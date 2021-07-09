@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B75E62AF269702E7003E1ADA /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75E62AE269702E7003E1ADA /* NavigationBar.swift */; };
 		B792815F268F2C30000ED84A /* Component.h in Headers */ = {isa = PBXBuildFile; fileRef = B792815D268F2C30000ED84A /* Component.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B79281D226959A84000ED84A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B79281D126959A84000ED84A /* Core.framework */; };
 		B79281D326959A84000ED84A /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B79281D126959A84000ED84A /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -31,6 +32,7 @@
 		00BF6A53B0C3485C485C205B /* Pods-Component.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.debug.xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.debug.xcconfig"; sourceTree = "<group>"; };
 		4F0D460B4A25B6AA9C09E885 /* Pods-Component.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.release.xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.release.xcconfig"; sourceTree = "<group>"; };
 		9A723B2EF055ED2C75BAC143 /* Pods_Component.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Component.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B75E62AE269702E7003E1ADA /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		B792815A268F2C30000ED84A /* Component.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Component.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B792815D268F2C30000ED84A /* Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
 		B792815E268F2C30000ED84A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			children = (
 				B792815D268F2C30000ED84A /* Component.h */,
 				B792815E268F2C30000ED84A /* Info.plist */,
+				B75E62AE269702E7003E1ADA /* NavigationBar.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 				TargetAttributes = {
 					B7928159268F2C30000ED84A = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -205,6 +209,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B75E62AF269702E7003E1ADA /* NavigationBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,6 +342,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 00BF6A53B0C3485C485C205B /* Pods-Component.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -352,6 +358,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.castcle.Component;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -361,6 +368,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4F0D460B4A25B6AA9C09E885 /* Pods-Component.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
