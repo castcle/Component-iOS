@@ -16,11 +16,11 @@ public enum NavBarButtonType {
     var image: UIImage {
         switch self {
         case .logo:
-            return UIImage.init(icon: .castcle(.alignCenter), size: CGSize(width: 30, height: 30), textColor: UIColor.Asset.white)
+            return UIImage.init(icon: .castcle(.logo), size: CGSize(width: 30, height: 30), textColor: UIColor.Asset.white)
         case .menu:
             return UIImage.init(icon: .castcle(.alignJustify), size: CGSize(width: 30, height: 30), textColor: UIColor.Asset.white)
         case .back:
-            return UIImage.init(icon: .castcle(.batteryFull), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
+            return UIImage.init(icon: .castcle(.back), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
         }
     }
 }
@@ -30,8 +30,14 @@ public enum NavBarType {
     case secondary
 }
 
+public enum BarButtonActionType {
+    case leftButton
+    case firstRightButton
+    case secondRightButton
+}
+
 public protocol CastcleTabbarDeleDelegate {
-    func castcleTabbar(didSelectButtonBar button: Int)
+    func castcleTabbar(didSelectButtonBar button: BarButtonActionType)
 }
 
 public extension UIViewController {
@@ -121,14 +127,14 @@ public extension UIViewController {
     }
     
     @objc private func leftButtonAction() {
-        UIViewController.castcleTabbarDelegate?.castcleTabbar(didSelectButtonBar: 1)
+        UIViewController.castcleTabbarDelegate?.castcleTabbar(didSelectButtonBar: .leftButton)
     }
     
     @objc private func firstRightButtonAction() {
-        UIViewController.castcleTabbarDelegate?.castcleTabbar(didSelectButtonBar: 2)
+        UIViewController.castcleTabbarDelegate?.castcleTabbar(didSelectButtonBar: .firstRightButton)
     }
     
     @objc private func secondRightButtonAction() {
-        UIViewController.castcleTabbarDelegate?.castcleTabbar(didSelectButtonBar: 3)
+        UIViewController.castcleTabbarDelegate?.castcleTabbar(didSelectButtonBar: .secondRightButton)
     }
 }
