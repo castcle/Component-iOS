@@ -16,9 +16,9 @@ public enum NavBarButtonType {
     var image: UIImage {
         switch self {
         case .logo:
-            return UIImage.init(icon: .castcle(.logo), size: CGSize(width: 30, height: 30), textColor: UIColor.Asset.white)
+            return UIImage.init(icon: .castcle(.logo), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white)
         case .menu:
-            return UIImage.init(icon: .castcle(.alignJustify), size: CGSize(width: 30, height: 30), textColor: UIColor.Asset.white)
+            return UIImage.init(icon: .castcle(.alignJustify), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white)
         case .back:
             return UIImage.init(icon: .castcle(.back), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
         }
@@ -61,7 +61,7 @@ public extension UIViewController {
         // MARK: - Title
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.Asset.lightBlue,
-            .font: UIFont.asset(.regular, fontSize: .h3)
+            .font: UIFont.asset(.regular, fontSize: .h4)
         ]
         
         navigationItem.title = title
@@ -81,7 +81,7 @@ public extension UIViewController {
         icon.setTitle("   \(title)", for: .normal)
         icon.setTitleColor(UIColor.Asset.white, for: .normal)
         icon.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 5, right: 0)
-        icon.titleLabel?.font = UIFont.asset(.regular, fontSize: .h3)
+        icon.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
         icon.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: icon)
