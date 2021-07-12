@@ -7,6 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */; };
+		B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552957269CBA14005D5EB5 /* FastAnimator.swift */; };
+		B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552958269CBA14005D5EB5 /* FastLayer.swift */; };
+		B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552959269CBA14005D5EB5 /* FastArrowLayer.swift */; };
+		B7552972269CBA14005D5EB5 /* FastCheckLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755295A269CBA14005D5EB5 /* FastCheckLayer.swift */; };
+		B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755295B269CBA14005D5EB5 /* FastCircleLayer.swift */; };
+		B7552978269CBA14005D5EB5 /* RefreshComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552961269CBA14005D5EB5 /* RefreshComponent.swift */; };
+		B7552979269CBA14005D5EB5 /* RefreshProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552962269CBA14005D5EB5 /* RefreshProtocol.swift */; };
+		B755297A269CBA14005D5EB5 /* RefreshBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552963269CBA14005D5EB5 /* RefreshBundle.swift */; };
+		B755297B269CBA14005D5EB5 /* RefreshFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552964269CBA14005D5EB5 /* RefreshFooterView.swift */; };
+		B755297C269CBA14005D5EB5 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552965269CBA14005D5EB5 /* UIColorExtension.swift */; };
+		B755297D269CBA15005D5EB5 /* RefreshExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552966269CBA14005D5EB5 /* RefreshExtension.swift */; };
+		B755297E269CBA15005D5EB5 /* RefreshHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552967269CBA14005D5EB5 /* RefreshHeaderView.swift */; };
+		B7552984269CBE48005D5EB5 /* NormalHeader.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B7552980269CBE48005D5EB5 /* NormalHeader.bundle */; };
+		B7552985269CBE49005D5EB5 /* NormalHeaderAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552981269CBE48005D5EB5 /* NormalHeaderAnimator.swift */; };
+		B7552986269CBE49005D5EB5 /* NormalFooterAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552982269CBE48005D5EB5 /* NormalFooterAnimator.swift */; };
+		B7552987269CBE49005D5EB5 /* NormalFooter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B7552983269CBE48005D5EB5 /* NormalFooter.bundle */; };
 		B75E62AF269702E7003E1ADA /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75E62AE269702E7003E1ADA /* NavigationBar.swift */; };
 		B792815F268F2C30000ED84A /* Component.h in Headers */ = {isa = PBXBuildFile; fileRef = B792815D268F2C30000ED84A /* Component.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B79281D226959A84000ED84A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B79281D126959A84000ED84A /* Core.framework */; };
@@ -36,6 +53,23 @@
 		7D2DA64FE09C59F76CA7D23E /* Pods-Component.release (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.release (staging).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.release (staging).xcconfig"; sourceTree = "<group>"; };
 		9A723B2EF055ED2C75BAC143 /* Pods_Component.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Component.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B70446F0676E9D9C1803A9CF /* Pods-Component.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.debug (development).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.debug (development).xcconfig"; sourceTree = "<group>"; };
+		B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshAnimator.swift; sourceTree = "<group>"; };
+		B7552957269CBA14005D5EB5 /* FastAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastAnimator.swift; sourceTree = "<group>"; };
+		B7552958269CBA14005D5EB5 /* FastLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLayer.swift; sourceTree = "<group>"; };
+		B7552959269CBA14005D5EB5 /* FastArrowLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastArrowLayer.swift; sourceTree = "<group>"; };
+		B755295A269CBA14005D5EB5 /* FastCheckLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastCheckLayer.swift; sourceTree = "<group>"; };
+		B755295B269CBA14005D5EB5 /* FastCircleLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastCircleLayer.swift; sourceTree = "<group>"; };
+		B7552961269CBA14005D5EB5 /* RefreshComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshComponent.swift; sourceTree = "<group>"; };
+		B7552962269CBA14005D5EB5 /* RefreshProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshProtocol.swift; sourceTree = "<group>"; };
+		B7552963269CBA14005D5EB5 /* RefreshBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshBundle.swift; sourceTree = "<group>"; };
+		B7552964269CBA14005D5EB5 /* RefreshFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshFooterView.swift; sourceTree = "<group>"; };
+		B7552965269CBA14005D5EB5 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		B7552966269CBA14005D5EB5 /* RefreshExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshExtension.swift; sourceTree = "<group>"; };
+		B7552967269CBA14005D5EB5 /* RefreshHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshHeaderView.swift; sourceTree = "<group>"; };
+		B7552980269CBE48005D5EB5 /* NormalHeader.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NormalHeader.bundle; sourceTree = "<group>"; };
+		B7552981269CBE48005D5EB5 /* NormalHeaderAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalHeaderAnimator.swift; sourceTree = "<group>"; };
+		B7552982269CBE48005D5EB5 /* NormalFooterAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalFooterAnimator.swift; sourceTree = "<group>"; };
+		B7552983269CBE48005D5EB5 /* NormalFooter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NormalFooter.bundle; sourceTree = "<group>"; };
 		B75E62AE269702E7003E1ADA /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		B792815A268F2C30000ED84A /* Component.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Component.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B792815D268F2C30000ED84A /* Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
@@ -83,6 +117,62 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B755294A269CB833005D5EB5 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				B75E62AE269702E7003E1ADA /* NavigationBar.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		B755294B269CB846005D5EB5 /* Refresh */ = {
+			isa = PBXGroup;
+			children = (
+				B755294D269CBA14005D5EB5 /* Animators */,
+				B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */,
+				B7552963269CBA14005D5EB5 /* RefreshBundle.swift */,
+				B7552961269CBA14005D5EB5 /* RefreshComponent.swift */,
+				B7552966269CBA14005D5EB5 /* RefreshExtension.swift */,
+				B7552964269CBA14005D5EB5 /* RefreshFooterView.swift */,
+				B7552967269CBA14005D5EB5 /* RefreshHeaderView.swift */,
+				B7552962269CBA14005D5EB5 /* RefreshProtocol.swift */,
+				B7552965269CBA14005D5EB5 /* UIColorExtension.swift */,
+			);
+			path = Refresh;
+			sourceTree = "<group>";
+		};
+		B755294D269CBA14005D5EB5 /* Animators */ = {
+			isa = PBXGroup;
+			children = (
+				B755297F269CBE48005D5EB5 /* NormalAnimator */,
+				B7552956269CBA14005D5EB5 /* FastAnimator */,
+			);
+			path = Animators;
+			sourceTree = "<group>";
+		};
+		B7552956269CBA14005D5EB5 /* FastAnimator */ = {
+			isa = PBXGroup;
+			children = (
+				B7552957269CBA14005D5EB5 /* FastAnimator.swift */,
+				B7552958269CBA14005D5EB5 /* FastLayer.swift */,
+				B7552959269CBA14005D5EB5 /* FastArrowLayer.swift */,
+				B755295A269CBA14005D5EB5 /* FastCheckLayer.swift */,
+				B755295B269CBA14005D5EB5 /* FastCircleLayer.swift */,
+			);
+			path = FastAnimator;
+			sourceTree = "<group>";
+		};
+		B755297F269CBE48005D5EB5 /* NormalAnimator */ = {
+			isa = PBXGroup;
+			children = (
+				B7552980269CBE48005D5EB5 /* NormalHeader.bundle */,
+				B7552981269CBE48005D5EB5 /* NormalHeaderAnimator.swift */,
+				B7552982269CBE48005D5EB5 /* NormalFooterAnimator.swift */,
+				B7552983269CBE48005D5EB5 /* NormalFooter.bundle */,
+			);
+			path = NormalAnimator;
+			sourceTree = "<group>";
+		};
 		B7928150268F2C30000ED84A = {
 			isa = PBXGroup;
 			children = (
@@ -106,7 +196,8 @@
 			children = (
 				B792815D268F2C30000ED84A /* Component.h */,
 				B792815E268F2C30000ED84A /* Info.plist */,
-				B75E62AE269702E7003E1ADA /* NavigationBar.swift */,
+				B755294B269CB846005D5EB5 /* Refresh */,
+				B755294A269CB833005D5EB5 /* Navigation */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -182,6 +273,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7552984269CBE48005D5EB5 /* NormalHeader.bundle in Resources */,
+				B7552987269CBE49005D5EB5 /* NormalFooter.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,7 +310,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7552985269CBE49005D5EB5 /* NormalHeaderAnimator.swift in Sources */,
 				B75E62AF269702E7003E1ADA /* NavigationBar.swift in Sources */,
+				B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */,
+				B7552972269CBA14005D5EB5 /* FastCheckLayer.swift in Sources */,
+				B755297A269CBA14005D5EB5 /* RefreshBundle.swift in Sources */,
+				B755297C269CBA14005D5EB5 /* UIColorExtension.swift in Sources */,
+				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
+				B7552979269CBA14005D5EB5 /* RefreshProtocol.swift in Sources */,
+				B7552986269CBE49005D5EB5 /* NormalFooterAnimator.swift in Sources */,
+				B7552978269CBA14005D5EB5 /* RefreshComponent.swift in Sources */,
+				B755297E269CBA15005D5EB5 /* RefreshHeaderView.swift in Sources */,
+				B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */,
+				B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */,
+				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,
+				B755297D269CBA15005D5EB5 /* RefreshExtension.swift in Sources */,
+				B755297B269CBA14005D5EB5 /* RefreshFooterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
