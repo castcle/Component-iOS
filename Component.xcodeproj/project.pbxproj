@@ -24,6 +24,7 @@
 		B7552985269CBE49005D5EB5 /* NormalHeaderAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552981269CBE48005D5EB5 /* NormalHeaderAnimator.swift */; };
 		B7552986269CBE49005D5EB5 /* NormalFooterAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552982269CBE48005D5EB5 /* NormalFooterAnimator.swift */; };
 		B7552987269CBE49005D5EB5 /* NormalFooter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B7552983269CBE48005D5EB5 /* NormalFooter.bundle */; };
+		B75529A2269D8837005D5EB5 /* NSObject+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */; };
 		B75E62AF269702E7003E1ADA /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75E62AE269702E7003E1ADA /* NavigationBar.swift */; };
 		B792815F268F2C30000ED84A /* Component.h in Headers */ = {isa = PBXBuildFile; fileRef = B792815D268F2C30000ED84A /* Component.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B79281D226959A84000ED84A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B79281D126959A84000ED84A /* Core.framework */; };
@@ -70,6 +71,7 @@
 		B7552981269CBE48005D5EB5 /* NormalHeaderAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalHeaderAnimator.swift; sourceTree = "<group>"; };
 		B7552982269CBE48005D5EB5 /* NormalFooterAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalFooterAnimator.swift; sourceTree = "<group>"; };
 		B7552983269CBE48005D5EB5 /* NormalFooter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NormalFooter.bundle; sourceTree = "<group>"; };
+		B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+ListDiffable.swift"; sourceTree = "<group>"; };
 		B75E62AE269702E7003E1ADA /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		B792815A268F2C30000ED84A /* Component.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Component.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B792815D268F2C30000ED84A /* Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 			children = (
 				B792815D268F2C30000ED84A /* Component.h */,
 				B792815E268F2C30000ED84A /* Info.plist */,
+				B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */,
 				B755294B269CB846005D5EB5 /* Refresh */,
 				B755294A269CB833005D5EB5 /* Navigation */,
 			);
@@ -314,6 +317,7 @@
 				B75E62AF269702E7003E1ADA /* NavigationBar.swift in Sources */,
 				B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */,
 				B7552972269CBA14005D5EB5 /* FastCheckLayer.swift in Sources */,
+				B75529A2269D8837005D5EB5 /* NSObject+ListDiffable.swift in Sources */,
 				B755297A269CBA14005D5EB5 /* RefreshBundle.swift in Sources */,
 				B755297C269CBA14005D5EB5 /* UIColorExtension.swift in Sources */,
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,

@@ -47,7 +47,7 @@ public extension UIViewController {
     func customNavigationBar(_ type: NavBarType, title: String, leftBarButton: NavBarButtonType? = nil, rightBarButton: [NavBarButtonType]) {
         
         // MARK: - Set Background
-        navigationController?.navigationBar.barTintColor = UIColor.Asset.black
+        navigationController?.navigationBar.barTintColor = UIColor.Asset.darkGraphiteBlue
         navigationController?.navigationBar.isTranslucent = false
         
         if type == .primary {
