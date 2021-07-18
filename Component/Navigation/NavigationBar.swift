@@ -104,7 +104,7 @@ public extension UIViewController {
     private func setupRightNavigationBar(rightBarButton: [NavBarButtonType]) {
         var rightButton: [UIBarButtonItem] = []
         
-        if rightBarButton.count > 0 {
+        if !rightBarButton.isEmpty {
             let firstItem = rightBarButton[0]
             let firstIcon = UIButton(type: .system)
             firstIcon.setImage(firstItem.image.withRenderingMode(.alwaysOriginal), for: .normal)
