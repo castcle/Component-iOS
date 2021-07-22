@@ -50,13 +50,15 @@ class RefreshBundle {
         var imageName = imageName
         if UIScreen.main.scale == 2 {
             imageName = imageName + "@2x"
-        }else if UIScreen.main.scale == 3 {
+        } else if UIScreen.main.scale == 3 {
             imageName = imageName + "@3x"
         }
-        let bundle = Bundle(path: bundle.bundlePath + "/images")
-         if let path = bundle?.path(forResource: imageName, ofType: "png") {
-            let image = UIImage(contentsOfFile: path)
-            return image
+        
+        if let bundle = Bundle(path: bundle.bundlePath + "/images") {
+            if let path = bundle.path(forResource: imageName, ofType: "png") {
+                let image = UIImage(contentsOfFile: path)
+                return image
+            }
         }
         return nil
     }
