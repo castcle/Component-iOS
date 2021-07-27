@@ -32,8 +32,9 @@ public enum NavBarButtonType {
     case logo
     case menu
     case back
+    case profile
     
-    var image: UIImage {
+    public var image: UIImage {
         switch self {
         case .logo:
             return UIImage.init(icon: .castcle(.logo), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white)
@@ -41,7 +42,15 @@ public enum NavBarButtonType {
             return UIImage.init(icon: .castcle(.alignJustify), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white)
         case .back:
             return UIImage.init(icon: .castcle(.back), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
+        case .profile:
+            return UIImage.init(icon: .castcle(.profile), size: CGSize(width: 24, height: 24), textColor: UIColor.Asset.white)
         }
+    }
+    
+    public var barButton: UIButton {
+        let icon = UIButton(type: .system)
+        icon.setImage(self.image.withRenderingMode(.alwaysOriginal), for: .normal)
+        return icon
     }
 }
 
@@ -56,13 +65,7 @@ public enum BarButtonActionType {
     case secondRightButton
 }
 
-public protocol CastcleTabbarDeleDelegate {
-    func castcleTabbar(didSelectButtonBar button: BarButtonActionType)
-}
-
 public extension UIViewController {
-    
-    static var castcleTabbarDelegate: CastcleTabbarDeleDelegate?
     
     func customNavigationBar(_ type: NavBarType, title: String, leftBarButton: NavBarButtonType? = nil, rightBarButton: [NavBarButtonType]) {
         
@@ -102,7 +105,7 @@ public extension UIViewController {
         icon.setTitleColor(UIColor.Asset.white, for: .normal)
         icon.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 5, right: 0)
         icon.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
-        icon.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
+        icon.addTarget(self, action: #selector(backAction), for: .touchUpInside)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: icon)
         
@@ -115,7 +118,10 @@ public extension UIViewController {
         if let leftButton = leftBarButton {
             let icon = UIButton(type: .system)
             icon.setImage(leftButton.image.withRenderingMode(.alwaysOriginal), for: .normal)
-            icon.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
+            
+            if leftBarButton == .back {
+                icon.addTarget(self, action: #selector(backAction), for: .touchUpInside)
+            }
         
             navigationItem.leftBarButtonItem = UIBarButtonItem(customView: icon)
         }
@@ -128,7 +134,6 @@ public extension UIViewController {
             let firstItem = rightBarButton[0]
             let firstIcon = UIButton(type: .system)
             firstIcon.setImage(firstItem.image.withRenderingMode(.alwaysOriginal), for: .normal)
-            firstIcon.addTarget(self, action: #selector(firstRightButtonAction), for: .touchUpInside)
             
             rightButton.append(UIBarButtonItem(customView: firstIcon))
         }
@@ -137,7 +142,6 @@ public extension UIViewController {
             let secondItem = rightBarButton[1]
             let secondIcon = UIButton(type: .system)
             secondIcon.setImage(secondItem.image.withRenderingMode(.alwaysOriginal), for: .normal)
-            secondIcon.addTarget(self, action: #selector(secondRightButtonAction), for: .touchUpInside)
             
             rightButton.append(UIBarButtonItem(customView: secondIcon))
         }
@@ -146,15 +150,7 @@ public extension UIViewController {
         navigationItem.rightBarButtonItems = rightButton
     }
     
-    @objc private func leftButtonAction() {
-        UIViewController.castcleTabbarDelegate?.castcleTabbar(didSelectButtonBar: .leftButton)
-    }
-    
-    @objc private func firstRightButtonAction() {
-        UIViewController.castcleTabbarDelegate?.castcleTabbar(didSelectButtonBar: .firstRightButton)
-    }
-    
-    @objc private func secondRightButtonAction() {
-        UIViewController.castcleTabbarDelegate?.castcleTabbar(didSelectButtonBar: .secondRightButton)
+    @objc private func backAction() {
+        Utility.currentViewController().navigationController?.popViewController(animated: true)
     }
 }
