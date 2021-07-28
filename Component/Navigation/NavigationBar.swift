@@ -150,29 +150,6 @@ public extension UIViewController {
         }
     }
     
-//    private func setupRightNavigationBar(rightBarButton: [NavBarButtonType]) {
-//        var rightButton: [UIBarButtonItem] = []
-//
-//        if !rightBarButton.isEmpty {
-//            let firstItem = rightBarButton[0]
-//            let firstIcon = UIButton(type: .system)
-//            firstIcon.setImage(firstItem.image.withRenderingMode(.alwaysOriginal), for: .normal)
-//
-//            rightButton.append(UIBarButtonItem(customView: firstIcon))
-//        }
-//
-//        if rightBarButton.count > 1 {
-//            let secondItem = rightBarButton[1]
-//            let secondIcon = UIButton(type: .system)
-//            secondIcon.setImage(secondItem.image.withRenderingMode(.alwaysOriginal), for: .normal)
-//
-//            rightButton.append(UIBarButtonItem(customView: secondIcon))
-//        }
-//
-//
-//        navigationItem.rightBarButtonItems = rightButton
-//    }
-    
     @objc private func backAction() {
         Utility.currentViewController().navigationController?.popViewController(animated: true)
     }
