@@ -32,8 +32,9 @@ public enum NavBarButtonType {
     case logo
     case menu
     case back
+    case profile
     
-    var image: UIImage {
+    public var image: UIImage {
         switch self {
         case .logo:
             return UIImage.init(icon: .castcle(.logo), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white)
@@ -41,13 +42,22 @@ public enum NavBarButtonType {
             return UIImage.init(icon: .castcle(.alignJustify), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white)
         case .back:
             return UIImage.init(icon: .castcle(.back), size: CGSize(width: 23, height: 23), textColor: UIColor.Asset.white)
+        case .profile:
+            return UIImage.init(icon: .castcle(.profile), size: CGSize(width: 24, height: 24), textColor: UIColor.Asset.white)
         }
+    }
+    
+    public var barButton: UIButton {
+        let icon = UIButton(type: .system)
+        icon.setImage(self.image.withRenderingMode(.alwaysOriginal), for: .normal)
+        return icon
     }
 }
 
 public enum NavBarType {
     case primary
     case secondary
+    case webView
 }
 
 public enum BarButtonActionType {
@@ -56,28 +66,24 @@ public enum BarButtonActionType {
     case secondRightButton
 }
 
-public protocol CastcleTabbarDeleDelegate {
-    func castcleTabbar(didSelectButtonBar button: BarButtonActionType)
-}
-
 public extension UIViewController {
     
-    static var castcleTabbarDelegate: CastcleTabbarDeleDelegate?
-    
-    func customNavigationBar(_ type: NavBarType, title: String, leftBarButton: NavBarButtonType? = nil, rightBarButton: [NavBarButtonType]) {
+    func customNavigationBar(_ type: NavBarType, title: String, urlString: String = "", leftBarButton: NavBarButtonType? = nil) {
         
         // MARK: - Set Background
         navigationController?.navigationBar.barTintColor = UIColor.Asset.darkGraphiteBlue
         navigationController?.navigationBar.isTranslucent = false
         
         if type == .primary {
-            self.setupPrimaryNavigationBar(title: title, leftBarButton: leftBarButton, rightBarButton: rightBarButton)
+            self.setupPrimaryNavigationBar(title: title, leftBarButton: leftBarButton)
+        } else if type == .webView {
+            self.setupWebViewNavigationBar(title: title, urlString: urlString)
         } else {
-            self.setupSecondaryNavigationBar(title: title, rightBarButton: rightBarButton)
+            self.setupSecondaryNavigationBar(title: title)
         }
     }
     
-    private func setupPrimaryNavigationBar(title: String, leftBarButton: NavBarButtonType?, rightBarButton: [NavBarButtonType]) {
+    private func setupPrimaryNavigationBar(title: String, leftBarButton: NavBarButtonType?) {
         // MARK: - Title
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.Asset.lightBlue,
@@ -88,12 +94,9 @@ public extension UIViewController {
         
         // MARK: - Left Bar Button
         self.setupLeftNavigationBar(leftBarButton: leftBarButton)
-        
-        // MARK: - Right Bar Button
-        self.setupRightNavigationBar(rightBarButton: rightBarButton)
     }
     
-    private func setupSecondaryNavigationBar(title: String, rightBarButton: [NavBarButtonType]) {
+    private func setupSecondaryNavigationBar(title: String) {
         // MARK: - Title
         let leftButton: NavBarButtonType = .back
         let icon = UIButton(type: .system)
@@ -102,12 +105,35 @@ public extension UIViewController {
         icon.setTitleColor(UIColor.Asset.white, for: .normal)
         icon.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 5, right: 0)
         icon.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
-        icon.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
+        icon.addTarget(self, action: #selector(backAction), for: .touchUpInside)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: icon)
+    }
+    
+    private func setupWebViewNavigationBar(title: String, urlString: String) {
+        // MARK: - Title
+        let titleStackView: UIStackView = {
+            let titleLabel = UILabel()
+            titleLabel.font = UIFont.asset(.regular, fontSize: .overline)
+            titleLabel.textColor = UIColor.Asset.lightBlue
+            titleLabel.textAlignment = .center
+            titleLabel.text = title
+            
+            let urlLabel = UILabel()
+            urlLabel.font = UIFont.asset(.regular, fontSize: .custom(size: 10))
+            urlLabel.textColor = UIColor.Asset.lightBlue
+            urlLabel.textAlignment = .center
+            urlLabel.text = urlString
+            
+            let stackView = UIStackView(arrangedSubviews: [titleLabel, urlLabel])
+            stackView.axis = .vertical
+            return stackView
+        }()
         
-        // MARK: - Right Bar Button
-        self.setupRightNavigationBar(rightBarButton: rightBarButton)
+        navigationItem.titleView = titleStackView
+        
+        // MARK: - Left Bar Button
+        self.setupLeftNavigationBar(leftBarButton: .back)
     }
     
     private func setupLeftNavigationBar(leftBarButton: NavBarButtonType?) {
@@ -115,46 +141,16 @@ public extension UIViewController {
         if let leftButton = leftBarButton {
             let icon = UIButton(type: .system)
             icon.setImage(leftButton.image.withRenderingMode(.alwaysOriginal), for: .normal)
-            icon.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
+            
+            if leftBarButton == .back {
+                icon.addTarget(self, action: #selector(backAction), for: .touchUpInside)
+            }
         
             navigationItem.leftBarButtonItem = UIBarButtonItem(customView: icon)
         }
     }
     
-    private func setupRightNavigationBar(rightBarButton: [NavBarButtonType]) {
-        var rightButton: [UIBarButtonItem] = []
-        
-        if !rightBarButton.isEmpty {
-            let firstItem = rightBarButton[0]
-            let firstIcon = UIButton(type: .system)
-            firstIcon.setImage(firstItem.image.withRenderingMode(.alwaysOriginal), for: .normal)
-            firstIcon.addTarget(self, action: #selector(firstRightButtonAction), for: .touchUpInside)
-            
-            rightButton.append(UIBarButtonItem(customView: firstIcon))
-        }
-        
-        if rightBarButton.count > 1 {
-            let secondItem = rightBarButton[1]
-            let secondIcon = UIButton(type: .system)
-            secondIcon.setImage(secondItem.image.withRenderingMode(.alwaysOriginal), for: .normal)
-            secondIcon.addTarget(self, action: #selector(secondRightButtonAction), for: .touchUpInside)
-            
-            rightButton.append(UIBarButtonItem(customView: secondIcon))
-        }
-        
-        
-        navigationItem.rightBarButtonItems = rightButton
-    }
-    
-    @objc private func leftButtonAction() {
-        UIViewController.castcleTabbarDelegate?.castcleTabbar(didSelectButtonBar: .leftButton)
-    }
-    
-    @objc private func firstRightButtonAction() {
-        UIViewController.castcleTabbarDelegate?.castcleTabbar(didSelectButtonBar: .firstRightButton)
-    }
-    
-    @objc private func secondRightButtonAction() {
-        UIViewController.castcleTabbarDelegate?.castcleTabbar(didSelectButtonBar: .secondRightButton)
+    @objc private func backAction() {
+        Utility.currentViewController().navigationController?.popViewController(animated: true)
     }
 }

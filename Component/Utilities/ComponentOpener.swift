@@ -19,28 +19,28 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  ComponentNibVars.swift
+//  ComponentOpener.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 15/7/2564 BE.
+//  Created by Tanakorn Phoochaliaw on 27/7/2564 BE.
 //
 
-public struct ComponentNibVars {
-    // MARK: - View Controller
-    public struct ViewController {
-        public static let internalWebView = "InternalWebViewController"
-    }
+import UIKit
+import Core
+
+public enum ComponentScene {
+    case internalWebView(URL)
+}
+
+public struct ComponentOpener {
     
-    // MARK: - View
-    public struct Storyboard {
-        public static let internalWebView = "WebView"
-    }
-    
-    // MARK: - TableViewCell
-    public struct TableViewCell {
-    }
-    
-    // MARK: - CollectionViewCell
-    public struct CollectionViewCell {
+    public static func open(_ componentScene: ComponentScene) -> UIViewController {
+        switch componentScene {
+        case .internalWebView(let url):
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.internalWebView, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.internalWebView) as? InternalWebViewController
+            vc?.viewModel = InternalWebViewModel(url: url)
+            return vc ?? UIViewController()
+        }
     }
 }

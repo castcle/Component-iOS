@@ -19,28 +19,26 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  ComponentNibVars.swift
+//  InternalWebViewModel.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 15/7/2564 BE.
+//  Created by Tanakorn Phoochaliaw on 27/7/2564 BE.
 //
 
-public struct ComponentNibVars {
-    // MARK: - View Controller
-    public struct ViewController {
-        public static let internalWebView = "InternalWebViewController"
-    }
+import Foundation
+
+final class InternalWebViewModel  {
+   
+    //MARK: Public
+    var request: URLRequest!
+    var titleHidden: Bool = false
+    var titleWeb: String = ""
+    var detailWeb: String = ""
+
+    //MARK: Input
+    init() { }
     
-    // MARK: - View
-    public struct Storyboard {
-        public static let internalWebView = "WebView"
-    }
-    
-    // MARK: - TableViewCell
-    public struct TableViewCell {
-    }
-    
-    // MARK: - CollectionViewCell
-    public struct CollectionViewCell {
+    init(url: URL) {
+        self.request = NSURLRequest(url: url) as URLRequest
     }
 }
