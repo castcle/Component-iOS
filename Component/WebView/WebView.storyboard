@@ -9,20 +9,46 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Internal Web View View Controller-->
+        <!--Internal Web View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="InternalWebViewViewController" hidesBottomBarWhenPushed="YES" id="Y6W-OH-hqX" customClass="InternalWebViewViewController" customModule="Component" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InternalWebViewController" hidesBottomBarWhenPushed="YES" id="Y6W-OH-hqX" customClass="InternalWebViewController" customModule="Component" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fC0-es-dx1">
+                                <rect key="frame" x="0.0" y="1.5" width="375" height="665.5"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="btB-Gu-faf">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="2.5"/>
+                            </progressView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="fC0-es-dx1" secondAttribute="bottom" id="D9Z-45-YJj"/>
+                            <constraint firstItem="btB-Gu-faf" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="DwW-5v-9ta"/>
+                            <constraint firstItem="fC0-es-dx1" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="asY-eB-5Er"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="fC0-es-dx1" secondAttribute="trailing" id="enM-7p-MTp"/>
+                            <constraint firstItem="fC0-es-dx1" firstAttribute="top" secondItem="btB-Gu-faf" secondAttribute="bottom" id="hdg-3P-cmD"/>
+                            <constraint firstItem="btB-Gu-faf" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="uY6-xa-Dsx"/>
+                            <constraint firstItem="btB-Gu-faf" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="z7X-r0-V0g"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="progressView" destination="btB-Gu-faf" id="Cbo-pm-1ah"/>
+                        <outlet property="webView" destination="fC0-es-dx1" id="tC5-60-TCT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="48" y="71"/>
+            <point key="canvasLocation" x="47.200000000000003" y="70.614692653673174"/>
         </scene>
     </scenes>
     <resources>

@@ -19,28 +19,26 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  ComponentOpener.swift
+//  InternalWebViewModel.swift
 //  Component
 //
 //  Created by Tanakorn Phoochaliaw on 27/7/2564 BE.
 //
 
-import UIKit
-import Core
+import Foundation
 
-public enum ComponentScene {
-    case internalWebView(URL)
-}
+final class InternalWebViewModel  {
+   
+    //MARK: Public
+    var request: URLRequest!
+    var titleHidden: Bool = false
+    var titleWeb: String = ""
+    var detailWeb: String = ""
 
-public struct ComponentOpener {
+    //MARK: Input
+    init() { }
     
-    public static func open(_ componentScene: ComponentScene) -> UIViewController {
-        switch componentScene {
-        case .internalWebView(let url):
-            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.internalWebView, bundle: ConfigBundle.component)
-            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.internalWebView) as? InternalWebViewController
-            vc?.viewModel = InternalWebViewModel(url: url)
-            return vc ?? UIViewController()
-        }
+    init(url: URL) {
+        self.request = NSURLRequest(url: url) as URLRequest
     }
 }

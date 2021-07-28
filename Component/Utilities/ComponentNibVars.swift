@@ -28,7 +28,7 @@
 public struct ComponentNibVars {
     // MARK: - View Controller
     public struct ViewController {
-        public static let internalWebView = "InternalWebViewViewController"
+        public static let internalWebView = "InternalWebViewController"
     }
     
     // MARK: - View
