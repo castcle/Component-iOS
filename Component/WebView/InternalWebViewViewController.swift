@@ -44,6 +44,7 @@ class InternalWebViewController: UIViewController{
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
+        self.progressView.progressTintColor = UIColor.Asset.lightBlue
         self.customNavigationBar(.webView, title: "Loading ...", urlString: self.viewModel.request.url?.host ?? "")
         
         self.webView.navigationDelegate = self

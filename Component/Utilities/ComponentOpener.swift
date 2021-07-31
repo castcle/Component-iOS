@@ -30,6 +30,7 @@ import Core
 
 public enum ComponentScene {
     case internalWebView(URL)
+    case splashScreen
 }
 
 public struct ComponentOpener {
@@ -40,6 +41,10 @@ public struct ComponentOpener {
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.internalWebView, bundle: ConfigBundle.component)
             let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.internalWebView) as? InternalWebViewController
             vc?.viewModel = InternalWebViewModel(url: url)
+            return vc ?? UIViewController()
+        case .splashScreen:
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.splashScreen, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.splashScreen) as? SplashScreenViewController
             return vc ?? UIViewController()
         }
     }

@@ -31,6 +31,8 @@
 		B7910DF726AFE4090097C94E /* InternalWebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910DF626AFE4090097C94E /* InternalWebViewViewController.swift */; };
 		B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910DF826AFE8200097C94E /* ComponentOpener.swift */; };
 		B7910DFB26B018E50097C94E /* InternalWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910DFA26B018E50097C94E /* InternalWebViewModel.swift */; };
+		B7910E3026B5E1320097C94E /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7910E2E26B5E1320097C94E /* SplashScreen.storyboard */; };
+		B7910E3126B5E1320097C94E /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E2F26B5E1320097C94E /* SplashScreenViewController.swift */; };
 		B792815F268F2C30000ED84A /* Component.h in Headers */ = {isa = PBXBuildFile; fileRef = B792815D268F2C30000ED84A /* Component.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B79281D226959A84000ED84A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B79281D126959A84000ED84A /* Core.framework */; };
 		B79281D326959A84000ED84A /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B79281D126959A84000ED84A /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -84,6 +86,8 @@
 		B7910DF626AFE4090097C94E /* InternalWebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalWebViewViewController.swift; sourceTree = "<group>"; };
 		B7910DF826AFE8200097C94E /* ComponentOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentOpener.swift; sourceTree = "<group>"; };
 		B7910DFA26B018E50097C94E /* InternalWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalWebViewModel.swift; sourceTree = "<group>"; };
+		B7910E2E26B5E1320097C94E /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SplashScreen.storyboard; sourceTree = "<group>"; };
+		B7910E2F26B5E1320097C94E /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
 		B792815A268F2C30000ED84A /* Component.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Component.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B792815D268F2C30000ED84A /* Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
 		B792815E268F2C30000ED84A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -206,6 +210,15 @@
 			path = WebView;
 			sourceTree = "<group>";
 		};
+		B7910E2D26B5E1320097C94E /* Splash Screen */ = {
+			isa = PBXGroup;
+			children = (
+				B7910E2E26B5E1320097C94E /* SplashScreen.storyboard */,
+				B7910E2F26B5E1320097C94E /* SplashScreenViewController.swift */,
+			);
+			path = "Splash Screen";
+			sourceTree = "<group>";
+		};
 		B7928150268F2C30000ED84A = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +244,7 @@
 				B792815E268F2C30000ED84A /* Info.plist */,
 				B75529D1269F693C005D5EB5 /* Utilities */,
 				B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */,
+				B7910E2D26B5E1320097C94E /* Splash Screen */,
 				B7910DF326AFDCEA0097C94E /* WebView */,
 				B755294B269CB846005D5EB5 /* Refresh */,
 				B755294A269CB833005D5EB5 /* Navigation */,
@@ -310,6 +324,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7552984269CBE48005D5EB5 /* NormalHeader.bundle in Resources */,
+				B7910E3026B5E1320097C94E /* SplashScreen.storyboard in Resources */,
 				B7910DF526AFE32A0097C94E /* WebView.storyboard in Resources */,
 				B7552987269CBE49005D5EB5 /* NormalFooter.bundle in Resources */,
 			);
@@ -363,6 +378,7 @@
 				B7552978269CBA14005D5EB5 /* RefreshComponent.swift in Sources */,
 				B755297E269CBA15005D5EB5 /* RefreshHeaderView.swift in Sources */,
 				B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */,
+				B7910E3126B5E1320097C94E /* SplashScreenViewController.swift in Sources */,
 				B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */,
 				B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */,
 				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,

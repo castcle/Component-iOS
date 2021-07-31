@@ -19,30 +19,24 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  ComponentNibVars.swift
+//  SplashScreenViewController.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 15/7/2564 BE.
+//  Created by Tanakorn Phoochaliaw on 1/8/2564 BE.
 //
 
-public struct ComponentNibVars {
-    // MARK: - View Controller
-    public struct ViewController {
-        public static let internalWebView = "InternalWebViewController"
-        public static let splashScreen = "SplashScreenViewController"
-    }
+import UIKit
+import Core
+
+class SplashScreenViewController: UIViewController {
+
+    @IBOutlet var logoImage: UIImageView!
+    @IBOutlet var backgroundImage: UIImageView!
     
-    // MARK: - View
-    public struct Storyboard {
-        public static let internalWebView = "WebView"
-        public static let splashScreen = "SplashScreen"
-    }
-    
-    // MARK: - TableViewCell
-    public struct TableViewCell {
-    }
-    
-    // MARK: - CollectionViewCell
-    public struct CollectionViewCell {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.backgroundImage.image = UIImage.Asset.launchScreen
+        self.logoImage.image = UIImage.Asset.castcleLogo
     }
 }
