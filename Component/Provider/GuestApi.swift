@@ -19,35 +19,53 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  SplashScreenViewController.swift
+//  GuestApi.swift
 //  Component
 //
 //  Created by Tanakorn Phoochaliaw on 1/8/2564 BE.
 //
 
-import UIKit
 import Core
+import Moya
 
-public protocol SplashScreenViewControllerDelegate {
-    func didLoadFinish(_ view: SplashScreenViewController)
+enum GuestApi {
+    case guestLogin(String)
 }
 
-public class SplashScreenViewController: UIViewController {
+public enum GuestApiKey: String {
+    case uuid = "deviceUUID"
+    case accessToken
+    case refreshToken
+}
 
-    @IBOutlet var logoImage: UIImageView!
-    @IBOutlet var backgroundImage: UIImageView!
+extension GuestApi: TargetType {
+    var baseURL: URL {
+        return URL(string: Environment.baseUrl)!
+    }
     
-    public var delegate: SplashScreenViewControllerDelegate?
-    var viewModel = SplashScreenViewModel()
-    
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.backgroundImage.image = UIImage.Asset.launchScreen
-        self.logoImage.image = UIImage.Asset.castcleLogo
-        
-        self.viewModel.didGuestLoginFinish = {
-            self.delegate?.didLoadFinish(self)
+    var path: String {
+        switch self {
+        case .guestLogin:
+            return "/authentications/guestLogin"
         }
+    }
+    
+    var method: Moya.Method {
+        return .put
+    }
+    
+    var sampleData: Data {
+        return "{\"accessToken\": \"0000000000\", \"refreshToken\": \"1111111111\"}".dataEncoded
+    }
+    
+    var task: Task {
+        switch self {
+        case .guestLogin(let uuid):
+            return .requestParameters(parameters: [GuestApiKey.uuid.rawValue: uuid], encoding: JSONEncoding.default)
+        }
+    }
+    
+    var headers: [String : String]? {
+        return nil
     }
 }

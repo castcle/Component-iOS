@@ -19,35 +19,39 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  SplashScreenViewController.swift
+//  SplashScreenViewModel.swift
 //  Component
 //
 //  Created by Tanakorn Phoochaliaw on 1/8/2564 BE.
 //
 
-import UIKit
+import Foundation
 import Core
+import Defaults
 
-public protocol SplashScreenViewControllerDelegate {
-    func didLoadFinish(_ view: SplashScreenViewController)
-}
+final class SplashScreenViewModel  {
+   
+    //MARK: Private
+    private var guestRepository: GuestRepository
 
-public class SplashScreenViewController: UIViewController {
-
-    @IBOutlet var logoImage: UIImageView!
-    @IBOutlet var backgroundImage: UIImageView!
+    //MARK: Input
+    public func guestLogin() {
+        self.guestRepository.guestLogin(uuid: UUID().uuidString) { (success) in
+            self.didGuestLoginFinish?()
+        }
+    }
     
-    public var delegate: SplashScreenViewControllerDelegate?
-    var viewModel = SplashScreenViewModel()
+    //MARK: Output
+    var didGuestLoginFinish: (() -> ())?
     
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.backgroundImage.image = UIImage.Asset.launchScreen
-        self.logoImage.image = UIImage.Asset.castcleLogo
-        
-        self.viewModel.didGuestLoginFinish = {
-            self.delegate?.didLoadFinish(self)
+    public init(guestRepository: GuestRepository = GuestRepositoryImpl()) {
+        self.guestRepository = guestRepository
+        if Defaults[.accessToken].isEmpty || Defaults[.userRole].isEmpty {
+            self.guestLogin()
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                self.didGuestLoginFinish?()
+            })
         }
     }
 }
