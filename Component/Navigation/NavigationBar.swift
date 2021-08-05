@@ -60,6 +60,11 @@ public enum NavBarType {
     case webView
 }
 
+public enum SecondaryBackType {
+    case normal
+    case root
+}
+
 public enum BarButtonActionType {
     case leftButton
     case firstRightButton
@@ -68,7 +73,7 @@ public enum BarButtonActionType {
 
 public extension UIViewController {
     
-    func customNavigationBar(_ type: NavBarType, title: String, urlString: String = "", textColor: UIColor = UIColor.Asset.white, leftBarButton: NavBarButtonType? = nil) {
+    func customNavigationBar(_ type: NavBarType, title: String, urlString: String = "", textColor: UIColor = UIColor.Asset.white, leftBarButton: NavBarButtonType? = nil, secondaryBackType: SecondaryBackType = .normal) {
         
         // MARK: - Set Background
         navigationController?.navigationBar.barTintColor = UIColor.Asset.darkGraphiteBlue
@@ -79,7 +84,7 @@ public extension UIViewController {
         } else if type == .webView {
             self.setupWebViewNavigationBar(title: title, urlString: urlString)
         } else {
-            self.setupSecondaryNavigationBar(title: title, textColor: textColor)
+            self.setupSecondaryNavigationBar(title: title, textColor: textColor, secondaryBackType: secondaryBackType)
         }
     }
     
@@ -96,7 +101,7 @@ public extension UIViewController {
         self.setupLeftNavigationBar(leftBarButton: leftBarButton)
     }
     
-    private func setupSecondaryNavigationBar(title: String, textColor: UIColor = UIColor.Asset.white) {
+    private func setupSecondaryNavigationBar(title: String, textColor: UIColor = UIColor.Asset.white, secondaryBackType: SecondaryBackType) {
         // MARK: - Title
         let leftButton: NavBarButtonType = .back
         let icon = UIButton(type: .system)
@@ -105,7 +110,12 @@ public extension UIViewController {
         icon.setTitleColor(textColor, for: .normal)
         icon.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 5, right: 0)
         icon.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
-        icon.addTarget(self, action: #selector(backAction), for: .touchUpInside)
+        
+        if secondaryBackType == .normal {
+            icon.addTarget(self, action: #selector(backAction), for: .touchUpInside)
+        } else {
+            icon.addTarget(self, action: #selector(backToRootAction), for: .touchUpInside)
+        }
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: icon)
     }
@@ -152,5 +162,9 @@ public extension UIViewController {
     
     @objc private func backAction() {
         Utility.currentViewController().navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func backToRootAction() {
+        Utility.currentViewController().navigationController?.popToRootViewController(animated: true)
     }
 }
