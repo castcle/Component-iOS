@@ -31,6 +31,7 @@ import Core
 public enum ComponentScene {
     case internalWebView(URL)
     case splashScreen
+    case datePicker
 }
 
 public struct ComponentOpener {
@@ -45,6 +46,10 @@ public struct ComponentOpener {
         case .splashScreen:
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.splashScreen, bundle: ConfigBundle.component)
             let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.splashScreen) as? SplashScreenViewController
+            return vc ?? UIViewController()
+        case .datePicker:
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.picker, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.datePicker) as? DatePickerViewController
             return vc ?? UIViewController()
         }
     }

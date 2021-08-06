@@ -30,12 +30,14 @@ public struct ComponentNibVars {
     public struct ViewController {
         public static let internalWebView = "InternalWebViewController"
         public static let splashScreen = "SplashScreenViewController"
+        public static let datePicker = "DatePickerViewController"
     }
     
     // MARK: - View
     public struct Storyboard {
         public static let internalWebView = "WebView"
         public static let splashScreen = "SplashScreen"
+        public static let picker = "Picker"
     }
     
     // MARK: - TableViewCell
