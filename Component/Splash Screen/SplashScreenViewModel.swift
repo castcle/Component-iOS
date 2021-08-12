@@ -36,8 +36,10 @@ final class SplashScreenViewModel  {
 
     //MARK: Input
     public func guestLogin() {
-        self.guestRepository.guestLogin(uuid: UUID().uuidString) { (success) in
-            self.didGuestLoginFinish?()
+        self.guestRepository.guestLogin(uuid: Defaults[.deviceUuid]) { (success) in
+            if success {
+                self.didGuestLoginFinish?()
+            }
         }
     }
     

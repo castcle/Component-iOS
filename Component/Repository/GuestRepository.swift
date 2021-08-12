@@ -35,7 +35,7 @@ protocol GuestRepository {
 }
 
 final class GuestRepositoryImpl: GuestRepository {
-    private let guestProvider = MoyaProvider<GuestApi>(stubClosure: MoyaProvider.delayedStub(1.0))
+    private let guestProvider = MoyaProvider<GuestApi>()
     
     func guestLogin(uuid: String, _ completion: @escaping (Bool) -> ()) {
         self.guestProvider.request(.guestLogin(uuid)) { result in
@@ -44,16 +44,23 @@ final class GuestRepositoryImpl: GuestRepository {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let accessToken = json[GuestApiKey.accessToken.rawValue].stringValue
-                    let refreshToken = json[GuestApiKey.refreshToken.rawValue].stringValue
-                    Defaults[.userRole] = "GUEST"
-                    Defaults[.accessToken] = accessToken
-                    Defaults[.refreshToken] = refreshToken
-                    completion(true)
+                    if response.statusCode < 300 {
+                        let accessToken = json[GuestApiKey.accessToken.rawValue].stringValue
+                        let refreshToken = json[GuestApiKey.refreshToken.rawValue].stringValue
+                        Defaults[.userRole] = "GUEST"
+                        Defaults[.accessToken] = accessToken
+                        Defaults[.refreshToken] = refreshToken
+                        completion(true)
+                    } else {
+                        ApiHelper.displayError(error: "\(json[ResponseErrorKey.code.rawValue].stringValue) : \(json[ResponseErrorKey.message.rawValue].stringValue)")
+                        completion(false)
+                    }
                 } catch {
+                    ApiHelper.displayError(error: "Something Went wrong")
                     completion(false)
                 }
             case .failure:
+                ApiHelper.displayError(error: "Something Went wrong")
                 completion(false)
             }
         }

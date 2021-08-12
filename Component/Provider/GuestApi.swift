@@ -51,11 +51,11 @@ extension GuestApi: TargetType {
     }
     
     var method: Moya.Method {
-        return .put
+        return .post
     }
     
     var sampleData: Data {
-        return "{\"accessToken\": \"0000000000\", \"refreshToken\": \"1111111111\"}".dataEncoded
+        return Data()
     }
     
     var task: Task {
@@ -66,6 +66,6 @@ extension GuestApi: TargetType {
     }
     
     var headers: [String : String]? {
-        return nil
+        return ApiHelper.header
     }
 }
