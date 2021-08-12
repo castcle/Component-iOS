@@ -27,16 +27,17 @@
 
 import Foundation
 import Core
+import Networking
 import Defaults
 
 final class SplashScreenViewModel  {
    
     //MARK: Private
-    private var guestRepository: GuestRepository
+    private var authenticationRepository: AuthenticationRepository
 
     //MARK: Input
     public func guestLogin() {
-        self.guestRepository.guestLogin(uuid: Defaults[.deviceUuid]) { (success) in
+        self.authenticationRepository.guestLogin(uuid: Defaults[.deviceUuid]) { (success) in
             if success {
                 self.didGuestLoginFinish?()
             }
@@ -46,8 +47,8 @@ final class SplashScreenViewModel  {
     //MARK: Output
     var didGuestLoginFinish: (() -> ())?
     
-    public init(guestRepository: GuestRepository = GuestRepositoryImpl()) {
-        self.guestRepository = guestRepository
+    public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
+        self.authenticationRepository = authenticationRepository
         if Defaults[.accessToken].isEmpty || Defaults[.userRole].isEmpty {
             self.guestLogin()
         } else {

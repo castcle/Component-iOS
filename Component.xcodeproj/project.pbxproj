@@ -27,14 +27,14 @@
 		B75529A2269D8837005D5EB5 /* NSObject+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */; };
 		B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75529D2269F696A005D5EB5 /* ComponentNibVars.swift */; };
 		B75E62AF269702E7003E1ADA /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75E62AE269702E7003E1ADA /* NavigationBar.swift */; };
+		B78795AC26C5127C00FECC21 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78795AB26C5127C00FECC21 /* Networking.framework */; };
+		B78795AD26C5127C00FECC21 /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B78795AB26C5127C00FECC21 /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B7910DF526AFE32A0097C94E /* WebView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7910DF426AFE32A0097C94E /* WebView.storyboard */; };
 		B7910DF726AFE4090097C94E /* InternalWebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910DF626AFE4090097C94E /* InternalWebViewViewController.swift */; };
 		B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910DF826AFE8200097C94E /* ComponentOpener.swift */; };
 		B7910DFB26B018E50097C94E /* InternalWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910DFA26B018E50097C94E /* InternalWebViewModel.swift */; };
 		B7910E3026B5E1320097C94E /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7910E2E26B5E1320097C94E /* SplashScreen.storyboard */; };
 		B7910E3126B5E1320097C94E /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E2F26B5E1320097C94E /* SplashScreenViewController.swift */; };
-		B7910E3526B65FDB0097C94E /* GuestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E3426B65FDB0097C94E /* GuestApi.swift */; };
-		B7910E3726B660270097C94E /* GuestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E3626B660270097C94E /* GuestRepository.swift */; };
 		B7910E3926B6650F0097C94E /* SplashScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E3826B6650F0097C94E /* SplashScreenViewModel.swift */; };
 		B7910E9226BC68460097C94E /* Picker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7910E9126BC68460097C94E /* Picker.storyboard */; };
 		B7910E9426BC686B0097C94E /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E9326BC686B0097C94E /* DatePickerViewController.swift */; };
@@ -51,6 +51,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B78795AD26C5127C00FECC21 /* Networking.framework in Embed Frameworks */,
 				B79281D326959A84000ED84A /* Core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -87,14 +88,13 @@
 		B75529D2269F696A005D5EB5 /* ComponentNibVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentNibVars.swift; sourceTree = "<group>"; };
 		B75529D4269FD885005D5EB5 /* Feed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Feed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B75E62AE269702E7003E1ADA /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
+		B78795AB26C5127C00FECC21 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7910DF426AFE32A0097C94E /* WebView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebView.storyboard; sourceTree = "<group>"; };
 		B7910DF626AFE4090097C94E /* InternalWebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalWebViewViewController.swift; sourceTree = "<group>"; };
 		B7910DF826AFE8200097C94E /* ComponentOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentOpener.swift; sourceTree = "<group>"; };
 		B7910DFA26B018E50097C94E /* InternalWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalWebViewModel.swift; sourceTree = "<group>"; };
 		B7910E2E26B5E1320097C94E /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SplashScreen.storyboard; sourceTree = "<group>"; };
 		B7910E2F26B5E1320097C94E /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
-		B7910E3426B65FDB0097C94E /* GuestApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestApi.swift; sourceTree = "<group>"; };
-		B7910E3626B660270097C94E /* GuestRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestRepository.swift; sourceTree = "<group>"; };
 		B7910E3826B6650F0097C94E /* SplashScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenViewModel.swift; sourceTree = "<group>"; };
 		B7910E9126BC68460097C94E /* Picker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Picker.storyboard; sourceTree = "<group>"; };
 		B7910E9326BC686B0097C94E /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +113,7 @@
 			files = (
 				C4C3938BB71648406A5368E4 /* Pods_Component.framework in Frameworks */,
 				B79281D226959A84000ED84A /* Core.framework in Frameworks */,
+				B78795AC26C5127C00FECC21 /* Networking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +139,7 @@
 		6BA0FC4F7BA7A76B8D4BCDF5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B78795AB26C5127C00FECC21 /* Networking.framework */,
 				B75529D4269FD885005D5EB5 /* Feed.framework */,
 				B79281D126959A84000ED84A /* Core.framework */,
 				9A723B2EF055ED2C75BAC143 /* Pods_Component.framework */,
@@ -230,22 +232,6 @@
 			path = "Splash Screen";
 			sourceTree = "<group>";
 		};
-		B7910E3226B65F8C0097C94E /* Provider */ = {
-			isa = PBXGroup;
-			children = (
-				B7910E3426B65FDB0097C94E /* GuestApi.swift */,
-			);
-			path = Provider;
-			sourceTree = "<group>";
-		};
-		B7910E3326B65F9F0097C94E /* Repository */ = {
-			isa = PBXGroup;
-			children = (
-				B7910E3626B660270097C94E /* GuestRepository.swift */,
-			);
-			path = Repository;
-			sourceTree = "<group>";
-		};
 		B7910E8E26BC660E0097C94E /* Picker */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,8 +264,6 @@
 			children = (
 				B792815D268F2C30000ED84A /* Component.h */,
 				B792815E268F2C30000ED84A /* Info.plist */,
-				B7910E3326B65F9F0097C94E /* Repository */,
-				B7910E3226B65F8C0097C94E /* Provider */,
 				B75529D1269F693C005D5EB5 /* Utilities */,
 				B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */,
 				B7910E8E26BC660E0097C94E /* Picker */,
@@ -410,7 +394,6 @@
 				B75529A2269D8837005D5EB5 /* NSObject+ListDiffable.swift in Sources */,
 				B755297A269CBA14005D5EB5 /* RefreshBundle.swift in Sources */,
 				B755297C269CBA14005D5EB5 /* UIColorExtension.swift in Sources */,
-				B7910E3726B660270097C94E /* GuestRepository.swift in Sources */,
 				B7910E3926B6650F0097C94E /* SplashScreenViewModel.swift in Sources */,
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,
@@ -426,7 +409,6 @@
 				B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */,
 				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,
 				B755297D269CBA15005D5EB5 /* RefreshExtension.swift in Sources */,
-				B7910E3526B65FDB0097C94E /* GuestApi.swift in Sources */,
 				B755297B269CBA14005D5EB5 /* RefreshFooterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
