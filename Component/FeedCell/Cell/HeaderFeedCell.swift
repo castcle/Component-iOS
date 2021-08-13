@@ -27,7 +27,6 @@
 
 import UIKit
 import Core
-import Share
 import Networking
 import SnackBar_swift
 import Kingfisher

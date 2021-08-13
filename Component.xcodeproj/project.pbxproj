@@ -57,8 +57,6 @@
 		B787961E26C65A3700FECC21 /* ImageXMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B787960E26C65A3700FECC21 /* ImageXMoreCell.xib */; };
 		B787961F26C65A3700FECC21 /* BlogNoImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B787960F26C65A3700FECC21 /* BlogNoImageCell.xib */; };
 		B787962026C65A3700FECC21 /* ImageX1Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787961026C65A3700FECC21 /* ImageX1Cell.swift */; };
-		B787963226C6632600FECC21 /* Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B787963126C6632600FECC21 /* Share.framework */; };
-		B787963326C6632600FECC21 /* Share.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B787963126C6632600FECC21 /* Share.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B787963626C66E7300FECC21 /* Recast.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B787963526C66E7300FECC21 /* Recast.storyboard */; };
 		B787963826C66EBD00FECC21 /* RecastPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787963726C66EBC00FECC21 /* RecastPopupViewController.swift */; };
 		B787963A26C66EE900FECC21 /* RecastPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787963926C66EE900FECC21 /* RecastPopupViewModel.swift */; };
@@ -85,7 +83,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B78795AD26C5127C00FECC21 /* Networking.framework in Embed Frameworks */,
-				B787963326C6632600FECC21 /* Share.framework in Embed Frameworks */,
 				B79281D326959A84000ED84A /* Core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -179,7 +176,6 @@
 			files = (
 				C4C3938BB71648406A5368E4 /* Pods_Component.framework in Frameworks */,
 				B79281D226959A84000ED84A /* Core.framework in Frameworks */,
-				B787963226C6632600FECC21 /* Share.framework in Frameworks */,
 				B78795AC26C5127C00FECC21 /* Networking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
