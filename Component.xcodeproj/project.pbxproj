@@ -29,6 +29,39 @@
 		B75E62AF269702E7003E1ADA /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75E62AE269702E7003E1ADA /* NavigationBar.swift */; };
 		B78795AC26C5127C00FECC21 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78795AB26C5127C00FECC21 /* Networking.framework */; };
 		B78795AD26C5127C00FECC21 /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B78795AB26C5127C00FECC21 /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B78795C226C6174A00FECC21 /* TPProgressDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C126C6174A00FECC21 /* TPProgressDelegate.swift */; };
+		B78795C426C6177200FECC21 /* TPDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C326C6177200FECC21 /* TPDataSource.swift */; };
+		B78795C626C6179700FECC21 /* PagerAwareProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C526C6179700FECC21 /* PagerAwareProtocol.swift */; };
+		B78795C826C617BA00FECC21 /* BottomPageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C726C617BA00FECC21 /* BottomPageDelegate.swift */; };
+		B78795CA26C6182400FECC21 /* PannableViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C926C6182300FECC21 /* PannableViewsProtocol.swift */; };
+		B78795CE26C6191A00FECC21 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795CD26C6191A00FECC21 /* ContainerViewController.swift */; };
+		B78795D026C6198300FECC21 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795CF26C6198300FECC21 /* Extensions.swift */; };
+		B78795E126C6516700FECC21 /* FeedSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795E026C6516700FECC21 /* FeedSectionController.swift */; };
+		B78795E726C6525D00FECC21 /* FooterFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795E326C6525C00FECC21 /* FooterFeedCell.swift */; };
+		B78795E826C6525D00FECC21 /* HeaderFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795E426C6525C00FECC21 /* HeaderFeedCell.swift */; };
+		B78795E926C6525D00FECC21 /* FooterFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B78795E526C6525C00FECC21 /* FooterFeedCell.xib */; };
+		B78795EA26C6525D00FECC21 /* HeaderFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B78795E626C6525D00FECC21 /* HeaderFeedCell.xib */; };
+		B787961126C65A3700FECC21 /* ImageX1Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B787960126C65A3700FECC21 /* ImageX1Cell.xib */; };
+		B787961226C65A3700FECC21 /* TextLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787960226C65A3700FECC21 /* TextLinkCell.swift */; };
+		B787961326C65A3700FECC21 /* ImageXMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787960326C65A3700FECC21 /* ImageXMoreCell.swift */; };
+		B787961426C65A3700FECC21 /* ImageX2Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787960426C65A3700FECC21 /* ImageX2Cell.swift */; };
+		B787961526C65A3700FECC21 /* TextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B787960526C65A3700FECC21 /* TextCell.xib */; };
+		B787961626C65A3700FECC21 /* TextLinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B787960626C65A3700FECC21 /* TextLinkCell.xib */; };
+		B787961726C65A3700FECC21 /* ImageX2Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B787960726C65A3700FECC21 /* ImageX2Cell.xib */; };
+		B787961826C65A3700FECC21 /* ImageX3Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787960826C65A3700FECC21 /* ImageX3Cell.swift */; };
+		B787961926C65A3700FECC21 /* BlogNoImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787960926C65A3700FECC21 /* BlogNoImageCell.swift */; };
+		B787961A26C65A3700FECC21 /* ImageX3Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B787960A26C65A3700FECC21 /* ImageX3Cell.xib */; };
+		B787961B26C65A3700FECC21 /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787960B26C65A3700FECC21 /* TextCell.swift */; };
+		B787961C26C65A3700FECC21 /* BlogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787960C26C65A3700FECC21 /* BlogCell.swift */; };
+		B787961D26C65A3700FECC21 /* BlogCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B787960D26C65A3700FECC21 /* BlogCell.xib */; };
+		B787961E26C65A3700FECC21 /* ImageXMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B787960E26C65A3700FECC21 /* ImageXMoreCell.xib */; };
+		B787961F26C65A3700FECC21 /* BlogNoImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B787960F26C65A3700FECC21 /* BlogNoImageCell.xib */; };
+		B787962026C65A3700FECC21 /* ImageX1Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787961026C65A3700FECC21 /* ImageX1Cell.swift */; };
+		B787963226C6632600FECC21 /* Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B787963126C6632600FECC21 /* Share.framework */; };
+		B787963326C6632600FECC21 /* Share.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B787963126C6632600FECC21 /* Share.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B787963626C66E7300FECC21 /* Recast.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B787963526C66E7300FECC21 /* Recast.storyboard */; };
+		B787963826C66EBD00FECC21 /* RecastPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787963726C66EBC00FECC21 /* RecastPopupViewController.swift */; };
+		B787963A26C66EE900FECC21 /* RecastPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787963926C66EE900FECC21 /* RecastPopupViewModel.swift */; };
 		B7910DF526AFE32A0097C94E /* WebView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7910DF426AFE32A0097C94E /* WebView.storyboard */; };
 		B7910DF726AFE4090097C94E /* InternalWebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910DF626AFE4090097C94E /* InternalWebViewViewController.swift */; };
 		B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910DF826AFE8200097C94E /* ComponentOpener.swift */; };
@@ -52,6 +85,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				B78795AD26C5127C00FECC21 /* Networking.framework in Embed Frameworks */,
+				B787963326C6632600FECC21 /* Share.framework in Embed Frameworks */,
 				B79281D326959A84000ED84A /* Core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -89,6 +123,38 @@
 		B75529D4269FD885005D5EB5 /* Feed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Feed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B75E62AE269702E7003E1ADA /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		B78795AB26C5127C00FECC21 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B78795C126C6174A00FECC21 /* TPProgressDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPProgressDelegate.swift; sourceTree = "<group>"; };
+		B78795C326C6177200FECC21 /* TPDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPDataSource.swift; sourceTree = "<group>"; };
+		B78795C526C6179700FECC21 /* PagerAwareProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerAwareProtocol.swift; sourceTree = "<group>"; };
+		B78795C726C617BA00FECC21 /* BottomPageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomPageDelegate.swift; sourceTree = "<group>"; };
+		B78795C926C6182300FECC21 /* PannableViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PannableViewsProtocol.swift; sourceTree = "<group>"; };
+		B78795CD26C6191A00FECC21 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		B78795CF26C6198300FECC21 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		B78795E026C6516700FECC21 /* FeedSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSectionController.swift; sourceTree = "<group>"; };
+		B78795E326C6525C00FECC21 /* FooterFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FooterFeedCell.swift; sourceTree = "<group>"; };
+		B78795E426C6525C00FECC21 /* HeaderFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderFeedCell.swift; sourceTree = "<group>"; };
+		B78795E526C6525C00FECC21 /* FooterFeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterFeedCell.xib; sourceTree = "<group>"; };
+		B78795E626C6525D00FECC21 /* HeaderFeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderFeedCell.xib; sourceTree = "<group>"; };
+		B787960126C65A3700FECC21 /* ImageX1Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageX1Cell.xib; sourceTree = "<group>"; };
+		B787960226C65A3700FECC21 /* TextLinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextLinkCell.swift; sourceTree = "<group>"; };
+		B787960326C65A3700FECC21 /* ImageXMoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageXMoreCell.swift; sourceTree = "<group>"; };
+		B787960426C65A3700FECC21 /* ImageX2Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageX2Cell.swift; sourceTree = "<group>"; };
+		B787960526C65A3700FECC21 /* TextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextCell.xib; sourceTree = "<group>"; };
+		B787960626C65A3700FECC21 /* TextLinkCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextLinkCell.xib; sourceTree = "<group>"; };
+		B787960726C65A3700FECC21 /* ImageX2Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageX2Cell.xib; sourceTree = "<group>"; };
+		B787960826C65A3700FECC21 /* ImageX3Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageX3Cell.swift; sourceTree = "<group>"; };
+		B787960926C65A3700FECC21 /* BlogNoImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogNoImageCell.swift; sourceTree = "<group>"; };
+		B787960A26C65A3700FECC21 /* ImageX3Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageX3Cell.xib; sourceTree = "<group>"; };
+		B787960B26C65A3700FECC21 /* TextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
+		B787960C26C65A3700FECC21 /* BlogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogCell.swift; sourceTree = "<group>"; };
+		B787960D26C65A3700FECC21 /* BlogCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlogCell.xib; sourceTree = "<group>"; };
+		B787960E26C65A3700FECC21 /* ImageXMoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageXMoreCell.xib; sourceTree = "<group>"; };
+		B787960F26C65A3700FECC21 /* BlogNoImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlogNoImageCell.xib; sourceTree = "<group>"; };
+		B787961026C65A3700FECC21 /* ImageX1Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageX1Cell.swift; sourceTree = "<group>"; };
+		B787963126C6632600FECC21 /* Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B787963526C66E7300FECC21 /* Recast.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Recast.storyboard; sourceTree = "<group>"; };
+		B787963726C66EBC00FECC21 /* RecastPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecastPopupViewController.swift; sourceTree = "<group>"; };
+		B787963926C66EE900FECC21 /* RecastPopupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecastPopupViewModel.swift; sourceTree = "<group>"; };
 		B7910DF426AFE32A0097C94E /* WebView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebView.storyboard; sourceTree = "<group>"; };
 		B7910DF626AFE4090097C94E /* InternalWebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalWebViewViewController.swift; sourceTree = "<group>"; };
 		B7910DF826AFE8200097C94E /* ComponentOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentOpener.swift; sourceTree = "<group>"; };
@@ -113,6 +179,7 @@
 			files = (
 				C4C3938BB71648406A5368E4 /* Pods_Component.framework in Frameworks */,
 				B79281D226959A84000ED84A /* Core.framework in Frameworks */,
+				B787963226C6632600FECC21 /* Share.framework in Frameworks */,
 				B78795AC26C5127C00FECC21 /* Networking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -139,6 +206,7 @@
 		6BA0FC4F7BA7A76B8D4BCDF5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B787963126C6632600FECC21 /* Share.framework */,
 				B78795AB26C5127C00FECC21 /* Networking.framework */,
 				B75529D4269FD885005D5EB5 /* Feed.framework */,
 				B79281D126959A84000ED84A /* Core.framework */,
@@ -212,6 +280,98 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		B78795C026C6171C00FECC21 /* TProfile */ = {
+			isa = PBXGroup;
+			children = (
+				B78795CC26C6190300FECC21 /* ScrollController */,
+				B78795CB26C6188F00FECC21 /* Protocals */,
+				B78795CF26C6198300FECC21 /* Extensions.swift */,
+			);
+			path = TProfile;
+			sourceTree = "<group>";
+		};
+		B78795CB26C6188F00FECC21 /* Protocals */ = {
+			isa = PBXGroup;
+			children = (
+				B78795C126C6174A00FECC21 /* TPProgressDelegate.swift */,
+				B78795C326C6177200FECC21 /* TPDataSource.swift */,
+				B78795C526C6179700FECC21 /* PagerAwareProtocol.swift */,
+				B78795C726C617BA00FECC21 /* BottomPageDelegate.swift */,
+				B78795C926C6182300FECC21 /* PannableViewsProtocol.swift */,
+			);
+			path = Protocals;
+			sourceTree = "<group>";
+		};
+		B78795CC26C6190300FECC21 /* ScrollController */ = {
+			isa = PBXGroup;
+			children = (
+				B78795CD26C6191A00FECC21 /* ContainerViewController.swift */,
+			);
+			path = ScrollController;
+			sourceTree = "<group>";
+		};
+		B78795DE26C6513F00FECC21 /* FeedCell */ = {
+			isa = PBXGroup;
+			children = (
+				B78795E226C6521500FECC21 /* Cell */,
+				B78795DF26C6515200FECC21 /* Section */,
+			);
+			path = FeedCell;
+			sourceTree = "<group>";
+		};
+		B78795DF26C6515200FECC21 /* Section */ = {
+			isa = PBXGroup;
+			children = (
+				B78795E026C6516700FECC21 /* FeedSectionController.swift */,
+			);
+			path = Section;
+			sourceTree = "<group>";
+		};
+		B78795E226C6521500FECC21 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B78795E326C6525C00FECC21 /* FooterFeedCell.swift */,
+				B78795E526C6525C00FECC21 /* FooterFeedCell.xib */,
+				B78795E426C6525C00FECC21 /* HeaderFeedCell.swift */,
+				B78795E626C6525D00FECC21 /* HeaderFeedCell.xib */,
+				B787960026C65A3700FECC21 /* Feed Type */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		B787960026C65A3700FECC21 /* Feed Type */ = {
+			isa = PBXGroup;
+			children = (
+				B787960B26C65A3700FECC21 /* TextCell.swift */,
+				B787960526C65A3700FECC21 /* TextCell.xib */,
+				B787960226C65A3700FECC21 /* TextLinkCell.swift */,
+				B787960626C65A3700FECC21 /* TextLinkCell.xib */,
+				B787961026C65A3700FECC21 /* ImageX1Cell.swift */,
+				B787960126C65A3700FECC21 /* ImageX1Cell.xib */,
+				B787960426C65A3700FECC21 /* ImageX2Cell.swift */,
+				B787960726C65A3700FECC21 /* ImageX2Cell.xib */,
+				B787960826C65A3700FECC21 /* ImageX3Cell.swift */,
+				B787960A26C65A3700FECC21 /* ImageX3Cell.xib */,
+				B787960326C65A3700FECC21 /* ImageXMoreCell.swift */,
+				B787960E26C65A3700FECC21 /* ImageXMoreCell.xib */,
+				B787960C26C65A3700FECC21 /* BlogCell.swift */,
+				B787960D26C65A3700FECC21 /* BlogCell.xib */,
+				B787960926C65A3700FECC21 /* BlogNoImageCell.swift */,
+				B787960F26C65A3700FECC21 /* BlogNoImageCell.xib */,
+			);
+			path = "Feed Type";
+			sourceTree = "<group>";
+		};
+		B787963426C66E5F00FECC21 /* Recast */ = {
+			isa = PBXGroup;
+			children = (
+				B787963526C66E7300FECC21 /* Recast.storyboard */,
+				B787963726C66EBC00FECC21 /* RecastPopupViewController.swift */,
+				B787963926C66EE900FECC21 /* RecastPopupViewModel.swift */,
+			);
+			path = Recast;
+			sourceTree = "<group>";
+		};
 		B7910DF326AFDCEA0097C94E /* WebView */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +426,9 @@
 				B792815E268F2C30000ED84A /* Info.plist */,
 				B75529D1269F693C005D5EB5 /* Utilities */,
 				B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */,
+				B787963426C66E5F00FECC21 /* Recast */,
+				B78795DE26C6513F00FECC21 /* FeedCell */,
+				B78795C026C6171C00FECC21 /* TProfile */,
 				B7910E8E26BC660E0097C94E /* Picker */,
 				B7910E2D26B5E1320097C94E /* Splash Screen */,
 				B7910DF326AFDCEA0097C94E /* WebView */,
@@ -346,10 +509,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B78795E926C6525D00FECC21 /* FooterFeedCell.xib in Resources */,
 				B7910E9226BC68460097C94E /* Picker.storyboard in Resources */,
+				B787961A26C65A3700FECC21 /* ImageX3Cell.xib in Resources */,
 				B7552984269CBE48005D5EB5 /* NormalHeader.bundle in Resources */,
 				B7910E3026B5E1320097C94E /* SplashScreen.storyboard in Resources */,
+				B787961E26C65A3700FECC21 /* ImageXMoreCell.xib in Resources */,
+				B787961D26C65A3700FECC21 /* BlogCell.xib in Resources */,
+				B787961F26C65A3700FECC21 /* BlogNoImageCell.xib in Resources */,
+				B787961626C65A3700FECC21 /* TextLinkCell.xib in Resources */,
+				B787961726C65A3700FECC21 /* ImageX2Cell.xib in Resources */,
+				B787963626C66E7300FECC21 /* Recast.storyboard in Resources */,
+				B787961126C65A3700FECC21 /* ImageX1Cell.xib in Resources */,
 				B7910DF526AFE32A0097C94E /* WebView.storyboard in Resources */,
+				B787961526C65A3700FECC21 /* TextCell.xib in Resources */,
+				B78795EA26C6525D00FECC21 /* HeaderFeedCell.xib in Resources */,
 				B7552987269CBE49005D5EB5 /* NormalFooter.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -388,28 +562,48 @@
 			files = (
 				B7552985269CBE49005D5EB5 /* NormalHeaderAnimator.swift in Sources */,
 				B7910DFB26B018E50097C94E /* InternalWebViewModel.swift in Sources */,
+				B78795C226C6174A00FECC21 /* TPProgressDelegate.swift in Sources */,
+				B787961226C65A3700FECC21 /* TextLinkCell.swift in Sources */,
+				B787961826C65A3700FECC21 /* ImageX3Cell.swift in Sources */,
+				B78795E126C6516700FECC21 /* FeedSectionController.swift in Sources */,
 				B75E62AF269702E7003E1ADA /* NavigationBar.swift in Sources */,
 				B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */,
+				B78795C626C6179700FECC21 /* PagerAwareProtocol.swift in Sources */,
 				B7552972269CBA14005D5EB5 /* FastCheckLayer.swift in Sources */,
+				B787963826C66EBD00FECC21 /* RecastPopupViewController.swift in Sources */,
 				B75529A2269D8837005D5EB5 /* NSObject+ListDiffable.swift in Sources */,
 				B755297A269CBA14005D5EB5 /* RefreshBundle.swift in Sources */,
 				B755297C269CBA14005D5EB5 /* UIColorExtension.swift in Sources */,
 				B7910E3926B6650F0097C94E /* SplashScreenViewModel.swift in Sources */,
+				B787961926C65A3700FECC21 /* BlogNoImageCell.swift in Sources */,
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,
+				B78795E826C6525D00FECC21 /* HeaderFeedCell.swift in Sources */,
 				B7552979269CBA14005D5EB5 /* RefreshProtocol.swift in Sources */,
 				B7552986269CBE49005D5EB5 /* NormalFooterAnimator.swift in Sources */,
+				B787962026C65A3700FECC21 /* ImageX1Cell.swift in Sources */,
+				B78795C426C6177200FECC21 /* TPDataSource.swift in Sources */,
 				B7910E9426BC686B0097C94E /* DatePickerViewController.swift in Sources */,
 				B7910DF726AFE4090097C94E /* InternalWebViewViewController.swift in Sources */,
 				B7552978269CBA14005D5EB5 /* RefreshComponent.swift in Sources */,
+				B78795D026C6198300FECC21 /* Extensions.swift in Sources */,
 				B755297E269CBA15005D5EB5 /* RefreshHeaderView.swift in Sources */,
+				B78795C826C617BA00FECC21 /* BottomPageDelegate.swift in Sources */,
 				B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */,
+				B78795CA26C6182400FECC21 /* PannableViewsProtocol.swift in Sources */,
 				B7910E3126B5E1320097C94E /* SplashScreenViewController.swift in Sources */,
+				B787961B26C65A3700FECC21 /* TextCell.swift in Sources */,
 				B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */,
+				B787961C26C65A3700FECC21 /* BlogCell.swift in Sources */,
+				B787961326C65A3700FECC21 /* ImageXMoreCell.swift in Sources */,
+				B787961426C65A3700FECC21 /* ImageX2Cell.swift in Sources */,
+				B78795CE26C6191A00FECC21 /* ContainerViewController.swift in Sources */,
 				B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */,
 				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,
 				B755297D269CBA15005D5EB5 /* RefreshExtension.swift in Sources */,
+				B78795E726C6525D00FECC21 /* FooterFeedCell.swift in Sources */,
 				B755297B269CBA14005D5EB5 /* RefreshFooterView.swift in Sources */,
+				B787963A26C66EE900FECC21 /* RecastPopupViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

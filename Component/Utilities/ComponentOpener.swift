@@ -32,6 +32,7 @@ public enum ComponentScene {
     case internalWebView(URL)
     case splashScreen
     case datePicker
+    case recast(RecastPopupViewModel)
 }
 
 public struct ComponentOpener {
@@ -51,6 +52,11 @@ public struct ComponentOpener {
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.picker, bundle: ConfigBundle.component)
             let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.datePicker) as? DatePickerViewController
             return vc ?? UIViewController()
+        case .recast(let viewModel):
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.recast, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.recastPopup) as? RecastPopupViewController
+            vc?.viewModel = viewModel
+            return vc ?? RecastPopupViewController()
         }
     }
 }

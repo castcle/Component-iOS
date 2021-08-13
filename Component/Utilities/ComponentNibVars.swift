@@ -31,6 +31,7 @@ public struct ComponentNibVars {
         public static let internalWebView = "InternalWebViewController"
         public static let splashScreen = "SplashScreenViewController"
         public static let datePicker = "DatePickerViewController"
+        public static let recastPopup = "RecastPopupViewController"
     }
     
     // MARK: - View
@@ -38,6 +39,7 @@ public struct ComponentNibVars {
         public static let internalWebView = "WebView"
         public static let splashScreen = "SplashScreen"
         public static let picker = "Picker"
+        public static let recast = "Recast"
     }
     
     // MARK: - TableViewCell
@@ -46,5 +48,15 @@ public struct ComponentNibVars {
     
     // MARK: - CollectionViewCell
     public struct CollectionViewCell {
+        public static let headerFeed = "HeaderFeedCell"
+        public static let footerFeed = "FooterFeedCell"
+        public static let postText = "TextCell"
+        public static let postTextLinkCell = "TextLinkCell"
+        public static let imageX1Cell = "ImageX1Cell"
+        public static let imageX2Cell = "ImageX2Cell"
+        public static let imageX3Cell = "ImageX3Cell"
+        public static let imageXMoreCell = "ImageXMoreCell"
+        public static let blogCell = "BlogCell"
+        public static let blogNoImageCell = "BlogNoImageCell"
     }
 }
