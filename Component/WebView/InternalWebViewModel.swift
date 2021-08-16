@@ -27,7 +27,7 @@
 
 import Foundation
 
-final class InternalWebViewModel  {
+final class InternalWebViewModel {
    
     //MARK: Public
     var request: URLRequest!

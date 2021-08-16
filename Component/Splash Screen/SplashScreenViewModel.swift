@@ -30,7 +30,7 @@ import Core
 import Networking
 import Defaults
 
-final class SplashScreenViewModel  {
+final class SplashScreenViewModel {
    
     //MARK: Private
     private var authenticationRepository: AuthenticationRepository
