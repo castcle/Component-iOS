@@ -58,7 +58,7 @@ public class RecastPopupViewController: UIViewController {
 
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         
-        let url = URL(string: "https://images.mubicdn.net/images/cast_member/2184/cache-2992-1547409411/image-w856.jpg")
+        let url = URL(string: UserState.shared.avatar)
         self.avatarImage.kf.setImage(with: url)
         self.recastImage.image = UIImage.init(icon: .castcle(.recast), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white)
         self.quoteCastImage.image = UIImage.init(icon: .castcle(.pencil), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white)
