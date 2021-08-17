@@ -32,6 +32,7 @@ import PanModal
 
 protocol FooterFeedCellDelegate {
     func didTabComment()
+    func didTabQuoteCast(feed: Feed)
     func didAuthen()
 }
 
@@ -140,19 +141,21 @@ extension FooterFeedCell: RecastPopupViewControllerDelegate {
     func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction) {
         guard let feed = self.feed else { return }
 
-        if feed.feedPayload.recasted.recasted {
-            self.recastRepository.unrecasted(feedUuid: feed.feedPayload.id) { success in
-                print("Unrecasted : \(success)")
-            }
-        } else {
-            self.recastRepository.recasted(feedUuid: feed.feedPayload.id) { success in
-                print("Recasted : \(success)")
-            }
-        }
-
         if recastAction == .recast {
+            if feed.feedPayload.recasted.recasted {
+                self.recastRepository.unrecasted(feedUuid: feed.feedPayload.id) { success in
+                    print("Unrecasted : \(success)")
+                }
+            } else {
+                self.recastRepository.recasted(feedUuid: feed.feedPayload.id) { success in
+                    print("Recasted : \(success)")
+                }
+            }
+
             feed.feedPayload.recasted.recasted.toggle()
             self.updateUi()
+        } else if recastAction == .quoteCast {
+            self.delegate?.didTabQuoteCast(feed: feed)
         }
     }
 }
