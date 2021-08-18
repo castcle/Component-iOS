@@ -26,12 +26,15 @@
 //
 
 import Foundation
+import Core
 
 public final class RecastPopupViewModel {
    
     var isRecasted: Bool = false
+    var page: Page?
     
-    public init(isRecasted: Bool = false) {
+    public init(isRecasted: Bool = false, page: Page = Page(name: UserState.shared.name, avatar: UserState.shared.avatar)) {
         self.isRecasted = isRecasted
+        self.page = page
     }
 }

@@ -31,7 +31,7 @@ import PanModal
 import Kingfisher
 
 public protocol RecastPopupViewControllerDelegate {
-    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction)
+    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?)
 }
 
 public enum RecastAction {
@@ -48,18 +48,28 @@ public class RecastPopupViewController: UIViewController {
     @IBOutlet var subTitleLabel: UILabel!
     @IBOutlet var recastLabel: UILabel!
     @IBOutlet var quoteCastLabel: UILabel!
+    @IBOutlet var moreButton: UIButton!
+    
+    @IBOutlet var selectView: UIView!
+    @IBOutlet var chooseUserHeader: UIView!
+    @IBOutlet var chooseUserTitle: UILabel!
+    @IBOutlet var userTableView: UITableView!
+    @IBOutlet var selectViewHeight: NSLayoutConstraint!
     
     var delegate: RecastPopupViewControllerDelegate?
     var maxHeight = (UIScreen.main.bounds.height - 320)
     var viewModel = RecastPopupViewModel()
+    
+    enum UserListSection: Int, CaseIterable {
+        case user = 0
+        case page
+    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
 
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         
-        let url = URL(string: UserState.shared.avatar)
-        self.avatarImage.kf.setImage(with: url)
         self.recastImage.image = UIImage.init(icon: .castcle(.recast), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white)
         self.quoteCastImage.image = UIImage.init(icon: .castcle(.pencil), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white)
         
@@ -72,22 +82,113 @@ public class RecastPopupViewController: UIViewController {
         self.recastLabel.textColor = UIColor.Asset.white
         self.quoteCastLabel.font = UIFont.asset(.medium, fontSize: .body)
         self.quoteCastLabel.textColor = UIColor.Asset.white
+        self.chooseUserTitle.font = UIFont.asset(.medium, fontSize: .overline)
+        self.chooseUserTitle.textColor = UIColor.Asset.white
         
         if self.viewModel.isRecasted {
             self.recastLabel.text = "Unrecasted"
         } else {
             self.recastLabel.text = "Recasted"
         }
+        
+        self.moreButton.tintColor = UIColor.Asset.white
+        self.configureTableView()
+        self.updateUser()
+        self.selectViewHeight.constant = 250
+        self.selectView.isHidden = true
+    }
+    
+    private func updateUser() {
+        let url = URL(string: self.viewModel.page?.avatar ?? "")
+        self.avatarImage.kf.setImage(with: url)
+        self.displayNameLabel.text = self.viewModel.page?.name ?? ""
+    }
+    
+    func configureTableView() {
+        self.userTableView.delegate = self
+        self.userTableView.dataSource = self
+        
+        self.userTableView.register(UINib(nibName: ComponentNibVars.TableViewCell.userList, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.userList)
+        
+        self.userTableView.rowHeight = UITableView.automaticDimension
+        self.userTableView.estimatedRowHeight = 100
+        self.userTableView.backgroundColor = UIColor.Asset.darkGraphiteBlue
     }
     
     @IBAction func recastAction(_ sender: Any) {
         self.dismiss(animated: true)
-        self.delegate?.recastPopupViewController(self, didSelectRecastAction: .recast)
+        self.delegate?.recastPopupViewController(self, didSelectRecastAction: .recast, page: nil)
     }
     
     @IBAction func quoteCastAction(_ sender: Any) {
         self.dismiss(animated: true)
-        self.delegate?.recastPopupViewController(self, didSelectRecastAction: .quoteCast)
+        self.delegate?.recastPopupViewController(self, didSelectRecastAction: .quoteCast, page: self.viewModel.page)
+    }
+    
+    @IBAction func moreActiom(_ sender: Any) {
+        UIView.transition(with: self.view, duration: 0.3,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                            self.selectView.isHidden = false
+                          })
+    }
+}
+
+extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource {
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return UserListSection.allCases.count
+    }
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case UserListSection.page.rawValue:
+            return UserState.shared.page.count
+        default:
+            return 1
+        }
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.section {
+        case UserListSection.user.rawValue:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.userList, for: indexPath as IndexPath) as? UserListTableViewCell
+            let isSelect: Bool = (self.viewModel.page?.name == UserState.shared.name ? true : false)
+            cell?.configCell(isUser: true, page: nil, isSelect: isSelect)
+            return cell ?? UserListTableViewCell()
+        case UserListSection.page.rawValue:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.userList, for: indexPath as IndexPath) as? UserListTableViewCell
+            let page: Page = UserState.shared.page[indexPath.row]
+            let isSelect: Bool = (self.viewModel.page?.name == page.name ? true : false)
+            cell?.configCell(isUser: false, page: UserState.shared.page[indexPath.row], isSelect: isSelect)
+            return cell ?? UserListTableViewCell()
+        default:
+            return UITableViewCell()
+        }
+    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case UserListSection.user.rawValue:
+            self.viewModel.page = Page(name: UserState.shared.name, avatar: UserState.shared.avatar)
+            self.userTableView.reloadData()
+            self.updateUser()
+            UIView.transition(with: self.view, duration: 0.3,
+                              options: .transitionCrossDissolve,
+                              animations: {
+                                self.selectView.isHidden = true
+                              })
+        case UserListSection.page.rawValue:
+            self.viewModel.page = UserState.shared.page[indexPath.row]
+            self.userTableView.reloadData()
+            self.updateUser()
+            UIView.transition(with: self.view, duration: 0.3,
+                              options: .transitionCrossDissolve,
+                              animations: {
+                                self.selectView.isHidden = true
+                              })
+        default:
+            return
+        }
     }
 }
 

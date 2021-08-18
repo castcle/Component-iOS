@@ -44,6 +44,7 @@ public struct ComponentNibVars {
     
     // MARK: - TableViewCell
     public struct TableViewCell {
+        public static let userList = "UserListTableViewCell"
     }
     
     // MARK: - CollectionViewCell

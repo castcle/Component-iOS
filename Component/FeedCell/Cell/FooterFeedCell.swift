@@ -32,7 +32,7 @@ import PanModal
 
 protocol FooterFeedCellDelegate {
     func didTabComment()
-    func didTabQuoteCast(feed: Feed)
+    func didTabQuoteCast(feed: Feed, page: Page)
     func didAuthen()
 }
 
@@ -138,7 +138,7 @@ class FooterFeedCell: UICollectionViewCell {
 }
 
 extension FooterFeedCell: RecastPopupViewControllerDelegate {
-    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction) {
+    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?) {
         guard let feed = self.feed else { return }
 
         if recastAction == .recast {
@@ -155,7 +155,8 @@ extension FooterFeedCell: RecastPopupViewControllerDelegate {
             feed.feedPayload.recasted.recasted.toggle()
             self.updateUi()
         } else if recastAction == .quoteCast {
-            self.delegate?.didTabQuoteCast(feed: feed)
+            guard let page = page else { return }
+            self.delegate?.didTabQuoteCast(feed: feed, page: page)
         }
     }
 }
