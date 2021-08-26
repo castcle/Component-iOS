@@ -46,7 +46,6 @@ class ImageX1Cell: UICollectionViewCell {
             }
         }
     }
-    
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var imageView: UIImageView!
     
@@ -69,7 +68,6 @@ class ImageX1Cell: UICollectionViewCell {
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                 Utility.currentViewController().present(alert, animated: true, completion: nil)
             }
-            
             if let imageUrl = feed.feedPayload.contentPayload.photo.first {
                 let url = URL(string: imageUrl.url)
                 self.imageView.kf.setImage(with: url)
@@ -119,9 +117,13 @@ class ImageX1Cell: UICollectionViewCell {
 }
 
 extension ImageX1Cell: LightboxControllerPageDelegate {
-    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) { }
+    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+        // MARK: - Lightbox Move Page
+    }
 }
 
 extension ImageX1Cell: LightboxControllerDismissalDelegate {
-    func lightboxControllerWillDismiss(_ controller: LightboxController) { }
+    func lightboxControllerWillDismiss(_ controller: LightboxController) {
+        // MARK: - Lightbox Dismiss
+    }
 }

@@ -43,7 +43,6 @@ class BlogCell: UICollectionViewCell {
         }
     }
     @IBOutlet var blogImageView: UIImageView!
-    
     var feed: Feed? {
         didSet {
             guard let feed = self.feed else { return }
@@ -71,7 +70,6 @@ class BlogCell: UICollectionViewCell {
         headerLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         headerLabel.font = UIFont.asset(.medium, fontSize: .h3)
         headerLabel.sizeToFit()
-        
         let bodyLabel = NantesLabel(frame: CGRect(x: 0, y: 0, width: width - 30, height: CGFloat.greatestFiniteMagnitude))
         let attributes = [NSAttributedString.Key.foregroundColor: UIColor.Asset.lightBlue,
                           NSAttributedString.Key.font: UIFont.asset(.regular, fontSize: .body)]
@@ -81,7 +79,6 @@ class BlogCell: UICollectionViewCell {
         bodyLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         bodyLabel.font = UIFont.asset(.regular, fontSize: .body)
         bodyLabel.sizeToFit()
-        
         let imageHeight = UIView.aspectRatioCalculator(ratioWidth: 16, ratioHeight: 9, pixelsWidth: Double(width))
         
         return CGSize(width: width, height: (headerLabel.frame.height + bodyLabel.frame.height + 35 + CGFloat(imageHeight)))
