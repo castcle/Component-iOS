@@ -69,7 +69,7 @@ public extension UIViewController {
         }
     }
     
-    func tp_configure(with dataSource: TPDataSource, delegate: TPProgressDelegate? = nil) {
+    func configure(with dataSource: TPDataSource, delegate: TPProgressDelegate? = nil) {
         let vc = ContainerViewController()
         vc.dataSource = dataSource
         vc.delegate = delegate

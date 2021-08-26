@@ -183,7 +183,7 @@ class ContainerViewController : UIViewController, UIScrollViewDelegate {
 //MARK: BottomPageDelegate
 extension ContainerViewController : BottomPageDelegate {
 
-    func tp_pageViewController(_ currentViewController: UIViewController?, didSelectPageAt index: Int) {
+    func pageViewController(_ currentViewController: UIViewController?, didSelectPageAt index: Int) {
         currentIndex = index
 
         if let offset = contentOffsets[index]{

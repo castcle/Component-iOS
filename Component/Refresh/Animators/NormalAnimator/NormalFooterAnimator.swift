@@ -75,7 +75,7 @@ open class NormalFooterAnimator: UIView, RefreshProtocol {
     }
     
     public func refreshWillEnd(view: RefreshComponent) {
-        
+        // MARK: - Refresh Will End
     }
     
     open func refreshEnd(view: RefreshComponent, finish: Bool) {
@@ -85,7 +85,7 @@ open class NormalFooterAnimator: UIView, RefreshProtocol {
     }
     
     open func refresh(view: RefreshComponent, progressDidChange progress: CGFloat) {
-        
+        // MARK: - Progress Did Change
     }
     
     open func refresh(view: RefreshComponent, stateDidChange state: RefreshState) {
@@ -94,13 +94,10 @@ open class NormalFooterAnimator: UIView, RefreshProtocol {
             titleLabel.text = loadingMoreDescription
         case .refreshing :
             titleLabel.text = loadingDescription
-            break
         case .noMoreData:
             titleLabel.text = noMoreDataDescription
-            break
         case .pulling:
             titleLabel.text = loadingMoreDescription
-            break
         default:
             break
         }

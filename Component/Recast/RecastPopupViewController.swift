@@ -140,10 +140,9 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case UserListSection.page.rawValue:
+        if section == UserListSection.page.rawValue {
             return UserState.shared.page.count
-        default:
+        } else {
             return 1
         }
     }
@@ -152,13 +151,13 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
         switch indexPath.section {
         case UserListSection.user.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.userList, for: indexPath as IndexPath) as? UserListTableViewCell
-            let isSelect: Bool = (self.viewModel.page?.name == UserState.shared.name ? true : false)
+            let isSelect: Bool = (self.viewModel.page?.name == UserState.shared.name)
             cell?.configCell(isUser: true, page: nil, isSelect: isSelect)
             return cell ?? UserListTableViewCell()
         case UserListSection.page.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.userList, for: indexPath as IndexPath) as? UserListTableViewCell
             let page: Page = UserState.shared.page[indexPath.row]
-            let isSelect: Bool = (self.viewModel.page?.name == page.name ? true : false)
+            let isSelect: Bool = (self.viewModel.page?.name == page.name)
             cell?.configCell(isUser: false, page: UserState.shared.page[indexPath.row], isSelect: isSelect)
             return cell ?? UserListTableViewCell()
         default:

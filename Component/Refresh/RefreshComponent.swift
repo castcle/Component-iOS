@@ -112,7 +112,7 @@ open class RefreshComponent: UIView {
     
     //MARK: Public Methods
     public final func beginRefreshing() -> Void {
-        guard isRefreshing == false else { return }
+        guard !isRefreshing else { return }
         if self.window != nil {
             state = .refreshing
             start()
@@ -147,9 +147,13 @@ open class RefreshComponent: UIView {
         isRefreshing = false
     }
     
-    public func sizeChange(change: [NSKeyValueChangeKey : Any]?) {}
+    public func sizeChange(change: [NSKeyValueChangeKey : Any]?) {
+        // MARK: - Size Change
+    }
     
-    public func offsetChange(change: [NSKeyValueChangeKey : Any]?) {}
+    public func offsetChange(change: [NSKeyValueChangeKey : Any]?) {
+        // MARK: - Offset Change
+    }
 }
 
 
@@ -180,15 +184,15 @@ extension RefreshComponent {
     
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if context == &RefreshComponent.context {
-            guard isUserInteractionEnabled == true && isHidden == false else {
+            guard isUserInteractionEnabled && !isHidden else {
                 return
             }
             if keyPath == RefreshComponent.contentSizeKeyPath {
-                if isIgnoreObserving == false {
+                if !isIgnoreObserving {
                     sizeChange(change: change)
                 }
             } else if keyPath == RefreshComponent.offsetKeyPath {
-                if isIgnoreObserving == false {
+                if !isIgnoreObserving {
                     offsetChange(change: change)
                 }
             }

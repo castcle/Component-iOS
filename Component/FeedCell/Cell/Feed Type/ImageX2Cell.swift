@@ -134,9 +134,13 @@ class ImageX2Cell: UICollectionViewCell {
 }
 
 extension ImageX2Cell: LightboxControllerPageDelegate {
-    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) { }
+    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+        // MARK: - Lightbox Move Page
+    }
 }
 
 extension ImageX2Cell: LightboxControllerDismissalDelegate {
-    func lightboxControllerWillDismiss(_ controller: LightboxController) { }
+    func lightboxControllerWillDismiss(_ controller: LightboxController) {
+        // MARK: - Lightbox Dismiss
+    }
 }

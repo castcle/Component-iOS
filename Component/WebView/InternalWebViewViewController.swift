@@ -35,6 +35,7 @@ class InternalWebViewController: UIViewController{
     @IBOutlet var webView: WKWebView!
     
     public var viewModel: InternalWebViewModel = InternalWebViewModel()
+    let loadingText: String = "Loading ..."
     enum WebViewKeyPath: String {
         case estimatedProgress
         case title
@@ -45,7 +46,7 @@ class InternalWebViewController: UIViewController{
         
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.progressView.progressTintColor = UIColor.Asset.lightBlue
-        self.customNavigationBar(.webView, title: "Loading ...", urlString: self.viewModel.request.url?.host ?? "")
+        self.customNavigationBar(.webView, title: self.loadingText, urlString: self.viewModel.request.url?.host ?? "")
         
         self.webView.navigationDelegate = self
         self.webView.load(self.viewModel.request)
@@ -81,7 +82,7 @@ class InternalWebViewController: UIViewController{
                 self.progressView.alpha = 1.0
             }
         case WebViewKeyPath.title.rawValue:
-            self.viewModel.titleWeb = ((self.viewModel.titleHidden ? "Loading ..." : self.webView.title) ?? "Loading ...")
+            self.viewModel.titleWeb = ((self.viewModel.titleHidden ? self.loadingText : self.webView.title) ?? self.loadingText)
             if let scheme = self.webView.url?.scheme,
                 let host = self.webView.url?.host {
                 self.viewModel.detailWeb = "\(scheme)://\(host)"

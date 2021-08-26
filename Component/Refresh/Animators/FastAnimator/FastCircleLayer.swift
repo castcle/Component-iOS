@@ -85,7 +85,7 @@ class FastCircleLayer: CALayer {
         codeTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
         codeTimer?.schedule(deadline: .now(), repeating: .milliseconds(42))
         codeTimer?.setEventHandler(handler: { [weak self] in
-            guard let `self` = self else {
+            guard let self = self else {
                 return
             }
             self.rotated = self.rotated - self.rotatedSpeed

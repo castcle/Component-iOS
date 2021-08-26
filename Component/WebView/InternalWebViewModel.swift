@@ -29,14 +29,16 @@ import Foundation
 
 final class InternalWebViewModel {
    
-    //MARK: Public
+    // MARK: Public
     var request: URLRequest!
     var titleHidden: Bool = false
     var titleWeb: String = ""
     var detailWeb: String = ""
 
-    //MARK: Input
-    init() { }
+    // MARK: Input
+    init() {
+        // MARK: Init
+    }
     
     init(url: URL) {
         self.request = NSURLRequest(url: url) as URLRequest

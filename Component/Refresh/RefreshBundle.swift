@@ -30,6 +30,7 @@ import UIKit
 class RefreshBundle {
     
     var bundle: Bundle
+    private let imagePath = "/images"
     
     init(bundle: Bundle) {
         self.bundle = bundle
@@ -54,7 +55,7 @@ class RefreshBundle {
             imageName = imageName + "@3x"
         }
         
-        if let bundle = Bundle(path: bundle.bundlePath + "/images") {
+        if let bundle = Bundle(path: self.bundle.bundlePath + self.imagePath) {
             if let path = bundle.path(forResource: imageName, ofType: "png") {
                 let image = UIImage(contentsOfFile: path)
                 return image
@@ -66,13 +67,12 @@ class RefreshBundle {
     func localizedString(key: String) -> String {
         if let current = Locale.current.languageCode {
             var language = ""
-            switch current {
-            case "zh":
-                language = "zh"
-            default:
+            if current == "th" {
+                language = "th"
+            } else {
                 language = "en"
             }
-            if let path = bundle.path(forResource: language, ofType: "lproj") {
+            if let path = self.bundle.path(forResource: language, ofType: "lproj") {
                 if let bundle = Bundle(path: path) {
                     let value = bundle.localizedString(forKey: key, value: nil, table: nil)
                     return Bundle.main.localizedString(forKey: key, value: value, table: nil)

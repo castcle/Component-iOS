@@ -44,8 +44,8 @@ open class RefreshHeaderView: RefreshComponent {
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
         DispatchQueue.main.async { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.scrollViewBounces = weakSelf.scrollView?.bounces ?? true
+            guard let self = self else { return }
+            self.scrollViewBounces = self.scrollView?.bounces ?? true
 
         }
     }
@@ -89,7 +89,7 @@ open class RefreshHeaderView: RefreshComponent {
             }
         }
         func beginStop() {
-            guard isEnding == false, isRefreshing else {
+            guard !isEnding, isRefreshing else {
                 return
             }
             isEnding = true
@@ -107,7 +107,7 @@ open class RefreshHeaderView: RefreshComponent {
             }
         }
         if animator.endDelay > 0 {
-            if self.isEnding == false {
+            if !self.isEnding {
                 let delay =  DispatchTimeInterval.milliseconds(Int(animator.endDelay * 1000))
                 DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
                     beginStop()
@@ -135,7 +135,7 @@ open class RefreshHeaderView: RefreshComponent {
         
         var isRecordingProgress = false
         defer {
-            if isRecordingProgress == true {
+            if isRecordingProgress {
                 let percent = -(previousOffsetY + scrollViewInsets.top) / animator.trigger
                 animator.refresh(view: self, progressDidChange: percent)
             }
@@ -143,8 +143,8 @@ open class RefreshHeaderView: RefreshComponent {
         
         let offsets = previousOffsetY + scrollViewInsets.top
         if offsets < -animator.trigger {
-            if isRefreshing == false {
-                if scrollView.isDragging == false, state == .pulling {
+            if !isRefreshing {
+                if !scrollView.isDragging, state == .pulling {
                     beginRefreshing()
                     state = .refreshing
                 } else {
@@ -155,7 +155,7 @@ open class RefreshHeaderView: RefreshComponent {
                 }
             }
         } else if offsets < 0 {
-            if isRefreshing == false {
+            if !isRefreshing {
                 state = .idle
                 isRecordingProgress = true
             }

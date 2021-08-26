@@ -107,15 +107,15 @@ public class HeaderFeedCell: UICollectionViewCell {
 
 class AppSnackBar: SnackBar {
     override var style: SnackBarStyle {
-        var style = SnackBarStyle()
-        style.background = UIColor.Asset.darkGray
-        style.textColor = UIColor.Asset.white
-        style.font = UIFont.asset(.medium, fontSize: .overline)
+        var customStyle = SnackBarStyle()
+        customStyle.background = UIColor.Asset.darkGray
+        customStyle.textColor = UIColor.Asset.white
+        customStyle.font = UIFont.asset(.medium, fontSize: .overline)
         
-        style.actionTextColor = UIColor.Asset.lightBlue
-        style.actionFont = UIFont.asset(.medium, fontSize: .body)
-        style.actionTextColorAlpha = 1.0
+        customStyle.actionTextColor = UIColor.Asset.lightBlue
+        customStyle.actionFont = UIFont.asset(.medium, fontSize: .body)
+        customStyle.actionTextColorAlpha = 1.0
         
-        return style
+        return customStyle
     }
 }

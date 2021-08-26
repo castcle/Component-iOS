@@ -39,7 +39,7 @@ open class RefreshFooterView: RefreshComponent {
     
     open override var isHidden: Bool {
         didSet {
-            if isHidden == true {
+            if isHidden {
                 scrollView?.contentInset.bottom = scrollViewInsets.bottom
                 var rect = self.frame
                 rect.origin.y = scrollView?.contentSize.height ?? 0.0
@@ -88,8 +88,9 @@ open class RefreshFooterView: RefreshComponent {
         guard let scrollView = scrollView else { return }
         animator.refreshEnd(view: self, finish: false)
         UIView.animate(withDuration: RefreshComponent.animationDuration, delay: 0, options: .curveLinear, animations: {
+            // MARK: - Block animate
         }, completion: { (finished) in
-            if self.noMoreData == false {
+            if !self.noMoreData {
                 self.state = .idle
             }
             super.stop()
@@ -123,7 +124,7 @@ open class RefreshFooterView: RefreshComponent {
     open override func offsetChange(change: [NSKeyValueChangeKey : Any]?) {
         guard let scrollView = scrollView else { return }
         super.offsetChange(change: change)
-        guard isRefreshing == false && noMoreData == false && isHidden == false else {
+        guard !isRefreshing && !noMoreData && !isHidden else {
             return
         }
         

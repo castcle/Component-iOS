@@ -46,13 +46,23 @@ open class RefreshAnimator: RefreshProtocol {
         insets = UIEdgeInsets.zero
     }
     
-    open func refreshBegin(view: RefreshComponent) {}
+    open func refreshBegin(view: RefreshComponent) {
+        // MARK: - Refresh Begin
+    }
     
-    open func refreshWillEnd(view: RefreshComponent) {}
+    open func refreshWillEnd(view: RefreshComponent) {
+        // MARK: - Refresh Will End
+    }
     
-    open func refreshEnd(view: RefreshComponent, finish: Bool) {}
+    open func refreshEnd(view: RefreshComponent, finish: Bool) {
+        // MARK: - Refresh End
+    }
     
-    open func refresh(view: RefreshComponent, progressDidChange progress: CGFloat) {}
+    open func refresh(view: RefreshComponent, progressDidChange progress: CGFloat) {
+        // MARK: - Progress Did Change
+    }
     
-    open func refresh(view: RefreshComponent, stateDidChange state: RefreshState) {}
+    open func refresh(view: RefreshComponent, stateDidChange state: RefreshState) {
+        // MARK: - State Did Change
+    }
 }

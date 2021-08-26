@@ -81,7 +81,7 @@ open class FastAnimator: UIView, RefreshProtocol {
     }
     
     open func refresh(view: RefreshComponent, stateDidChange state: RefreshState) {
-
+        // MARK: - State Did Change
     }
     
     //MARK: Override

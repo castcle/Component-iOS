@@ -101,11 +101,11 @@ open class NormalHeaderAnimator: UIView, RefreshProtocol {
     }
     
     public func refreshWillEnd(view: RefreshComponent) {
-        
+        // MARK: - Refresh Will End
     }
     
     open func refresh(view: RefreshComponent, progressDidChange progress: CGFloat) {
-        
+        // MARK: - Progress Did Change
     }
     
     open func refresh(view: RefreshComponent, stateDidChange state: RefreshState) {
@@ -113,23 +113,24 @@ open class NormalHeaderAnimator: UIView, RefreshProtocol {
         case .refreshing:
             titleLabel.text = loadingDescription
             setNeedsLayout()
-            break
         case .pulling:
             titleLabel.text = releaseToRefreshDescription
             self.setNeedsLayout()
             UIView.animate(withDuration: 0.2, delay: 0.0, options: UIView.AnimationOptions(), animations: {
                 [weak self] in
                 self?.imageView.transform = CGAffineTransform(rotationAngle: 0.000001 - CGFloat(Double.pi))
-            }) { (animated) in }
-            break
+            }) { (animated) in
+                // MARK: - Block animated
+            }
         case .idle:
             titleLabel.text = pullToRefreshDescription
             self.setNeedsLayout()
             UIView.animate(withDuration: 0.2, delay: 0.0, options: UIView.AnimationOptions(), animations: {
                 [weak self] in
                 self?.imageView.transform = CGAffineTransform.identity
-            }) { (animated) in }
-            break
+            }) { (animated) in
+                // MARK: - Block animated
+            }
         default:
             break
         }
