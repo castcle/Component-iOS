@@ -68,19 +68,19 @@ class FooterFeedCell: UICollectionViewCell {
         self.commentLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.recastLabel.font = UIFont.asset(.regular, fontSize: .overline)
         
-        if feed.feedPayload.liked.liked {
+        if feed.feedPayload.liked.isLike {
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.lightBlue, postfixText: "  \(String.displayCount(count: feed.feedPayload.liked.count))", postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 18)
         } else {
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.white, postfixText: "  \(String.displayCount(count: feed.feedPayload.liked.count))", postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 18)
         }
         
-        if feed.feedPayload.commented.commented {
+        if feed.feedPayload.commented.isComment {
             self.commentLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.comment), iconColor: UIColor.Asset.lightBlue, postfixText: "  \(String.displayCount(count: feed.feedPayload.commented.count))", postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 15)
         } else {
             self.commentLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.comment), iconColor: UIColor.Asset.white, postfixText: "  \(String.displayCount(count: feed.feedPayload.commented.count))", postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 15)
         }
         
-        if feed.feedPayload.recasted.recasted {
+        if feed.feedPayload.recasted.isRecast {
             self.recastLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.recast), iconColor: UIColor.Asset.lightBlue, postfixText: "  \(String.displayCount(count: feed.feedPayload.recasted.count))", postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 18)
         } else {
             self.recastLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.recast), iconColor: UIColor.Asset.white, postfixText: "  \(String.displayCount(count: feed.feedPayload.recasted.count))", postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 18)
@@ -92,7 +92,7 @@ class FooterFeedCell: UICollectionViewCell {
         if UserState.shared.isLogin {
             guard let feed = self.feed else { return }
 
-            if feed.feedPayload.liked.liked {
+            if feed.feedPayload.liked.isLike {
                 self.likeRepository.unliked(feedUuid: feed.feedPayload.id) { success in
                     print("Unliked : \(success)")
                 }
@@ -102,10 +102,10 @@ class FooterFeedCell: UICollectionViewCell {
                 }
             }
 
-            feed.feedPayload.liked.liked.toggle()
+            feed.feedPayload.liked.isLike.toggle()
             self.updateUi()
 
-            if feed.feedPayload.liked.liked {
+            if feed.feedPayload.liked.isLike {
                 let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
                 impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
                 impliesAnimation.duration = 0.3 * 2
@@ -128,7 +128,7 @@ class FooterFeedCell: UICollectionViewCell {
     @IBAction func recastAction(_ sender: Any) {
         if UserState.shared.isLogin {
             guard let feed = self.feed else { return }
-            let vc = ComponentOpener.open(.recast(RecastPopupViewModel(isRecasted: feed.feedPayload.recasted.recasted))) as? RecastPopupViewController
+            let vc = ComponentOpener.open(.recast(RecastPopupViewModel(isRecasted: feed.feedPayload.recasted.isRecast))) as? RecastPopupViewController
             vc?.delegate = self
             Utility.currentViewController().presentPanModal(vc ?? RecastPopupViewController())
         } else {
@@ -142,7 +142,7 @@ extension FooterFeedCell: RecastPopupViewControllerDelegate {
         guard let feed = self.feed else { return }
 
         if recastAction == .recast {
-            if feed.feedPayload.recasted.recasted {
+            if feed.feedPayload.recasted.isRecast {
                 self.recastRepository.unrecasted(feedUuid: feed.feedPayload.id) { success in
                     print("Unrecasted : \(success)")
                 }
@@ -152,7 +152,7 @@ extension FooterFeedCell: RecastPopupViewControllerDelegate {
                 }
             }
 
-            feed.feedPayload.recasted.recasted.toggle()
+            feed.feedPayload.recasted.isRecast.toggle()
             self.updateUi()
         } else if recastAction == .quoteCast {
             guard let page = page else { return }
