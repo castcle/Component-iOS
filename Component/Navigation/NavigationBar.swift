@@ -144,10 +144,14 @@ public extension UIViewController {
         
         // MARK: - Left Bar Button
         self.setupLeftNavigationBar(leftBarButton: .back)
+        
+        // MARK: - Right Bar Button
+        let icon = UIButton(type: .system)
+        let rightButton: [UIBarButtonItem] = [UIBarButtonItem(customView: icon)]
+        navigationItem.rightBarButtonItems = rightButton
     }
     
     private func setupLeftNavigationBar(leftBarButton: NavBarButtonType?) {
-
         if let leftButton = leftBarButton {
             let icon = UIButton(type: .system)
             icon.setImage(leftButton.image.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -155,7 +159,6 @@ public extension UIViewController {
             if leftBarButton == .back {
                 icon.addTarget(self, action: #selector(backAction), for: .touchUpInside)
             }
-        
             navigationItem.leftBarButtonItem = UIBarButtonItem(customView: icon)
         }
     }

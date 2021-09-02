@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="TextLinkCell" customModule="Feed" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="TextLinkCell" customModule="Component" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="265"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -26,10 +26,59 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jem-AV-duF">
                         <rect key="frame" x="15" y="55" width="290" height="200"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pCB-Ib-VGy">
+                                <rect key="frame" x="0.0" y="0.0" width="290" height="175"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wt7-o6-DKg">
+                                <rect key="frame" x="0.0" y="175" width="290" height="25"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tFJ-oN-8Dc">
+                                        <rect key="frame" x="20" y="10" width="250" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zoD-gR-97c">
+                                        <rect key="frame" x="20" y="15" width="250" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="zoD-gR-97c" secondAttribute="trailing" constant="20" id="1WD-tF-fYy"/>
+                                    <constraint firstItem="zoD-gR-97c" firstAttribute="top" secondItem="tFJ-oN-8Dc" secondAttribute="bottom" constant="5" id="C5g-KD-gpa"/>
+                                    <constraint firstItem="tFJ-oN-8Dc" firstAttribute="leading" secondItem="Wt7-o6-DKg" secondAttribute="leading" constant="20" id="ELd-n6-z0c"/>
+                                    <constraint firstItem="tFJ-oN-8Dc" firstAttribute="top" secondItem="Wt7-o6-DKg" secondAttribute="top" constant="10" id="MWi-d9-2h7"/>
+                                    <constraint firstAttribute="trailing" secondItem="tFJ-oN-8Dc" secondAttribute="trailing" constant="20" id="baR-Bu-WdS"/>
+                                    <constraint firstItem="zoD-gR-97c" firstAttribute="leading" secondItem="Wt7-o6-DKg" secondAttribute="leading" constant="20" id="d7J-RU-CxU"/>
+                                    <constraint firstAttribute="bottom" secondItem="zoD-gR-97c" secondAttribute="bottom" constant="10" id="hmb-gx-mMd"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bCn-5k-Or2">
+                                <rect key="frame" x="0.0" y="0.0" width="290" height="200"/>
+                                <connections>
+                                    <action selector="openWebViewAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="ty5-Ga-t1Q"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="pCB-Ib-VGy" firstAttribute="leading" secondItem="jem-AV-duF" secondAttribute="leading" id="24v-4U-Eqh"/>
+                            <constraint firstItem="bCn-5k-Or2" firstAttribute="top" secondItem="jem-AV-duF" secondAttribute="top" id="46G-eb-Qg0"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="290" id="6LC-3h-g5F"/>
+                            <constraint firstItem="Wt7-o6-DKg" firstAttribute="leading" secondItem="jem-AV-duF" secondAttribute="leading" id="8pl-Ev-5UF"/>
+                            <constraint firstItem="Wt7-o6-DKg" firstAttribute="top" secondItem="pCB-Ib-VGy" secondAttribute="bottom" id="IxP-aW-Nam"/>
+                            <constraint firstAttribute="bottom" secondItem="Wt7-o6-DKg" secondAttribute="bottom" id="MiB-vv-UzK"/>
                             <constraint firstAttribute="width" secondItem="jem-AV-duF" secondAttribute="height" multiplier="29:20" id="RmH-yS-eu1"/>
+                            <constraint firstAttribute="trailing" secondItem="pCB-Ib-VGy" secondAttribute="trailing" id="XnK-T9-AOJ"/>
+                            <constraint firstAttribute="trailing" secondItem="bCn-5k-Or2" secondAttribute="trailing" id="Y3E-Dd-MqC"/>
+                            <constraint firstItem="bCn-5k-Or2" firstAttribute="leading" secondItem="jem-AV-duF" secondAttribute="leading" id="atr-T0-D18"/>
+                            <constraint firstItem="pCB-Ib-VGy" firstAttribute="top" secondItem="jem-AV-duF" secondAttribute="top" id="oxB-0H-k3F"/>
+                            <constraint firstAttribute="bottom" secondItem="bCn-5k-Or2" secondAttribute="bottom" id="qAu-gA-2ke"/>
+                            <constraint firstAttribute="trailing" secondItem="Wt7-o6-DKg" secondAttribute="trailing" id="reW-lG-o4w"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -48,6 +97,10 @@
             <connections>
                 <outlet property="detailLabel" destination="hZr-lw-sE5" id="0Zc-HZ-z19"/>
                 <outlet property="linkContainer" destination="jem-AV-duF" id="27T-AO-2ME"/>
+                <outlet property="linkDescriptionLabel" destination="zoD-gR-97c" id="Tp3-PP-UKd"/>
+                <outlet property="linkImage" destination="pCB-Ib-VGy" id="S2z-z6-AMX"/>
+                <outlet property="linkTitleLabel" destination="tFJ-oN-8Dc" id="ifX-ZI-QJf"/>
+                <outlet property="titleLinkView" destination="Wt7-o6-DKg" id="o8U-dI-EoV"/>
             </connections>
             <point key="canvasLocation" x="243.47826086956525" y="138.95089285714286"/>
         </collectionViewCell>

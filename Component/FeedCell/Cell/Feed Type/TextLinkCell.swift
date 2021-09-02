@@ -26,10 +26,10 @@
 //
 
 import UIKit
-import LinkPresentation
 import Core
 import Networking
 import ActiveLabel
+import SwiftLinkPreview
 
 class TextLinkCell: UICollectionViewCell {
 
@@ -48,8 +48,15 @@ class TextLinkCell: UICollectionViewCell {
     }
     
     @IBOutlet var linkContainer: UIView!
+    @IBOutlet var titleLinkView: UIView!
+    @IBOutlet var linkImage: UIImageView!
+    @IBOutlet var linkTitleLabel: UILabel!
+    @IBOutlet var linkDescriptionLabel: UILabel!
     
-    private var linkView: LPLinkView = LPLinkView(metadata: LPLinkMetadata())
+    private var result = Response()
+    private let placeholderImage = UIColor.Asset.lightGray.toImage()
+    private let slp = SwiftLinkPreview(cache: InMemoryCache())
+    
     var feed: Feed? {
         didSet {
             guard let feed = self.feed else { return }
@@ -69,15 +76,19 @@ class TextLinkCell: UICollectionViewCell {
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                 Utility.currentViewController().present(alert, animated: true, completion: nil)
             }
-            self.addLinkViewToLinkLinkContainer()
-            self.fetchPreview(feed: feed)
+            self.loadLink(feed: feed)
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
         self.linkContainer.custom(cornerRadius: 12)
+        self.linkContainer.backgroundColor = UIColor.Asset.darkGraphiteBlue
+        self.titleLinkView.backgroundColor = UIColor.Asset.darkGraphiteBlue
+        self.linkTitleLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.linkTitleLabel.textColor = UIColor.Asset.white
+        self.linkDescriptionLabel.font = UIFont.asset(.regular, fontSize: .small)
+        self.linkDescriptionLabel.textColor = UIColor.Asset.lightGray
     }
     
     static func cellSize(width: CGFloat, text: String) -> CGSize {
@@ -92,27 +103,51 @@ class TextLinkCell: UICollectionViewCell {
         return CGSize(width: width, height: (label.frame.height + 45 + CGFloat(imageHeight)))
     }
     
-    private func addLinkViewToLinkLinkContainer() {
-        DispatchQueue.main.async {
-            self.linkView.frame = self.linkContainer.bounds
-            self.linkContainer.addSubview(self.linkView)
-            self.linkContainer.sizeToFit()
+    private func loadLink(feed: Feed) {
+        if let link = feed.feedPayload.contentPayload.link.first {
+            if let cached = self.slp.cache.slp_getCachedResponse(url: link.url) {
+                self.result = cached
+                self.setData()
+            } else {
+                self.slp.preview(link.url, onSuccess: { result in
+                    self.result = result
+                    self.setData()
+                }, onError: { error in
+                    self.setData()
+                })
+            }
+        } else {
+            self.setData()
         }
     }
-
-    private func fetchPreview(feed: Feed) {
-        if let link = feed.feedPayload.contentPayload.link.first, let url = URL(string: link.url) {
-            let metaDataProvider = LPMetadataProvider()
-            
-            metaDataProvider.startFetchingMetadata(for: url) { [weak self]  (metaData, error) in
-                if let error = error {
-                    print(error)
-                } else if let metaData = metaData {
-                    DispatchQueue.main.async { [weak self] in
-                        self?.linkView.metadata = metaData
-                    }
-                }
-            }
+    
+    private func setData() {
+        // MARK: - Image
+        if let value = self.result.image {
+            let url = URL(string: value)
+            self.linkImage.kf.setImage(with: url, placeholder: self.placeholderImage, options: [.transition(.fade(1))])
+        } else {
+            self.linkImage.image = self.placeholderImage
+        }
+        
+        // MARK: - Title
+        if let value: String = self.result.title {
+            self.linkTitleLabel.text = value.isEmpty ? "No title" : value
+        } else {
+            self.linkTitleLabel.text = "No title"
+        }
+        
+        // MARK: - Description
+        if let value: String = self.result.description {
+            self.linkDescriptionLabel.text = value.isEmpty ? "" : value
+        } else {
+            self.linkDescriptionLabel.text = ""
+        }
+    }
+    
+    @IBAction func openWebViewAction(_ sender: Any) {
+        if let value = self.result.url {
+            Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(value)), animated: true)
         }
     }
 }
