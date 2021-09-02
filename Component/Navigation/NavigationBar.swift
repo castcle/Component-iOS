@@ -103,20 +103,23 @@ public extension UIViewController {
     
     private func setupSecondaryNavigationBar(title: String, textColor: UIColor = UIColor.Asset.white, secondaryBackType: SecondaryBackType) {
         // MARK: - Title
+        navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: textColor,
+            .font: UIFont.asset(.regular, fontSize: .h4)
+        ]
+        
+        navigationItem.title = title
+        
         let leftButton: NavBarButtonType = .back
         let icon = UIButton(type: .system)
         icon.setImage(leftButton.image.withRenderingMode(.alwaysOriginal), for: .normal)
-        icon.setTitle("   \(title)", for: .normal)
-        icon.setTitleColor(textColor, for: .normal)
-        icon.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 5, right: 0)
-        icon.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
-        
+
         if secondaryBackType == .normal {
             icon.addTarget(self, action: #selector(backAction), for: .touchUpInside)
         } else {
             icon.addTarget(self, action: #selector(backToRootAction), for: .touchUpInside)
         }
-        
+
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: icon)
     }
     

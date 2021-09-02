@@ -31,7 +31,7 @@ import Networking
 import PanModal
 
 protocol FooterFeedCellDelegate {
-    func didTabComment()
+    func didTabComment(feed: Feed)
     func didTabQuoteCast(feed: Feed, page: Page)
     func didAuthen()
 }
@@ -119,7 +119,8 @@ class FooterFeedCell: UICollectionViewCell {
     
     @IBAction func commentAction(_ sender: Any) {
         if UserState.shared.isLogin {
-            self.delegate?.didTabComment()
+            guard let feed = self.feed else { return }
+            self.delegate?.didTabComment(feed: feed)
         } else {
             self.delegate?.didAuthen()
         }

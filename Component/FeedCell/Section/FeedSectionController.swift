@@ -31,7 +31,7 @@ import IGListKit
 
 public protocol FeedSectionControllerDelegate {
     func didTabProfile()
-    func didTabComment()
+    func didTabComment(feed: Feed)
     func didTabQuoteCast(feed: Feed, page: Page)
     func didAuthen()
 }
@@ -158,6 +158,10 @@ extension FeedSectionController {
     public override func didUpdate(to object: Any) {
         self.feed = object as? Feed
     }
+    
+    public override func didSelectItem(at index: Int) {
+        print(index)
+    }
 }
 
 extension FeedSectionController: HeaderFeedCellDelegate, FooterFeedCellDelegate {
@@ -169,8 +173,8 @@ extension FeedSectionController: HeaderFeedCellDelegate, FooterFeedCellDelegate 
         self.delegate?.didAuthen()
     }
     
-    func didTabComment() {
-        self.delegate?.didTabComment()
+    func didTabComment(feed: Feed) {
+        self.delegate?.didTabComment(feed: feed)
     }
     
     func didTabQuoteCast(feed: Feed, page: Page) {

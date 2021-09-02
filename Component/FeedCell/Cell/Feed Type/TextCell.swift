@@ -70,7 +70,6 @@ class TextCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
     static func cellSize(width: CGFloat, text: String) -> CGSize {
@@ -83,5 +82,4 @@ class TextCell: UICollectionViewCell {
         label.sizeToFit()
         return CGSize(width: width, height: (label.frame.height + 30.0))
     }
-
 }
