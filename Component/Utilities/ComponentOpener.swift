@@ -33,6 +33,7 @@ public enum ComponentScene {
     case splashScreen
     case datePicker
     case recast(RecastPopupViewModel)
+    case comment(CommentViewModel)
 }
 
 public struct ComponentOpener {
@@ -57,6 +58,11 @@ public struct ComponentOpener {
             let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.recastPopup) as? RecastPopupViewController
             vc?.viewModel = viewModel
             return vc ?? RecastPopupViewController()
+        case .comment(let viewModel):
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.comment, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.comment) as? CommentViewController
+            vc?.viewModel = viewModel
+            return vc ?? CommentViewController()
         }
     }
 }

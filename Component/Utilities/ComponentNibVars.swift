@@ -32,6 +32,7 @@ public struct ComponentNibVars {
         public static let splashScreen = "SplashScreenViewController"
         public static let datePicker = "DatePickerViewController"
         public static let recastPopup = "RecastPopupViewController"
+        public static let comment = "CommentViewController"
     }
     
     // MARK: - View
@@ -40,6 +41,7 @@ public struct ComponentNibVars {
         public static let splashScreen = "SplashScreen"
         public static let picker = "Picker"
         public static let recast = "Recast"
+        public static let comment = "Comment"
     }
     
     // MARK: - TableViewCell
@@ -59,5 +61,7 @@ public struct ComponentNibVars {
         public static let imageXMoreCell = "ImageXMoreCell"
         public static let blogCell = "BlogCell"
         public static let blogNoImageCell = "BlogNoImageCell"
+        public static let comment = "CommentCell"
+        public static let reply = "ReplyCell"
     }
 }
