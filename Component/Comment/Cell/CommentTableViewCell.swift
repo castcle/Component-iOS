@@ -19,10 +19,10 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  CommentCell.swift
+//  CommentTableViewCell.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 2/9/2564 BE.
+//  Created by Tanakorn Phoochaliaw on 8/9/2564 BE.
 //
 
 import UIKit
@@ -30,13 +30,17 @@ import Core
 import Networking
 import ActiveLabel
 
-class CommentCell: UICollectionViewCell {
+protocol CommentTableViewCellDelegate {
+    func didReplay(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
+}
+
+class CommentTableViewCell: UITableViewCell {
 
     @IBOutlet var avatarImage: UIImageView!
     @IBOutlet var displayNameLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var likeLabel: UILabel!
     @IBOutlet var replayButton: UIButton!
-    @IBOutlet var likeButton: UIButton!
     @IBOutlet var topLineView: UIView!
     @IBOutlet var bottomLineView: UIView!
     @IBOutlet var commentLabel: ActiveLabel! {
@@ -84,6 +88,9 @@ class CommentCell: UICollectionViewCell {
         }
     }
     
+    var delegate: CommentTableViewCellDelegate?
+    private var isShowActionSheet: Bool = false
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.avatarImage.circle(color: UIColor.Asset.white)
@@ -93,19 +100,57 @@ class CommentCell: UICollectionViewCell {
         self.dateLabel.textColor = UIColor.Asset.lightGray
         self.replayButton.titleLabel?.font = UIFont.asset(.medium, fontSize: .small)
         self.replayButton.setTitleColor(UIColor.Asset.white, for: .normal)
-        self.topLineView.backgroundColor = UIColor.Asset.lightGray
-        self.bottomLineView.backgroundColor = UIColor.Asset.lightGray
+        self.topLineView.backgroundColor = UIColor.Asset.gray
+        self.bottomLineView.backgroundColor = UIColor.Asset.gray
+        
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
+        self.commentLabel.addGestureRecognizer(longPressRecognizer)
     }
 
-    static func cellSize(width: CGFloat, text: String) -> CGSize {
-        let label = ActiveLabel(frame: CGRect(x: 0, y: 0, width: width - 95, height: CGFloat.greatestFiniteMagnitude))
-        label.numberOfLines = 0
-        label.enabledTypes = [.mention, .hashtag, .url]
-        label.text = text
-        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        label.font = UIFont.asset(.regular, fontSize: .overline)
-        label.sizeToFit()
-        return CGSize(width: width, height: (label.frame.height + 125.0))
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+    
+    @objc func longPressed(sender: UILongPressGestureRecognizer) {
+        if !self.isShowActionSheet {
+            self.isShowActionSheet = true
+            self.showActionSheet()
+        }
+    }
+    
+    private func showActionSheet() {
+        guard let comment = self.comment else { return }
+        
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Reply", style: .default , handler: { (UIAlertAction) in
+            self.isShowActionSheet = false
+            self.delegate?.didReplay(self, comment: comment)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Edit", style: .default , handler: { (UIAlertAction) in
+            self.isShowActionSheet = false
+            print("User click Edit button")
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler: { (UIAlertAction) in
+            self.isShowActionSheet = false
+            print("User click Delete button")
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction)in
+            self.isShowActionSheet = false
+            print("User click Cancel button")
+        }))
+
+        // uncomment for iPad Support
+        // alert.popoverPresentationController?.sourceView = self.view
+
+        Utility.currentViewController().present(alert, animated: true)
+    }
+    @IBAction func replayAction(_ sender: Any) {
+        guard let comment = self.comment else { return }
+        self.delegate?.didReplay(self, comment: comment)
     }
     
     @IBAction func likeAction(_ sender: Any) {
@@ -124,18 +169,25 @@ class CommentCell: UICollectionViewCell {
 
             comment.like.isLike.toggle()
             self.updateUi()
+            
+            if comment.like.isLike {
+                let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
+                impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
+                impliesAnimation.duration = 0.3 * 2
+                impliesAnimation.calculationMode = CAAnimationCalculationMode.cubic
+                self.likeLabel.layer.add(impliesAnimation, forKey: nil)
+            }
         }
     }
     
     private func updateUi() {
         guard let comment = self.comment else { return }
         
+        self.likeLabel.font = UIFont.asset(.medium, fontSize: .small)
         if comment.like.isLike {
-            self.likeButton.titleLabel?.font = UIFont.asset(.medium, fontSize: .small)
-            self.likeButton.setIcon(prefixText: "", prefixTextColor: UIColor.Asset.lightBlue, icon: .castcle(.like), iconColor: UIColor.Asset.lightBlue, postfixText: "  Like", postfixTextColor: UIColor.Asset.lightBlue, forState: .normal, textSize: 12, iconSize: 14)
+            self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.lightBlue, postfixText: "  Like", postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 14)
         } else {
-            self.likeButton.titleLabel?.font = UIFont.asset(.medium, fontSize: .small)
-            self.likeButton.setIcon(prefixText: "", prefixTextColor: UIColor.Asset.white, icon: .castcle(.like), iconColor: UIColor.Asset.white, postfixText: "  Like", postfixTextColor: UIColor.Asset.white, forState: .normal, textSize: 12, iconSize: 14)
+            self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.white, postfixText: "  Like", postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 14)
         }
     }
 }

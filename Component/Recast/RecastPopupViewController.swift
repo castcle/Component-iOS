@@ -91,7 +91,7 @@ public class RecastPopupViewController: UIViewController {
             self.recastLabel.text = "Recasted"
         }
         
-        self.moreButton.tintColor = UIColor.Asset.white
+        self.moreButton.setImage(UIImage.init(icon: .castcle(.dropDown), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
         self.configureTableView()
         self.updateUser()
         self.selectViewHeight.constant = 250

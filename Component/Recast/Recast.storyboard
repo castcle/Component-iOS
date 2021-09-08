@@ -47,7 +47,6 @@
                                             <constraint firstAttribute="height" constant="30" id="s1U-2L-GcN"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <state key="normal" image="arrowtriangle.down.square.fill" catalog="system"/>
                                         <connections>
                                             <action selector="moreActiom:" destination="Rrt-Ap-Lky" eventType="touchUpInside" id="Ere-6a-ddm"/>
                                         </connections>
@@ -220,7 +219,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrowtriangle.down.square.fill" catalog="system" width="128" height="114"/>
         <namedColor name="DarkGraphiteBlue">
             <color red="0.078431372549019607" green="0.090196078431372548" blue="0.10196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

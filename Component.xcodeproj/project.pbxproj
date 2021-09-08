@@ -10,11 +10,14 @@
 		B717447C26E2595E0014D6B5 /* Comment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B717447B26E2595E0014D6B5 /* Comment.storyboard */; };
 		B717447F26E259AB0014D6B5 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B717447D26E259AB0014D6B5 /* CommentViewModel.swift */; };
 		B717448026E259AB0014D6B5 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B717447E26E259AB0014D6B5 /* CommentViewController.swift */; };
-		B717448526E259B50014D6B5 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B717448126E259B50014D6B5 /* CommentCell.xib */; };
-		B717448626E259B50014D6B5 /* ReplyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B717448226E259B50014D6B5 /* ReplyCell.xib */; };
-		B717448726E259B50014D6B5 /* ReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B717448326E259B50014D6B5 /* ReplyCell.swift */; };
-		B717448826E259B50014D6B5 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B717448426E259B50014D6B5 /* CommentCell.swift */; };
-		B717448A26E259BF0014D6B5 /* CommentSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B717448926E259BF0014D6B5 /* CommentSectionController.swift */; };
+		B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B717449426E791070014D6B5 /* HeaderTableViewCell.swift */; };
+		B717449726E791070014D6B5 /* HeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B717449526E791070014D6B5 /* HeaderTableViewCell.xib */; };
+		B717449A26E7A2550014D6B5 /* FooterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B717449826E7A2550014D6B5 /* FooterTableViewCell.swift */; };
+		B717449B26E7A2550014D6B5 /* FooterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B717449926E7A2550014D6B5 /* FooterTableViewCell.xib */; };
+		B717449E26E7E1450014D6B5 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B717449C26E7E1450014D6B5 /* CommentTableViewCell.swift */; };
+		B717449F26E7E1450014D6B5 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B717449D26E7E1450014D6B5 /* CommentTableViewCell.xib */; };
+		B71744A226E7ED320014D6B5 /* ReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71744A026E7ED310014D6B5 /* ReplyTableViewCell.swift */; };
+		B71744A326E7ED320014D6B5 /* ReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71744A126E7ED310014D6B5 /* ReplyTableViewCell.xib */; };
 		B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */; };
 		B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552957269CBA14005D5EB5 /* FastAnimator.swift */; };
 		B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552958269CBA14005D5EB5 /* FastLayer.swift */; };
@@ -110,11 +113,14 @@
 		B717447B26E2595E0014D6B5 /* Comment.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Comment.storyboard; sourceTree = "<group>"; };
 		B717447D26E259AB0014D6B5 /* CommentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		B717447E26E259AB0014D6B5 /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
-		B717448126E259B50014D6B5 /* CommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentCell.xib; sourceTree = "<group>"; };
-		B717448226E259B50014D6B5 /* ReplyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReplyCell.xib; sourceTree = "<group>"; };
-		B717448326E259B50014D6B5 /* ReplyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyCell.swift; sourceTree = "<group>"; };
-		B717448426E259B50014D6B5 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
-		B717448926E259BF0014D6B5 /* CommentSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentSectionController.swift; sourceTree = "<group>"; };
+		B717449426E791070014D6B5 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
+		B717449526E791070014D6B5 /* HeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderTableViewCell.xib; sourceTree = "<group>"; };
+		B717449826E7A2550014D6B5 /* FooterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterTableViewCell.swift; sourceTree = "<group>"; };
+		B717449926E7A2550014D6B5 /* FooterTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FooterTableViewCell.xib; sourceTree = "<group>"; };
+		B717449C26E7E1450014D6B5 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		B717449D26E7E1450014D6B5 /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
+		B71744A026E7ED310014D6B5 /* ReplyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyTableViewCell.swift; sourceTree = "<group>"; };
+		B71744A126E7ED310014D6B5 /* ReplyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplyTableViewCell.xib; sourceTree = "<group>"; };
 		B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshAnimator.swift; sourceTree = "<group>"; };
 		B7552957269CBA14005D5EB5 /* FastAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastAnimator.swift; sourceTree = "<group>"; };
 		B7552958269CBA14005D5EB5 /* FastLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLayer.swift; sourceTree = "<group>"; };
@@ -236,26 +242,17 @@
 				B717447E26E259AB0014D6B5 /* CommentViewController.swift */,
 				B717447D26E259AB0014D6B5 /* CommentViewModel.swift */,
 				B717447A26E259040014D6B5 /* Cell */,
-				B717447926E258FA0014D6B5 /* Section */,
 			);
 			path = Comment;
-			sourceTree = "<group>";
-		};
-		B717447926E258FA0014D6B5 /* Section */ = {
-			isa = PBXGroup;
-			children = (
-				B717448926E259BF0014D6B5 /* CommentSectionController.swift */,
-			);
-			path = Section;
 			sourceTree = "<group>";
 		};
 		B717447A26E259040014D6B5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				B717448426E259B50014D6B5 /* CommentCell.swift */,
-				B717448126E259B50014D6B5 /* CommentCell.xib */,
-				B717448326E259B50014D6B5 /* ReplyCell.swift */,
-				B717448226E259B50014D6B5 /* ReplyCell.xib */,
+				B717449C26E7E1450014D6B5 /* CommentTableViewCell.swift */,
+				B717449D26E7E1450014D6B5 /* CommentTableViewCell.xib */,
+				B71744A026E7ED310014D6B5 /* ReplyTableViewCell.swift */,
+				B71744A126E7ED310014D6B5 /* ReplyTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -372,6 +369,10 @@
 				B78795E426C6525C00FECC21 /* HeaderFeedCell.swift */,
 				B78795E626C6525D00FECC21 /* HeaderFeedCell.xib */,
 				B787960026C65A3700FECC21 /* Feed Type */,
+				B717449426E791070014D6B5 /* HeaderTableViewCell.swift */,
+				B717449526E791070014D6B5 /* HeaderTableViewCell.xib */,
+				B717449826E7A2550014D6B5 /* FooterTableViewCell.swift */,
+				B717449926E7A2550014D6B5 /* FooterTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -548,12 +549,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B71744A326E7ED320014D6B5 /* ReplyTableViewCell.xib in Resources */,
 				B78795E926C6525D00FECC21 /* FooterFeedCell.xib in Resources */,
 				B7910E9226BC68460097C94E /* Picker.storyboard in Resources */,
 				B787961A26C65A3700FECC21 /* ImageX3Cell.xib in Resources */,
 				B7552984269CBE48005D5EB5 /* NormalHeader.bundle in Resources */,
 				B717447C26E2595E0014D6B5 /* Comment.storyboard in Resources */,
 				B7910E3026B5E1320097C94E /* SplashScreen.storyboard in Resources */,
+				B717449726E791070014D6B5 /* HeaderTableViewCell.xib in Resources */,
+				B717449F26E7E1450014D6B5 /* CommentTableViewCell.xib in Resources */,
 				B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */,
 				B787961E26C65A3700FECC21 /* ImageXMoreCell.xib in Resources */,
 				B787961D26C65A3700FECC21 /* BlogCell.xib in Resources */,
@@ -562,11 +566,10 @@
 				B787961726C65A3700FECC21 /* ImageX2Cell.xib in Resources */,
 				B787963626C66E7300FECC21 /* Recast.storyboard in Resources */,
 				B787961126C65A3700FECC21 /* ImageX1Cell.xib in Resources */,
-				B717448526E259B50014D6B5 /* CommentCell.xib in Resources */,
 				B7910DF526AFE32A0097C94E /* WebView.storyboard in Resources */,
 				B787961526C65A3700FECC21 /* TextCell.xib in Resources */,
+				B717449B26E7A2550014D6B5 /* FooterTableViewCell.xib in Resources */,
 				B78795EA26C6525D00FECC21 /* HeaderFeedCell.xib in Resources */,
-				B717448626E259B50014D6B5 /* ReplyCell.xib in Resources */,
 				B7552987269CBE49005D5EB5 /* NormalFooter.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -607,7 +610,6 @@
 				B7910DFB26B018E50097C94E /* InternalWebViewModel.swift in Sources */,
 				B78795C226C6174A00FECC21 /* TPProgressDelegate.swift in Sources */,
 				B787961226C65A3700FECC21 /* TextLinkCell.swift in Sources */,
-				B717448726E259B50014D6B5 /* ReplyCell.swift in Sources */,
 				B787961826C65A3700FECC21 /* ImageX3Cell.swift in Sources */,
 				B78795E126C6516700FECC21 /* FeedSectionController.swift in Sources */,
 				B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */,
@@ -618,10 +620,10 @@
 				B75529A2269D8837005D5EB5 /* NSObject+ListDiffable.swift in Sources */,
 				B755297A269CBA14005D5EB5 /* RefreshBundle.swift in Sources */,
 				B755297C269CBA14005D5EB5 /* UIColorExtension.swift in Sources */,
-				B717448A26E259BF0014D6B5 /* CommentSectionController.swift in Sources */,
 				B7910E3926B6650F0097C94E /* SplashScreenViewModel.swift in Sources */,
 				B787961926C65A3700FECC21 /* BlogNoImageCell.swift in Sources */,
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
+				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,
 				B717447F26E259AB0014D6B5 /* CommentViewModel.swift in Sources */,
 				B78795E826C6525D00FECC21 /* HeaderFeedCell.swift in Sources */,
@@ -639,6 +641,7 @@
 				B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */,
 				B78795CA26C6182400FECC21 /* PannableViewsProtocol.swift in Sources */,
 				B7910E3126B5E1320097C94E /* SplashScreenViewController.swift in Sources */,
+				B717449A26E7A2550014D6B5 /* FooterTableViewCell.swift in Sources */,
 				B787961B26C65A3700FECC21 /* TextCell.swift in Sources */,
 				B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */,
 				B787961C26C65A3700FECC21 /* BlogCell.swift in Sources */,
@@ -648,10 +651,11 @@
 				B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */,
 				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,
 				B755297D269CBA15005D5EB5 /* RefreshExtension.swift in Sources */,
+				B71744A226E7ED320014D6B5 /* ReplyTableViewCell.swift in Sources */,
 				B78795E726C6525D00FECC21 /* FooterFeedCell.swift in Sources */,
+				B717449E26E7E1450014D6B5 /* CommentTableViewCell.swift in Sources */,
 				B755297B269CBA14005D5EB5 /* RefreshFooterView.swift in Sources */,
 				B787963A26C66EE900FECC21 /* RecastPopupViewModel.swift in Sources */,
-				B717448826E259B50014D6B5 /* CommentCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

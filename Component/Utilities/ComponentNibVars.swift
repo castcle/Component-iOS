@@ -44,9 +44,25 @@ public struct ComponentNibVars {
         public static let comment = "Comment"
     }
     
+    public struct View {
+        public static let comment = "CommentKeyboardInput"
+    }
+    
     // MARK: - TableViewCell
     public struct TableViewCell {
         public static let userList = "UserListTableViewCell"
+        public static let headerFeed = "HeaderTableViewCell"
+        public static let footerFeed = "FooterTableViewCell"
+//        public static let postText = "TextCell"
+//        public static let postTextLinkCell = "TextLinkCell"
+//        public static let imageX1Cell = "ImageX1Cell"
+//        public static let imageX2Cell = "ImageX2Cell"
+//        public static let imageX3Cell = "ImageX3Cell"
+//        public static let imageXMoreCell = "ImageXMoreCell"
+//        public static let blogCell = "BlogCell"
+//        public static let blogNoImageCell = "BlogNoImageCell"
+        public static let comment = "CommentTableViewCell"
+        public static let reply = "ReplyTableViewCell"
     }
     
     // MARK: - CollectionViewCell
@@ -61,7 +77,5 @@ public struct ComponentNibVars {
         public static let imageXMoreCell = "ImageXMoreCell"
         public static let blogCell = "BlogCell"
         public static let blogNoImageCell = "BlogNoImageCell"
-        public static let comment = "CommentCell"
-        public static let reply = "ReplyCell"
     }
 }

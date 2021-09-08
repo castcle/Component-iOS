@@ -19,10 +19,10 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  FooterFeedCell.swift
+//  FooterTableViewCell.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 15/7/2564 BE.
+//  Created by Tanakorn Phoochaliaw on 7/9/2564 BE.
 //
 
 import UIKit
@@ -30,13 +30,13 @@ import Core
 import Networking
 import PanModal
 
-protocol FooterFeedCellDelegate {
-    func didTabComment(feed: Feed)
-    func didTabQuoteCast(feed: Feed, page: Page)
-    func didAuthen()
+protocol FooterTableViewCellDelegate {
+    func didTabComment(_ footerTableViewCell: FooterTableViewCell, feed: Feed)
+    func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, feed: Feed, page: Page)
+    func didAuthen(_ footerTableViewCell: FooterTableViewCell)
 }
 
-class FooterFeedCell: UICollectionViewCell {
+class FooterTableViewCell: UITableViewCell {
 
     @IBOutlet var likeLabel: UILabel!
     @IBOutlet var commentLabel: UILabel!
@@ -48,7 +48,7 @@ class FooterFeedCell: UICollectionViewCell {
         }
     }
     
-    var delegate: FooterFeedCellDelegate?
+    var delegate: FooterTableViewCellDelegate?
     
     //MARK: Private
     private var likeRepository: LikeRepository = LikeRepositoryImpl()
@@ -56,10 +56,13 @@ class FooterFeedCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        // Initialization code
     }
-    
-    public static func cellSize(width: CGFloat) -> CGSize {
-        return CGSize(width: width, height: 55)
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
     }
     
     private func updateUi() {
@@ -120,16 +123,16 @@ class FooterFeedCell: UICollectionViewCell {
                 self.likeLabel.layer.add(impliesAnimation, forKey: nil)
             }
         } else {
-            self.delegate?.didAuthen()
+            self.delegate?.didAuthen(self)
         }
     }
     
     @IBAction func commentAction(_ sender: Any) {
         if UserState.shared.isLogin {
             guard let feed = self.feed else { return }
-            self.delegate?.didTabComment(feed: feed)
+            self.delegate?.didTabComment(self, feed: feed)
         } else {
-            self.delegate?.didAuthen()
+            self.delegate?.didAuthen(self)
         }
     }
     
@@ -140,12 +143,13 @@ class FooterFeedCell: UICollectionViewCell {
             vc?.delegate = self
             Utility.currentViewController().presentPanModal(vc ?? RecastPopupViewController())
         } else {
-            self.delegate?.didAuthen()
+            self.delegate?.didAuthen(self)
         }
     }
+    
 }
 
-extension FooterFeedCell: RecastPopupViewControllerDelegate {
+extension FooterTableViewCell: RecastPopupViewControllerDelegate {
     func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?) {
         guard let feed = self.feed else { return }
 
@@ -164,7 +168,7 @@ extension FooterFeedCell: RecastPopupViewControllerDelegate {
             self.updateUi()
         } else if recastAction == .quoteCast {
             guard let page = page else { return }
-            self.delegate?.didTabQuoteCast(feed: feed, page: page)
+            self.delegate?.didTabQuoteCast(self, feed: feed, page: page)
         }
     }
 }
