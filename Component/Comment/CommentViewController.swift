@@ -29,7 +29,7 @@ import UIKit
 import Core
 import Networking
 
-class CommentViewController: UITableViewController {
+class CommentViewController: UITableViewController, UITextViewDelegate {
     
     var viewModel = CommentViewModel()
     
@@ -43,7 +43,6 @@ class CommentViewController: UITableViewController {
     }
     
     override var inputAccessoryView: UIView? {
-        
         if customInputView == nil {
             customInputView = CustomView()
             customInputView.backgroundColor = UIColor.Asset.darkGray
@@ -102,7 +101,6 @@ class CommentViewController: UITableViewController {
     }
     
     @objc func handleSend() {
-        print("works")
         self.commentTextField.text = ""
         self.commentTextField.resignFirstResponder()
     }
@@ -121,6 +119,7 @@ class CommentViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.backgroundColor = UIColor.Asset.darkGraphiteBlue
+        self.commentTextField.delegate = self
         self.setupNevBar()
         self.configureTableView()
         self.tableView.keyboardDismissMode = .interactive
@@ -143,7 +142,14 @@ class CommentViewController: UITableViewController {
     func configureTableView() {
         self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.headerFeed, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.headerFeed)
         self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.footerFeed, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.footerFeed)
-        
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.postText, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.postText)
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.postTextLink, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.postTextLink)
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.imageX1, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.imageX1)
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.imageX2, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.imageX2)
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.imageX3, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.imageX3)
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.imageXMore, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.imageXMore)
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.blog, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.blog)
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.blogNoImage, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.blogNoImage)
         self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.comment, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.comment)
         self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.reply, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.reply)
         
@@ -153,6 +159,12 @@ class CommentViewController: UITableViewController {
     
     @objc private func leftButtonAction() {
         Utility.currentViewController().dismiss(animated: true)
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars < 280
     }
 }
 
@@ -189,7 +201,49 @@ extension CommentViewController {
                 cell?.feed = self.viewModel.feed
                 return cell ?? FooterTableViewCell()
             default:
-                return UITableViewCell()
+                if self.viewModel.feed?.feedPayload.feedDisplayType == .postText {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.postText, for: indexPath as IndexPath) as? TextTableViewCell
+                    cell?.backgroundColor = UIColor.Asset.darkGray
+                    cell?.feed = self.viewModel.feed
+                    return cell ?? TextTableViewCell()
+                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postLink || self.viewModel.feed?.feedPayload.feedDisplayType == .postYoutube {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.postTextLink, for: indexPath as IndexPath) as? TextLinkTableViewCell
+                    cell?.backgroundColor = UIColor.Asset.darkGray
+                    cell?.feed = self.viewModel.feed
+                    return cell ?? TextLinkTableViewCell()
+                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postImageX1 {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageX1, for: indexPath as IndexPath) as? ImageX1TableViewCell
+                    cell?.backgroundColor = UIColor.Asset.darkGray
+                    cell?.feed = self.viewModel.feed
+                    return cell ?? ImageX1TableViewCell()
+                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postImageX2 {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageX2, for: indexPath as IndexPath) as? ImageX2TableViewCell
+                    cell?.backgroundColor = UIColor.Asset.darkGray
+                    cell?.feed = self.viewModel.feed
+                    return cell ?? ImageX2TableViewCell()
+                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postImageX3 {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageX3, for: indexPath as IndexPath) as? ImageX3TableViewCell
+                    cell?.backgroundColor = UIColor.Asset.darkGray
+                    cell?.feed = self.viewModel.feed
+                    return cell ?? ImageX3TableViewCell()
+                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postImageXMore {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageXMore, for: indexPath as IndexPath) as? ImageXMoreTableViewCell
+                    cell?.backgroundColor = UIColor.Asset.darkGray
+                    cell?.feed = self.viewModel.feed
+                    return cell ?? ImageXMoreTableViewCell()
+                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .blogImage {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.blog, for: indexPath as IndexPath) as? BlogTableViewCell
+                    cell?.backgroundColor = UIColor.Asset.darkGray
+                    cell?.feed = self.viewModel.feed
+                    return cell ?? BlogTableViewCell()
+                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .blogNoImage {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.blogNoImage, for: indexPath as IndexPath) as? BlogNoImageTableViewCell
+                    cell?.backgroundColor = UIColor.Asset.darkGray
+                    cell?.feed = self.viewModel.feed
+                    return cell ?? BlogNoImageTableViewCell()
+                } else {
+                    return UITableViewCell()
+                }
             }
         } else {
             let comment = self.viewModel.comments[indexPath.section - 1]
@@ -212,6 +266,7 @@ extension CommentViewController {
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.reply, for: indexPath as IndexPath) as? ReplyTableViewCell
                 cell?.backgroundColor = UIColor.Asset.darkGraphiteBlue
+                cell?.delegate = self
                 if comment.isFirst {
                     cell?.lineView.isHidden = false
                 } else {
@@ -251,6 +306,20 @@ extension CommentViewController: FooterTableViewCellDelegate {
 extension CommentViewController: CommentTableViewCellDelegate {
     func didReplay(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
         self.commentTextField.text = "\(comment.author.castcleId) "
+        self.commentTextField.becomeFirstResponder()
+    }
+    
+    func didEdit(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
+        guard let lastComment = comment.comments.last else { return }
+        self.commentTextField.text = "\(lastComment.message)"
+        self.commentTextField.becomeFirstResponder()
+    }
+}
+
+extension CommentViewController: ReplyTableViewCellDelegate {
+    func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
+        guard let lastComment = replyComment.comments.last else { return }
+        self.commentTextField.text = "\(lastComment.message)"
         self.commentTextField.becomeFirstResponder()
     }
 }

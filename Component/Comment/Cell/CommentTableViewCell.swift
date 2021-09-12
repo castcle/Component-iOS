@@ -32,6 +32,7 @@ import ActiveLabel
 
 protocol CommentTableViewCellDelegate {
     func didReplay(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
+    func didEdit(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
 }
 
 class CommentTableViewCell: UITableViewCell {
@@ -130,12 +131,11 @@ class CommentTableViewCell: UITableViewCell {
         
         alert.addAction(UIAlertAction(title: "Edit", style: .default , handler: { (UIAlertAction) in
             self.isShowActionSheet = false
-            print("User click Edit button")
+            self.delegate?.didEdit(self, comment: comment)
         }))
         
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler: { (UIAlertAction) in
             self.isShowActionSheet = false
-            print("User click Delete button")
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction)in

@@ -42,7 +42,7 @@ public final class CommentViewModel {
     }
     
     public func getComments() {
-        self.commentRepository.getComments(contentId: self.feed?.id ?? "") { (success, response) in
+        self.commentRepository.getComments(contentId: self.feed?.id ?? "") { (success, response, isRefreshToken)  in
             if success {
                 do {
                     let rawJson = try response.mapJSON()

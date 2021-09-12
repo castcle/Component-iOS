@@ -30,6 +30,10 @@ import Core
 import Networking
 import ActiveLabel
 
+protocol ReplyTableViewCellDelegate {
+    func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment)
+}
+
 class ReplyTableViewCell: UITableViewCell {
 
     @IBOutlet var avatarImage: UIImageView!
@@ -82,6 +86,7 @@ class ReplyTableViewCell: UITableViewCell {
         }
     }
     
+    var delegate: ReplyTableViewCellDelegate?
     private var isShowActionSheet: Bool = false
     
     override func awakeFromNib() {
@@ -109,11 +114,12 @@ class ReplyTableViewCell: UITableViewCell {
     }
     
     private func showActionSheet() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        guard let replyComment = self.replyComment else { return }
         
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Edit", style: .default , handler: { (UIAlertAction) in
             self.isShowActionSheet = false
-            print("User click Edit button")
+            self.delegate?.didEdit(self, replyComment: replyComment)
         }))
         
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler: { (UIAlertAction) in

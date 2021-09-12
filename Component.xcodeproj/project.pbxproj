@@ -18,6 +18,22 @@
 		B717449F26E7E1450014D6B5 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B717449D26E7E1450014D6B5 /* CommentTableViewCell.xib */; };
 		B71744A226E7ED320014D6B5 /* ReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71744A026E7ED310014D6B5 /* ReplyTableViewCell.swift */; };
 		B71744A326E7ED320014D6B5 /* ReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71744A126E7ED310014D6B5 /* ReplyTableViewCell.xib */; };
+		B71744A626E9E6DC0014D6B5 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71744A426E9E6DC0014D6B5 /* TextTableViewCell.swift */; };
+		B71744A726E9E6DC0014D6B5 /* TextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71744A526E9E6DC0014D6B5 /* TextTableViewCell.xib */; };
+		B71744AA26E9EAB10014D6B5 /* TextLinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71744A826E9EAB10014D6B5 /* TextLinkTableViewCell.swift */; };
+		B71744AB26E9EAB10014D6B5 /* TextLinkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71744A926E9EAB10014D6B5 /* TextLinkTableViewCell.xib */; };
+		B71744AE26E9EF280014D6B5 /* ImageX1TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71744AC26E9EF280014D6B5 /* ImageX1TableViewCell.swift */; };
+		B71744AF26E9EF280014D6B5 /* ImageX1TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71744AD26E9EF280014D6B5 /* ImageX1TableViewCell.xib */; };
+		B71744B426E9EF750014D6B5 /* ImageX2TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71744B226E9EF750014D6B5 /* ImageX2TableViewCell.swift */; };
+		B71744B526E9EF750014D6B5 /* ImageX2TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71744B326E9EF750014D6B5 /* ImageX2TableViewCell.xib */; };
+		B71744B826E9EF850014D6B5 /* ImageX3TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71744B626E9EF850014D6B5 /* ImageX3TableViewCell.swift */; };
+		B71744B926E9EF850014D6B5 /* ImageX3TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71744B726E9EF850014D6B5 /* ImageX3TableViewCell.xib */; };
+		B71744BC26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71744BA26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.swift */; };
+		B71744BD26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71744BB26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.xib */; };
+		B71744C126E9F6820014D6B5 /* BlogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71744BF26E9F6820014D6B5 /* BlogTableViewCell.swift */; };
+		B71744C226E9F6820014D6B5 /* BlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71744C026E9F6820014D6B5 /* BlogTableViewCell.xib */; };
+		B71744C526E9F6980014D6B5 /* BlogNoImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71744C326E9F6970014D6B5 /* BlogNoImageTableViewCell.swift */; };
+		B71744C626E9F6980014D6B5 /* BlogNoImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71744C426E9F6980014D6B5 /* BlogNoImageTableViewCell.xib */; };
 		B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */; };
 		B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552957269CBA14005D5EB5 /* FastAnimator.swift */; };
 		B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552958269CBA14005D5EB5 /* FastLayer.swift */; };
@@ -121,6 +137,22 @@
 		B717449D26E7E1450014D6B5 /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
 		B71744A026E7ED310014D6B5 /* ReplyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyTableViewCell.swift; sourceTree = "<group>"; };
 		B71744A126E7ED310014D6B5 /* ReplyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplyTableViewCell.xib; sourceTree = "<group>"; };
+		B71744A426E9E6DC0014D6B5 /* TextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
+		B71744A526E9E6DC0014D6B5 /* TextTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextTableViewCell.xib; sourceTree = "<group>"; };
+		B71744A826E9EAB10014D6B5 /* TextLinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLinkTableViewCell.swift; sourceTree = "<group>"; };
+		B71744A926E9EAB10014D6B5 /* TextLinkTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextLinkTableViewCell.xib; sourceTree = "<group>"; };
+		B71744AC26E9EF280014D6B5 /* ImageX1TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageX1TableViewCell.swift; sourceTree = "<group>"; };
+		B71744AD26E9EF280014D6B5 /* ImageX1TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageX1TableViewCell.xib; sourceTree = "<group>"; };
+		B71744B226E9EF750014D6B5 /* ImageX2TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageX2TableViewCell.swift; sourceTree = "<group>"; };
+		B71744B326E9EF750014D6B5 /* ImageX2TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageX2TableViewCell.xib; sourceTree = "<group>"; };
+		B71744B626E9EF850014D6B5 /* ImageX3TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageX3TableViewCell.swift; sourceTree = "<group>"; };
+		B71744B726E9EF850014D6B5 /* ImageX3TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageX3TableViewCell.xib; sourceTree = "<group>"; };
+		B71744BA26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageXMoreTableViewCell.swift; sourceTree = "<group>"; };
+		B71744BB26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageXMoreTableViewCell.xib; sourceTree = "<group>"; };
+		B71744BF26E9F6820014D6B5 /* BlogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogTableViewCell.swift; sourceTree = "<group>"; };
+		B71744C026E9F6820014D6B5 /* BlogTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlogTableViewCell.xib; sourceTree = "<group>"; };
+		B71744C326E9F6970014D6B5 /* BlogNoImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogNoImageTableViewCell.swift; sourceTree = "<group>"; };
+		B71744C426E9F6980014D6B5 /* BlogNoImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlogNoImageTableViewCell.xib; sourceTree = "<group>"; };
 		B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshAnimator.swift; sourceTree = "<group>"; };
 		B7552957269CBA14005D5EB5 /* FastAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastAnimator.swift; sourceTree = "<group>"; };
 		B7552958269CBA14005D5EB5 /* FastLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLayer.swift; sourceTree = "<group>"; };
@@ -257,6 +289,29 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		B71744BE26E9F54D0014D6B5 /* Collection */ = {
+			isa = PBXGroup;
+			children = (
+				B787960B26C65A3700FECC21 /* TextCell.swift */,
+				B787960526C65A3700FECC21 /* TextCell.xib */,
+				B787960226C65A3700FECC21 /* TextLinkCell.swift */,
+				B787960626C65A3700FECC21 /* TextLinkCell.xib */,
+				B787961026C65A3700FECC21 /* ImageX1Cell.swift */,
+				B787960126C65A3700FECC21 /* ImageX1Cell.xib */,
+				B787960426C65A3700FECC21 /* ImageX2Cell.swift */,
+				B787960726C65A3700FECC21 /* ImageX2Cell.xib */,
+				B787960826C65A3700FECC21 /* ImageX3Cell.swift */,
+				B787960A26C65A3700FECC21 /* ImageX3Cell.xib */,
+				B787960326C65A3700FECC21 /* ImageXMoreCell.swift */,
+				B787960E26C65A3700FECC21 /* ImageXMoreCell.xib */,
+				B787960C26C65A3700FECC21 /* BlogCell.swift */,
+				B787960D26C65A3700FECC21 /* BlogCell.xib */,
+				B787960926C65A3700FECC21 /* BlogNoImageCell.swift */,
+				B787960F26C65A3700FECC21 /* BlogNoImageCell.xib */,
+			);
+			path = Collection;
+			sourceTree = "<group>";
+		};
 		B755294B269CB846005D5EB5 /* Refresh */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,22 +435,23 @@
 		B787960026C65A3700FECC21 /* Feed Type */ = {
 			isa = PBXGroup;
 			children = (
-				B787960B26C65A3700FECC21 /* TextCell.swift */,
-				B787960526C65A3700FECC21 /* TextCell.xib */,
-				B787960226C65A3700FECC21 /* TextLinkCell.swift */,
-				B787960626C65A3700FECC21 /* TextLinkCell.xib */,
-				B787961026C65A3700FECC21 /* ImageX1Cell.swift */,
-				B787960126C65A3700FECC21 /* ImageX1Cell.xib */,
-				B787960426C65A3700FECC21 /* ImageX2Cell.swift */,
-				B787960726C65A3700FECC21 /* ImageX2Cell.xib */,
-				B787960826C65A3700FECC21 /* ImageX3Cell.swift */,
-				B787960A26C65A3700FECC21 /* ImageX3Cell.xib */,
-				B787960326C65A3700FECC21 /* ImageXMoreCell.swift */,
-				B787960E26C65A3700FECC21 /* ImageXMoreCell.xib */,
-				B787960C26C65A3700FECC21 /* BlogCell.swift */,
-				B787960D26C65A3700FECC21 /* BlogCell.xib */,
-				B787960926C65A3700FECC21 /* BlogNoImageCell.swift */,
-				B787960F26C65A3700FECC21 /* BlogNoImageCell.xib */,
+				B71744BE26E9F54D0014D6B5 /* Collection */,
+				B71744A426E9E6DC0014D6B5 /* TextTableViewCell.swift */,
+				B71744A526E9E6DC0014D6B5 /* TextTableViewCell.xib */,
+				B71744A826E9EAB10014D6B5 /* TextLinkTableViewCell.swift */,
+				B71744A926E9EAB10014D6B5 /* TextLinkTableViewCell.xib */,
+				B71744AC26E9EF280014D6B5 /* ImageX1TableViewCell.swift */,
+				B71744AD26E9EF280014D6B5 /* ImageX1TableViewCell.xib */,
+				B71744B226E9EF750014D6B5 /* ImageX2TableViewCell.swift */,
+				B71744B326E9EF750014D6B5 /* ImageX2TableViewCell.xib */,
+				B71744B626E9EF850014D6B5 /* ImageX3TableViewCell.swift */,
+				B71744B726E9EF850014D6B5 /* ImageX3TableViewCell.xib */,
+				B71744BA26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.swift */,
+				B71744BB26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.xib */,
+				B71744BF26E9F6820014D6B5 /* BlogTableViewCell.swift */,
+				B71744C026E9F6820014D6B5 /* BlogTableViewCell.xib */,
+				B71744C326E9F6970014D6B5 /* BlogNoImageTableViewCell.swift */,
+				B71744C426E9F6980014D6B5 /* BlogNoImageTableViewCell.xib */,
 			);
 			path = "Feed Type";
 			sourceTree = "<group>";
@@ -549,21 +605,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B71744B926E9EF850014D6B5 /* ImageX3TableViewCell.xib in Resources */,
 				B71744A326E7ED320014D6B5 /* ReplyTableViewCell.xib in Resources */,
 				B78795E926C6525D00FECC21 /* FooterFeedCell.xib in Resources */,
 				B7910E9226BC68460097C94E /* Picker.storyboard in Resources */,
+				B71744B526E9EF750014D6B5 /* ImageX2TableViewCell.xib in Resources */,
+				B71744A726E9E6DC0014D6B5 /* TextTableViewCell.xib in Resources */,
 				B787961A26C65A3700FECC21 /* ImageX3Cell.xib in Resources */,
 				B7552984269CBE48005D5EB5 /* NormalHeader.bundle in Resources */,
 				B717447C26E2595E0014D6B5 /* Comment.storyboard in Resources */,
+				B71744BD26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.xib in Resources */,
 				B7910E3026B5E1320097C94E /* SplashScreen.storyboard in Resources */,
 				B717449726E791070014D6B5 /* HeaderTableViewCell.xib in Resources */,
 				B717449F26E7E1450014D6B5 /* CommentTableViewCell.xib in Resources */,
 				B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */,
+				B71744C626E9F6980014D6B5 /* BlogNoImageTableViewCell.xib in Resources */,
+				B71744AF26E9EF280014D6B5 /* ImageX1TableViewCell.xib in Resources */,
 				B787961E26C65A3700FECC21 /* ImageXMoreCell.xib in Resources */,
 				B787961D26C65A3700FECC21 /* BlogCell.xib in Resources */,
+				B71744C226E9F6820014D6B5 /* BlogTableViewCell.xib in Resources */,
 				B787961F26C65A3700FECC21 /* BlogNoImageCell.xib in Resources */,
 				B787961626C65A3700FECC21 /* TextLinkCell.xib in Resources */,
 				B787961726C65A3700FECC21 /* ImageX2Cell.xib in Resources */,
+				B71744AB26E9EAB10014D6B5 /* TextLinkTableViewCell.xib in Resources */,
 				B787963626C66E7300FECC21 /* Recast.storyboard in Resources */,
 				B787961126C65A3700FECC21 /* ImageX1Cell.xib in Resources */,
 				B7910DF526AFE32A0097C94E /* WebView.storyboard in Resources */,
@@ -611,6 +675,8 @@
 				B78795C226C6174A00FECC21 /* TPProgressDelegate.swift in Sources */,
 				B787961226C65A3700FECC21 /* TextLinkCell.swift in Sources */,
 				B787961826C65A3700FECC21 /* ImageX3Cell.swift in Sources */,
+				B71744B826E9EF850014D6B5 /* ImageX3TableViewCell.swift in Sources */,
+				B71744AE26E9EF280014D6B5 /* ImageX1TableViewCell.swift in Sources */,
 				B78795E126C6516700FECC21 /* FeedSectionController.swift in Sources */,
 				B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */,
 				B78795C626C6179700FECC21 /* PagerAwareProtocol.swift in Sources */,
@@ -626,6 +692,7 @@
 				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,
 				B717447F26E259AB0014D6B5 /* CommentViewModel.swift in Sources */,
+				B71744AA26E9EAB10014D6B5 /* TextLinkTableViewCell.swift in Sources */,
 				B78795E826C6525D00FECC21 /* HeaderFeedCell.swift in Sources */,
 				B7552979269CBA14005D5EB5 /* RefreshProtocol.swift in Sources */,
 				B7552986269CBE49005D5EB5 /* NormalFooterAnimator.swift in Sources */,
@@ -635,13 +702,18 @@
 				B7910E9426BC686B0097C94E /* DatePickerViewController.swift in Sources */,
 				B7910DF726AFE4090097C94E /* InternalWebViewViewController.swift in Sources */,
 				B7552978269CBA14005D5EB5 /* RefreshComponent.swift in Sources */,
+				B71744C526E9F6980014D6B5 /* BlogNoImageTableViewCell.swift in Sources */,
 				B78795D026C6198300FECC21 /* Extensions.swift in Sources */,
+				B71744A626E9E6DC0014D6B5 /* TextTableViewCell.swift in Sources */,
+				B71744C126E9F6820014D6B5 /* BlogTableViewCell.swift in Sources */,
 				B755297E269CBA15005D5EB5 /* RefreshHeaderView.swift in Sources */,
 				B78795C826C617BA00FECC21 /* BottomPageDelegate.swift in Sources */,
+				B71744B426E9EF750014D6B5 /* ImageX2TableViewCell.swift in Sources */,
 				B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */,
 				B78795CA26C6182400FECC21 /* PannableViewsProtocol.swift in Sources */,
 				B7910E3126B5E1320097C94E /* SplashScreenViewController.swift in Sources */,
 				B717449A26E7A2550014D6B5 /* FooterTableViewCell.swift in Sources */,
+				B71744BC26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.swift in Sources */,
 				B787961B26C65A3700FECC21 /* TextCell.swift in Sources */,
 				B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */,
 				B787961C26C65A3700FECC21 /* BlogCell.swift in Sources */,
