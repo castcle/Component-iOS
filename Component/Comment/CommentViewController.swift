@@ -28,6 +28,7 @@
 import UIKit
 import Core
 import Networking
+import Defaults
 
 class CommentViewController: UITableViewController, UITextViewDelegate {
     
@@ -129,6 +130,11 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
                               options: .transitionCrossDissolve,
                               animations: { self.tableView.reloadData() })
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Defaults[.screenId] = ""
     }
     
     private func setupNevBar() {

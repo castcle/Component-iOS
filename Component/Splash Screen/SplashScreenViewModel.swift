@@ -29,13 +29,15 @@ import Foundation
 import Core
 import Networking
 import Defaults
+import SwiftyJSON
 
 final class SplashScreenViewModel {
    
     //MARK: Private
     private var authenticationRepository: AuthenticationRepository
+    private var userRepository: UserRepository
+    let tokenHelper: TokenHelper = TokenHelper()
 
-    //MARK: Input
     public func guestLogin() {
         self.authenticationRepository.guestLogin(uuid: Defaults[.deviceUuid]) { (success) in
             if success {
@@ -44,17 +46,41 @@ final class SplashScreenViewModel {
         }
     }
     
+    private func getMe() {
+        self.userRepository.me() { (success, response, isRefreshToken) in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                } catch {}
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
+    }
+    
     //MARK: Output
     var didGuestLoginFinish: (() -> ())?
     
-    public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()) {
+    public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl(), userRepository: UserRepository = UserRepositoryImpl()) {
         self.authenticationRepository = authenticationRepository
+        self.userRepository = userRepository
+        self.tokenHelper.delegate = self
         if Defaults[.accessToken].isEmpty || Defaults[.userRole].isEmpty {
             self.guestLogin()
         } else {
+//            self.getMe()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                 self.didGuestLoginFinish?()
             })
         }
+    }
+}
+
+extension SplashScreenViewModel: TokenHelperDelegate {
+    func didRefreshTokenFinish() {
+        self.getMe()
     }
 }

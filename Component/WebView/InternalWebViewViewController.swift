@@ -28,6 +28,7 @@
 import UIKit
 import WebKit
 import Core
+import Defaults
 
 class InternalWebViewController: UIViewController{
 
@@ -43,11 +44,10 @@ class InternalWebViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        Defaults[.screenId] = ""
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.progressView.progressTintColor = UIColor.Asset.lightBlue
         self.customNavigationBar(.webView, title: self.loadingText, urlString: self.viewModel.request.url?.host ?? "")
-        
         self.webView.navigationDelegate = self
         self.webView.load(self.viewModel.request)
         self.addWebViewObservers()
