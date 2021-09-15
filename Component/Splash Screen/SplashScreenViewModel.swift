@@ -47,11 +47,14 @@ final class SplashScreenViewModel {
     }
     
     private func getMe() {
-        self.userRepository.me() { (success, response, isRefreshToken) in
+        self.userRepository.getMe() { (success, response, isRefreshToken) in
             if success {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
+                    let userHelper = UserHelper()
+                    userHelper.updateLocalProfile(user: User(json: json))
+                    self.didGuestLoginFinish?()
                 } catch {}
             } else {
                 if isRefreshToken {
@@ -71,10 +74,13 @@ final class SplashScreenViewModel {
         if Defaults[.accessToken].isEmpty || Defaults[.userRole].isEmpty {
             self.guestLogin()
         } else {
-//            self.getMe()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                self.didGuestLoginFinish?()
-            })
+            if UserState.shared.isLogin {
+                self.getMe()
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                    self.didGuestLoginFinish?()
+                })
+            }
         }
     }
 }
