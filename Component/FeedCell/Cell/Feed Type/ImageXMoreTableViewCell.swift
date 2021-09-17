@@ -92,16 +92,16 @@ class ImageXMoreTableViewCell: UITableViewCell {
             
             if feed.feedPayload.contentPayload.photo.count >= 4 {
                 let firstUrl = URL(string: feed.feedPayload.contentPayload.photo[0].url)
-                self.firstImageView.kf.setImage(with: firstUrl)
+                self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
                 
                 let secondUrl = URL(string: feed.feedPayload.contentPayload.photo[1].url)
-                self.secondImageView.kf.setImage(with: secondUrl)
+                self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
                 
                 let thirdUrl = URL(string: feed.feedPayload.contentPayload.photo[2].url)
-                self.thirdImageView.kf.setImage(with: thirdUrl)
+                self.thirdImageView.kf.setImage(with: thirdUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
                 
                 let fourthUrl = URL(string: feed.feedPayload.contentPayload.photo[3].url)
-                self.fourthImageView.kf.setImage(with: fourthUrl)
+                self.fourthImageView.kf.setImage(with: fourthUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
             }
         }
     }

@@ -49,12 +49,12 @@ class UserListTableViewCell: UITableViewCell {
     func configCell(isUser: Bool, page: Page?, isSelect: Bool) {
         if isUser {
             let url = URL(string: UserState.shared.avatar)
-            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
+            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
             self.nameLabel.text = UserState.shared.name
         } else {
             guard let page = page else { return }
             let url = URL(string: page.avatar)
-            self.avatarImage.kf.setImage(with: url)
+            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
             self.nameLabel.text = page.name
         }
         

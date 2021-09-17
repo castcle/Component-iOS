@@ -74,10 +74,10 @@ class ImageX2Cell: UICollectionViewCell {
             
             if feed.feedPayload.contentPayload.photo.count >= 2 {
                 let firstUrl = URL(string: feed.feedPayload.contentPayload.photo[0].url)
-                self.firstImageView.kf.setImage(with: firstUrl)
+                self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
                 
                 let secondUrl = URL(string: feed.feedPayload.contentPayload.photo[1].url)
-                self.secondImageView.kf.setImage(with: secondUrl)
+                self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
             }
         }
     }

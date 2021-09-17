@@ -70,7 +70,7 @@ class ImageX1TableViewCell: UITableViewCell {
             }
             if let imageUrl = feed.feedPayload.contentPayload.photo.first {
                 let url = URL(string: imageUrl.url)
-                self.displayImage.kf.setImage(with: url)
+                self.displayImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
             }
         }
     }

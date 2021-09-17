@@ -98,7 +98,7 @@ public class RecastPopupViewController: UIViewController {
     
     private func updateUser() {
         let url = URL(string: self.viewModel.page?.avatar ?? "")
-        self.avatarImage.kf.setImage(with: url)
+        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
         self.displayNameLabel.text = self.viewModel.page?.name ?? ""
     }
     

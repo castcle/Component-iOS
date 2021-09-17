@@ -55,7 +55,7 @@ class BlogCell: UICollectionViewCell {
             self.detailLabel.text = feed.feedPayload.contentPayload.content
             
             let imageUrl = URL(string: feed.feedPayload.contentPayload.cover)
-            self.blogImageView.kf.setImage(with: imageUrl)
+            self.blogImageView.kf.setImage(with: imageUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
         }
     }
     

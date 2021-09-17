@@ -70,7 +70,7 @@ class ImageX1Cell: UICollectionViewCell {
             }
             if let imageUrl = feed.feedPayload.contentPayload.photo.first {
                 let url = URL(string: imageUrl.url)
-                self.imageView.kf.setImage(with: url)
+                self.imageView.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
             }
         }
     }

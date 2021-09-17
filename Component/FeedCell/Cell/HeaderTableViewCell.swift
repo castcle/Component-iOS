@@ -52,7 +52,7 @@ class HeaderTableViewCell: UITableViewCell {
         didSet {
             if let feed = self.feed {
                 let url = URL(string: feed.feedPayload.author.avatar)
-                self.avatarImage.kf.setImage(with: url)
+                self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
                 self.displayNameLabel.text = feed.feedPayload.author.displayName
                 self.dateLabel.text = feed.feedPayload.postDate.timeAgoDisplay()
             } else {
