@@ -43,6 +43,7 @@ public class DatePickerViewController: UIViewController {
     public var delegate: DatePickerViewControllerDelegate?
     var maxHeight = (UIScreen.main.bounds.height - 350)
     
+    public var initDate: Date? = nil
     private var dateSelect: Date = Date()
     private var displayDate: String = ""
     
@@ -55,6 +56,11 @@ public class DatePickerViewController: UIViewController {
         self.datePicker.maximumDate = Date()
         self.datePicker.minimumDate = Date() - 100.years
         self.datePicker.addTarget(self, action: #selector(self.datePickerValueChanged(_:)), for: .valueChanged)
+        
+        if let date = self.initDate {
+            self.datePicker.date = date
+        }
+        
         self.dateSelect = self.datePicker.date
         self.displayDate = self.datePicker.date.dateToString()
     }
