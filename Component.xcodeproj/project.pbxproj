@@ -54,7 +54,6 @@
 		B75529A2269D8837005D5EB5 /* NSObject+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */; };
 		B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75529D2269F696A005D5EB5 /* ComponentNibVars.swift */; };
 		B78795AC26C5127C00FECC21 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78795AB26C5127C00FECC21 /* Networking.framework */; };
-		B78795AD26C5127C00FECC21 /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B78795AB26C5127C00FECC21 /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B78795C226C6174A00FECC21 /* TPProgressDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C126C6174A00FECC21 /* TPProgressDelegate.swift */; };
 		B78795C426C6177200FECC21 /* TPDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C326C6177200FECC21 /* TPDataSource.swift */; };
 		B78795C626C6179700FECC21 /* PagerAwareProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C526C6179700FECC21 /* PagerAwareProtocol.swift */; };
@@ -97,26 +96,10 @@
 		B7910E9426BC686B0097C94E /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E9326BC686B0097C94E /* DatePickerViewController.swift */; };
 		B792815F268F2C30000ED84A /* Component.h in Headers */ = {isa = PBXBuildFile; fileRef = B792815D268F2C30000ED84A /* Component.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B79281D226959A84000ED84A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B79281D126959A84000ED84A /* Core.framework */; };
-		B79281D326959A84000ED84A /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B79281D126959A84000ED84A /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */; };
 		B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */; };
 		C4C3938BB71648406A5368E4 /* Pods_Component.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A723B2EF055ED2C75BAC143 /* Pods_Component.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		B79281D426959A84000ED84A /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B78795AD26C5127C00FECC21 /* Networking.framework in Embed Frameworks */,
-				B79281D326959A84000ED84A /* Core.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00BF6A53B0C3485C485C205B /* Pods-Component.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.debug.xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.debug.xcconfig"; sourceTree = "<group>"; };
@@ -557,7 +540,6 @@
 				B7928156268F2C30000ED84A /* Sources */,
 				B7928157268F2C30000ED84A /* Frameworks */,
 				B7928158268F2C30000ED84A /* Resources */,
-				B79281D426959A84000ED84A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
