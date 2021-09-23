@@ -30,39 +30,36 @@ import Core
 import Networking
 import PanModal
 
-protocol FooterTableViewCellDelegate {
+public protocol FooterTableViewCellDelegate {
     func didTabComment(_ footerTableViewCell: FooterTableViewCell, feed: Feed)
     func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, feed: Feed, page: Page)
     func didAuthen(_ footerTableViewCell: FooterTableViewCell)
 }
 
-class FooterTableViewCell: UITableViewCell {
+public class FooterTableViewCell: UITableViewCell {
 
     @IBOutlet var likeLabel: UILabel!
     @IBOutlet var commentLabel: UILabel!
     @IBOutlet var recastLabel: UILabel!
     
-    var feed: Feed? {
+    public var feed: Feed? {
         didSet {
             self.updateUi()
         }
     }
     
-    var delegate: FooterTableViewCellDelegate?
+    public var delegate: FooterTableViewCellDelegate?
     
     //MARK: Private
     private var likeRepository: LikeRepository = LikeRepositoryImpl()
     private var recastRepository: RecastRepository = RecastRepositoryImpl()
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     private func updateUi() {
@@ -150,7 +147,7 @@ class FooterTableViewCell: UITableViewCell {
 }
 
 extension FooterTableViewCell: RecastPopupViewControllerDelegate {
-    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?) {
+    public func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?) {
         guard let feed = self.feed else { return }
 
         if recastAction == .recast {

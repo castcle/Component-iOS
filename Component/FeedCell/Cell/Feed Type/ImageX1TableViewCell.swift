@@ -31,7 +31,7 @@ import Networking
 import ActiveLabel
 import Lightbox
 
-class ImageX1TableViewCell: UITableViewCell {
+public class ImageX1TableViewCell: UITableViewCell {
 
     @IBOutlet var detailLabel: ActiveLabel! {
         didSet {
@@ -49,7 +49,7 @@ class ImageX1TableViewCell: UITableViewCell {
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var displayImage: UIImageView!
     
-    var feed: Feed? {
+    public var feed: Feed? {
         didSet {
             guard let feed = self.feed else { return }
             self.detailLabel.text = feed.feedPayload.contentPayload.content
@@ -75,12 +75,12 @@ class ImageX1TableViewCell: UITableViewCell {
         }
     }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         self.imageContainer.custom(cornerRadius: 12)
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
@@ -108,13 +108,13 @@ class ImageX1TableViewCell: UITableViewCell {
 }
 
 extension ImageX1TableViewCell: LightboxControllerPageDelegate {
-    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+    public func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
         // MARK: - Lightbox Move Page
     }
 }
 
 extension ImageX1TableViewCell: LightboxControllerDismissalDelegate {
-    func lightboxControllerWillDismiss(_ controller: LightboxController) {
+    public func lightboxControllerWillDismiss(_ controller: LightboxController) {
         // MARK: - Lightbox Dismiss
     }
 }

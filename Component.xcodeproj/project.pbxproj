@@ -96,6 +96,7 @@
 		B7910E9426BC686B0097C94E /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7910E9326BC686B0097C94E /* DatePickerViewController.swift */; };
 		B792815F268F2C30000ED84A /* Component.h in Headers */ = {isa = PBXBuildFile; fileRef = B792815D268F2C30000ED84A /* Component.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B79281D226959A84000ED84A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B79281D126959A84000ED84A /* Core.framework */; };
+		B7A71D0126FC4E380092F318 /* FeedCellHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A71D0026FC4E380092F318 /* FeedCellHelper.swift */; };
 		B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */; };
 		B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */; };
 		C4C3938BB71648406A5368E4 /* Pods_Component.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A723B2EF055ED2C75BAC143 /* Pods_Component.framework */; };
@@ -202,6 +203,7 @@
 		B792815D268F2C30000ED84A /* Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
 		B792815E268F2C30000ED84A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B79281D126959A84000ED84A /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7A71D0026FC4E380092F318 /* FeedCellHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellHelper.swift; sourceTree = "<group>"; };
 		B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
 		D22398FF8040ECFC1E72C75E /* Pods-Component.debug (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.debug (staging).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.debug (staging).xcconfig"; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 			children = (
 				B78795E226C6521500FECC21 /* Cell */,
 				B78795DF26C6515200FECC21 /* Section */,
+				B7A71D0026FC4E380092F318 /* FeedCellHelper.swift */,
 			);
 			path = FeedCell;
 			sourceTree = "<group>";
@@ -670,6 +673,7 @@
 				B755297C269CBA14005D5EB5 /* UIColorExtension.swift in Sources */,
 				B7910E3926B6650F0097C94E /* SplashScreenViewModel.swift in Sources */,
 				B787961926C65A3700FECC21 /* BlogNoImageCell.swift in Sources */,
+				B7A71D0126FC4E380092F318 /* FeedCellHelper.swift in Sources */,
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
 				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,

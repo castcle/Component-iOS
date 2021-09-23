@@ -31,12 +31,12 @@ import Networking
 import SnackBar_swift
 import Kingfisher
 
-protocol HeaderTableViewCellDelegate {
+public protocol HeaderTableViewCellDelegate {
     func didTabProfile(_ headerTableViewCell: HeaderTableViewCell)
     func didAuthen(_ headerTableViewCell: HeaderTableViewCell)
 }
 
-class HeaderTableViewCell: UITableViewCell {
+public class HeaderTableViewCell: UITableViewCell {
 
     @IBOutlet var avatarImage: UIImageView!
     @IBOutlet var globalIcon: UIImageView!
@@ -46,9 +46,9 @@ class HeaderTableViewCell: UITableViewCell {
     @IBOutlet var followButton: UIButton!
     @IBOutlet var moreButton: UIButton!
     
-    var delegate: HeaderTableViewCellDelegate?
+    public var delegate: HeaderTableViewCellDelegate?
     
-    var feed: Feed? {
+    public var feed: Feed? {
         didSet {
             if let feed = self.feed {
                 let url = URL(string: feed.feedPayload.author.avatar)
@@ -61,7 +61,7 @@ class HeaderTableViewCell: UITableViewCell {
         }
     }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         self.avatarImage.circle(color: UIColor.Asset.white)
         self.displayNameLabel.font = UIFont.asset(.medium, fontSize: .overline)
@@ -78,7 +78,7 @@ class HeaderTableViewCell: UITableViewCell {
         self.moreButton.setImage(UIImage.init(icon: .castcle(.ellipsisV), size: CGSize(width: 22, height: 22), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     

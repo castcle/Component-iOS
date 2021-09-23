@@ -31,7 +31,7 @@ import Networking
 import Kingfisher
 import Nantes
 
-class BlogTableViewCell: UITableViewCell {
+public class BlogTableViewCell: UITableViewCell {
 
     @IBOutlet var headerLabel: UILabel!
     @IBOutlet var detailLabel: NantesLabel! {
@@ -43,7 +43,8 @@ class BlogTableViewCell: UITableViewCell {
         }
     }
     @IBOutlet var blogImageView: UIImageView!
-    var feed: Feed? {
+    
+    public var feed: Feed? {
         didSet {
             guard let feed = self.feed else { return }
             self.headerLabel.font = UIFont.asset(.medium, fontSize: .h3)
@@ -59,11 +60,11 @@ class BlogTableViewCell: UITableViewCell {
         }
     }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     

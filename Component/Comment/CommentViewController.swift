@@ -207,49 +207,7 @@ extension CommentViewController {
                 cell?.feed = self.viewModel.feed
                 return cell ?? FooterTableViewCell()
             default:
-                if self.viewModel.feed?.feedPayload.feedDisplayType == .postText {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.postText, for: indexPath as IndexPath) as? TextTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? TextTableViewCell()
-                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postLink || self.viewModel.feed?.feedPayload.feedDisplayType == .postYoutube {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.postTextLink, for: indexPath as IndexPath) as? TextLinkTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? TextLinkTableViewCell()
-                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postImageX1 {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageX1, for: indexPath as IndexPath) as? ImageX1TableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? ImageX1TableViewCell()
-                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postImageX2 {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageX2, for: indexPath as IndexPath) as? ImageX2TableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? ImageX2TableViewCell()
-                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postImageX3 {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageX3, for: indexPath as IndexPath) as? ImageX3TableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? ImageX3TableViewCell()
-                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postImageXMore {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageXMore, for: indexPath as IndexPath) as? ImageXMoreTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? ImageXMoreTableViewCell()
-                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .blogImage {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.blog, for: indexPath as IndexPath) as? BlogTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? BlogTableViewCell()
-                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .blogNoImage {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.blogNoImage, for: indexPath as IndexPath) as? BlogNoImageTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? BlogNoImageTableViewCell()
-                } else {
-                    return UITableViewCell()
-                }
+                return FeedCellHelper().renderFeedCell(feed: self.viewModel.feed!, tableView: tableView, indexPath: indexPath)
             }
         } else {
             let comment = self.viewModel.comments[indexPath.section - 1]

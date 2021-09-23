@@ -31,7 +31,7 @@ import Networking
 import ActiveLabel
 import SwiftLinkPreview
 
-class TextLinkTableViewCell: UITableViewCell {
+public class TextLinkTableViewCell: UITableViewCell {
 
     @IBOutlet var detailLabel: ActiveLabel! {
         didSet {
@@ -56,7 +56,7 @@ class TextLinkTableViewCell: UITableViewCell {
     private var result = Response()
     private let slp = SwiftLinkPreview(cache: InMemoryCache())
     
-    var feed: Feed? {
+    public var feed: Feed? {
         didSet {
             guard let feed = self.feed else { return }
             self.detailLabel.text = feed.feedPayload.contentPayload.content
@@ -79,7 +79,7 @@ class TextLinkTableViewCell: UITableViewCell {
         }
     }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         self.linkContainer.custom(cornerRadius: 12)
         self.linkContainer.backgroundColor = UIColor.Asset.darkGraphiteBlue
@@ -90,7 +90,7 @@ class TextLinkTableViewCell: UITableViewCell {
         self.linkDescriptionLabel.textColor = UIColor.Asset.lightGray
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     

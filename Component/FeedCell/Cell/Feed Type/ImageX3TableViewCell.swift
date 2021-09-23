@@ -32,7 +32,7 @@ import ActiveLabel
 import Lightbox
 import Kingfisher
 
-class ImageX3TableViewCell: UITableViewCell {
+public class ImageX3TableViewCell: UITableViewCell {
 
     @IBOutlet var detailLabel: ActiveLabel! {
         didSet {
@@ -53,7 +53,7 @@ class ImageX3TableViewCell: UITableViewCell {
     @IBOutlet var secondImageView: UIImageView!
     @IBOutlet var thirdImageView: UIImageView!
     
-    var feed: Feed? {
+    public var feed: Feed? {
         didSet {
             guard let feed = self.feed else { return }
             self.detailLabel.text = feed.feedPayload.contentPayload.content
@@ -86,12 +86,12 @@ class ImageX3TableViewCell: UITableViewCell {
         }
     }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         self.imageContainer.custom(cornerRadius: 12)
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
@@ -133,13 +133,13 @@ class ImageX3TableViewCell: UITableViewCell {
 }
 
 extension ImageX3TableViewCell: LightboxControllerPageDelegate {
-    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+    public func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
         // MARK: - Lightbox Move Page
     }
 }
 
 extension ImageX3TableViewCell: LightboxControllerDismissalDelegate {
-    func lightboxControllerWillDismiss(_ controller: LightboxController) {
+    public func lightboxControllerWillDismiss(_ controller: LightboxController) {
         // MARK: - Lightbox Dismiss
     }
 }

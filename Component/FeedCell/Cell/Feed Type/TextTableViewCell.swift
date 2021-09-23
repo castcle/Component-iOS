@@ -30,7 +30,7 @@ import Core
 import Networking
 import ActiveLabel
 
-class TextTableViewCell: UITableViewCell {
+public class TextTableViewCell: UITableViewCell {
 
     @IBOutlet var detailLabel: ActiveLabel! {
         didSet {
@@ -46,7 +46,7 @@ class TextTableViewCell: UITableViewCell {
         }
     }
     
-    var feed: Feed? {
+    public var feed: Feed? {
         didSet {
             guard let feed = self.feed else { return }
             self.detailLabel.text = feed.feedPayload.contentPayload.content
@@ -68,11 +68,11 @@ class TextTableViewCell: UITableViewCell {
         }
     }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
