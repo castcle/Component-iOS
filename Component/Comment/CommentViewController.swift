@@ -137,6 +137,11 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         Defaults[.screenId] = ""
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.commentTextField.becomeFirstResponder()
+    }
+    
     private func setupNevBar() {
         self.customNavigationBar(.primary, title: "Post of \(self.viewModel.feed?.feedPayload.author.displayName ?? "")", textColor: UIColor.Asset.white)
         
