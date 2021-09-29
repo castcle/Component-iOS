@@ -52,10 +52,10 @@ public class ImageX2TableViewCell: UITableViewCell {
     @IBOutlet var firstImageView: UIImageView!
     @IBOutlet var secondImageView: UIImageView!
     
-    public var feed: Feed? {
+    public var content: Content? {
         didSet {
-            guard let feed = self.feed else { return }
-            self.detailLabel.text = feed.feedPayload.contentPayload.content
+            guard let content = self.content else { return }
+            self.detailLabel.text = content.contentPayload.message
             self.detailLabel.handleHashtagTap { hashtag in
                 let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -72,11 +72,11 @@ public class ImageX2TableViewCell: UITableViewCell {
                 Utility.currentViewController().present(alert, animated: true, completion: nil)
             }
             
-            if feed.feedPayload.contentPayload.photo.count >= 2 {
-                let firstUrl = URL(string: feed.feedPayload.contentPayload.photo[0].url)
+            if content.contentPayload.photo.count >= 2 {
+                let firstUrl = URL(string: content.contentPayload.photo[0].url)
                 self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
                 
-                let secondUrl = URL(string: feed.feedPayload.contentPayload.photo[1].url)
+                let secondUrl = URL(string: content.contentPayload.photo[1].url)
                 self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
             }
         }
@@ -100,10 +100,10 @@ public class ImageX2TableViewCell: UITableViewCell {
     }
     
     private func openImage(index: Int) {
-        if let feed = self.feed, !feed.feedPayload.contentPayload.photo.isEmpty {
+        if let content = self.content, !content.contentPayload.photo.isEmpty {
             
             var images: [LightboxImage] = []
-            feed.feedPayload.contentPayload.photo.forEach { photo in
+            content.contentPayload.photo.forEach { photo in
                 images.append(LightboxImage(imageURL: URL(string: photo.url)!))
             }
             

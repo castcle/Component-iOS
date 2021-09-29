@@ -31,18 +31,17 @@ import SwiftyJSON
 
 public final class CommentViewModel {
     
-    private var commentRepository: CommentRepository
-    var feed: Feed?
+    private var commentRepository: CommentRepository = CommentRepositoryImpl()
+    var content: Content?
     var comments: [Comment] = []
     
-    public init(commentRepository: CommentRepository = CommentRepositoryImpl(), feed: Feed? = nil) {
-        self.commentRepository = commentRepository
-        self.feed = feed
+    public init(content: Content? = nil) {
+        self.content = content
         self.getComments()
     }
     
     public func getComments() {
-        self.commentRepository.getComments(contentId: self.feed?.id ?? "") { (success, response, isRefreshToken)  in
+        self.commentRepository.getComments(contentId: self.content?.id ?? "") { (success, response, isRefreshToken)  in
             if success {
                 do {
                     let rawJson = try response.mapJSON()

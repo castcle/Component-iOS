@@ -31,8 +31,8 @@ import Networking
 import PanModal
 
 public protocol FooterTableViewCellDelegate {
-    func didTabComment(_ footerTableViewCell: FooterTableViewCell, feed: Feed)
-    func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, feed: Feed, page: Page)
+    func didTabComment(_ footerTableViewCell: FooterTableViewCell, content: Content)
+    func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: Page)
     func didAuthen(_ footerTableViewCell: FooterTableViewCell)
 }
 
@@ -42,7 +42,7 @@ public class FooterTableViewCell: UITableViewCell {
     @IBOutlet var commentLabel: UILabel!
     @IBOutlet var recastLabel: UILabel!
     
-    public var feed: Feed? {
+    public var content: Content? {
         didSet {
             self.updateUi()
         }
@@ -63,29 +63,29 @@ public class FooterTableViewCell: UITableViewCell {
     }
     
     private func updateUi() {
-        guard let feed = self.feed else { return }
+        guard let content = self.content else { return }
         self.likeLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.commentLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.recastLabel.font = UIFont.asset(.regular, fontSize: .overline)
         
-        let displayLike: String = (feed.feedPayload.liked.count > 0 ? "  \(String.displayCount(count: feed.feedPayload.liked.count))" : "")
-        let displayComment: String = (feed.feedPayload.commented.count > 0 ? "  \(String.displayCount(count: feed.feedPayload.commented.count))" : "")
-        let displayRecast: String = (feed.feedPayload.recasted.count > 0 ? "  \(String.displayCount(count: feed.feedPayload.recasted.count))" : "")
+        let displayLike: String = (content.liked.count > 0 ? "  \(String.displayCount(count: content.liked.count))" : "")
+        let displayComment: String = (content.commented.count > 0 ? "  \(String.displayCount(count: content.commented.count))" : "")
+        let displayRecast: String = (content.recasted.count > 0 ? "  \(String.displayCount(count: content.recasted.count))" : "")
         
-        if feed.feedPayload.liked.isLike {
+        if content.liked.isLike {
             
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.lightBlue, postfixText: displayLike, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 18)
         } else {
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.white, postfixText: displayLike, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 18)
         }
         
-        if feed.feedPayload.commented.isComment {
+        if content.commented.isComment {
             self.commentLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.comment), iconColor: UIColor.Asset.lightBlue, postfixText: displayComment, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 15)
         } else {
             self.commentLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.comment), iconColor: UIColor.Asset.white, postfixText: displayComment, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 15)
         }
         
-        if feed.feedPayload.recasted.isRecast {
+        if content.recasted.isRecast {
             self.recastLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.recast), iconColor: UIColor.Asset.lightBlue, postfixText: displayRecast, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 18)
         } else {
             self.recastLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.recast), iconColor: UIColor.Asset.white, postfixText: displayRecast, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 18)
@@ -95,24 +95,24 @@ public class FooterTableViewCell: UITableViewCell {
     @IBAction func likeAction(_ sender: Any) {
         
         if UserState.shared.isLogin {
-            guard let feed = self.feed else { return }
+            guard let content = self.content else { return }
 
-            if feed.feedPayload.liked.isLike {
-                feed.feedPayload.liked.count -= 1
-                self.likeRepository.unliked(feedUuid: feed.feedPayload.id) { success in
+            if content.liked.isLike {
+                content.liked.count -= 1
+                self.likeRepository.unliked(feedUuid: content.id) { success in
                     print("Unliked : \(success)")
                 }
             } else {
-                feed.feedPayload.liked.count += 1
-                self.likeRepository.liked(feedUuid: feed.feedPayload.id) { success in
+                content.liked.count += 1
+                self.likeRepository.liked(feedUuid: content.id) { success in
                     print("Liked : \(success)")
                 }
             }
 
-            feed.feedPayload.liked.isLike.toggle()
+            content.liked.isLike.toggle()
             self.updateUi()
 
-            if feed.feedPayload.liked.isLike {
+            if content.liked.isLike {
                 let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
                 impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
                 impliesAnimation.duration = 0.3 * 2
@@ -126,8 +126,8 @@ public class FooterTableViewCell: UITableViewCell {
     
     @IBAction func commentAction(_ sender: Any) {
         if UserState.shared.isLogin {
-            guard let feed = self.feed else { return }
-            self.delegate?.didTabComment(self, feed: feed)
+            guard let content = self.content else { return }
+            self.delegate?.didTabComment(self, content: content)
         } else {
             self.delegate?.didAuthen(self)
         }
@@ -135,8 +135,8 @@ public class FooterTableViewCell: UITableViewCell {
     
     @IBAction func recastAction(_ sender: Any) {
         if UserState.shared.isLogin {
-            guard let feed = self.feed else { return }
-            let vc = ComponentOpener.open(.recast(RecastPopupViewModel(isRecasted: feed.feedPayload.recasted.isRecast))) as? RecastPopupViewController
+            guard let content = self.content else { return }
+            let vc = ComponentOpener.open(.recast(RecastPopupViewModel(isRecasted: content.recasted.isRecast))) as? RecastPopupViewController
             vc?.delegate = self
             Utility.currentViewController().presentPanModal(vc ?? RecastPopupViewController())
         } else {
@@ -148,24 +148,24 @@ public class FooterTableViewCell: UITableViewCell {
 
 extension FooterTableViewCell: RecastPopupViewControllerDelegate {
     public func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?) {
-        guard let feed = self.feed else { return }
+        guard let content = self.content else { return }
 
         if recastAction == .recast {
-            if feed.feedPayload.recasted.isRecast {
-                self.recastRepository.unrecasted(feedUuid: feed.feedPayload.id) { success in
+            if content.recasted.isRecast {
+                self.recastRepository.unrecasted(feedUuid: content.id) { success in
                     print("Unrecasted : \(success)")
                 }
             } else {
-                self.recastRepository.recasted(feedUuid: feed.feedPayload.id) { success in
+                self.recastRepository.recasted(feedUuid: content.id) { success in
                     print("Recasted : \(success)")
                 }
             }
 
-            feed.feedPayload.recasted.isRecast.toggle()
+            content.recasted.isRecast.toggle()
             self.updateUi()
         } else if recastAction == .quoteCast {
             guard let page = page else { return }
-            self.delegate?.didTabQuoteCast(self, feed: feed, page: page)
+            self.delegate?.didTabQuoteCast(self, content: content, page: page)
         }
     }
 }

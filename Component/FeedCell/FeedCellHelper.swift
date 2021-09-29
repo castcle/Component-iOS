@@ -33,46 +33,46 @@ public class FeedCellHelper {
         // Init FeedCellHelper
     }
     
-    public func renderFeedCell(feed: Feed, tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
-        if feed.feedPayload.feedDisplayType == .postText {
+    public func renderFeedCell(content: Content, tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        if content.feedDisplayType == .postText {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.postText, for: indexPath as IndexPath) as? TextTableViewCell
             cell?.backgroundColor = UIColor.Asset.darkGray
-            cell?.feed = feed
+            cell?.content = content
             return cell ?? TextTableViewCell()
-        } else if feed.feedPayload.feedDisplayType == .postLink || feed.feedPayload.feedDisplayType == .postYoutube {
+        } else if content.feedDisplayType == .postLink || content.feedDisplayType == .postYoutube {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.postTextLink, for: indexPath as IndexPath) as? TextLinkTableViewCell
             cell?.backgroundColor = UIColor.Asset.darkGray
-            cell?.feed = feed
+            cell?.content = content
             return cell ?? TextLinkTableViewCell()
-        } else if feed.feedPayload.feedDisplayType == .postImageX1 {
+        } else if content.feedDisplayType == .postImageX1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageX1, for: indexPath as IndexPath) as? ImageX1TableViewCell
             cell?.backgroundColor = UIColor.Asset.darkGray
-            cell?.feed = feed
+            cell?.content = content
             return cell ?? ImageX1TableViewCell()
-        } else if feed.feedPayload.feedDisplayType == .postImageX2 {
+        } else if content.feedDisplayType == .postImageX2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageX2, for: indexPath as IndexPath) as? ImageX2TableViewCell
             cell?.backgroundColor = UIColor.Asset.darkGray
-            cell?.feed = feed
+            cell?.content = content
             return cell ?? ImageX2TableViewCell()
-        } else if feed.feedPayload.feedDisplayType == .postImageX3 {
+        } else if content.feedDisplayType == .postImageX3 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageX3, for: indexPath as IndexPath) as? ImageX3TableViewCell
             cell?.backgroundColor = UIColor.Asset.darkGray
-            cell?.feed = feed
+            cell?.content = content
             return cell ?? ImageX3TableViewCell()
-        } else if feed.feedPayload.feedDisplayType == .postImageXMore {
+        } else if content.feedDisplayType == .postImageXMore {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageXMore, for: indexPath as IndexPath) as? ImageXMoreTableViewCell
             cell?.backgroundColor = UIColor.Asset.darkGray
-            cell?.feed = feed
+            cell?.content = content
             return cell ?? ImageXMoreTableViewCell()
-        } else if feed.feedPayload.feedDisplayType == .blogImage {
+        } else if content.feedDisplayType == .blogImage {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.blog, for: indexPath as IndexPath) as? BlogTableViewCell
             cell?.backgroundColor = UIColor.Asset.darkGray
-            cell?.feed = feed
+            cell?.content = content
             return cell ?? BlogTableViewCell()
-        } else if feed.feedPayload.feedDisplayType == .blogNoImage {
+        } else if content.feedDisplayType == .blogNoImage {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.blogNoImage, for: indexPath as IndexPath) as? BlogNoImageTableViewCell
             cell?.backgroundColor = UIColor.Asset.darkGray
-            cell?.feed = feed
+            cell?.content = content
             return cell ?? BlogNoImageTableViewCell()
         } else {
             return UITableViewCell()

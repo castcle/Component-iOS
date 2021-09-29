@@ -56,10 +56,10 @@ public class TextLinkTableViewCell: UITableViewCell {
     private var result = Response()
     private let slp = SwiftLinkPreview(cache: InMemoryCache())
     
-    public var feed: Feed? {
+    public var content: Content? {
         didSet {
-            guard let feed = self.feed else { return }
-            self.detailLabel.text = feed.feedPayload.contentPayload.content
+            guard let content = self.content else { return }
+            self.detailLabel.text = content.contentPayload.message
             self.detailLabel.handleHashtagTap { hashtag in
                 let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -75,7 +75,7 @@ public class TextLinkTableViewCell: UITableViewCell {
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                 Utility.currentViewController().present(alert, animated: true, completion: nil)
             }
-            self.loadLink(feed: feed)
+            self.loadLink(content: content)
         }
     }
     
@@ -94,8 +94,8 @@ public class TextLinkTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    private func loadLink(feed: Feed) {
-        if let link = feed.feedPayload.contentPayload.link.first {
+    private func loadLink(content: Content) {
+        if let link = content.contentPayload.link.first {
             if let cached = self.slp.cache.slp_getCachedResponse(url: link.url) {
                 self.result = cached
                 self.setData()

@@ -49,10 +49,10 @@ public class ImageX1TableViewCell: UITableViewCell {
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var displayImage: UIImageView!
     
-    public var feed: Feed? {
+    public var content: Content? {
         didSet {
-            guard let feed = self.feed else { return }
-            self.detailLabel.text = feed.feedPayload.contentPayload.content
+            guard let content = self.content else { return }
+            self.detailLabel.text = content.contentPayload.message
             self.detailLabel.handleHashtagTap { hashtag in
                 let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -68,7 +68,7 @@ public class ImageX1TableViewCell: UITableViewCell {
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                 Utility.currentViewController().present(alert, animated: true, completion: nil)
             }
-            if let imageUrl = feed.feedPayload.contentPayload.photo.first {
+            if let imageUrl = content.contentPayload.photo.first {
                 let url = URL(string: imageUrl.url)
                 self.displayImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
             }
@@ -85,7 +85,7 @@ public class ImageX1TableViewCell: UITableViewCell {
     }
     
     @IBAction func viewImageAction(_ sender: Any) {
-        if let feed = self.feed, let image = feed.feedPayload.contentPayload.photo.first {
+        if let content = self.content, let image = content.contentPayload.photo.first {
             let images = [
                 LightboxImage(imageURL: URL(string: image.url)!)
             ]

@@ -106,7 +106,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         self.commentTextField.resignFirstResponder()
     }
     
-    enum FeedSection: Int, CaseIterable {
+    enum ContentSection: Int, CaseIterable {
         case header = 0
         case content
         case footer
@@ -143,7 +143,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     }
     
     private func setupNevBar() {
-        self.customNavigationBar(.primary, title: "Post of \(self.viewModel.feed?.feedPayload.author.displayName ?? "")", textColor: UIColor.Asset.white)
+        self.customNavigationBar(.primary, title: "Post of \(self.viewModel.content?.author.displayName ?? "")", textColor: UIColor.Asset.white)
         
         let leftIcon = NavBarButtonType.back.barButton
         leftIcon.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
@@ -186,8 +186,8 @@ extension CommentViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            if self.viewModel.feed != nil {
-                return FeedSection.allCases.count
+            if self.viewModel.content != nil {
+                return ContentSection.allCases.count
             } else {
                 return 0
             }
@@ -199,20 +199,20 @@ extension CommentViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             switch indexPath.row {
-            case FeedSection.header.rawValue:
+            case ContentSection.header.rawValue:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.headerFeed, for: indexPath as IndexPath) as? HeaderTableViewCell
                 cell?.backgroundColor = UIColor.Asset.darkGray
                 cell?.delegate = self
-                cell?.feed = self.viewModel.feed
+                cell?.content = self.viewModel.content
                 return cell ?? HeaderTableViewCell()
-            case FeedSection.footer.rawValue:
+            case ContentSection.footer.rawValue:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.footerFeed, for: indexPath as IndexPath) as? FooterTableViewCell
                 cell?.backgroundColor = UIColor.Asset.darkGray
                 cell?.delegate = self
-                cell?.feed = self.viewModel.feed
+                cell?.content = self.viewModel.content
                 return cell ?? FooterTableViewCell()
             default:
-                return FeedCellHelper().renderFeedCell(feed: self.viewModel.feed!, tableView: tableView, indexPath: indexPath)
+                return FeedCellHelper().renderFeedCell(content: self.viewModel.content!, tableView: tableView, indexPath: indexPath)
             }
         } else {
             let comment = self.viewModel.comments[indexPath.section - 1]
@@ -259,11 +259,11 @@ extension CommentViewController: HeaderTableViewCellDelegate {
 }
 
 extension CommentViewController: FooterTableViewCellDelegate {
-    func didTabComment(_ footerTableViewCell: FooterTableViewCell, feed: Feed) {
+    func didTabComment(_ footerTableViewCell: FooterTableViewCell, content: Content) {
         //
     }
     
-    func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, feed: Feed, page: Page) {
+    func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: Page) {
         //
     }
     

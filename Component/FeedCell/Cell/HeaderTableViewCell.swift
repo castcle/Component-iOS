@@ -48,13 +48,13 @@ public class HeaderTableViewCell: UITableViewCell {
     
     public var delegate: HeaderTableViewCellDelegate?
     
-    public var feed: Feed? {
+    public var content: Content? {
         didSet {
-            if let feed = self.feed {
-                let url = URL(string: feed.feedPayload.author.avatar)
+            if let content = self.content {
+                let url = URL(string: content.author.avatar)
                 self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
-                self.displayNameLabel.text = feed.feedPayload.author.displayName
-                self.dateLabel.text = feed.feedPayload.postDate.timeAgoDisplay()
+                self.displayNameLabel.text = content.author.displayName
+                self.dateLabel.text = content.postDate.timeAgoDisplay()
             } else {
                 return
             }

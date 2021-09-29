@@ -57,10 +57,10 @@ public class ImageXMoreTableViewCell: UITableViewCell {
     @IBOutlet var moreImageView: UIImageView!
     @IBOutlet var moreLabel: UILabel!
     
-    public var feed: Feed? {
+    public var content: Content? {
         didSet {
-            guard let feed = self.feed else { return }
-            self.detailLabel.text = feed.feedPayload.contentPayload.content
+            guard let content = self.content else { return }
+            self.detailLabel.text = content.contentPayload.message
             self.detailLabel.handleHashtagTap { hashtag in
                 let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -80,27 +80,27 @@ public class ImageXMoreTableViewCell: UITableViewCell {
             self.moreImageView.image = UIColor.Asset.black.toImage()
             self.moreLabel.font = UIFont.asset(.medium, fontSize: .custom(size: 45))
             
-            if feed.feedPayload.contentPayload.photo.count > 4 {
+            if content.contentPayload.photo.count > 4 {
                 self.moreImageView.isHidden = false
                 self.moreImageView.alpha = 0.5
                 self.moreLabel.isHidden = false
-                self.moreLabel.text = "+\(feed.feedPayload.contentPayload.photo.count - 3)"
+                self.moreLabel.text = "+\(content.contentPayload.photo.count - 3)"
             } else {
                 self.moreImageView.isHidden = true
                 self.moreLabel.isHidden = true
             }
             
-            if feed.feedPayload.contentPayload.photo.count >= 4 {
-                let firstUrl = URL(string: feed.feedPayload.contentPayload.photo[0].url)
+            if content.contentPayload.photo.count >= 4 {
+                let firstUrl = URL(string: content.contentPayload.photo[0].url)
                 self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
                 
-                let secondUrl = URL(string: feed.feedPayload.contentPayload.photo[1].url)
+                let secondUrl = URL(string: content.contentPayload.photo[1].url)
                 self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
                 
-                let thirdUrl = URL(string: feed.feedPayload.contentPayload.photo[2].url)
+                let thirdUrl = URL(string: content.contentPayload.photo[2].url)
                 self.thirdImageView.kf.setImage(with: thirdUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
                 
-                let fourthUrl = URL(string: feed.feedPayload.contentPayload.photo[3].url)
+                let fourthUrl = URL(string: content.contentPayload.photo[3].url)
                 self.fourthImageView.kf.setImage(with: fourthUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
             }
         }
@@ -132,10 +132,10 @@ public class ImageXMoreTableViewCell: UITableViewCell {
     }
     
     private func openImage(index: Int) {
-        if let feed = self.feed, !feed.feedPayload.contentPayload.photo.isEmpty {
+        if let content = self.content, !content.contentPayload.photo.isEmpty {
             
             var images: [LightboxImage] = []
-            feed.feedPayload.contentPayload.photo.forEach { photo in
+            content.contentPayload.photo.forEach { photo in
                 images.append(LightboxImage(imageURL: URL(string: photo.url)!))
             }
             

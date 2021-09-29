@@ -44,18 +44,18 @@ public class BlogTableViewCell: UITableViewCell {
     }
     @IBOutlet var blogImageView: UIImageView!
     
-    public var feed: Feed? {
+    public var content: Content? {
         didSet {
-            guard let feed = self.feed else { return }
+            guard let content = self.content else { return }
             self.headerLabel.font = UIFont.asset(.medium, fontSize: .h3)
             self.headerLabel.textColor = UIColor.Asset.white
             self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
             self.detailLabel.textColor = UIColor.Asset.lightGray
             
-            self.headerLabel.text = feed.feedPayload.contentPayload.header
-            self.detailLabel.text = feed.feedPayload.contentPayload.content
+            self.headerLabel.text = content.contentPayload.header
+            self.detailLabel.text = content.contentPayload.message
             
-            let imageUrl = URL(string: feed.feedPayload.contentPayload.cover)
+            let imageUrl = URL(string: content.contentPayload.cover)
             self.blogImageView.kf.setImage(with: imageUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
         }
     }
