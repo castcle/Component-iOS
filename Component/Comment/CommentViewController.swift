@@ -249,6 +249,10 @@ extension CommentViewController {
 }
 
 extension CommentViewController: HeaderTableViewCellDelegate {
+    func didRemoveSuccess(_ headerTableViewCell: HeaderTableViewCell) {
+        Utility.currentViewController().dismiss(animated: true)
+    }
+    
     func didTabProfile(_ headerTableViewCell: HeaderTableViewCell) {
         //
     }

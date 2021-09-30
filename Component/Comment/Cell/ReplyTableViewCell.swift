@@ -127,7 +127,7 @@ class ReplyTableViewCell: UITableViewCell {
             print("User click Delete button")
         }))
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction)in
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in
             self.isShowActionSheet = false
             print("User click Cancel button")
         }))

@@ -89,6 +89,12 @@ public class RecastPopupViewController: UIViewController {
             self.recastLabel.text = "Recasted"
         }
         
+        if UserState.shared.page.count == 0 {
+            self.moreButton.isHidden = true
+        } else {
+            self.moreButton.isHidden = false
+        }
+        
         self.moreButton.setImage(UIImage.init(icon: .castcle(.dropDown), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
         self.configureTableView()
         self.updateUser()

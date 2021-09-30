@@ -44,26 +44,28 @@ public class FooterTableViewCell: UITableViewCell {
     
     public var content: Content? {
         didSet {
-            self.updateUi()
+            guard let content = self.content else { return }
+            self.updateUi(content: content)
         }
     }
     
     public var delegate: FooterTableViewCellDelegate?
     
     //MARK: Private
-    private var likeRepository: LikeRepository = LikeRepositoryImpl()
+    private var contentRepository: ContentRepository = ContentRepositoryImpl()
     private var recastRepository: RecastRepository = RecastRepositoryImpl()
+    let tokenHelper: TokenHelper = TokenHelper()
     
     public override func awakeFromNib() {
         super.awakeFromNib()
+        self.tokenHelper.delegate = self
     }
 
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    private func updateUi() {
-        guard let content = self.content else { return }
+    private func updateUi(content: Content) {
         self.likeLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.commentLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.recastLabel.font = UIFont.asset(.regular, fontSize: .overline)
@@ -92,33 +94,52 @@ public class FooterTableViewCell: UITableViewCell {
         }
     }
     
+    private func likeContent(content: Content) {
+        if content.liked.isLike {
+            content.liked.count -= 1
+            content.liked.isLike.toggle()
+            self.updateUi(content: content)
+            self.contentRepository.unlikeContent(contentId: content.id) { (success, response, isRefreshToken) in
+                if !success {
+                    if isRefreshToken {
+                        self.tokenHelper.refreshToken()
+                    } else {
+                        content.liked.count += 1
+                        content.liked.isLike.toggle()
+                        self.updateUi(content: content)
+                    }
+                }
+            }
+        } else {
+            content.liked.count += 1
+            content.liked.isLike.toggle()
+            self.updateUi(content: content)
+            self.contentRepository.likeContent(contentId: content.id) { (success, response, isRefreshToken) in
+                if !success {
+                    if isRefreshToken {
+                        self.tokenHelper.refreshToken()
+                    } else {
+                        content.liked.count -= 1
+                        content.liked.isLike.toggle()
+                        self.updateUi(content: content)
+                    }
+                }
+            }
+        }
+
+        if content.liked.isLike {
+            let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
+            impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
+            impliesAnimation.duration = 0.3 * 2
+            impliesAnimation.calculationMode = CAAnimationCalculationMode.cubic
+            self.likeLabel.layer.add(impliesAnimation, forKey: nil)
+        }
+    }
+    
     @IBAction func likeAction(_ sender: Any) {
-        
         if UserState.shared.isLogin {
             guard let content = self.content else { return }
-
-            if content.liked.isLike {
-                content.liked.count -= 1
-                self.likeRepository.unliked(feedUuid: content.id) { success in
-                    print("Unliked : \(success)")
-                }
-            } else {
-                content.liked.count += 1
-                self.likeRepository.liked(feedUuid: content.id) { success in
-                    print("Liked : \(success)")
-                }
-            }
-
-            content.liked.isLike.toggle()
-            self.updateUi()
-
-            if content.liked.isLike {
-                let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
-                impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
-                impliesAnimation.duration = 0.3 * 2
-                impliesAnimation.calculationMode = CAAnimationCalculationMode.cubic
-                self.likeLabel.layer.add(impliesAnimation, forKey: nil)
-            }
+            self.likeContent(content: content)
         } else {
             self.delegate?.didAuthen(self)
         }
@@ -162,10 +183,17 @@ extension FooterTableViewCell: RecastPopupViewControllerDelegate {
             }
 
             content.recasted.isRecast.toggle()
-            self.updateUi()
+            self.updateUi(content: content)
         } else if recastAction == .quoteCast {
             guard let page = page else { return }
             self.delegate?.didTabQuoteCast(self, content: content, page: page)
         }
+    }
+}
+
+extension FooterTableViewCell: TokenHelperDelegate {
+    public func didRefreshTokenFinish() {
+        guard let content = self.content else { return }
+        self.likeContent(content: content)
     }
 }

@@ -34,6 +34,7 @@ import Kingfisher
 public protocol HeaderTableViewCellDelegate {
     func didTabProfile(_ headerTableViewCell: HeaderTableViewCell)
     func didAuthen(_ headerTableViewCell: HeaderTableViewCell)
+    func didRemoveSuccess(_ headerTableViewCell: HeaderTableViewCell)
 }
 
 public class HeaderTableViewCell: UITableViewCell {
@@ -47,6 +48,8 @@ public class HeaderTableViewCell: UITableViewCell {
     @IBOutlet var moreButton: UIButton!
     
     public var delegate: HeaderTableViewCellDelegate?
+    private var contentRepository: ContentRepository = ContentRepositoryImpl()
+    let tokenHelper: TokenHelper = TokenHelper()
     
     public var content: Content? {
         didSet {
@@ -55,6 +58,13 @@ public class HeaderTableViewCell: UITableViewCell {
                 self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
                 self.displayNameLabel.text = content.author.displayName
                 self.dateLabel.text = content.postDate.timeAgoDisplay()
+                if UserState.shared.rawCastcleId == content.author.castcleId {
+                    self.moreButton.isHidden = false
+                    self.followButton.isHidden = true
+                } else {
+                    self.moreButton.isHidden = true
+                    self.followButton.isHidden = false
+                }
             } else {
                 return
             }
@@ -63,12 +73,12 @@ public class HeaderTableViewCell: UITableViewCell {
     
     public override func awakeFromNib() {
         super.awakeFromNib()
+        self.tokenHelper.delegate = self
         self.avatarImage.circle(color: UIColor.Asset.white)
         self.displayNameLabel.font = UIFont.asset(.medium, fontSize: .overline)
         self.displayNameLabel.textColor = UIColor.Asset.white
         self.dateLabel.font = UIFont.asset(.regular, fontSize: .small)
         self.dateLabel.textColor = UIColor.Asset.lightGray
-        
         self.followButton.titleLabel?.font = UIFont.asset(.medium, fontSize: .overline)
         self.followButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
         
@@ -98,9 +108,37 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     @IBAction func moreAction(_ sender: Any) {
-        let alert = UIAlertController(title: nil, message: "Go to more action", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        Utility.currentViewController().present(alert, animated: true, completion: nil)
+        
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler: { (UIAlertAction) in
+            self.deleteContent()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in
+            
+        }))
+
+        Utility.currentViewController().present(alert, animated: true)
+    }
+    
+    private func deleteContent() {
+        guard let content = self.content else { return }
+        self.contentRepository.deleteContent(contentId: content.id) { (success, response, isRefreshToken) in
+            if success {
+                self.delegate?.didRemoveSuccess(self)
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
+    }
+}
+
+extension HeaderTableViewCell: TokenHelperDelegate {
+    public func didRefreshTokenFinish() {
+        self.deleteContent()
     }
 }
 
