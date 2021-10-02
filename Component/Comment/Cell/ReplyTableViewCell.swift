@@ -77,9 +77,7 @@ class ReplyTableViewCell: UITableViewCell {
                 Utility.currentViewController().present(alert, animated: true, completion: nil)
             }
             self.commentLabel.handleURLTap { url in
-                let alert = UIAlertController(title: nil, message: "Go to url view", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                Utility.currentViewController().present(alert, animated: true, completion: nil)
+                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
             }
             
             self.updateUi()

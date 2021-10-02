@@ -62,8 +62,12 @@ public class HeaderTableViewCell: UITableViewCell {
                     self.moreButton.isHidden = false
                     self.followButton.isHidden = true
                 } else {
+                    if content.author.followed {
+                        self.followButton.isHidden = true
+                    } else {
+                        self.followButton.isHidden = false
+                    }
                     self.moreButton.isHidden = true
-                    self.followButton.isHidden = false
                 }
             } else {
                 return
@@ -94,8 +98,9 @@ public class HeaderTableViewCell: UITableViewCell {
     
     @IBAction func followAction(_ sender: Any) {
         if UserState.shared.isLogin {
+            guard let content = self.content else { return }
             self.followButton.isHidden = true
-            HeaderSnackBar.make(in: Utility.currentViewController().view, message: "You've followed @{userSlug}", duration: .lengthLong).setAction(with: "Undo", action: {
+            HeaderSnackBar.make(in: Utility.currentViewController().view, message: "You've followed @\(content.author.castcleId)", duration: .lengthLong).setAction(with: "Undo", action: {
                 self.followButton.isHidden = false
             }).show()
         } else {
@@ -108,7 +113,6 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     @IBAction func moreAction(_ sender: Any) {
-        
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler: { (UIAlertAction) in

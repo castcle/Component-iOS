@@ -39,7 +39,7 @@ public class FeedCellHelper {
             cell?.backgroundColor = UIColor.Asset.darkGray
             cell?.content = content
             return cell ?? TextTableViewCell()
-        } else if content.feedDisplayType == .postLink || content.feedDisplayType == .postYoutube {
+        } else if content.feedDisplayType == .postLink {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.postTextLink, for: indexPath as IndexPath) as? TextLinkTableViewCell
             cell?.backgroundColor = UIColor.Asset.darkGray
             cell?.content = content

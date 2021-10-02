@@ -53,8 +53,14 @@ public class FooterTableViewCell: UITableViewCell {
     
     //MARK: Private
     private var contentRepository: ContentRepository = ContentRepositoryImpl()
-    private var recastRepository: RecastRepository = RecastRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
+    var contentRequest: ContentRequest = ContentRequest()
+    var stateType: StateType = .none
+    enum StateType {
+        case like
+        case recast
+        case none
+    }
     
     public override func awakeFromNib() {
         super.awakeFromNib()
@@ -136,9 +142,46 @@ public class FooterTableViewCell: UITableViewCell {
         }
     }
     
+    private func recastContent(content: Content, castcleId: String) {
+        if content.recasted.isRecast {
+            content.recasted.count -= 1
+            content.recasted.isRecast.toggle()
+            self.updateUi(content: content)
+            self.contentRequest.castcleId = castcleId
+            self.contentRepository.unrecastContent(contentId: content.id, contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
+                if !success {
+                    if isRefreshToken {
+                        self.tokenHelper.refreshToken()
+                    } else {
+                        content.recasted.count += 1
+                        content.recasted.isRecast.toggle()
+                        self.updateUi(content: content)
+                    }
+                }
+            }
+        } else {
+            content.recasted.count += 1
+            content.recasted.isRecast.toggle()
+            self.updateUi(content: content)
+            self.contentRequest.castcleId = castcleId
+            self.contentRepository.recastContent(contentId: content.id, contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
+                if !success {
+                    if isRefreshToken {
+                        self.tokenHelper.refreshToken()
+                    } else {
+                        content.recasted.count -= 1
+                        content.recasted.isRecast.toggle()
+                        self.updateUi(content: content)
+                    }
+                }
+            }
+        }
+    }
+    
     @IBAction func likeAction(_ sender: Any) {
         if UserState.shared.isLogin {
             guard let content = self.content else { return }
+            self.stateType = .like
             self.likeContent(content: content)
         } else {
             self.delegate?.didAuthen(self)
@@ -148,6 +191,7 @@ public class FooterTableViewCell: UITableViewCell {
     @IBAction func commentAction(_ sender: Any) {
         if UserState.shared.isLogin {
             guard let content = self.content else { return }
+            self.stateType = .recast
             self.delegate?.didTabComment(self, content: content)
         } else {
             self.delegate?.didAuthen(self)
@@ -168,22 +212,10 @@ public class FooterTableViewCell: UITableViewCell {
 }
 
 extension FooterTableViewCell: RecastPopupViewControllerDelegate {
-    public func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?) {
+    public func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?, castcleId: String) {
         guard let content = self.content else { return }
-
         if recastAction == .recast {
-            if content.recasted.isRecast {
-                self.recastRepository.unrecasted(feedUuid: content.id) { success in
-                    print("Unrecasted : \(success)")
-                }
-            } else {
-                self.recastRepository.recasted(feedUuid: content.id) { success in
-                    print("Recasted : \(success)")
-                }
-            }
-
-            content.recasted.isRecast.toggle()
-            self.updateUi(content: content)
+            self.recastContent(content: content, castcleId: castcleId)
         } else if recastAction == .quoteCast {
             guard let page = page else { return }
             self.delegate?.didTabQuoteCast(self, content: content, page: page)
@@ -194,6 +226,10 @@ extension FooterTableViewCell: RecastPopupViewControllerDelegate {
 extension FooterTableViewCell: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
         guard let content = self.content else { return }
-        self.likeContent(content: content)
+        if self.stateType == .like {
+            self.likeContent(content: content)
+        } else if self.stateType == .recast {
+            self.recastContent(content: content, castcleId: self.contentRequest.castcleId)
+        }
     }
 }

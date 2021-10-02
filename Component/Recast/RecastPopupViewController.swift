@@ -31,7 +31,7 @@ import PanModal
 import Kingfisher
 
 public protocol RecastPopupViewControllerDelegate {
-    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?)
+    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?, castcleId: String)
 }
 
 public enum RecastAction {
@@ -121,12 +121,12 @@ public class RecastPopupViewController: UIViewController {
     
     @IBAction func recastAction(_ sender: Any) {
         self.dismiss(animated: true)
-        self.delegate?.recastPopupViewController(self, didSelectRecastAction: .recast, page: nil)
+        self.delegate?.recastPopupViewController(self, didSelectRecastAction: .recast, page: nil, castcleId: self.viewModel.page?.castcleId ?? "")
     }
     
     @IBAction func quoteCastAction(_ sender: Any) {
         self.dismiss(animated: true)
-        self.delegate?.recastPopupViewController(self, didSelectRecastAction: .quoteCast, page: self.viewModel.page)
+        self.delegate?.recastPopupViewController(self, didSelectRecastAction: .quoteCast, page: self.viewModel.page, castcleId: self.viewModel.page?.castcleId ?? "")
     }
     
     @IBAction func moreActiom(_ sender: Any) {
@@ -172,7 +172,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case UserListSection.user.rawValue:
-            self.viewModel.page = Page(name: UserState.shared.name, avatar: UserState.shared.avatar)
+            self.viewModel.page = Page(name: UserState.shared.name, avatar: UserState.shared.avatar, castcleId: UserState.shared.rawCastcleId)
             self.userTableView.reloadData()
             self.updateUser()
             UIView.transition(with: self.view, duration: 0.3,
