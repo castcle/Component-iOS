@@ -34,8 +34,8 @@ import SwiftyJSON
 final class SplashScreenViewModel {
    
     //MARK: Private
-    private var authenticationRepository: AuthenticationRepository
-    private var userRepository: UserRepository
+    private var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
+    private var userRepository: UserRepository = UserRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
 
     public func guestLogin() {
@@ -67,14 +67,12 @@ final class SplashScreenViewModel {
     //MARK: Output
     var didGuestLoginFinish: (() -> ())?
     
-    public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl(), userRepository: UserRepository = UserRepositoryImpl()) {
-        self.authenticationRepository = authenticationRepository
-        self.userRepository = userRepository
+    public init() {
         self.tokenHelper.delegate = self
         if Defaults[.accessToken].isEmpty || Defaults[.userRole].isEmpty {
             self.guestLogin()
         } else {
-            if UserState.shared.isLogin {
+            if UserManager.shared.isLogin {
                 self.getMe()
             } else {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {

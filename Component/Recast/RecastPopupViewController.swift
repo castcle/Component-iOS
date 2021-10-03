@@ -89,7 +89,7 @@ public class RecastPopupViewController: UIViewController {
             self.recastLabel.text = "Recasted"
         }
         
-        if UserState.shared.page.count == 0 {
+        if UserManager.shared.page.count == 0 {
             self.moreButton.isHidden = true
         } else {
             self.moreButton.isHidden = false
@@ -105,7 +105,7 @@ public class RecastPopupViewController: UIViewController {
     private func updateUser() {
         let url = URL(string: self.viewModel.page?.avatar ?? "")
         self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
-        self.displayNameLabel.text = self.viewModel.page?.name ?? ""
+        self.displayNameLabel.text = self.viewModel.page?.displayName ?? ""
     }
     
     func configureTableView() {
@@ -145,7 +145,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == UserListSection.page.rawValue {
-            return UserState.shared.page.count
+            return UserManager.shared.page.count
         } else {
             return 1
         }
@@ -155,14 +155,14 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
         switch indexPath.section {
         case UserListSection.user.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.userList, for: indexPath as IndexPath) as? UserListTableViewCell
-            let isSelect: Bool = (self.viewModel.page?.name == UserState.shared.name)
+            let isSelect: Bool = (self.viewModel.page?.displayName == UserManager.shared.displayName)
             cell?.configCell(isUser: true, page: nil, isSelect: isSelect)
             return cell ?? UserListTableViewCell()
         case UserListSection.page.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.userList, for: indexPath as IndexPath) as? UserListTableViewCell
-            let page: Page = UserState.shared.page[indexPath.row]
-            let isSelect: Bool = (self.viewModel.page?.name == page.name)
-            cell?.configCell(isUser: false, page: UserState.shared.page[indexPath.row], isSelect: isSelect)
+            let page: Page = UserManager.shared.page[indexPath.row]
+            let isSelect: Bool = (self.viewModel.page?.displayName == page.displayName)
+            cell?.configCell(isUser: false, page: UserManager.shared.page[indexPath.row], isSelect: isSelect)
             return cell ?? UserListTableViewCell()
         default:
             return UITableViewCell()
@@ -172,7 +172,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case UserListSection.user.rawValue:
-            self.viewModel.page = Page(name: UserState.shared.name, avatar: UserState.shared.avatar, castcleId: UserState.shared.rawCastcleId)
+            self.viewModel.page = Page(displayName: UserManager.shared.displayName, avatar: UserManager.shared.avatar, castcleId: UserManager.shared.rawCastcleId)
             self.userTableView.reloadData()
             self.updateUser()
             UIView.transition(with: self.view, duration: 0.3,
@@ -181,7 +181,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
                                 self.selectView.isHidden = true
                               })
         case UserListSection.page.rawValue:
-            self.viewModel.page = UserState.shared.page[indexPath.row]
+            self.viewModel.page = UserManager.shared.page[indexPath.row]
             self.userTableView.reloadData()
             self.updateUser()
             UIView.transition(with: self.view, duration: 0.3,

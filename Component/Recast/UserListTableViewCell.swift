@@ -48,14 +48,14 @@ class UserListTableViewCell: UITableViewCell {
     
     func configCell(isUser: Bool, page: Page?, isSelect: Bool) {
         if isUser {
-            let url = URL(string: UserState.shared.avatar)
+            let url = URL(string: UserManager.shared.avatar)
             self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
-            self.nameLabel.text = UserState.shared.name
+            self.nameLabel.text = UserManager.shared.displayName
         } else {
             guard let page = page else { return }
             let url = URL(string: page.avatar)
             self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
-            self.nameLabel.text = page.name
+            self.nameLabel.text = page.displayName
         }
         
         if isSelect {

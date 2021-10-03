@@ -137,7 +137,7 @@ class ReplyTableViewCell: UITableViewCell {
     }
     
     @IBAction func likeAction(_ sender: Any) {
-        if UserState.shared.isLogin {
+        if UserManager.shared.isLogin {
             guard let replyComment = self.replyComment else { return }
 
 //            if feed.feedPayload.liked.isLike {

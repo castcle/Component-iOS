@@ -179,7 +179,7 @@ public class FooterTableViewCell: UITableViewCell {
     }
     
     @IBAction func likeAction(_ sender: Any) {
-        if UserState.shared.isLogin {
+        if UserManager.shared.isLogin {
             guard let content = self.content else { return }
             self.stateType = .like
             self.likeContent(content: content)
@@ -189,7 +189,7 @@ public class FooterTableViewCell: UITableViewCell {
     }
     
     @IBAction func commentAction(_ sender: Any) {
-        if UserState.shared.isLogin {
+        if UserManager.shared.isLogin {
             guard let content = self.content else { return }
             self.stateType = .recast
             self.delegate?.didTabComment(self, content: content)
@@ -199,7 +199,7 @@ public class FooterTableViewCell: UITableViewCell {
     }
     
     @IBAction func recastAction(_ sender: Any) {
-        if UserState.shared.isLogin {
+        if UserManager.shared.isLogin {
             guard let content = self.content else { return }
             let vc = ComponentOpener.open(.recast(RecastPopupViewModel(isRecasted: content.recasted.isRecast))) as? RecastPopupViewController
             vc?.delegate = self

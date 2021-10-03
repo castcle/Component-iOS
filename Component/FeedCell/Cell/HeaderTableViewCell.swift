@@ -58,16 +58,16 @@ public class HeaderTableViewCell: UITableViewCell {
                 self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
                 self.displayNameLabel.text = content.author.displayName
                 self.dateLabel.text = content.postDate.timeAgoDisplay()
-                if UserState.shared.rawCastcleId == content.author.castcleId {
+                if UserManager.shared.rawCastcleId == content.author.castcleId {
                     self.moreButton.isHidden = false
                     self.followButton.isHidden = true
                 } else {
+                    self.moreButton.isHidden = true
                     if content.author.followed {
                         self.followButton.isHidden = true
                     } else {
                         self.followButton.isHidden = false
                     }
-                    self.moreButton.isHidden = true
                 }
             } else {
                 return
@@ -97,7 +97,7 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     @IBAction func followAction(_ sender: Any) {
-        if UserState.shared.isLogin {
+        if UserManager.shared.isLogin {
             guard let content = self.content else { return }
             self.followButton.isHidden = true
             HeaderSnackBar.make(in: Utility.currentViewController().view, message: "You've followed @\(content.author.castcleId)", duration: .lengthLong).setAction(with: "Undo", action: {
