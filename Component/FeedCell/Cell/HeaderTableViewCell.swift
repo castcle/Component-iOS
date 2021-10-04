@@ -46,6 +46,7 @@ public class HeaderTableViewCell: UITableViewCell {
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var followButton: UIButton!
     @IBOutlet var moreButton: UIButton!
+    @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
     
     public var delegate: HeaderTableViewCellDelegate?
     private var contentRepository: ContentRepository = ContentRepositoryImpl()
@@ -68,6 +69,13 @@ public class HeaderTableViewCell: UITableViewCell {
                     } else {
                         self.followButton.isHidden = false
                     }
+                }
+                if content.author.verified.official {
+                    self.verifyConstraintWidth.constant = 15.0
+                    self.verifyIcon.isHidden = false
+                } else {
+                    self.verifyConstraintWidth.constant = 0.0
+                    self.verifyIcon.isHidden = true
                 }
             } else {
                 return
