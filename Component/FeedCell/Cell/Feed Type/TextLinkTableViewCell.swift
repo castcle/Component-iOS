@@ -71,9 +71,22 @@ public class TextLinkTableViewCell: UITableViewCell {
                 Utility.currentViewController().present(alert, animated: true, completion: nil)
             }
             self.detailLabel.handleURLTap { url in
-                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
+                var urlString = url.absoluteString
+                urlString = urlString.replacingOccurrences(of: "https://", with: "")
+                urlString = urlString.replacingOccurrences(of: "http://", with: "")
+                if let newUrl = URL(string: "https://\(urlString)") {
+                    Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
+                } else {
+                    return
+                }
             }
-            self.loadLink(content: content)
+            if let link = content.contentPayload.link.first {
+                self.loadLink(link: link.url)
+            } else if let link = content.contentPayload.message.detectedFirstLink {
+                self.loadLink(link: link)
+            } else {
+                self.setData()
+            }
         }
     }
     
@@ -92,21 +105,17 @@ public class TextLinkTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    private func loadLink(content: Content) {
-        if let link = content.contentPayload.link.first {
-            if let cached = self.slp.cache.slp_getCachedResponse(url: link.url) {
-                self.result = cached
-                self.setData()
-            } else {
-                self.slp.preview(link.url, onSuccess: { result in
-                    self.result = result
-                    self.setData()
-                }, onError: { error in
-                    self.setData()
-                })
-            }
-        } else {
+    private func loadLink(link: String) {
+        if let cached = self.slp.cache.slp_getCachedResponse(url: link) {
+            self.result = cached
             self.setData()
+        } else {
+            self.slp.preview(link, onSuccess: { result in
+                self.result = result
+                self.setData()
+            }, onError: { error in
+                self.setData()
+            })
         }
     }
     
