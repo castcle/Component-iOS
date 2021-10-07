@@ -80,21 +80,29 @@
                             <constraint firstItem="T5t-De-s0k" firstAttribute="top" secondItem="DnD-uN-gp6" secondAttribute="top" id="xUd-eU-6dW"/>
                         </constraints>
                     </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GVO-Op-bAY">
+                        <rect key="frame" x="15" y="55" width="290" height="200"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="8gY-d9-6ZW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="3PC-00-biR"/>
                     <constraint firstAttribute="trailing" secondItem="8gY-d9-6ZW" secondAttribute="trailing" constant="15" id="71W-U1-eq1"/>
                     <constraint firstItem="8gY-d9-6ZW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="BNW-d4-e65"/>
+                    <constraint firstItem="GVO-Op-bAY" firstAttribute="leading" secondItem="DnD-uN-gp6" secondAttribute="leading" id="GKr-gN-dRV"/>
                     <constraint firstAttribute="trailing" secondItem="DnD-uN-gp6" secondAttribute="trailing" constant="15" id="IN7-aM-u76"/>
+                    <constraint firstItem="GVO-Op-bAY" firstAttribute="top" secondItem="DnD-uN-gp6" secondAttribute="top" id="LBj-Vc-gRl"/>
                     <constraint firstAttribute="bottom" secondItem="DnD-uN-gp6" secondAttribute="bottom" constant="10" id="LDN-70-cVc"/>
+                    <constraint firstItem="GVO-Op-bAY" firstAttribute="trailing" secondItem="DnD-uN-gp6" secondAttribute="trailing" id="PY3-Z1-qX8"/>
                     <constraint firstItem="DnD-uN-gp6" firstAttribute="top" secondItem="8gY-d9-6ZW" secondAttribute="bottom" constant="25" id="T9s-12-tUb"/>
                     <constraint firstItem="DnD-uN-gp6" firstAttribute="width" secondItem="DnD-uN-gp6" secondAttribute="height" multiplier="29:20" id="bDn-97-Gu8"/>
+                    <constraint firstItem="GVO-Op-bAY" firstAttribute="bottom" secondItem="DnD-uN-gp6" secondAttribute="bottom" id="kSF-Q2-dwb"/>
                     <constraint firstItem="DnD-uN-gp6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="lvd-eE-PbS"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="detailLabel" destination="8gY-d9-6ZW" id="GiI-Po-1Sh"/>
+                <outlet property="initImage" destination="GVO-Op-bAY" id="mlK-5n-rqV"/>
                 <outlet property="linkContainer" destination="DnD-uN-gp6" id="bw4-AZ-Wp9"/>
                 <outlet property="linkDescriptionLabel" destination="tUL-xi-0p8" id="O1g-Y4-7XF"/>
                 <outlet property="linkImage" destination="T5t-De-s0k" id="i0P-5U-yIx"/>
