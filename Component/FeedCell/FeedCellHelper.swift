@@ -39,10 +39,15 @@ public class FeedCellHelper {
             cell?.backgroundColor = UIColor.Asset.darkGray
             cell?.content = content
             return cell ?? TextTableViewCell()
-        } else if content.feedDisplayType == .postLink {
-            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.postTextLink, for: indexPath as IndexPath) as? TextLinkTableViewCell
+        } else if content.feedDisplayType == .postLinkPreview {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.postLinkPreview, for: indexPath as IndexPath) as? TextLinkPreviewTableViewCell
             cell?.backgroundColor = UIColor.Asset.darkGray
             cell?.content = content
+            return cell ?? TextLinkPreviewTableViewCell()
+        } else if content.feedDisplayType == .postLink {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.postLink, for: indexPath as IndexPath) as? TextLinkTableViewCell
+            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.configCell(content: content)
             return cell ?? TextLinkTableViewCell()
         } else if content.feedDisplayType == .postImageX1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageX1, for: indexPath as IndexPath) as? ImageX1TableViewCell

@@ -76,6 +76,8 @@
 		B792815F268F2C30000ED84A /* Component.h in Headers */ = {isa = PBXBuildFile; fileRef = B792815D268F2C30000ED84A /* Component.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B79281D226959A84000ED84A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B79281D126959A84000ED84A /* Core.framework */; };
 		B7A71D0126FC4E380092F318 /* FeedCellHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A71D0026FC4E380092F318 /* FeedCellHelper.swift */; };
+		B7AC1E442717C67A002FC176 /* TextLinkPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC1E422717C67A002FC176 /* TextLinkPreviewTableViewCell.swift */; };
+		B7AC1E452717C67A002FC176 /* TextLinkPreviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7AC1E432717C67A002FC176 /* TextLinkPreviewTableViewCell.xib */; };
 		B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */; };
 		B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */; };
 		C4C3938BB71648406A5368E4 /* Pods_Component.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A723B2EF055ED2C75BAC143 /* Pods_Component.framework */; };
@@ -162,6 +164,8 @@
 		B792815E268F2C30000ED84A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B79281D126959A84000ED84A /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7A71D0026FC4E380092F318 /* FeedCellHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellHelper.swift; sourceTree = "<group>"; };
+		B7AC1E422717C67A002FC176 /* TextLinkPreviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextLinkPreviewTableViewCell.swift; sourceTree = "<group>"; };
+		B7AC1E432717C67A002FC176 /* TextLinkPreviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextLinkPreviewTableViewCell.xib; sourceTree = "<group>"; };
 		B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
 		D22398FF8040ECFC1E72C75E /* Pods-Component.debug (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.debug (staging).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.debug (staging).xcconfig"; sourceTree = "<group>"; };
@@ -347,6 +351,8 @@
 				B71744A526E9E6DC0014D6B5 /* TextTableViewCell.xib */,
 				B71744A826E9EAB10014D6B5 /* TextLinkTableViewCell.swift */,
 				B71744A926E9EAB10014D6B5 /* TextLinkTableViewCell.xib */,
+				B7AC1E422717C67A002FC176 /* TextLinkPreviewTableViewCell.swift */,
+				B7AC1E432717C67A002FC176 /* TextLinkPreviewTableViewCell.xib */,
 				B71744AC26E9EF280014D6B5 /* ImageX1TableViewCell.swift */,
 				B71744AD26E9EF280014D6B5 /* ImageX1TableViewCell.xib */,
 				B71744B226E9EF750014D6B5 /* ImageX2TableViewCell.swift */,
@@ -524,6 +530,7 @@
 				B717449F26E7E1450014D6B5 /* CommentTableViewCell.xib in Resources */,
 				B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */,
 				B71744C626E9F6980014D6B5 /* BlogNoImageTableViewCell.xib in Resources */,
+				B7AC1E452717C67A002FC176 /* TextLinkPreviewTableViewCell.xib in Resources */,
 				B71744AF26E9EF280014D6B5 /* ImageX1TableViewCell.xib in Resources */,
 				B71744C226E9F6820014D6B5 /* BlogTableViewCell.xib in Resources */,
 				B71744AB26E9EAB10014D6B5 /* TextLinkTableViewCell.xib in Resources */,
@@ -585,6 +592,7 @@
 				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,
 				B717447F26E259AB0014D6B5 /* CommentViewModel.swift in Sources */,
+				B7AC1E442717C67A002FC176 /* TextLinkPreviewTableViewCell.swift in Sources */,
 				B71744AA26E9EAB10014D6B5 /* TextLinkTableViewCell.swift in Sources */,
 				B7552979269CBA14005D5EB5 /* RefreshProtocol.swift in Sources */,
 				B7552986269CBE49005D5EB5 /* NormalFooterAnimator.swift in Sources */,

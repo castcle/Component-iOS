@@ -19,7 +19,7 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  TextLinkTableViewCell.swift
+//  TextLinkPreviewTableViewCell.swift
 //  Component
 //
 //  Created by Tanakorn Phoochaliaw on 9/9/2564 BE.
@@ -30,9 +30,8 @@ import Core
 import Networking
 import ActiveLabel
 import SwiftLinkPreview
-import SkeletonView
 
-public class TextLinkTableViewCell: UITableViewCell {
+public class TextLinkPreviewTableViewCell: UITableViewCell {
 
     @IBOutlet var detailLabel: ActiveLabel! {
         didSet {
@@ -53,61 +52,63 @@ public class TextLinkTableViewCell: UITableViewCell {
     @IBOutlet var linkImage: UIImageView!
     @IBOutlet var linkTitleLabel: UILabel!
     @IBOutlet var linkDescriptionLabel: UILabel!
-    @IBOutlet var skeletonView: UIView!
+    @IBOutlet var initImage: UIImageView!
     
     private var result = Response()
     private let slp = SwiftLinkPreview(cache: InMemoryCache())
     
+    public var content: Content? {
+        didSet {
+            guard let content = self.content else { return }
+            self.detailLabel.text = content.contentPayload.message
+            self.detailLabel.handleHashtagTap { hashtag in
+                let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                Utility.currentViewController().present(alert, animated: true, completion: nil)
+            }
+            self.detailLabel.handleMentionTap { mention in
+                let alert = UIAlertController(title: nil, message: "Go to mention view", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                Utility.currentViewController().present(alert, animated: true, completion: nil)
+            }
+            self.detailLabel.handleURLTap { url in
+                var urlString = url.absoluteString
+                urlString = urlString.replacingOccurrences(of: "https://", with: "")
+                urlString = urlString.replacingOccurrences(of: "http://", with: "")
+                if let newUrl = URL(string: "https://\(urlString)") {
+                    Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
+                } else {
+                    return
+                }
+            }
+            
+            self.initImage.image = UIImage.Asset.placeholder
+            self.initImage.isHidden = false
+            self.linkContainer.isHidden = true
+            if let link = content.contentPayload.link.first {
+                self.loadLink(link: link.url)
+            } else if let link = content.contentPayload.message.detectedFirstLink {
+                self.loadLink(link: link)
+            } else {
+                self.setData()
+            }
+        }
+    }
+    
     public override func awakeFromNib() {
         super.awakeFromNib()
-        self.skeletonView.custom(cornerRadius: 12, borderWidth: 1, borderColor: UIColor.Asset.gray)
-        self.linkContainer.custom(cornerRadius: 12, borderWidth: 1, borderColor: UIColor.Asset.gray)
+        self.initImage.custom(cornerRadius: 12)
+        self.linkContainer.custom(cornerRadius: 12)
         self.linkContainer.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.titleLinkView.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.linkTitleLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.linkTitleLabel.textColor = UIColor.Asset.white
         self.linkDescriptionLabel.font = UIFont.asset(.regular, fontSize: .small)
         self.linkDescriptionLabel.textColor = UIColor.Asset.lightGray
-        self.skeletonView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.Asset.gray))
     }
 
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-    }
-    
-    func configCell(content: Content?) {
-        guard let content = content else { return }
-        self.detailLabel.text = content.contentPayload.message
-        self.detailLabel.handleHashtagTap { hashtag in
-            let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            Utility.currentViewController().present(alert, animated: true, completion: nil)
-        }
-        self.detailLabel.handleMentionTap { mention in
-            let alert = UIAlertController(title: nil, message: "Go to mention view", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            Utility.currentViewController().present(alert, animated: true, completion: nil)
-        }
-        self.detailLabel.handleURLTap { url in
-            var urlString = url.absoluteString
-            urlString = urlString.replacingOccurrences(of: "https://", with: "")
-            urlString = urlString.replacingOccurrences(of: "http://", with: "")
-            if let newUrl = URL(string: "https://\(urlString)") {
-                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
-            } else {
-                return
-            }
-        }
-        
-        self.skeletonView.isHidden = false
-        self.linkContainer.isHidden = true
-        if let link = content.contentPayload.link.first {
-            self.loadLink(link: link.url)
-        } else if let link = content.contentPayload.message.detectedFirstLink {
-            self.loadLink(link: link)
-        } else {
-            self.setData()
-        }
     }
     
     private func loadLink(link: String) {
@@ -126,12 +127,12 @@ public class TextLinkTableViewCell: UITableViewCell {
     
     private func setData() {
         UIView.transition(with: self, duration: 0.35, options: .transitionCrossDissolve, animations: {
-            self.skeletonView.isHidden = true
+            self.initImage.isHidden = true
             self.linkContainer.isHidden = false
         })
         
         // MARK: - Image
-        if let value = self.result.icon {
+        if let value = self.result.image {
             let url = URL(string: value)
             self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
         } else {
