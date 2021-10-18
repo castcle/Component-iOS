@@ -60,7 +60,7 @@
 		B78795C826C617BA00FECC21 /* BottomPageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C726C617BA00FECC21 /* BottomPageDelegate.swift */; };
 		B78795CA26C6182400FECC21 /* PannableViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C926C6182300FECC21 /* PannableViewsProtocol.swift */; };
 		B78795CE26C6191A00FECC21 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795CD26C6191A00FECC21 /* ContainerViewController.swift */; };
-		B78795D026C6198300FECC21 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795CF26C6198300FECC21 /* Extensions.swift */; };
+		B78795D026C6198300FECC21 /* TProfileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795CF26C6198300FECC21 /* TProfileExtensions.swift */; };
 		B787963626C66E7300FECC21 /* Recast.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B787963526C66E7300FECC21 /* Recast.storyboard */; };
 		B787963826C66EBD00FECC21 /* RecastPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787963726C66EBC00FECC21 /* RecastPopupViewController.swift */; };
 		B787963A26C66EE900FECC21 /* RecastPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787963926C66EE900FECC21 /* RecastPopupViewModel.swift */; };
@@ -78,6 +78,12 @@
 		B7A71D0126FC4E380092F318 /* FeedCellHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A71D0026FC4E380092F318 /* FeedCellHelper.swift */; };
 		B7AC1E442717C67A002FC176 /* TextLinkPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC1E422717C67A002FC176 /* TextLinkPreviewTableViewCell.swift */; };
 		B7AC1E452717C67A002FC176 /* TextLinkPreviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7AC1E432717C67A002FC176 /* TextLinkPreviewTableViewCell.xib */; };
+		B7AC87FE27199A6D00500F81 /* CCActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC87FD27199A6D00500F81 /* CCActionSheet.swift */; };
+		B7AC880027199AD500500F81 /* CCActionSheet+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC87FF27199AD500500F81 /* CCActionSheet+Animation.swift */; };
+		B7AC880227199B0F00500F81 /* CastcleActionSheetExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880127199B0F00500F81 /* CastcleActionSheetExtensions.swift */; };
+		B7AC880427199B4700500F81 /* CCAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880327199B4700500F81 /* CCAction.swift */; };
+		B7AC880627199B7800500F81 /* CCAction+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880527199B7800500F81 /* CCAction+Style.swift */; };
+		B7AC880827199BA500500F81 /* HandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880727199BA500500F81 /* HandleView.swift */; };
 		B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */; };
 		B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */; };
 		C4C3938BB71648406A5368E4 /* Pods_Component.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A723B2EF055ED2C75BAC143 /* Pods_Component.framework */; };
@@ -145,7 +151,7 @@
 		B78795C726C617BA00FECC21 /* BottomPageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomPageDelegate.swift; sourceTree = "<group>"; };
 		B78795C926C6182300FECC21 /* PannableViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PannableViewsProtocol.swift; sourceTree = "<group>"; };
 		B78795CD26C6191A00FECC21 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
-		B78795CF26C6198300FECC21 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		B78795CF26C6198300FECC21 /* TProfileExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TProfileExtensions.swift; sourceTree = "<group>"; };
 		B787963126C6632600FECC21 /* Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B787963526C66E7300FECC21 /* Recast.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Recast.storyboard; sourceTree = "<group>"; };
 		B787963726C66EBC00FECC21 /* RecastPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecastPopupViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +172,12 @@
 		B7A71D0026FC4E380092F318 /* FeedCellHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellHelper.swift; sourceTree = "<group>"; };
 		B7AC1E422717C67A002FC176 /* TextLinkPreviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextLinkPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		B7AC1E432717C67A002FC176 /* TextLinkPreviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextLinkPreviewTableViewCell.xib; sourceTree = "<group>"; };
+		B7AC87FD27199A6D00500F81 /* CCActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCActionSheet.swift; sourceTree = "<group>"; };
+		B7AC87FF27199AD500500F81 /* CCActionSheet+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CCActionSheet+Animation.swift"; sourceTree = "<group>"; };
+		B7AC880127199B0F00500F81 /* CastcleActionSheetExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastcleActionSheetExtensions.swift; sourceTree = "<group>"; };
+		B7AC880327199B4700500F81 /* CCAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCAction.swift; sourceTree = "<group>"; };
+		B7AC880527199B7800500F81 /* CCAction+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CCAction+Style.swift"; sourceTree = "<group>"; };
+		B7AC880727199BA500500F81 /* HandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleView.swift; sourceTree = "<group>"; };
 		B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
 		D22398FF8040ECFC1E72C75E /* Pods-Component.debug (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.debug (staging).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.debug (staging).xcconfig"; sourceTree = "<group>"; };
@@ -298,7 +310,7 @@
 			children = (
 				B78795CC26C6190300FECC21 /* ScrollController */,
 				B78795CB26C6188F00FECC21 /* Protocals */,
-				B78795CF26C6198300FECC21 /* Extensions.swift */,
+				B78795CF26C6198300FECC21 /* TProfileExtensions.swift */,
 			);
 			path = TProfile;
 			sourceTree = "<group>";
@@ -435,6 +447,7 @@
 				B792815E268F2C30000ED84A /* Info.plist */,
 				B75529D1269F693C005D5EB5 /* Utilities */,
 				B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */,
+				B7AC87FC271999CF00500F81 /* CastcleActionSheet */,
 				B717447826E258DE0014D6B5 /* Comment */,
 				B787963426C66E5F00FECC21 /* Recast */,
 				B78795DE26C6513F00FECC21 /* FeedCell */,
@@ -445,6 +458,19 @@
 				B755294B269CB846005D5EB5 /* Refresh */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		B7AC87FC271999CF00500F81 /* CastcleActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				B7AC87FD27199A6D00500F81 /* CCActionSheet.swift */,
+				B7AC87FF27199AD500500F81 /* CCActionSheet+Animation.swift */,
+				B7AC880127199B0F00500F81 /* CastcleActionSheetExtensions.swift */,
+				B7AC880327199B4700500F81 /* CCAction.swift */,
+				B7AC880527199B7800500F81 /* CCAction+Style.swift */,
+				B7AC880727199BA500500F81 /* HandleView.swift */,
+			);
+			path = CastcleActionSheet;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -602,11 +628,14 @@
 				B7910DF726AFE4090097C94E /* InternalWebViewViewController.swift in Sources */,
 				B7552978269CBA14005D5EB5 /* RefreshComponent.swift in Sources */,
 				B71744C526E9F6980014D6B5 /* BlogNoImageTableViewCell.swift in Sources */,
-				B78795D026C6198300FECC21 /* Extensions.swift in Sources */,
+				B78795D026C6198300FECC21 /* TProfileExtensions.swift in Sources */,
 				B71744A626E9E6DC0014D6B5 /* TextTableViewCell.swift in Sources */,
+				B7AC880827199BA500500F81 /* HandleView.swift in Sources */,
 				B71744C126E9F6820014D6B5 /* BlogTableViewCell.swift in Sources */,
+				B7AC880027199AD500500F81 /* CCActionSheet+Animation.swift in Sources */,
 				B755297E269CBA15005D5EB5 /* RefreshHeaderView.swift in Sources */,
 				B78795C826C617BA00FECC21 /* BottomPageDelegate.swift in Sources */,
+				B7AC880627199B7800500F81 /* CCAction+Style.swift in Sources */,
 				B71744B426E9EF750014D6B5 /* ImageX2TableViewCell.swift in Sources */,
 				B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */,
 				B78795CA26C6182400FECC21 /* PannableViewsProtocol.swift in Sources */,
@@ -614,10 +643,13 @@
 				B717449A26E7A2550014D6B5 /* FooterTableViewCell.swift in Sources */,
 				B71744BC26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.swift in Sources */,
 				B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */,
+				B7AC87FE27199A6D00500F81 /* CCActionSheet.swift in Sources */,
 				B78795CE26C6191A00FECC21 /* ContainerViewController.swift in Sources */,
 				B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */,
+				B7AC880427199B4700500F81 /* CCAction.swift in Sources */,
 				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,
 				B755297D269CBA15005D5EB5 /* RefreshExtension.swift in Sources */,
+				B7AC880227199B0F00500F81 /* CastcleActionSheetExtensions.swift in Sources */,
 				B71744A226E7ED320014D6B5 /* ReplyTableViewCell.swift in Sources */,
 				B717449E26E7E1450014D6B5 /* CommentTableViewCell.swift in Sources */,
 				B755297B269CBA14005D5EB5 /* RefreshFooterView.swift in Sources */,
