@@ -22,7 +22,7 @@
 //  ComponentOpener.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 27/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 27/7/2564 BE.
 //
 
 import UIKit

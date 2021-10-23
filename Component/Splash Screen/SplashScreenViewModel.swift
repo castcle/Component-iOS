@@ -22,7 +22,7 @@
 //  SplashScreenViewModel.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 1/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 1/8/2564 BE.
 //
 
 import Foundation

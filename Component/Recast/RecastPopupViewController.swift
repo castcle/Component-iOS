@@ -22,7 +22,7 @@
 //  RecastPopupViewController.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 22/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 22/7/2564 BE.
 //
 
 import UIKit

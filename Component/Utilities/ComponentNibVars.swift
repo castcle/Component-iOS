@@ -22,7 +22,7 @@
 //  ComponentNibVars.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 15/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 15/7/2564 BE.
 //
 
 public struct ComponentNibVars {

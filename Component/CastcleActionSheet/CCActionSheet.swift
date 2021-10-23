@@ -22,7 +22,7 @@
 //  CCActionSheet.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 15/10/2564 BE.
+//  Created by Castcle Co., Ltd. on 15/10/2564 BE.
 //
 
 import UIKit

@@ -22,7 +22,7 @@
 //  TPDataSource.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 13/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 13/8/2564 BE.
 //
 
 import UIKit
