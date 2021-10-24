@@ -37,7 +37,7 @@ public class TextLinkTableViewCell: UITableViewCell {
     @IBOutlet var detailLabel: ActiveLabel! {
         didSet {
             self.detailLabel.customize { label in
-                label.font = UIFont.asset(.regular, fontSize: .body)
+                label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
                 label.enabledTypes = [.mention, .hashtag, .url]
                 label.textColor = UIColor.Asset.white
@@ -64,9 +64,9 @@ public class TextLinkTableViewCell: UITableViewCell {
         self.linkContainer.custom(cornerRadius: 12, borderWidth: 1, borderColor: UIColor.Asset.gray)
         self.linkContainer.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.titleLinkView.backgroundColor = UIColor.Asset.darkGraphiteBlue
-        self.linkTitleLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.linkTitleLabel.font = UIFont.asset(.contentBold, fontSize: .overline)
         self.linkTitleLabel.textColor = UIColor.Asset.white
-        self.linkDescriptionLabel.font = UIFont.asset(.regular, fontSize: .small)
+        self.linkDescriptionLabel.font = UIFont.asset(.contentLight, fontSize: .small)
         self.linkDescriptionLabel.textColor = UIColor.Asset.lightGray
         self.skeletonView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.Asset.gray))
     }

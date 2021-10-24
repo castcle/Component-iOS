@@ -44,8 +44,8 @@ public class CCAction: UIView {
     public override var bounds: CGRect {
         didSet {
             if self.isCancelButton {
-                layer.cornerRadius = frame.height/2
-                layer.masksToBounds = true
+                self.layer.cornerRadius = self.frame.height/2
+                self.layer.masksToBounds = true
             }
         }
     }
@@ -66,7 +66,7 @@ public class CCAction: UIView {
     public convenience init(title: String, image: UIImage? = nil, style: CCAction.Style = .default, completion: @escaping ()->Void) {
         self.init()
         self.button.setTitle(title, for: .normal)
-        self.button.titleLabel?.font =  UIFont.asset(.medium, fontSize: .body)
+        self.button.titleLabel?.font =  UIFont.asset(.bold, fontSize: .body)
         self.imageView.image = image
         self.onTapCompletion = completion
         self.isCancelButton = false
@@ -85,7 +85,7 @@ public class CCAction: UIView {
     // MARK: - Setups
     private func setupView() {
         self.button.setTitleColor(style == .default ? UIColor.Asset.white : UIColor.Asset.denger, for: .normal)
-        addSubview(self.button)
+        self.addSubview(self.button)
         self.setButtonConstraints()
         if !self.isCancelButton {
             self.setupNotCancelView()
@@ -97,7 +97,7 @@ public class CCAction: UIView {
     }
     
     private func setupCancelButton() {
-        backgroundColor = UIColor.Asset.darkGray
+        self.backgroundColor = UIColor.Asset.darkGray
     }
     
     private func setupNotCancelView() {
@@ -110,8 +110,8 @@ public class CCAction: UIView {
         self.imageView.contentMode = .scaleAspectFit
         self.imageView.image = self.imageView.image?.withRenderingMode(.alwaysTemplate)
         self.imageView.tintColor = self.style == .default ? UIColor.Asset.white : UIColor.Asset.denger
-        addSubview(self.imageView)
-        bringSubviewToFront(self.button)
+        self.addSubview(self.imageView)
+        self.bringSubviewToFront(self.button)
         self.setImageViewConstraints()
         self.button.titleEdgeInsets = UIEdgeInsets(top: 0, left: self.leftButtonPadding + self.imageViewWidth + self.interImageTitleSpace, bottom: 0, right: 0)
     }

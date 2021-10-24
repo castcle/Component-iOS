@@ -90,7 +90,7 @@ class ReplyTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.avatarImage.circle(color: UIColor.Asset.white)
-        self.displayNameLabel.font = UIFont.asset(.medium, fontSize: .overline)
+        self.displayNameLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.displayNameLabel.textColor = UIColor.Asset.white
         self.dateLabel.font = UIFont.asset(.regular, fontSize: .small)
         self.dateLabel.textColor = UIColor.Asset.lightGray
@@ -166,7 +166,7 @@ class ReplyTableViewCell: UITableViewCell {
     private func updateUi() {
         guard let replyComment = self.replyComment else { return }
         
-        self.likeLabel.font = UIFont.asset(.medium, fontSize: .small)
+        self.likeLabel.font = UIFont.asset(.bold, fontSize: .small)
         if replyComment.like.isLike {
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.lightBlue, postfixText: "  Like", postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 14)
         } else {

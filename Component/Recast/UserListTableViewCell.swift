@@ -37,7 +37,7 @@ class UserListTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.avatarImage.circle(color: UIColor.Asset.white)
-        self.nameLabel.font = UIFont.asset(.medium, fontSize: .overline)
+        self.nameLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.nameLabel.textColor = UIColor.Asset.white
         self.checkImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
     }

@@ -35,7 +35,7 @@ public class TextTableViewCell: UITableViewCell {
     @IBOutlet var detailLabel: ActiveLabel! {
         didSet {
             self.detailLabel.customize { label in
-                label.font = UIFont.asset(.regular, fontSize: .body)
+                label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
                 label.enabledTypes = [.mention, .hashtag, .url]
                 label.textColor = UIColor.Asset.white

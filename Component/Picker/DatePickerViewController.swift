@@ -51,7 +51,7 @@ public class DatePickerViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.toolBarView.backgroundColor = UIColor.Asset.darkGray
-        self.doneButton.titleLabel?.font = UIFont.asset(.medium, fontSize: .h4)
+        self.doneButton.titleLabel?.font = UIFont.asset(.bold, fontSize: .h4)
         self.datePicker.datePickerMode = .date
         self.datePicker.maximumDate = Date()
         self.datePicker.minimumDate = Date() - 100.years

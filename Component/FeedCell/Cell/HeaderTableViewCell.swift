@@ -88,11 +88,11 @@ public class HeaderTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.tokenHelper.delegate = self
         self.avatarImage.circle(color: UIColor.Asset.white)
-        self.displayNameLabel.font = UIFont.asset(.medium, fontSize: .overline)
+        self.displayNameLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.displayNameLabel.textColor = UIColor.Asset.white
         self.dateLabel.font = UIFont.asset(.regular, fontSize: .small)
         self.dateLabel.textColor = UIColor.Asset.lightGray
-        self.followButton.titleLabel?.font = UIFont.asset(.medium, fontSize: .overline)
+        self.followButton.titleLabel?.font = UIFont.asset(.bold, fontSize: .overline)
         self.followButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
         
         self.verifyIcon.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)
@@ -160,10 +160,10 @@ class HeaderSnackBar: SnackBar {
         var customStyle = SnackBarStyle()
         customStyle.background = UIColor.Asset.darkGray
         customStyle.textColor = UIColor.Asset.white
-        customStyle.font = UIFont.asset(.medium, fontSize: .overline)
+        customStyle.font = UIFont.asset(.bold, fontSize: .overline)
         
         customStyle.actionTextColor = UIColor.Asset.lightBlue
-        customStyle.actionFont = UIFont.asset(.medium, fontSize: .body)
+        customStyle.actionFont = UIFont.asset(.bold, fontSize: .body)
         customStyle.actionTextColorAlpha = 1.0
         
         return customStyle

@@ -93,13 +93,13 @@ public class CCActionSheet: UIViewController {
     
     // MARK: - Setups
     private func setupBackgroundView() {
-        view.backgroundColor = UIColor.clear
+        self.view.backgroundColor = UIColor.clear
         self.backgroundView.backgroundColor = UIColor.black
         self.backgroundView.alpha = 0
         self.backgroundView.frame = view.frame
         self.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
-        view.addSubview(self.backgroundView)
-        view.sendSubviewToBack(self.backgroundView)
+        self.view.addSubview(self.backgroundView)
+        self.view.sendSubviewToBack(self.backgroundView)
     }
     
     private func setupAlertView() {
@@ -108,7 +108,7 @@ public class CCActionSheet: UIViewController {
         self.alertView.layer.cornerRadius = 12
         self.alertView.roundCorners([.layerMinXMinYCorner, .layerMaxXMinYCorner], radius: 12)
         self.alertView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.panGestureRecognizerHandler(_:))))
-        view.addSubview(self.alertView)
+        self.view.addSubview(self.alertView)
         
         self.setAlertViewConstraints()
         self.setAlertViewContentConstraints()

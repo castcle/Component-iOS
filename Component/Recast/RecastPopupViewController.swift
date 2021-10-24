@@ -72,15 +72,15 @@ public class RecastPopupViewController: UIViewController {
         self.quoteCastImage.image = UIImage.init(icon: .castcle(.pencil), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white)
         
         self.avatarImage.circle(color: UIColor.Asset.white)
-        self.displayNameLabel.font = UIFont.asset(.medium, fontSize: .overline)
+        self.displayNameLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.displayNameLabel.textColor = UIColor.Asset.white
-        self.subTitleLabel.font = UIFont.asset(.medium, fontSize: .overline)
+        self.subTitleLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.subTitleLabel.textColor = UIColor.Asset.lightGray
-        self.recastLabel.font = UIFont.asset(.medium, fontSize: .body)
+        self.recastLabel.font = UIFont.asset(.bold, fontSize: .body)
         self.recastLabel.textColor = UIColor.Asset.white
-        self.quoteCastLabel.font = UIFont.asset(.medium, fontSize: .body)
+        self.quoteCastLabel.font = UIFont.asset(.bold, fontSize: .body)
         self.quoteCastLabel.textColor = UIColor.Asset.white
-        self.chooseUserTitle.font = UIFont.asset(.medium, fontSize: .overline)
+        self.chooseUserTitle.font = UIFont.asset(.bold, fontSize: .overline)
         self.chooseUserTitle.textColor = UIColor.Asset.white
         
         if self.viewModel.isRecasted {

@@ -35,7 +35,7 @@ extension CCActionSheet {
         UIView.setAnimationsEnabled(true)
         UIView.animate(withDuration: 0.55, delay: 0.05, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.01, options: .curveLinear, animations: {
             self.alertView.transform = .identity
-            self.backgroundView.alpha = 0.3
+            self.backgroundView.alpha = 0.5
         }, completion: nil)
         UIView.setAnimationsEnabled(false)
     }

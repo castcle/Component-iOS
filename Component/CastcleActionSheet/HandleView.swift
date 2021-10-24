@@ -33,14 +33,14 @@ class HandleView: UIView {
     
     override var bounds: CGRect {
         didSet {
-            layer.cornerRadius = self.bounds.height/2
+            self.layer.cornerRadius = self.bounds.height/2
         }
     }
     
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor.Asset.darkGraphiteBlue
+        self.backgroundColor = UIColor.Asset.darkGraphiteBlue
     }
     
     required init?(coder aDecoder: NSCoder) {
