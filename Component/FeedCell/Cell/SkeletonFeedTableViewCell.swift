@@ -42,6 +42,8 @@ public class SkeletonFeedTableViewCell: UITableViewCell {
     }
     
     public func configCell() {
-        self.skeletonView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.Asset.gray))
+        DispatchQueue.main.async {
+            self.skeletonView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.Asset.gray))
+        }
     }
 }
