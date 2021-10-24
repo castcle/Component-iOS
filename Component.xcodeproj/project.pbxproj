@@ -34,6 +34,8 @@
 		B71744C226E9F6820014D6B5 /* BlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71744C026E9F6820014D6B5 /* BlogTableViewCell.xib */; };
 		B71744C526E9F6980014D6B5 /* BlogNoImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71744C326E9F6970014D6B5 /* BlogNoImageTableViewCell.swift */; };
 		B71744C626E9F6980014D6B5 /* BlogNoImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71744C426E9F6980014D6B5 /* BlogNoImageTableViewCell.xib */; };
+		B71B666E27251C0900191A62 /* SkeletonFeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71B666C27251C0900191A62 /* SkeletonFeedTableViewCell.swift */; };
+		B71B666F27251C0900191A62 /* SkeletonFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71B666D27251C0900191A62 /* SkeletonFeedTableViewCell.xib */; };
 		B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */; };
 		B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552957269CBA14005D5EB5 /* FastAnimator.swift */; };
 		B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552958269CBA14005D5EB5 /* FastLayer.swift */; };
@@ -124,6 +126,8 @@
 		B71744C026E9F6820014D6B5 /* BlogTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlogTableViewCell.xib; sourceTree = "<group>"; };
 		B71744C326E9F6970014D6B5 /* BlogNoImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogNoImageTableViewCell.swift; sourceTree = "<group>"; };
 		B71744C426E9F6980014D6B5 /* BlogNoImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlogNoImageTableViewCell.xib; sourceTree = "<group>"; };
+		B71B666C27251C0900191A62 /* SkeletonFeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonFeedTableViewCell.swift; sourceTree = "<group>"; };
+		B71B666D27251C0900191A62 /* SkeletonFeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkeletonFeedTableViewCell.xib; sourceTree = "<group>"; };
 		B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshAnimator.swift; sourceTree = "<group>"; };
 		B7552957269CBA14005D5EB5 /* FastAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastAnimator.swift; sourceTree = "<group>"; };
 		B7552958269CBA14005D5EB5 /* FastLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLayer.swift; sourceTree = "<group>"; };
@@ -352,6 +356,8 @@
 				B717449526E791070014D6B5 /* HeaderTableViewCell.xib */,
 				B717449826E7A2550014D6B5 /* FooterTableViewCell.swift */,
 				B717449926E7A2550014D6B5 /* FooterTableViewCell.xib */,
+				B71B666C27251C0900191A62 /* SkeletonFeedTableViewCell.swift */,
+				B71B666D27251C0900191A62 /* SkeletonFeedTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -549,6 +555,7 @@
 				B71744B526E9EF750014D6B5 /* ImageX2TableViewCell.xib in Resources */,
 				B71744A726E9E6DC0014D6B5 /* TextTableViewCell.xib in Resources */,
 				B7552984269CBE48005D5EB5 /* NormalHeader.bundle in Resources */,
+				B71B666F27251C0900191A62 /* SkeletonFeedTableViewCell.xib in Resources */,
 				B717447C26E2595E0014D6B5 /* Comment.storyboard in Resources */,
 				B71744BD26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.xib in Resources */,
 				B7910E3026B5E1320097C94E /* SplashScreen.storyboard in Resources */,
@@ -613,6 +620,7 @@
 				B755297A269CBA14005D5EB5 /* RefreshBundle.swift in Sources */,
 				B755297C269CBA14005D5EB5 /* UIColorExtension.swift in Sources */,
 				B7910E3926B6650F0097C94E /* SplashScreenViewModel.swift in Sources */,
+				B71B666E27251C0900191A62 /* SkeletonFeedTableViewCell.swift in Sources */,
 				B7A71D0126FC4E380092F318 /* FeedCellHelper.swift in Sources */,
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
 				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
