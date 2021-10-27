@@ -28,7 +28,7 @@
 import UIKit
 import Core
 import Networking
-import SnackBar_swift
+import SnackBar
 import Kingfisher
 
 public protocol HeaderTableViewCellDelegate {
