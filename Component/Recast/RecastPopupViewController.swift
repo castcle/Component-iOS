@@ -29,9 +29,10 @@ import UIKit
 import Core
 import PanModal
 import Kingfisher
+import RealmSwift
 
 public protocol RecastPopupViewControllerDelegate {
-    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?, castcleId: String)
+    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: PageLocal?, castcleId: String)
 }
 
 public enum RecastAction {
@@ -59,6 +60,8 @@ public class RecastPopupViewController: UIViewController {
     var delegate: RecastPopupViewControllerDelegate?
     var maxHeight = (UIScreen.main.bounds.height - 320)
     var viewModel = RecastPopupViewModel()
+    private let realm = try! Realm()
+    var pageList: Results<PageLocal>!
     
     enum UserListSection: Int, CaseIterable {
         case user = 0
@@ -83,13 +86,15 @@ public class RecastPopupViewController: UIViewController {
         self.chooseUserTitle.font = UIFont.asset(.bold, fontSize: .overline)
         self.chooseUserTitle.textColor = UIColor.Asset.white
         
+        self.pageList = self.realm.objects(PageLocal.self)
+        
         if self.viewModel.isRecasted {
             self.recastLabel.text = "Unrecasted"
         } else {
             self.recastLabel.text = "Recasted"
         }
         
-        if UserManager.shared.page.count == 0 {
+        if self.pageList.count == 0 {
             self.moreButton.isHidden = true
         } else {
             self.moreButton.isHidden = false
@@ -103,7 +108,7 @@ public class RecastPopupViewController: UIViewController {
     }
     
     private func updateUser() {
-        let url = URL(string: self.viewModel.page?.avatar ?? "")
+        let url = URL(string: self.viewModel.page?.image ?? "")
         self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
         self.displayNameLabel.text = self.viewModel.page?.displayName ?? ""
     }
@@ -145,7 +150,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == UserListSection.page.rawValue {
-            return UserManager.shared.page.count
+            return self.pageList.count
         } else {
             return 1
         }
@@ -160,9 +165,9 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
             return cell ?? UserListTableViewCell()
         case UserListSection.page.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.userList, for: indexPath as IndexPath) as? UserListTableViewCell
-            let page: Page = UserManager.shared.page[indexPath.row]
+            let page: PageLocal = self.pageList[indexPath.row]
             let isSelect: Bool = (self.viewModel.page?.displayName == page.displayName)
-            cell?.configCell(isUser: false, page: UserManager.shared.page[indexPath.row], isSelect: isSelect)
+            cell?.configCell(isUser: false, page: self.pageList[indexPath.row], isSelect: isSelect)
             return cell ?? UserListTableViewCell()
         default:
             return UITableViewCell()
@@ -172,7 +177,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case UserListSection.user.rawValue:
-            self.viewModel.page = Page(displayName: UserManager.shared.displayName, avatar: UserManager.shared.avatar, castcleId: UserManager.shared.rawCastcleId)
+            self.viewModel.page = PageLocal().initCustom(displayName: UserManager.shared.displayName, image: UserManager.shared.avatar, castcleId: UserManager.shared.rawCastcleId)
             self.userTableView.reloadData()
             self.updateUser()
             UIView.transition(with: self.view, duration: 0.3,
@@ -181,7 +186,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
                                 self.selectView.isHidden = true
                               })
         case UserListSection.page.rawValue:
-            self.viewModel.page = UserManager.shared.page[indexPath.row]
+            self.viewModel.page = self.pageList[indexPath.row]
             self.userTableView.reloadData()
             self.updateUser()
             UIView.transition(with: self.view, duration: 0.3,
