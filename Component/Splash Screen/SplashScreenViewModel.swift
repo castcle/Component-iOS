@@ -35,31 +35,12 @@ final class SplashScreenViewModel {
    
     //MARK: Private
     private var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
-    private var userRepository: UserRepository = UserRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
 
     public func guestLogin() {
         self.authenticationRepository.guestLogin(uuid: Defaults[.deviceUuid]) { (success) in
             if success {
                 self.didGuestLoginFinish?()
-            }
-        }
-    }
-    
-    private func getMe() {
-        self.userRepository.getMe() { (success, response, isRefreshToken) in
-            if success {
-                do {
-                    let rawJson = try response.mapJSON()
-                    let json = JSON(rawJson)
-                    let userHelper = UserHelper()
-                    userHelper.updateLocalProfile(user: User(json: json))
-                    self.didGuestLoginFinish?()
-                } catch {}
-            } else {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
-                }
             }
         }
     }
@@ -72,19 +53,13 @@ final class SplashScreenViewModel {
         if Defaults[.accessToken].isEmpty || Defaults[.userRole].isEmpty {
             self.guestLogin()
         } else {
-            if UserManager.shared.isLogin {
-                self.getMe()
-            } else {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                    self.didGuestLoginFinish?()
-                })
-            }
+            self.tokenHelper.refreshToken()
         }
     }
 }
 
 extension SplashScreenViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
-        self.getMe()
+        self.didGuestLoginFinish?()
     }
 }
