@@ -72,13 +72,13 @@ public class ImageX3TableViewCell: UITableViewCell {
             }
             
             if content.contentPayload.photo.count >= 3 {
-                let firstUrl = URL(string: content.contentPayload.photo[0].url)
+                let firstUrl = URL(string: content.contentPayload.photo[0].thumbnail)
                 self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
                 
-                let secondUrl = URL(string: content.contentPayload.photo[1].url)
+                let secondUrl = URL(string: content.contentPayload.photo[1].thumbnail)
                 self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
                 
-                let thirdUrl = URL(string: content.contentPayload.photo[2].url)
+                let thirdUrl = URL(string: content.contentPayload.photo[2].thumbnail)
                 self.thirdImageView.kf.setImage(with: thirdUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
             }
         }
@@ -110,7 +110,7 @@ public class ImageX3TableViewCell: UITableViewCell {
             
             var images: [LightboxImage] = []
             content.contentPayload.photo.forEach { photo in
-                images.append(LightboxImage(imageURL: URL(string: photo.url)!))
+                images.append(LightboxImage(imageURL: URL(string: photo.original)!))
             }
             
             LightboxConfig.CloseButton.textAttributes = [

@@ -71,10 +71,10 @@ public class ImageX2TableViewCell: UITableViewCell {
             }
             
             if content.contentPayload.photo.count >= 2 {
-                let firstUrl = URL(string: content.contentPayload.photo[0].url)
+                let firstUrl = URL(string: content.contentPayload.photo[0].thumbnail)
                 self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
                 
-                let secondUrl = URL(string: content.contentPayload.photo[1].url)
+                let secondUrl = URL(string: content.contentPayload.photo[1].thumbnail)
                 self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
             }
         }
@@ -102,7 +102,7 @@ public class ImageX2TableViewCell: UITableViewCell {
             
             var images: [LightboxImage] = []
             content.contentPayload.photo.forEach { photo in
-                images.append(LightboxImage(imageURL: URL(string: photo.url)!))
+                images.append(LightboxImage(imageURL: URL(string: photo.original)!))
             }
             
             LightboxConfig.CloseButton.textAttributes = [
