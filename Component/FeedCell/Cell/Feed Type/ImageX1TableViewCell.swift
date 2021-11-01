@@ -67,7 +67,7 @@ public class ImageX1TableViewCell: UITableViewCell {
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
             }
             if let imageUrl = content.contentPayload.photo.first {
-                let url = URL(string: imageUrl.fullHd)
+                let url = URL(string: imageUrl.thumbnail)
                 self.displayImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
             }
         }
@@ -85,7 +85,7 @@ public class ImageX1TableViewCell: UITableViewCell {
     @IBAction func viewImageAction(_ sender: Any) {
         if let content = self.content, let image = content.contentPayload.photo.first {
             let images = [
-                LightboxImage(imageURL: URL(string: image.original)!)
+                LightboxImage(imageURL: URL(string: image.fullHd)!)
             ]
             
             LightboxConfig.CloseButton.textAttributes = [
