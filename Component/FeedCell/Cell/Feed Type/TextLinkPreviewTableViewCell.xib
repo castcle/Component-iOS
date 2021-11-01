@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -24,6 +24,77 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pw7-Sw-IsE">
+                        <rect key="frame" x="15" y="55" width="290" height="200"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WM7-Vn-HhG">
+                                <rect key="frame" x="0.0" y="0.0" width="290" height="130"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OT6-wt-LcR">
+                                <rect key="frame" x="15" y="140" width="260" height="10"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="10" id="BJU-h0-oQy"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="skeletonCornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RvQ-ib-7rc">
+                                <rect key="frame" x="15" y="160" width="260" height="10"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="10" id="CH4-WF-6XT"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="skeletonCornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OHl-y3-Zcw">
+                                <rect key="frame" x="15" y="180" width="225" height="10"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="10" id="DIk-if-73k"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="skeletonCornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="WM7-Vn-HhG" firstAttribute="leading" secondItem="pw7-Sw-IsE" secondAttribute="leading" id="0OK-Rb-qG0"/>
+                            <constraint firstItem="WM7-Vn-HhG" firstAttribute="leading" secondItem="pw7-Sw-IsE" secondAttribute="leading" id="57S-08-gep"/>
+                            <constraint firstItem="WM7-Vn-HhG" firstAttribute="top" secondItem="pw7-Sw-IsE" secondAttribute="top" id="7TK-u5-59f"/>
+                            <constraint firstItem="OHl-y3-Zcw" firstAttribute="leading" secondItem="pw7-Sw-IsE" secondAttribute="leading" constant="15" id="9Us-qf-9yi"/>
+                            <constraint firstItem="OT6-wt-LcR" firstAttribute="leading" secondItem="pw7-Sw-IsE" secondAttribute="leading" constant="15" id="9l3-Q9-Oe1"/>
+                            <constraint firstAttribute="bottom" secondItem="OHl-y3-Zcw" secondAttribute="bottom" constant="10" id="BOb-R1-1p3"/>
+                            <constraint firstItem="OHl-y3-Zcw" firstAttribute="top" secondItem="RvQ-ib-7rc" secondAttribute="bottom" constant="10" id="Jh3-5L-L75"/>
+                            <constraint firstAttribute="trailing" secondItem="OT6-wt-LcR" secondAttribute="trailing" constant="15" id="Qd8-7K-YIn"/>
+                            <constraint firstItem="OT6-wt-LcR" firstAttribute="top" secondItem="WM7-Vn-HhG" secondAttribute="bottom" constant="10" id="Txc-Om-bak"/>
+                            <constraint firstAttribute="trailing" secondItem="OHl-y3-Zcw" secondAttribute="trailing" constant="50" id="hTo-J1-Zon"/>
+                            <constraint firstAttribute="trailing" secondItem="WM7-Vn-HhG" secondAttribute="trailing" id="kp0-SJ-FWL"/>
+                            <constraint firstAttribute="trailing" secondItem="RvQ-ib-7rc" secondAttribute="trailing" constant="15" id="rKq-kQ-Dui"/>
+                            <constraint firstItem="RvQ-ib-7rc" firstAttribute="leading" secondItem="pw7-Sw-IsE" secondAttribute="leading" constant="15" id="sdl-01-zrL"/>
+                            <constraint firstItem="RvQ-ib-7rc" firstAttribute="top" secondItem="OT6-wt-LcR" secondAttribute="bottom" constant="10" id="w92-2Z-ZpM"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DnD-uN-gp6">
                         <rect key="frame" x="15" y="55" width="290" height="200"/>
                         <subviews>
@@ -80,33 +151,30 @@
                             <constraint firstItem="T5t-De-s0k" firstAttribute="top" secondItem="DnD-uN-gp6" secondAttribute="top" id="xUd-eU-6dW"/>
                         </constraints>
                     </view>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GVO-Op-bAY">
-                        <rect key="frame" x="15" y="55" width="290" height="200"/>
-                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="8gY-d9-6ZW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="3PC-00-biR"/>
                     <constraint firstAttribute="trailing" secondItem="8gY-d9-6ZW" secondAttribute="trailing" constant="15" id="71W-U1-eq1"/>
+                    <constraint firstItem="pw7-Sw-IsE" firstAttribute="top" secondItem="DnD-uN-gp6" secondAttribute="top" id="8Sn-NM-krq"/>
                     <constraint firstItem="8gY-d9-6ZW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="BNW-d4-e65"/>
-                    <constraint firstItem="GVO-Op-bAY" firstAttribute="leading" secondItem="DnD-uN-gp6" secondAttribute="leading" id="GKr-gN-dRV"/>
                     <constraint firstAttribute="trailing" secondItem="DnD-uN-gp6" secondAttribute="trailing" constant="15" id="IN7-aM-u76"/>
-                    <constraint firstItem="GVO-Op-bAY" firstAttribute="top" secondItem="DnD-uN-gp6" secondAttribute="top" id="LBj-Vc-gRl"/>
                     <constraint firstAttribute="bottom" secondItem="DnD-uN-gp6" secondAttribute="bottom" constant="10" id="LDN-70-cVc"/>
-                    <constraint firstItem="GVO-Op-bAY" firstAttribute="trailing" secondItem="DnD-uN-gp6" secondAttribute="trailing" id="PY3-Z1-qX8"/>
                     <constraint firstItem="DnD-uN-gp6" firstAttribute="top" secondItem="8gY-d9-6ZW" secondAttribute="bottom" constant="25" id="T9s-12-tUb"/>
+                    <constraint firstItem="pw7-Sw-IsE" firstAttribute="bottom" secondItem="DnD-uN-gp6" secondAttribute="bottom" id="Z8Q-FW-IKQ"/>
                     <constraint firstItem="DnD-uN-gp6" firstAttribute="width" secondItem="DnD-uN-gp6" secondAttribute="height" multiplier="29:20" id="bDn-97-Gu8"/>
-                    <constraint firstItem="GVO-Op-bAY" firstAttribute="bottom" secondItem="DnD-uN-gp6" secondAttribute="bottom" id="kSF-Q2-dwb"/>
+                    <constraint firstItem="pw7-Sw-IsE" firstAttribute="leading" secondItem="DnD-uN-gp6" secondAttribute="leading" id="bHH-TT-G2g"/>
+                    <constraint firstItem="pw7-Sw-IsE" firstAttribute="trailing" secondItem="DnD-uN-gp6" secondAttribute="trailing" id="dS7-JL-wwZ"/>
                     <constraint firstItem="DnD-uN-gp6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="lvd-eE-PbS"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="detailLabel" destination="8gY-d9-6ZW" id="GiI-Po-1Sh"/>
-                <outlet property="initImage" destination="GVO-Op-bAY" id="mlK-5n-rqV"/>
                 <outlet property="linkContainer" destination="DnD-uN-gp6" id="bw4-AZ-Wp9"/>
                 <outlet property="linkDescriptionLabel" destination="tUL-xi-0p8" id="O1g-Y4-7XF"/>
                 <outlet property="linkImage" destination="T5t-De-s0k" id="i0P-5U-yIx"/>
                 <outlet property="linkTitleLabel" destination="eAe-kD-1vb" id="M16-ad-y1e"/>
+                <outlet property="skeletonView" destination="pw7-Sw-IsE" id="EZN-t5-B5p"/>
                 <outlet property="titleLinkView" destination="0yD-Ju-rkh" id="ZNw-Kr-BOV"/>
             </connections>
             <point key="canvasLocation" x="66.666666666666671" y="174.77678571428569"/>
@@ -114,7 +182,7 @@
     </objects>
     <designables>
         <designable name="8gY-d9-6ZW">
-            <size key="intrinsicContentSize" width="40" height="20"/>
+            <size key="intrinsicContentSize" width="39.5" height="19.5"/>
         </designable>
     </designables>
     <resources>

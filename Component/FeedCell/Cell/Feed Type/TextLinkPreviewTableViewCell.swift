@@ -30,6 +30,7 @@ import Core
 import Networking
 import ActiveLabel
 import SwiftLinkPreview
+import SkeletonView
 
 public class TextLinkPreviewTableViewCell: UITableViewCell {
 
@@ -52,7 +53,7 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
     @IBOutlet var linkImage: UIImageView!
     @IBOutlet var linkTitleLabel: UILabel!
     @IBOutlet var linkDescriptionLabel: UILabel!
-    @IBOutlet var initImage: UIImageView!
+    @IBOutlet var skeletonView: UIView!
     
     private var result = Response()
     private let slp = SwiftLinkPreview(cache: InMemoryCache())
@@ -82,13 +83,12 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
                 }
             }
             
-            self.initImage.image = UIImage.Asset.placeholder
-            self.initImage.isHidden = false
+            self.skeletonView.isHidden = false
             self.linkContainer.isHidden = true
             if let link = content.contentPayload.link.first {
                 self.loadLink(link: link.url)
-            } else if let link = content.contentPayload.message.detectedFirstLink {
-                self.loadLink(link: link)
+            } else if let link = content.contentPayload.message.extractURLs().first {
+                self.loadLink(link: link.absoluteString)
             } else {
                 self.setData()
             }
@@ -97,7 +97,7 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
     
     public override func awakeFromNib() {
         super.awakeFromNib()
-        self.initImage.custom(cornerRadius: 12)
+        self.skeletonView.custom(cornerRadius: 12, borderWidth: 1, borderColor: UIColor.Asset.gray)
         self.linkContainer.custom(cornerRadius: 12)
         self.linkContainer.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.titleLinkView.backgroundColor = UIColor.Asset.darkGraphiteBlue
@@ -105,6 +105,7 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
         self.linkTitleLabel.textColor = UIColor.Asset.white
         self.linkDescriptionLabel.font = UIFont.asset(.contentLight, fontSize: .small)
         self.linkDescriptionLabel.textColor = UIColor.Asset.lightGray
+        self.skeletonView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.Asset.gray))
     }
 
     public override func setSelected(_ selected: Bool, animated: Bool) {
@@ -127,7 +128,7 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
     
     private func setData() {
         UIView.transition(with: self, duration: 0.35, options: .transitionCrossDissolve, animations: {
-            self.initImage.isHidden = true
+            self.skeletonView.isHidden = true
             self.linkContainer.isHidden = false
         })
         

@@ -101,10 +101,15 @@ public class TextLinkTableViewCell: UITableViewCell {
         
         self.skeletonView.isHidden = false
         self.linkContainer.isHidden = true
+        
         if let link = content.contentPayload.link.first {
-            self.loadLink(link: link.url)
-        } else if let link = content.contentPayload.message.detectedFirstLink {
-            self.loadLink(link: link)
+            self.setDataWithContent(icon: link.type.image, message: content.contentPayload.message)
+        } else if let link = content.contentPayload.message.extractURLs().first {
+            if link.absoluteString.contains("www.reddit.com") {
+                self.setDataWithContent(icon: UIImage.Asset.reddit, message: content.contentPayload.message)
+            } else {
+                self.loadLink(link: link.absoluteString)
+            }
         } else {
             self.setData()
         }
@@ -151,6 +156,14 @@ public class TextLinkTableViewCell: UITableViewCell {
         } else {
             self.linkDescriptionLabel.text = ""
         }
+    }
+    
+    private func setDataWithContent(icon: UIImage, message: String) {
+        self.skeletonView.isHidden = true
+        self.linkContainer.isHidden = false
+        self.linkImage.image = icon
+        self.linkTitleLabel.text = message
+        self.linkDescriptionLabel.text = ""
     }
     
     @IBAction func openWebViewAction(_ sender: Any) {
