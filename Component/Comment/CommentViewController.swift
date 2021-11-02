@@ -268,7 +268,7 @@ extension CommentViewController: FooterTableViewCellDelegate {
         //
     }
     
-    func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: PageLocal) {
+    func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: Page) {
         //
     }
     

@@ -32,7 +32,7 @@ import Kingfisher
 import RealmSwift
 
 public protocol RecastPopupViewControllerDelegate {
-    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: PageLocal?, castcleId: String)
+    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?, castcleId: String)
 }
 
 public enum RecastAction {
@@ -61,7 +61,7 @@ public class RecastPopupViewController: UIViewController {
     var maxHeight = (UIScreen.main.bounds.height - 320)
     var viewModel = RecastPopupViewModel()
     private let realm = try! Realm()
-    var pageList: Results<PageLocal>!
+    var pages: Results<Page>!
     
     enum UserListSection: Int, CaseIterable {
         case user = 0
@@ -86,7 +86,7 @@ public class RecastPopupViewController: UIViewController {
         self.chooseUserTitle.font = UIFont.asset(.bold, fontSize: .overline)
         self.chooseUserTitle.textColor = UIColor.Asset.white
         
-        self.pageList = self.realm.objects(PageLocal.self)
+        self.pages = self.realm.objects(Page.self)
         
         if self.viewModel.isRecasted {
             self.recastLabel.text = "Unrecasted"
@@ -94,7 +94,7 @@ public class RecastPopupViewController: UIViewController {
             self.recastLabel.text = "Recasted"
         }
         
-        if self.pageList.count == 0 {
+        if self.pages.count == 0 {
             self.moreButton.isHidden = true
         } else {
             self.moreButton.isHidden = false
@@ -150,7 +150,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == UserListSection.page.rawValue {
-            return self.pageList.count
+            return self.pages.count
         } else {
             return 1
         }
@@ -165,9 +165,9 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
             return cell ?? UserListTableViewCell()
         case UserListSection.page.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.userList, for: indexPath as IndexPath) as? UserListTableViewCell
-            let page: PageLocal = self.pageList[indexPath.row]
+            let page: Page = self.pages[indexPath.row]
             let isSelect: Bool = (self.viewModel.page?.displayName == page.displayName)
-            cell?.configCell(isUser: false, page: self.pageList[indexPath.row], isSelect: isSelect)
+            cell?.configCell(isUser: false, page: self.pages[indexPath.row], isSelect: isSelect)
             return cell ?? UserListTableViewCell()
         default:
             return UITableViewCell()
@@ -177,7 +177,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case UserListSection.user.rawValue:
-            self.viewModel.page = PageLocal().initCustom(displayName: UserManager.shared.displayName, image: UserManager.shared.avatar, castcleId: UserManager.shared.rawCastcleId)
+            self.viewModel.page = Page().initCustom(displayName: UserManager.shared.displayName, image: UserManager.shared.avatar, castcleId: UserManager.shared.rawCastcleId)
             self.userTableView.reloadData()
             self.updateUser()
             UIView.transition(with: self.view, duration: 0.3,
@@ -186,7 +186,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
                                 self.selectView.isHidden = true
                               })
         case UserListSection.page.rawValue:
-            self.viewModel.page = self.pageList[indexPath.row]
+            self.viewModel.page = self.pages[indexPath.row]
             self.userTableView.reloadData()
             self.updateUser()
             UIView.transition(with: self.view, duration: 0.3,
@@ -201,7 +201,6 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
 }
 
 extension RecastPopupViewController: PanModalPresentable {
-
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
