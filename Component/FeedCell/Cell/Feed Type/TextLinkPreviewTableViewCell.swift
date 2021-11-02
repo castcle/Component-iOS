@@ -135,7 +135,7 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
         // MARK: - Image
         if let value = self.result.image {
             let url = URL(string: value)
-            self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
+            self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
         } else {
             self.linkImage.image = UIImage.Asset.placeholder
         }

@@ -56,7 +56,7 @@ public class BlogTableViewCell: UITableViewCell {
             self.detailLabel.text = content.contentPayload.message
             
             let imageUrl = URL(string: content.contentPayload.cover.large)
-            self.blogImageView.kf.setImage(with: imageUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
+            self.blogImageView.kf.setImage(with: imageUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
         }
     }
     

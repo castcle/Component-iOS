@@ -68,7 +68,7 @@ public class ImageX1TableViewCell: UITableViewCell {
             }
             if let imageUrl = content.contentPayload.photo.first {
                 let url = URL(string: imageUrl.large)
-                self.displayImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
+                self.displayImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
             }
         }
     }

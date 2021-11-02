@@ -105,8 +105,8 @@ public class TextLinkTableViewCell: UITableViewCell {
         if let link = content.contentPayload.link.first {
             self.setDataWithContent(icon: link.type.image, message: content.contentPayload.message)
         } else if let link = content.contentPayload.message.extractURLs().first {
-            if link.absoluteString.contains("www.reddit.com") {
-                self.setDataWithContent(icon: UIImage.Asset.reddit, message: content.contentPayload.message)
+            if let icon = UIImage.iconFromUrl(url: link.absoluteString) {
+                self.setDataWithContent(icon: icon, message: content.contentPayload.message)
             } else {
                 self.loadLink(link: link.absoluteString)
             }
@@ -138,7 +138,7 @@ public class TextLinkTableViewCell: UITableViewCell {
         // MARK: - Image
         if let value = self.result.icon {
             let url = URL(string: value)
-            self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
+            self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
         } else {
             self.linkImage.image = UIImage.Asset.placeholder
         }

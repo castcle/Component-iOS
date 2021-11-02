@@ -62,7 +62,7 @@ class ReplyTableViewCell: UITableViewCell {
             self.commentLabel.text = laseMessage.message
             
             let url = URL(string: replyComment.author.avatar.thumbnail)
-            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
+            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
             self.displayNameLabel.text = replyComment.author.displayName
             self.dateLabel.text = laseMessage.commentDate.timeAgoDisplay()
             
