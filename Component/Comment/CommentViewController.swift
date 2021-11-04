@@ -254,8 +254,8 @@ extension CommentViewController: HeaderTableViewCellDelegate {
         Utility.currentViewController().dismiss(animated: true)
     }
     
-    func didTabProfile(_ headerTableViewCell: HeaderTableViewCell) {
-        //
+    func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author) {
+        // Profile
     }
     
     func didAuthen(_ headerTableViewCell: HeaderTableViewCell) {

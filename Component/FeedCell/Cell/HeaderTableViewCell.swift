@@ -32,7 +32,7 @@ import SnackBar
 import Kingfisher
 
 public protocol HeaderTableViewCellDelegate {
-    func didTabProfile(_ headerTableViewCell: HeaderTableViewCell)
+    func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author)
     func didAuthen(_ headerTableViewCell: HeaderTableViewCell)
     func didRemoveSuccess(_ headerTableViewCell: HeaderTableViewCell)
 }
@@ -118,7 +118,9 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     @IBAction func viewProfileAction(_ sender: Any) {
-        self.delegate?.didTabProfile(self)
+        if let content = self.content {
+            self.delegate?.didTabProfile(self, author: content.author)
+        }
     }
     
     @IBAction func moreAction(_ sender: Any) {
