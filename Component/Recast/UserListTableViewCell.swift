@@ -48,8 +48,7 @@ class UserListTableViewCell: UITableViewCell {
     
     func configCell(isUser: Bool, page: Page?, isSelect: Bool) {
         if isUser {
-            let url = URL(string: UserManager.shared.avatar)
-            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+            self.avatarImage.image = UserManager.shared.avatar
             self.nameLabel.text = UserManager.shared.displayName
         } else {
             guard let page = page else { return }
