@@ -52,8 +52,7 @@ class UserListTableViewCell: UITableViewCell {
             self.nameLabel.text = UserManager.shared.displayName
         } else {
             guard let page = page else { return }
-            let url = URL(string: page.image)
-            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+            self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: page.castcleId, type: .avatar)
             self.nameLabel.text = page.displayName
         }
         

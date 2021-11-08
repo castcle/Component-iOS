@@ -30,6 +30,7 @@ import Core
 import Networking
 import SnackBar
 import Kingfisher
+import RealmSwift
 
 public protocol HeaderTableViewCellDelegate {
     func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author)
@@ -55,26 +56,42 @@ public class HeaderTableViewCell: UITableViewCell {
     public var content: Content? {
         didSet {
             if let content = self.content {
-                if content.author.castcleId == UserManager.shared.rawCastcleId {
-                    self.avatarImage.image = UserManager.shared.avatar
-                } else {
-                    let url = URL(string: content.author.avatar.thumbnail)
-                    self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                }
-                
-                self.displayNameLabel.text = content.author.displayName
-                self.dateLabel.text = content.postDate.timeAgoDisplay()
-                if UserManager.shared.rawCastcleId == content.author.castcleId {
-                    self.moreButton.isHidden = false
-                    self.followButton.isHidden = true
-                } else {
-                    self.moreButton.isHidden = true
-                    if content.author.followed {
+                if content.author.type == .people {
+                    if content.author.castcleId == UserManager.shared.rawCastcleId {
+                        self.avatarImage.image = UserManager.shared.avatar
+                        self.moreButton.isHidden = false
                         self.followButton.isHidden = true
                     } else {
-                        self.followButton.isHidden = false
+                        let url = URL(string: content.author.avatar.thumbnail)
+                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                        self.moreButton.isHidden = true
+                        if content.author.followed {
+                            self.followButton.isHidden = true
+                        } else {
+                            self.followButton.isHidden = false
+                        }
+                    }
+                } else {
+                    let realm = try! Realm()
+                    if realm.objects(Page.self).filter("castcleId = '\(content.author.castcleId)'").first != nil {
+                        self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: content.author.castcleId, type: .avatar)
+                        self.moreButton.isHidden = false
+                        self.followButton.isHidden = true
+                    } else {
+                        let url = URL(string: content.author.avatar.thumbnail)
+                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                        self.moreButton.isHidden = true
+                        if content.author.followed {
+                            self.followButton.isHidden = true
+                        } else {
+                            self.followButton.isHidden = false
+                        }
                     }
                 }
+
+                self.displayNameLabel.text = content.author.displayName
+                self.dateLabel.text = content.postDate.timeAgoDisplay()
+                
                 if content.author.verified.official {
                     self.verifyConstraintWidth.constant = 15.0
                     self.verifyIcon.isHidden = false
