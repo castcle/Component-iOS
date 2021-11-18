@@ -29,6 +29,7 @@ import UIKit
 import Core
 import Networking
 import Defaults
+import JGProgressHUD
 
 class CommentViewController: UITableViewController, UITextViewDelegate {
     
@@ -38,6 +39,14 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     var sendButton: UIButton!
     var avatarImage: UIImageView!
     let commentTextField = FlexibleTextView()
+    let hud = JGProgressHUD()
+    var event: Event = .none
+    
+    enum Event {
+        case create
+        case reply
+        case none
+    }
     
     override var canBecomeFirstResponder: Bool {
         return true
@@ -101,6 +110,16 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     }
     
     @objc func handleSend() {
+        self.hud.show(in: self.view)
+        self.viewModel.commentRequest.message = self.commentTextField.text
+        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
+        
+        if self.event == .create {
+            self.viewModel.createComment()
+        } else if self.event == .reply {
+            self.viewModel.replayComment()
+        }
+        
         self.commentTextField.text = ""
         self.commentTextField.resignFirstResponder()
     }
@@ -124,11 +143,14 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         self.configureTableView()
         self.tableView.keyboardDismissMode = .interactive
         self.viewModel.didLoadCommentsFinish = {
+            self.hud.dismiss()
+            self.event = .create
             UIView.transition(with: self.tableView,
                               duration: 0.35,
                               options: .transitionCrossDissolve,
                               animations: { self.tableView.reloadData() })
         }
+        self.hud.textLabel.text = "Commenting"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -138,7 +160,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.commentTextField.becomeFirstResponder()
+//        self.commentTextField.becomeFirstResponder()
     }
     
     private func setupNevBar() {
@@ -278,22 +300,42 @@ extension CommentViewController: FooterTableViewCellDelegate {
 
 extension CommentViewController: CommentTableViewCellDelegate {
     func didReplay(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
-        self.commentTextField.text = "\(comment.author.castcleId) "
+        self.event = .reply
+        self.viewModel.commentId = comment.id
+        self.commentTextField.text = "@\(comment.author.castcleId) "
         self.commentTextField.becomeFirstResponder()
     }
     
     func didEdit(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
-        guard let lastComment = comment.comments.last else { return }
-        self.commentTextField.text = "\(lastComment.message)"
+        self.commentTextField.text = "\(comment.message)"
         self.commentTextField.becomeFirstResponder()
+    }
+    
+    func didLiked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
+        self.viewModel.commentId = comment.id
+        self.viewModel.likeComment()
+    }
+    
+    func didUnliked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
+        self.viewModel.commentId = comment.id
+        self.viewModel.unlikeComment()
     }
 }
 
 extension CommentViewController: ReplyTableViewCellDelegate {
     func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
-        guard let lastComment = replyComment.comments.last else { return }
-        self.commentTextField.text = "\(lastComment.message)"
+        self.commentTextField.text = "\(replyComment.message)"
         self.commentTextField.becomeFirstResponder()
+    }
+    
+    func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
+        self.viewModel.commentId = replyComment.id
+        self.viewModel.likeComment()
+    }
+    
+    func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
+        self.viewModel.commentId = replyComment.id
+        self.viewModel.unlikeComment()
     }
 }
 

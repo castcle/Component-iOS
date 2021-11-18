@@ -32,6 +32,8 @@ import ActiveLabel
 
 protocol ReplyTableViewCellDelegate {
     func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment)
+    func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment)
+    func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment)
 }
 
 class ReplyTableViewCell: UITableViewCell {
@@ -58,13 +60,12 @@ class ReplyTableViewCell: UITableViewCell {
     var replyComment: ReplyComment? {
         didSet {
             guard let replyComment = self.replyComment else { return }
-            guard let laseMessage = replyComment.comments.last else { return }
-            self.commentLabel.text = laseMessage.message
+            self.commentLabel.text = replyComment.message
             
             let url = URL(string: replyComment.author.avatar.thumbnail)
             self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
             self.displayNameLabel.text = replyComment.author.displayName
-            self.dateLabel.text = laseMessage.commentDate.timeAgoDisplay()
+            self.dateLabel.text = replyComment.replyDate.timeAgoDisplay()
             
             self.commentLabel.handleHashtagTap { hashtag in
                 let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
@@ -140,15 +141,11 @@ class ReplyTableViewCell: UITableViewCell {
         if UserManager.shared.isLogin {
             guard let replyComment = self.replyComment else { return }
 
-//            if feed.feedPayload.liked.isLike {
-//                self.likeRepository.unliked(feedUuid: feed.feedPayload.id) { success in
-//                    print("Unliked : \(success)")
-//                }
-//            } else {
-//                self.likeRepository.liked(feedUuid: feed.feedPayload.id) { success in
-//                    print("Liked : \(success)")
-//                }
-//            }
+            if replyComment.like.isLike {
+                self.delegate?.didUnliked(self, replyComment: replyComment)
+            } else {
+                self.delegate?.didLiked(self, replyComment: replyComment)
+            }
 
             replyComment.like.isLike.toggle()
             self.updateUi()
