@@ -65,6 +65,7 @@ public struct ComponentNibVars {
         public static let comment = "CommentTableViewCell"
         public static let reply = "ReplyTableViewCell"
         public static let skeleton = "SkeletonFeedTableViewCell"
+        public static let activityHeader = "ActivityHeaderTableViewCell"
     }
     
     // MARK: - CollectionViewCell

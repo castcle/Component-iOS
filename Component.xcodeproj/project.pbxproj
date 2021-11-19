@@ -55,6 +55,8 @@
 		B7552987269CBE49005D5EB5 /* NormalFooter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B7552983269CBE48005D5EB5 /* NormalFooter.bundle */; };
 		B75529A2269D8837005D5EB5 /* NSObject+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */; };
 		B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75529D2269F696A005D5EB5 /* ComponentNibVars.swift */; };
+		B7866335274777F900B13EEF /* ActivityHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7866333274777F800B13EEF /* ActivityHeaderTableViewCell.swift */; };
+		B7866336274777F900B13EEF /* ActivityHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7866334274777F800B13EEF /* ActivityHeaderTableViewCell.xib */; };
 		B78795AC26C5127C00FECC21 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78795AB26C5127C00FECC21 /* Networking.framework */; };
 		B78795C226C6174A00FECC21 /* TPProgressDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C126C6174A00FECC21 /* TPProgressDelegate.swift */; };
 		B78795C426C6177200FECC21 /* TPDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C326C6177200FECC21 /* TPDataSource.swift */; };
@@ -148,6 +150,8 @@
 		B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+ListDiffable.swift"; sourceTree = "<group>"; };
 		B75529D2269F696A005D5EB5 /* ComponentNibVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentNibVars.swift; sourceTree = "<group>"; };
 		B75529D4269FD885005D5EB5 /* Feed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Feed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7866333274777F800B13EEF /* ActivityHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		B7866334274777F800B13EEF /* ActivityHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		B78795AB26C5127C00FECC21 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B78795C126C6174A00FECC21 /* TPProgressDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPProgressDelegate.swift; sourceTree = "<group>"; };
 		B78795C326C6177200FECC21 /* TPDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPDataSource.swift; sourceTree = "<group>"; };
@@ -356,6 +360,8 @@
 				B717449526E791070014D6B5 /* HeaderTableViewCell.xib */,
 				B717449826E7A2550014D6B5 /* FooterTableViewCell.swift */,
 				B717449926E7A2550014D6B5 /* FooterTableViewCell.xib */,
+				B7866333274777F800B13EEF /* ActivityHeaderTableViewCell.swift */,
+				B7866334274777F800B13EEF /* ActivityHeaderTableViewCell.xib */,
 				B71B666C27251C0900191A62 /* SkeletonFeedTableViewCell.swift */,
 				B71B666D27251C0900191A62 /* SkeletonFeedTableViewCell.xib */,
 			);
@@ -569,6 +575,7 @@
 				B71744AB26E9EAB10014D6B5 /* TextLinkTableViewCell.xib in Resources */,
 				B787963626C66E7300FECC21 /* Recast.storyboard in Resources */,
 				B7910DF526AFE32A0097C94E /* WebView.storyboard in Resources */,
+				B7866336274777F900B13EEF /* ActivityHeaderTableViewCell.xib in Resources */,
 				B717449B26E7A2550014D6B5 /* FooterTableViewCell.xib in Resources */,
 				B7552987269CBE49005D5EB5 /* NormalFooter.bundle in Resources */,
 			);
@@ -654,6 +661,7 @@
 				B7AC87FE27199A6D00500F81 /* CCActionSheet.swift in Sources */,
 				B78795CE26C6191A00FECC21 /* ContainerViewController.swift in Sources */,
 				B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */,
+				B7866335274777F900B13EEF /* ActivityHeaderTableViewCell.swift in Sources */,
 				B7AC880427199B4700500F81 /* CCAction.swift in Sources */,
 				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,
 				B755297D269CBA15005D5EB5 /* RefreshExtension.swift in Sources */,
