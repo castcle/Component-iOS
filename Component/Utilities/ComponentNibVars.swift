@@ -66,6 +66,15 @@ public struct ComponentNibVars {
         public static let reply = "ReplyTableViewCell"
         public static let skeleton = "SkeletonFeedTableViewCell"
         public static let activityHeader = "ActivityHeaderTableViewCell"
+        public static let quoteText = "QuoteCastTextCell"
+        public static let quoteLink = "QuoteCastTextLinkCell"
+        public static let quoteLinkPreview = "QuoteCastTextLinkPreviewCell"
+        public static let quoteImageX1 = "QuoteCastImageX1Cell"
+        public static let quoteImageX2 = "QuoteCastImageX2Cell"
+        public static let quoteImageX3 = "QuoteCastImageX3Cell"
+        public static let quoteImageXMore = "QuoteCastImageXMoreCell"
+        public static let quoteBlog = "QuoteCastBlogCell"
+        public static let quoteBlogNoImage = "QuoteCastBlogNoImageCell"
     }
     
     // MARK: - CollectionViewCell

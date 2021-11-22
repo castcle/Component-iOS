@@ -57,6 +57,24 @@
 		B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75529D2269F696A005D5EB5 /* ComponentNibVars.swift */; };
 		B7866335274777F900B13EEF /* ActivityHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7866333274777F800B13EEF /* ActivityHeaderTableViewCell.swift */; };
 		B7866336274777F900B13EEF /* ActivityHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7866334274777F800B13EEF /* ActivityHeaderTableViewCell.xib */; };
+		B786634E2747AC4200B13EEF /* QuoteCastBlogNoImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B786633C2747AC4100B13EEF /* QuoteCastBlogNoImageCell.xib */; };
+		B786634F2747AC4200B13EEF /* QuoteCastImageX2Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B786633D2747AC4100B13EEF /* QuoteCastImageX2Cell.swift */; };
+		B78663502747AC4200B13EEF /* QuoteCastTextLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B786633E2747AC4100B13EEF /* QuoteCastTextLinkCell.swift */; };
+		B78663512747AC4200B13EEF /* QuoteCastImageX3Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B786633F2747AC4100B13EEF /* QuoteCastImageX3Cell.swift */; };
+		B78663522747AC4200B13EEF /* QuoteCastTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B78663402747AC4100B13EEF /* QuoteCastTextCell.xib */; };
+		B78663532747AC4200B13EEF /* QuoteCastImageXMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78663412747AC4100B13EEF /* QuoteCastImageXMoreCell.swift */; };
+		B78663542747AC4200B13EEF /* QuoteCastImageXMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B78663422747AC4100B13EEF /* QuoteCastImageXMoreCell.xib */; };
+		B78663552747AC4200B13EEF /* QuoteCastImageX1Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B78663432747AC4100B13EEF /* QuoteCastImageX1Cell.xib */; };
+		B78663562747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78663442747AC4100B13EEF /* QuoteCastTextLinkPreviewCell.swift */; };
+		B78663572747AC4200B13EEF /* QuoteCastTextLinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B78663452747AC4100B13EEF /* QuoteCastTextLinkCell.xib */; };
+		B78663582747AC4200B13EEF /* QuoteCastTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78663462747AC4100B13EEF /* QuoteCastTextCell.swift */; };
+		B78663592747AC4200B13EEF /* QuoteCastBlogCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B78663472747AC4100B13EEF /* QuoteCastBlogCell.xib */; };
+		B786635A2747AC4200B13EEF /* QuoteCastBlogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78663482747AC4200B13EEF /* QuoteCastBlogCell.swift */; };
+		B786635B2747AC4200B13EEF /* QuoteCastImageX2Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B78663492747AC4200B13EEF /* QuoteCastImageX2Cell.xib */; };
+		B786635C2747AC4200B13EEF /* QuoteCastBlogNoImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B786634A2747AC4200B13EEF /* QuoteCastBlogNoImageCell.swift */; };
+		B786635D2747AC4200B13EEF /* QuoteCastImageX3Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B786634B2747AC4200B13EEF /* QuoteCastImageX3Cell.xib */; };
+		B786635E2747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B786634C2747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.xib */; };
+		B786635F2747AC4200B13EEF /* QuoteCastImageX1Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B786634D2747AC4200B13EEF /* QuoteCastImageX1Cell.swift */; };
 		B78795AC26C5127C00FECC21 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78795AB26C5127C00FECC21 /* Networking.framework */; };
 		B78795C226C6174A00FECC21 /* TPProgressDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C126C6174A00FECC21 /* TPProgressDelegate.swift */; };
 		B78795C426C6177200FECC21 /* TPDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C326C6177200FECC21 /* TPDataSource.swift */; };
@@ -152,6 +170,24 @@
 		B75529D4269FD885005D5EB5 /* Feed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Feed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7866333274777F800B13EEF /* ActivityHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		B7866334274777F800B13EEF /* ActivityHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		B786633C2747AC4100B13EEF /* QuoteCastBlogNoImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuoteCastBlogNoImageCell.xib; sourceTree = "<group>"; };
+		B786633D2747AC4100B13EEF /* QuoteCastImageX2Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCastImageX2Cell.swift; sourceTree = "<group>"; };
+		B786633E2747AC4100B13EEF /* QuoteCastTextLinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCastTextLinkCell.swift; sourceTree = "<group>"; };
+		B786633F2747AC4100B13EEF /* QuoteCastImageX3Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCastImageX3Cell.swift; sourceTree = "<group>"; };
+		B78663402747AC4100B13EEF /* QuoteCastTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuoteCastTextCell.xib; sourceTree = "<group>"; };
+		B78663412747AC4100B13EEF /* QuoteCastImageXMoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCastImageXMoreCell.swift; sourceTree = "<group>"; };
+		B78663422747AC4100B13EEF /* QuoteCastImageXMoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuoteCastImageXMoreCell.xib; sourceTree = "<group>"; };
+		B78663432747AC4100B13EEF /* QuoteCastImageX1Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuoteCastImageX1Cell.xib; sourceTree = "<group>"; };
+		B78663442747AC4100B13EEF /* QuoteCastTextLinkPreviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCastTextLinkPreviewCell.swift; sourceTree = "<group>"; };
+		B78663452747AC4100B13EEF /* QuoteCastTextLinkCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuoteCastTextLinkCell.xib; sourceTree = "<group>"; };
+		B78663462747AC4100B13EEF /* QuoteCastTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCastTextCell.swift; sourceTree = "<group>"; };
+		B78663472747AC4100B13EEF /* QuoteCastBlogCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuoteCastBlogCell.xib; sourceTree = "<group>"; };
+		B78663482747AC4200B13EEF /* QuoteCastBlogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCastBlogCell.swift; sourceTree = "<group>"; };
+		B78663492747AC4200B13EEF /* QuoteCastImageX2Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuoteCastImageX2Cell.xib; sourceTree = "<group>"; };
+		B786634A2747AC4200B13EEF /* QuoteCastBlogNoImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCastBlogNoImageCell.swift; sourceTree = "<group>"; };
+		B786634B2747AC4200B13EEF /* QuoteCastImageX3Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuoteCastImageX3Cell.xib; sourceTree = "<group>"; };
+		B786634C2747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuoteCastTextLinkPreviewCell.xib; sourceTree = "<group>"; };
+		B786634D2747AC4200B13EEF /* QuoteCastImageX1Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCastImageX1Cell.swift; sourceTree = "<group>"; };
 		B78795AB26C5127C00FECC21 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B78795C126C6174A00FECC21 /* TPProgressDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPProgressDelegate.swift; sourceTree = "<group>"; };
 		B78795C326C6177200FECC21 /* TPDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPDataSource.swift; sourceTree = "<group>"; };
@@ -313,6 +349,31 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		B786633B2747AC4100B13EEF /* Quote Feed Type */ = {
+			isa = PBXGroup;
+			children = (
+				B78663462747AC4100B13EEF /* QuoteCastTextCell.swift */,
+				B78663402747AC4100B13EEF /* QuoteCastTextCell.xib */,
+				B786633E2747AC4100B13EEF /* QuoteCastTextLinkCell.swift */,
+				B78663452747AC4100B13EEF /* QuoteCastTextLinkCell.xib */,
+				B78663442747AC4100B13EEF /* QuoteCastTextLinkPreviewCell.swift */,
+				B786634C2747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.xib */,
+				B786634D2747AC4200B13EEF /* QuoteCastImageX1Cell.swift */,
+				B78663432747AC4100B13EEF /* QuoteCastImageX1Cell.xib */,
+				B786633D2747AC4100B13EEF /* QuoteCastImageX2Cell.swift */,
+				B78663492747AC4200B13EEF /* QuoteCastImageX2Cell.xib */,
+				B786633F2747AC4100B13EEF /* QuoteCastImageX3Cell.swift */,
+				B786634B2747AC4200B13EEF /* QuoteCastImageX3Cell.xib */,
+				B78663412747AC4100B13EEF /* QuoteCastImageXMoreCell.swift */,
+				B78663422747AC4100B13EEF /* QuoteCastImageXMoreCell.xib */,
+				B78663482747AC4200B13EEF /* QuoteCastBlogCell.swift */,
+				B78663472747AC4100B13EEF /* QuoteCastBlogCell.xib */,
+				B786634A2747AC4200B13EEF /* QuoteCastBlogNoImageCell.swift */,
+				B786633C2747AC4100B13EEF /* QuoteCastBlogNoImageCell.xib */,
+			);
+			path = "Quote Feed Type";
+			sourceTree = "<group>";
+		};
 		B78795C026C6171C00FECC21 /* TProfile */ = {
 			isa = PBXGroup;
 			children = (
@@ -355,6 +416,7 @@
 		B78795E226C6521500FECC21 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				B786633B2747AC4100B13EEF /* Quote Feed Type */,
 				B787960026C65A3700FECC21 /* Feed Type */,
 				B717449426E791070014D6B5 /* HeaderTableViewCell.swift */,
 				B717449526E791070014D6B5 /* HeaderTableViewCell.xib */,
@@ -557,18 +619,25 @@
 			files = (
 				B71744B926E9EF850014D6B5 /* ImageX3TableViewCell.xib in Resources */,
 				B71744A326E7ED320014D6B5 /* ReplyTableViewCell.xib in Resources */,
+				B786634E2747AC4200B13EEF /* QuoteCastBlogNoImageCell.xib in Resources */,
 				B7910E9226BC68460097C94E /* Picker.storyboard in Resources */,
 				B71744B526E9EF750014D6B5 /* ImageX2TableViewCell.xib in Resources */,
+				B78663542747AC4200B13EEF /* QuoteCastImageXMoreCell.xib in Resources */,
 				B71744A726E9E6DC0014D6B5 /* TextTableViewCell.xib in Resources */,
 				B7552984269CBE48005D5EB5 /* NormalHeader.bundle in Resources */,
 				B71B666F27251C0900191A62 /* SkeletonFeedTableViewCell.xib in Resources */,
 				B717447C26E2595E0014D6B5 /* Comment.storyboard in Resources */,
+				B78663572747AC4200B13EEF /* QuoteCastTextLinkCell.xib in Resources */,
 				B71744BD26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.xib in Resources */,
+				B78663592747AC4200B13EEF /* QuoteCastBlogCell.xib in Resources */,
 				B7910E3026B5E1320097C94E /* SplashScreen.storyboard in Resources */,
+				B78663522747AC4200B13EEF /* QuoteCastTextCell.xib in Resources */,
 				B717449726E791070014D6B5 /* HeaderTableViewCell.xib in Resources */,
 				B717449F26E7E1450014D6B5 /* CommentTableViewCell.xib in Resources */,
+				B78663552747AC4200B13EEF /* QuoteCastImageX1Cell.xib in Resources */,
 				B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */,
 				B71744C626E9F6980014D6B5 /* BlogNoImageTableViewCell.xib in Resources */,
+				B786635D2747AC4200B13EEF /* QuoteCastImageX3Cell.xib in Resources */,
 				B7AC1E452717C67A002FC176 /* TextLinkPreviewTableViewCell.xib in Resources */,
 				B71744AF26E9EF280014D6B5 /* ImageX1TableViewCell.xib in Resources */,
 				B71744C226E9F6820014D6B5 /* BlogTableViewCell.xib in Resources */,
@@ -578,6 +647,8 @@
 				B7866336274777F900B13EEF /* ActivityHeaderTableViewCell.xib in Resources */,
 				B717449B26E7A2550014D6B5 /* FooterTableViewCell.xib in Resources */,
 				B7552987269CBE49005D5EB5 /* NormalFooter.bundle in Resources */,
+				B786635E2747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.xib in Resources */,
+				B786635B2747AC4200B13EEF /* QuoteCastImageX2Cell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,6 +684,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B78663582747AC4200B13EEF /* QuoteCastTextCell.swift in Sources */,
 				B7552985269CBE49005D5EB5 /* NormalHeaderAnimator.swift in Sources */,
 				B7910DFB26B018E50097C94E /* InternalWebViewModel.swift in Sources */,
 				B78795C226C6174A00FECC21 /* TPProgressDelegate.swift in Sources */,
@@ -627,8 +699,10 @@
 				B755297A269CBA14005D5EB5 /* RefreshBundle.swift in Sources */,
 				B755297C269CBA14005D5EB5 /* UIColorExtension.swift in Sources */,
 				B7910E3926B6650F0097C94E /* SplashScreenViewModel.swift in Sources */,
+				B786635A2747AC4200B13EEF /* QuoteCastBlogCell.swift in Sources */,
 				B71B666E27251C0900191A62 /* SkeletonFeedTableViewCell.swift in Sources */,
 				B7A71D0126FC4E380092F318 /* FeedCellHelper.swift in Sources */,
+				B78663502747AC4200B13EEF /* QuoteCastTextLinkCell.swift in Sources */,
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
 				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,
@@ -637,6 +711,8 @@
 				B71744AA26E9EAB10014D6B5 /* TextLinkTableViewCell.swift in Sources */,
 				B7552979269CBA14005D5EB5 /* RefreshProtocol.swift in Sources */,
 				B7552986269CBE49005D5EB5 /* NormalFooterAnimator.swift in Sources */,
+				B786635C2747AC4200B13EEF /* QuoteCastBlogNoImageCell.swift in Sources */,
+				B78663562747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.swift in Sources */,
 				B717448026E259AB0014D6B5 /* CommentViewController.swift in Sources */,
 				B78795C426C6177200FECC21 /* TPDataSource.swift in Sources */,
 				B7910E9426BC686B0097C94E /* DatePickerViewController.swift in Sources */,
@@ -648,6 +724,7 @@
 				B7AC880827199BA500500F81 /* HandleView.swift in Sources */,
 				B71744C126E9F6820014D6B5 /* BlogTableViewCell.swift in Sources */,
 				B7AC880027199AD500500F81 /* CCActionSheet+Animation.swift in Sources */,
+				B78663532747AC4200B13EEF /* QuoteCastImageXMoreCell.swift in Sources */,
 				B755297E269CBA15005D5EB5 /* RefreshHeaderView.swift in Sources */,
 				B78795C826C617BA00FECC21 /* BottomPageDelegate.swift in Sources */,
 				B7AC880627199B7800500F81 /* CCAction+Style.swift in Sources */,
@@ -662,11 +739,14 @@
 				B78795CE26C6191A00FECC21 /* ContainerViewController.swift in Sources */,
 				B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */,
 				B7866335274777F900B13EEF /* ActivityHeaderTableViewCell.swift in Sources */,
+				B786634F2747AC4200B13EEF /* QuoteCastImageX2Cell.swift in Sources */,
+				B786635F2747AC4200B13EEF /* QuoteCastImageX1Cell.swift in Sources */,
 				B7AC880427199B4700500F81 /* CCAction.swift in Sources */,
 				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,
 				B755297D269CBA15005D5EB5 /* RefreshExtension.swift in Sources */,
 				B7AC880227199B0F00500F81 /* CastcleActionSheetExtensions.swift in Sources */,
 				B71744A226E7ED320014D6B5 /* ReplyTableViewCell.swift in Sources */,
+				B78663512747AC4200B13EEF /* QuoteCastImageX3Cell.swift in Sources */,
 				B717449E26E7E1450014D6B5 /* CommentTableViewCell.swift in Sources */,
 				B755297B269CBA14005D5EB5 /* RefreshFooterView.swift in Sources */,
 				B787963A26C66EE900FECC21 /* RecastPopupViewModel.swift in Sources */,

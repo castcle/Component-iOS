@@ -83,4 +83,91 @@ public class FeedCellHelper {
             return UITableViewCell()
         }
     }
+    
+    public func renderQuoteCastCell(content: Content, tableView: UITableView, indexPath: IndexPath, isRenderForFeed: Bool) -> UITableViewCell {
+        if content.feedDisplayType == .postText {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.quoteText, for: indexPath as IndexPath) as? QuoteCastTextCell
+            if isRenderForFeed {
+                cell?.backgroundColor = UIColor.Asset.darkGray
+            } else {
+                cell?.backgroundColor = UIColor.clear
+            }
+            cell?.content = content
+            return cell ?? QuoteCastTextCell()
+        } else if content.feedDisplayType == .postLink {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.quoteLink, for: indexPath as IndexPath) as? QuoteCastTextLinkCell
+            if isRenderForFeed {
+                cell?.backgroundColor = UIColor.Asset.darkGray
+            } else {
+                cell?.backgroundColor = UIColor.clear
+            }
+            cell?.configCell(content: content)
+            return cell ?? QuoteCastTextLinkCell()
+        } else if content.feedDisplayType == .postLinkPreview {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.quoteLinkPreview, for: indexPath as IndexPath) as? QuoteCastTextLinkPreviewCell
+            if isRenderForFeed {
+                cell?.backgroundColor = UIColor.Asset.darkGray
+            } else {
+                cell?.backgroundColor = UIColor.clear
+            }
+            cell?.content = content
+            return cell ?? QuoteCastTextLinkPreviewCell()
+        } else if content.feedDisplayType == .postImageX1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.quoteImageX1, for: indexPath as IndexPath) as? QuoteCastImageX1Cell
+            if isRenderForFeed {
+                cell?.backgroundColor = UIColor.Asset.darkGray
+            } else {
+                cell?.backgroundColor = UIColor.clear
+            }
+            cell?.content = content
+            return cell ?? QuoteCastImageX1Cell()
+        } else if content.feedDisplayType == .postImageX2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.quoteImageX2, for: indexPath as IndexPath) as? QuoteCastImageX2Cell
+            if isRenderForFeed {
+                cell?.backgroundColor = UIColor.Asset.darkGray
+            } else {
+                cell?.backgroundColor = UIColor.clear
+            }
+            cell?.content = content
+            return cell ?? QuoteCastImageX2Cell()
+        } else if content.feedDisplayType == .postImageX3 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.quoteImageX3, for: indexPath as IndexPath) as? QuoteCastImageX3Cell
+            if isRenderForFeed {
+                cell?.backgroundColor = UIColor.Asset.darkGray
+            } else {
+                cell?.backgroundColor = UIColor.clear
+            }
+            cell?.content = content
+            return cell ?? QuoteCastImageX3Cell()
+        } else if content.feedDisplayType == .postImageXMore {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.quoteImageXMore, for: indexPath as IndexPath) as? QuoteCastImageXMoreCell
+            if isRenderForFeed {
+                cell?.backgroundColor = UIColor.Asset.darkGray
+            } else {
+                cell?.backgroundColor = UIColor.clear
+            }
+            cell?.content = content
+            return cell ?? QuoteCastImageXMoreCell()
+        } else if content.feedDisplayType == .blogImage {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.quoteBlog, for: indexPath as IndexPath) as? QuoteCastBlogCell
+            if isRenderForFeed {
+                cell?.backgroundColor = UIColor.Asset.darkGray
+            } else {
+                cell?.backgroundColor = UIColor.clear
+            }
+            cell?.content = content
+            return cell ?? QuoteCastBlogCell()
+        } else if content.feedDisplayType == .blogNoImage {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.quoteBlogNoImage, for: indexPath as IndexPath) as? QuoteCastBlogNoImageCell
+            if isRenderForFeed {
+                cell?.backgroundColor = UIColor.Asset.darkGray
+            } else {
+                cell?.backgroundColor = UIColor.clear
+            }
+            cell?.content = content
+            return cell ?? QuoteCastBlogNoImageCell()
+        } else {
+            return UITableViewCell()
+        }
+    }
 }
