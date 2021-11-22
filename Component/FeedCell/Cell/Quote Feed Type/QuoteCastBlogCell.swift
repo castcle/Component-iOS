@@ -52,9 +52,11 @@ public class QuoteCastBlogCell: UITableViewCell {
     @IBOutlet var blogImageView: UIImageView!
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
     
+    var viewModel: QuoteCastViewModel?
     public var content: Content? {
         didSet {
             if let content = self.content {
+                self.viewModel = QuoteCastViewModel(content: content)
                 self.detailLabel.text = content.contentPayload.message
                 
                 self.headerLabel.font = UIFont.asset(.contentBold, fontSize: .h4)
@@ -132,6 +134,8 @@ public class QuoteCastBlogCell: UITableViewCell {
     }
     
     @IBAction func followAction(_ sender: Any) {
+        guard let viewModel = self.viewModel else { return }
+        viewModel.followUser()
         self.followButton.isHidden = true
     }
 }

@@ -75,6 +75,7 @@
 		B786635D2747AC4200B13EEF /* QuoteCastImageX3Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B786634B2747AC4200B13EEF /* QuoteCastImageX3Cell.xib */; };
 		B786635E2747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B786634C2747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.xib */; };
 		B786635F2747AC4200B13EEF /* QuoteCastImageX1Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B786634D2747AC4200B13EEF /* QuoteCastImageX1Cell.swift */; };
+		B7866366274B833400B13EEF /* QuoteCastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7866365274B833400B13EEF /* QuoteCastViewModel.swift */; };
 		B78795AC26C5127C00FECC21 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78795AB26C5127C00FECC21 /* Networking.framework */; };
 		B78795C226C6174A00FECC21 /* TPProgressDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C126C6174A00FECC21 /* TPProgressDelegate.swift */; };
 		B78795C426C6177200FECC21 /* TPDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C326C6177200FECC21 /* TPDataSource.swift */; };
@@ -188,6 +189,7 @@
 		B786634B2747AC4200B13EEF /* QuoteCastImageX3Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuoteCastImageX3Cell.xib; sourceTree = "<group>"; };
 		B786634C2747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuoteCastTextLinkPreviewCell.xib; sourceTree = "<group>"; };
 		B786634D2747AC4200B13EEF /* QuoteCastImageX1Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCastImageX1Cell.swift; sourceTree = "<group>"; };
+		B7866365274B833400B13EEF /* QuoteCastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCastViewModel.swift; sourceTree = "<group>"; };
 		B78795AB26C5127C00FECC21 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B78795C126C6174A00FECC21 /* TPProgressDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPProgressDelegate.swift; sourceTree = "<group>"; };
 		B78795C326C6177200FECC21 /* TPDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPDataSource.swift; sourceTree = "<group>"; };
@@ -374,6 +376,14 @@
 			path = "Quote Feed Type";
 			sourceTree = "<group>";
 		};
+		B7866364274B82B400B13EEF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B7866365274B833400B13EEF /* QuoteCastViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		B78795C026C6171C00FECC21 /* TProfile */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +417,7 @@
 		B78795DE26C6513F00FECC21 /* FeedCell */ = {
 			isa = PBXGroup;
 			children = (
+				B7866364274B82B400B13EEF /* ViewModel */,
 				B78795E226C6521500FECC21 /* Cell */,
 				B7A71D0026FC4E380092F318 /* FeedCellHelper.swift */,
 			);
@@ -690,6 +701,7 @@
 				B78795C226C6174A00FECC21 /* TPProgressDelegate.swift in Sources */,
 				B71744B826E9EF850014D6B5 /* ImageX3TableViewCell.swift in Sources */,
 				B71744AE26E9EF280014D6B5 /* ImageX1TableViewCell.swift in Sources */,
+				B7866366274B833400B13EEF /* QuoteCastViewModel.swift in Sources */,
 				B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */,
 				B78795C626C6179700FECC21 /* PagerAwareProtocol.swift in Sources */,
 				B7552972269CBA14005D5EB5 /* FastCheckLayer.swift in Sources */,

@@ -57,9 +57,11 @@ public class QuoteCastImageX2Cell: UITableViewCell {
     @IBOutlet var secondImageView: UIImageView!
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
     
+    var viewModel: QuoteCastViewModel?
     public var content: Content? {
         didSet {
             if let content = self.content {
+                self.viewModel = QuoteCastViewModel(content: content)
                 self.detailLabel.text = content.contentPayload.message
                 
                 if content.contentPayload.photo.count >= 2 {
@@ -135,6 +137,8 @@ public class QuoteCastImageX2Cell: UITableViewCell {
     }
     
     @IBAction func followAction(_ sender: Any) {
+        guard let viewModel = self.viewModel else { return }
+        viewModel.followUser()
         self.followButton.isHidden = true
     }
 }

@@ -61,9 +61,11 @@ public class QuoteCastImageXMoreCell: UITableViewCell {
     @IBOutlet var moreLabel: UILabel!
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
     
+    var viewModel: QuoteCastViewModel?
     public var content: Content? {
         didSet {
             if let content = self.content {
+                self.viewModel = QuoteCastViewModel(content: content)
                 self.detailLabel.text = content.contentPayload.message
                 
                 self.moreImageView.image = UIColor.Asset.black.toImage()
@@ -158,6 +160,8 @@ public class QuoteCastImageXMoreCell: UITableViewCell {
     }
     
     @IBAction func followAction(_ sender: Any) {
+        guard let viewModel = self.viewModel else { return }
+        viewModel.followUser()
         self.followButton.isHidden = true
     }
 }

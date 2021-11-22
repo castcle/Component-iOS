@@ -66,6 +66,7 @@ public class QuoteCastTextLinkCell: UITableViewCell {
     
     private var result = Response()
     private let slp = SwiftLinkPreview(cache: InMemoryCache())
+    var viewModel: QuoteCastViewModel?
     
     public override func awakeFromNib() {
         super.awakeFromNib()
@@ -96,7 +97,7 @@ public class QuoteCastTextLinkCell: UITableViewCell {
     
     public func configCell(content: Content?) {
         guard let content = content else { return }
-        
+        self.viewModel = QuoteCastViewModel(content: content)
         self.detailLabel.text = content.contentPayload.message
         self.skeletonView.isHidden = false
         self.linkContainer.isHidden = true
@@ -204,6 +205,8 @@ public class QuoteCastTextLinkCell: UITableViewCell {
     }
     
     @IBAction func followAction(_ sender: Any) {
+        guard let viewModel = self.viewModel else { return }
+        viewModel.followUser()
         self.followButton.isHidden = true
     }
 }

@@ -50,8 +50,18 @@ public class HeaderTableViewCell: UITableViewCell {
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
     
     public var delegate: HeaderTableViewCellDelegate?
+    private var userRepository: UserRepository = UserRepositoryImpl()
     private var contentRepository: ContentRepository = ContentRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
+    private var stage: Stage = .none
+    private var userRequest: UserRequest = UserRequest()
+    
+    enum Stage {
+        case deleteContent
+        case followUser
+        case unfollowUser
+        case none
+    }
     
     public var content: Content? {
         didSet {
@@ -130,8 +140,10 @@ public class HeaderTableViewCell: UITableViewCell {
         if UserManager.shared.isLogin {
             guard let content = self.content else { return }
             self.followButton.isHidden = true
+            self.followUser()
             HeaderSnackBar.make(in: Utility.currentViewController().view, message: "You've followed @\(content.author.castcleId)", duration: .lengthLong).setAction(with: "Undo", action: {
                 self.followButton.isHidden = false
+                self.unfollowUser()
             }).show()
         } else {
             self.delegate?.didAuthen(self)
@@ -159,6 +171,7 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     private func deleteContent() {
+        self.stage = .deleteContent
         guard let content = self.content else { return }
         self.contentRepository.deleteContent(contentId: content.id) { (success, response, isRefreshToken) in
             if success {
@@ -170,11 +183,53 @@ public class HeaderTableViewCell: UITableViewCell {
             }
         }
     }
+    
+    private func followUser() {
+        self.stage = .followUser
+        guard let content = self.content else { return }
+        let userId: String = UserManager.shared.rawCastcleId
+        if content.isRecast {
+            self.userRequest.targetCastcleId = content.originalPost.author.castcleId
+        } else {
+            self.userRequest.targetCastcleId = content.author.castcleId
+        }
+        self.userRepository.follow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
+            if !success {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
+    }
+    
+    private func unfollowUser() {
+        self.stage = .unfollowUser
+        guard let content = self.content else { return }
+        let userId: String = UserManager.shared.rawCastcleId
+        if content.isRecast {
+            self.userRequest.targetCastcleId = content.originalPost.author.castcleId
+        } else {
+            self.userRequest.targetCastcleId = content.author.castcleId
+        }
+        self.userRepository.unfollow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
+            if !success {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
+    }
 }
 
 extension HeaderTableViewCell: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        self.deleteContent()
+        if self.stage == .deleteContent {
+            self.deleteContent()
+        } else if self.stage == .followUser {
+            self.followUser()
+        } else if self.stage == .unfollowUser {
+            self.unfollowUser()
+        }
     }
 }
 
