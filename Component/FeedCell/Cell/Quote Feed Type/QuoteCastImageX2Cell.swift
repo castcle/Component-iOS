@@ -61,25 +61,26 @@ public class QuoteCastImageX2Cell: UITableViewCell {
     public var content: Content? {
         didSet {
             if let content = self.content {
+                guard let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) else { return }
                 self.viewModel = QuoteCastViewModel(content: content)
-                self.detailLabel.text = content.contentPayload.message
+                self.detailLabel.text = content.message
                 
-                if content.contentPayload.photo.count >= 2 {
-                    let firstUrl = URL(string: content.contentPayload.photo[0].large)
+                if content.photo.count >= 2 {
+                    let firstUrl = URL(string: content.photo[0].large)
                     self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                     
-                    let secondUrl = URL(string: content.contentPayload.photo[1].large)
+                    let secondUrl = URL(string: content.photo[1].large)
                     self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 }
                 
-                if content.author.type == .people {
-                    if content.author.castcleId == UserManager.shared.rawCastcleId {
+                if authorRef.type == AuthorType.people.rawValue {
+                    if authorRef.castcleId == UserManager.shared.rawCastcleId {
                         self.avatarImage.image = UserManager.shared.avatar
                         self.followButton.isHidden = true
                     } else {
-                        let url = URL(string: content.author.avatar.thumbnail)
+                        let url = URL(string: authorRef.avatar)
                         self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        if content.author.followed {
+                        if authorRef.followed {
                             self.followButton.isHidden = true
                         } else {
                             self.followButton.isHidden = false
@@ -87,13 +88,13 @@ public class QuoteCastImageX2Cell: UITableViewCell {
                     }
                 } else {
                     let realm = try! Realm()
-                    if realm.objects(Page.self).filter("castcleId = '\(content.author.castcleId)'").first != nil {
-                        self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: content.author.castcleId, type: .avatar)
+                    if realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first != nil {
+                        self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: authorRef.castcleId, type: .avatar)
                         self.followButton.isHidden = true
                     } else {
-                        let url = URL(string: content.author.avatar.thumbnail)
+                        let url = URL(string: authorRef.avatar)
                         self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        if content.author.followed {
+                        if authorRef.followed {
                             self.followButton.isHidden = true
                         } else {
                             self.followButton.isHidden = false
@@ -101,9 +102,9 @@ public class QuoteCastImageX2Cell: UITableViewCell {
                     }
                 }
                 
-                self.displayNameLabel.text = content.author.displayName
+                self.displayNameLabel.text = authorRef.displayName
                 self.dateLabel.text = content.postDate.timeAgoDisplay()
-                if content.author.verified.official {
+                if authorRef.official {
                     self.verifyConstraintWidth.constant = 15.0
                     self.verifyIcon.isHidden = false
                 } else {

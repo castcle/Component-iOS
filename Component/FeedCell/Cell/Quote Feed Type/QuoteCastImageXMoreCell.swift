@@ -65,44 +65,45 @@ public class QuoteCastImageXMoreCell: UITableViewCell {
     public var content: Content? {
         didSet {
             if let content = self.content {
+                guard let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) else { return }
                 self.viewModel = QuoteCastViewModel(content: content)
-                self.detailLabel.text = content.contentPayload.message
+                self.detailLabel.text = content.message
                 
                 self.moreImageView.image = UIColor.Asset.black.toImage()
                 self.moreLabel.font = UIFont.asset(.bold, fontSize: .custom(size: 45))
                 
-                if content.contentPayload.photo.count > 4 {
+                if content.photo.count > 4 {
                     self.moreImageView.isHidden = false
                     self.moreImageView.alpha = 0.5
                     self.moreLabel.isHidden = false
-                    self.moreLabel.text = "+\(content.contentPayload.photo.count - 3)"
+                    self.moreLabel.text = "+\(content.photo.count - 3)"
                 } else {
                     self.moreImageView.isHidden = true
                     self.moreLabel.isHidden = true
                 }
                 
-                if content.contentPayload.photo.count >= 4 {
-                    let firstUrl = URL(string: content.contentPayload.photo[0].large)
+                if content.photo.count >= 4 {
+                    let firstUrl = URL(string: content.photo[0].large)
                     self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                     
-                    let secondUrl = URL(string: content.contentPayload.photo[1].large)
+                    let secondUrl = URL(string: content.photo[1].large)
                     self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                     
-                    let thirdUrl = URL(string: content.contentPayload.photo[2].large)
+                    let thirdUrl = URL(string: content.photo[2].large)
                     self.thirdImageView.kf.setImage(with: thirdUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                     
-                    let fourthUrl = URL(string: content.contentPayload.photo[3].large)
+                    let fourthUrl = URL(string: content.photo[3].large)
                     self.fourthImageView.kf.setImage(with: fourthUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 }
                 
-                if content.author.type == .people {
-                    if content.author.castcleId == UserManager.shared.rawCastcleId {
+                if authorRef.type == AuthorType.people.rawValue {
+                    if authorRef.castcleId == UserManager.shared.rawCastcleId {
                         self.avatarImage.image = UserManager.shared.avatar
                         self.followButton.isHidden = true
                     } else {
-                        let url = URL(string: content.author.avatar.thumbnail)
+                        let url = URL(string: authorRef.avatar)
                         self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        if content.author.followed {
+                        if authorRef.followed {
                             self.followButton.isHidden = true
                         } else {
                             self.followButton.isHidden = false
@@ -110,13 +111,13 @@ public class QuoteCastImageXMoreCell: UITableViewCell {
                     }
                 } else {
                     let realm = try! Realm()
-                    if realm.objects(Page.self).filter("castcleId = '\(content.author.castcleId)'").first != nil {
-                        self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: content.author.castcleId, type: .avatar)
+                    if realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first != nil {
+                        self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: authorRef.castcleId, type: .avatar)
                         self.followButton.isHidden = true
                     } else {
-                        let url = URL(string: content.author.avatar.thumbnail)
+                        let url = URL(string: authorRef.avatar)
                         self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        if content.author.followed {
+                        if authorRef.followed {
                             self.followButton.isHidden = true
                         } else {
                             self.followButton.isHidden = false
@@ -124,9 +125,9 @@ public class QuoteCastImageXMoreCell: UITableViewCell {
                     }
                 }
                 
-                self.displayNameLabel.text = content.author.displayName
+                self.displayNameLabel.text = authorRef.displayName
                 self.dateLabel.text = content.postDate.timeAgoDisplay()
-                if content.author.verified.official {
+                if authorRef.official {
                     self.verifyConstraintWidth.constant = 15.0
                     self.verifyIcon.isHidden = false
                 } else {

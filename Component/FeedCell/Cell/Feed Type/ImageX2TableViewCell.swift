@@ -55,7 +55,7 @@ public class ImageX2TableViewCell: UITableViewCell {
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
-            self.detailLabel.text = content.contentPayload.message
+            self.detailLabel.text = content.message
             self.detailLabel.handleHashtagTap { hashtag in
                 let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -70,11 +70,11 @@ public class ImageX2TableViewCell: UITableViewCell {
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
             }
             
-            if content.contentPayload.photo.count >= 2 {
-                let firstUrl = URL(string: content.contentPayload.photo[0].large)
+            if content.photo.count >= 2 {
+                let firstUrl = URL(string: content.photo[0].large)
                 self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 
-                let secondUrl = URL(string: content.contentPayload.photo[1].large)
+                let secondUrl = URL(string: content.photo[1].large)
                 self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
             }
         }
@@ -98,10 +98,10 @@ public class ImageX2TableViewCell: UITableViewCell {
     }
     
     private func openImage(index: Int) {
-        if let content = self.content, !content.contentPayload.photo.isEmpty {
+        if let content = self.content, !content.photo.isEmpty {
             
             var images: [LightboxImage] = []
-            content.contentPayload.photo.forEach { photo in
+            content.photo.forEach { photo in
                 images.append(LightboxImage(imageURL: URL(string: photo.fullHd)!))
             }
             

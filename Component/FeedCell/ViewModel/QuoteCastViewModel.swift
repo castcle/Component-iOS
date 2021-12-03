@@ -49,14 +49,18 @@ public final class QuoteCastViewModel {
     func followUser() {
         self.stage = .followUser
         guard let content = self.content else { return }
-        let userId: String = UserManager.shared.rawCastcleId
-        self.userRequest.targetCastcleId = content.author.castcleId
-        self.userRepository.follow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
-            if !success {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
+        if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
+            let userId: String = UserManager.shared.rawCastcleId
+            self.userRequest.targetCastcleId = authorRef.castcleId
+            self.userRepository.follow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
+                if !success {
+                    if isRefreshToken {
+                        self.tokenHelper.refreshToken()
+                    }
                 }
             }
+        } else {
+            return
         }
     }
 }
