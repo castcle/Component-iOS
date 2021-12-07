@@ -56,28 +56,29 @@ public class QuoteCastBlogCell: UITableViewCell {
     public var content: Content? {
         didSet {
             if let content = self.content {
+                guard let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) else { return }
                 self.viewModel = QuoteCastViewModel(content: content)
-                self.detailLabel.text = content.contentPayload.message
+                self.detailLabel.text = content.message
                 
                 self.headerLabel.font = UIFont.asset(.contentBold, fontSize: .h4)
                 self.headerLabel.textColor = UIColor.Asset.white
                 self.detailLabel.font = UIFont.asset(.contentLight, fontSize: .overline)
                 self.detailLabel.textColor = UIColor.Asset.lightGray
                 
-                self.headerLabel.text = content.contentPayload.header
-                self.detailLabel.text = content.contentPayload.message
+//                self.headerLabel.text = content.contentPayload.header
+//                self.detailLabel.text = content.contentPayload.message
+//                
+//                let imageUrl = URL(string: content.cover.thumbnail)
+//                self.blogImageView.kf.setImage(with: imageUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 
-                let imageUrl = URL(string: content.contentPayload.cover.thumbnail)
-                self.blogImageView.kf.setImage(with: imageUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-                
-                if content.author.type == .people {
-                    if content.author.castcleId == UserManager.shared.rawCastcleId {
+                if authorRef.type == AuthorType.people.rawValue {
+                    if authorRef.castcleId == UserManager.shared.rawCastcleId {
                         self.avatarImage.image = UserManager.shared.avatar
                         self.followButton.isHidden = true
                     } else {
-                        let url = URL(string: content.author.avatar.thumbnail)
+                        let url = URL(string: authorRef.avatar)
                         self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        if content.author.followed {
+                        if authorRef.followed {
                             self.followButton.isHidden = true
                         } else {
                             self.followButton.isHidden = false
@@ -85,13 +86,13 @@ public class QuoteCastBlogCell: UITableViewCell {
                     }
                 } else {
                     let realm = try! Realm()
-                    if realm.objects(Page.self).filter("castcleId = '\(content.author.castcleId)'").first != nil {
-                        self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: content.author.castcleId, type: .avatar)
+                    if realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first != nil {
+                        self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: authorRef.castcleId, type: .avatar)
                         self.followButton.isHidden = true
                     } else {
-                        let url = URL(string: content.author.avatar.thumbnail)
+                        let url = URL(string: authorRef.avatar)
                         self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        if content.author.followed {
+                        if authorRef.followed {
                             self.followButton.isHidden = true
                         } else {
                             self.followButton.isHidden = false
@@ -99,9 +100,9 @@ public class QuoteCastBlogCell: UITableViewCell {
                     }
                 }
                 
-                self.displayNameLabel.text = content.author.displayName
+                self.displayNameLabel.text = authorRef.displayName
                 self.dateLabel.text = content.postDate.timeAgoDisplay()
-                if content.author.verified.official {
+                if authorRef.official {
                     self.verifyConstraintWidth.constant = 15.0
                     self.verifyIcon.isHidden = false
                 } else {

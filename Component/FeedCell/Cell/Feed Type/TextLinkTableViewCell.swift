@@ -77,7 +77,7 @@ public class TextLinkTableViewCell: UITableViewCell {
     
     func configCell(content: Content?) {
         guard let content = content else { return }
-        self.detailLabel.text = content.contentPayload.message
+        self.detailLabel.text = content.message
         self.detailLabel.handleHashtagTap { hashtag in
             let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -102,11 +102,11 @@ public class TextLinkTableViewCell: UITableViewCell {
         self.skeletonView.isHidden = false
         self.linkContainer.isHidden = true
         
-        if let link = content.contentPayload.link.first {
-            self.setDataWithContent(icon: link.type.image, message: content.contentPayload.message)
-        } else if let link = content.contentPayload.message.extractURLs().first {
+        if let link = content.link.first {
+            self.setDataWithContent(icon: link.type.image, message: content.message)
+        } else if let link = content.message.extractURLs().first {
             if let icon = UIImage.iconFromUrl(url: link.absoluteString) {
-                self.setDataWithContent(icon: icon, message: content.contentPayload.message)
+                self.setDataWithContent(icon: icon, message: content.message)
             } else {
                 self.loadLink(link: link.absoluteString)
             }

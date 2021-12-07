@@ -52,8 +52,8 @@ public class BlogNoImageTableViewCell: UITableViewCell {
             self.detailLabel.font = UIFont.asset(.contentLight, fontSize: .body)
             self.detailLabel.textColor = UIColor.Asset.lightGray
             
-            self.headerLabel.text = content.contentPayload.header
-            self.detailLabel.text = content.contentPayload.message
+//            self.headerLabel.text = content.contentPayload.header
+//            self.detailLabel.text = content.contentPayload.message
             
             self.blogImageView.image = UIColor.Asset.black.toImage()
         }

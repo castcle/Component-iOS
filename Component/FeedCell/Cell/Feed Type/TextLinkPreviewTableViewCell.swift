@@ -61,7 +61,7 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
-            self.detailLabel.text = content.contentPayload.message
+            self.detailLabel.text = content.message
             self.detailLabel.handleHashtagTap { hashtag in
                 let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -85,9 +85,9 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
             
             self.skeletonView.isHidden = false
             self.linkContainer.isHidden = true
-            if let link = content.contentPayload.link.first {
+            if let link = content.link.first {
                 self.loadLink(link: link.url)
-            } else if let link = content.contentPayload.message.extractURLs().first {
+            } else if let link = content.message.extractURLs().first {
                 self.loadLink(link: link.absoluteString)
             } else {
                 self.setData()

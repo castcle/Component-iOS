@@ -36,6 +36,7 @@ public protocol HeaderTableViewCellDelegate {
     func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author)
     func didAuthen(_ headerTableViewCell: HeaderTableViewCell)
     func didRemoveSuccess(_ headerTableViewCell: HeaderTableViewCell)
+    func didReportSuccess(_ headerTableViewCell: HeaderTableViewCell)
 }
 
 public class HeaderTableViewCell: UITableViewCell {
@@ -52,6 +53,7 @@ public class HeaderTableViewCell: UITableViewCell {
     public var delegate: HeaderTableViewCellDelegate?
     private var userRepository: UserRepository = UserRepositoryImpl()
     private var contentRepository: ContentRepository = ContentRepositoryImpl()
+    private var reportRepository: ReportRepository = ReportRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
     private var stage: Stage = .none
     private var userRequest: UserRequest = UserRequest()
@@ -60,54 +62,55 @@ public class HeaderTableViewCell: UITableViewCell {
         case deleteContent
         case followUser
         case unfollowUser
+        case reportContent
         case none
     }
     
     public var content: Content? {
         didSet {
             if let content = self.content {
-                if content.author.type == .people {
-                    if content.author.castcleId == UserManager.shared.rawCastcleId {
-                        self.avatarImage.image = UserManager.shared.avatar
-                        self.moreButton.isHidden = false
-                        self.followButton.isHidden = true
-                    } else {
-                        let url = URL(string: content.author.avatar.thumbnail)
-                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        self.moreButton.isHidden = true
-                        if content.author.followed {
+                if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
+                    if authorRef.type == AuthorType.people.rawValue {
+                        if authorRef.castcleId == UserManager.shared.rawCastcleId {
+                            self.avatarImage.image = UserManager.shared.avatar
                             self.followButton.isHidden = true
                         } else {
-                            self.followButton.isHidden = false
+                            let url = URL(string: authorRef.avatar)
+                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                            if authorRef.followed {
+                                self.followButton.isHidden = true
+                            } else {
+                                self.followButton.isHidden = false
+                            }
                         }
-                    }
-                } else {
-                    let realm = try! Realm()
-                    if realm.objects(Page.self).filter("castcleId = '\(content.author.castcleId)'").first != nil {
-                        self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: content.author.castcleId, type: .avatar)
-                        self.moreButton.isHidden = false
-                        self.followButton.isHidden = true
                     } else {
-                        let url = URL(string: content.author.avatar.thumbnail)
-                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        self.moreButton.isHidden = true
-                        if content.author.followed {
+                        let realm = try! Realm()
+                        if let page = realm.objects(Page.self).filter("id = '\(content.authorId)'").first {
+                            self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: page.castcleId, type: .avatar)
                             self.followButton.isHidden = true
                         } else {
-                            self.followButton.isHidden = false
+                            let url = URL(string: authorRef.avatar)
+                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                            if authorRef.followed {
+                                self.followButton.isHidden = true
+                            } else {
+                                self.followButton.isHidden = false
+                            }
                         }
                     }
-                }
 
-                self.displayNameLabel.text = content.author.displayName
-                self.dateLabel.text = content.postDate.timeAgoDisplay()
-                
-                if content.author.verified.official {
-                    self.verifyConstraintWidth.constant = 15.0
-                    self.verifyIcon.isHidden = false
+                    self.displayNameLabel.text = authorRef.displayName
+                    self.dateLabel.text = content.postDate.timeAgoDisplay()
+                    
+                    if authorRef.official {
+                        self.verifyConstraintWidth.constant = 15.0
+                        self.verifyIcon.isHidden = false
+                    } else {
+                        self.verifyConstraintWidth.constant = 0.0
+                        self.verifyIcon.isHidden = true
+                    }
                 } else {
-                    self.verifyConstraintWidth.constant = 0.0
-                    self.verifyIcon.isHidden = true
+                    return
                 }
             } else {
                 return
@@ -139,12 +142,17 @@ public class HeaderTableViewCell: UITableViewCell {
     @IBAction func followAction(_ sender: Any) {
         if UserManager.shared.isLogin {
             guard let content = self.content else { return }
-            self.followButton.isHidden = true
-            self.followUser()
-            HeaderSnackBar.make(in: Utility.currentViewController().view, message: "You've followed @\(content.author.castcleId)", duration: .lengthLong).setAction(with: "Undo", action: {
-                self.followButton.isHidden = false
-                self.unfollowUser()
-            }).show()
+            if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
+                self.followButton.isHidden = true
+                self.followUser()
+                HeaderSnackBar.make(in: Utility.currentViewController().view, message: "You've followed @\(authorRef.castcleId)", duration: .lengthLong).setAction(with: "Undo", action: {
+                    self.followButton.isHidden = false
+                    self.unfollowUser()
+                }).show()
+            } else {
+                return
+            }
+            
         } else {
             self.delegate?.didAuthen(self)
         }
@@ -152,22 +160,38 @@ public class HeaderTableViewCell: UITableViewCell {
     
     @IBAction func viewProfileAction(_ sender: Any) {
         if let content = self.content {
-            self.delegate?.didTabProfile(self, author: content.author)
+            if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
+                self.delegate?.didTabProfile(self, author: Author(authorRef: authorRef))
+            }
         }
     }
     
     @IBAction func moreAction(_ sender: Any) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        if let content = self.content {
+            if ContentHelper.shared.isMyAccount(id: content.authorId) {
+                let actionSheet = CCActionSheet()
+                let deleteButton = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.delete), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                    actionSheet.dismissActionSheet()
+                    self.deleteContent()
+                }
+                
+                actionSheet.addActions([deleteButton])
+                actionSheet.modalPresentationStyle  = .overFullScreen
+                Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
+            } else {
+                let actionSheet = CCActionSheet()
+                let reportButton = CCAction(title: "Report cast", image: UIImage.init(icon: .castcle(.email), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                    actionSheet.dismissActionSheet()
+                    self.reportContent()
+                }
+                
+                actionSheet.addActions([reportButton])
+                actionSheet.modalPresentationStyle  = .overFullScreen
+                Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
+            }
+        }
         
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler: { (UIAlertAction) in
-            self.deleteContent()
-        }))
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in
-            
-        }))
-
-        Utility.currentViewController().present(alert, animated: true)
     }
     
     private func deleteContent() {
@@ -184,17 +208,13 @@ public class HeaderTableViewCell: UITableViewCell {
         }
     }
     
-    private func followUser() {
-        self.stage = .followUser
+    private func reportContent() {
+        self.stage = .reportContent
         guard let content = self.content else { return }
-        let userId: String = UserManager.shared.rawCastcleId
-        if content.isRecast {
-            self.userRequest.targetCastcleId = content.originalPost.author.castcleId
-        } else {
-            self.userRequest.targetCastcleId = content.author.castcleId
-        }
-        self.userRepository.follow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
-            if !success {
+        self.reportRepository.reportContent(contentId: content.id) { (success, response, isRefreshToken) in
+            if success {
+                self.delegate?.didReportSuccess(self)
+            } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
                 }
@@ -202,21 +222,49 @@ public class HeaderTableViewCell: UITableViewCell {
         }
     }
     
+    private func followUser() {
+        self.stage = .followUser
+        guard let content = self.content else { return }
+        if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
+            let userId: String = UserManager.shared.rawCastcleId
+            if content.participate.recasted {
+                // Original Post
+//                self.userRequest.targetCastcleId = content.originalPost.author.castcleId
+            } else {
+                self.userRequest.targetCastcleId = authorRef.castcleId
+            }
+            self.userRepository.follow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
+                if !success {
+                    if isRefreshToken {
+                        self.tokenHelper.refreshToken()
+                    }
+                }
+            }
+        } else {
+            return
+        }
+    }
+    
     private func unfollowUser() {
         self.stage = .unfollowUser
         guard let content = self.content else { return }
-        let userId: String = UserManager.shared.rawCastcleId
-        if content.isRecast {
-            self.userRequest.targetCastcleId = content.originalPost.author.castcleId
-        } else {
-            self.userRequest.targetCastcleId = content.author.castcleId
-        }
-        self.userRepository.unfollow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
-            if !success {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
+        if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
+            let userId: String = UserManager.shared.rawCastcleId
+            if content.participate.recasted {
+                // Original Post
+//                self.userRequest.targetCastcleId = content.originalPost.author.castcleId
+            } else {
+                self.userRequest.targetCastcleId = authorRef.castcleId
+            }
+            self.userRepository.unfollow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
+                if !success {
+                    if isRefreshToken {
+                        self.tokenHelper.refreshToken()
+                    }
                 }
             }
+        } else {
+            return
         }
     }
 }
@@ -229,6 +277,8 @@ extension HeaderTableViewCell: TokenHelperDelegate {
             self.followUser()
         } else if self.stage == .unfollowUser {
             self.unfollowUser()
+        } else if self.stage == .reportContent {
+            self.reportContent()
         }
     }
 }

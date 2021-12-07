@@ -45,11 +45,15 @@ public class ActivityHeaderTableViewCell: UITableViewCell {
     }
     
     public func cellConfig(content: Content) {
-        if content.isRecast {
-            if content.author.castcleId == UserManager.shared.rawCastcleId {
+        if content.participate.recasted {
+            if content.authorId == UserManager.shared.id {
                 self.detailLabel.text = "You Recasted"
             } else {
-                self.detailLabel.text = "\(content.author.displayName) Recasted"
+                if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
+                    self.detailLabel.text = "\(authorRef.displayName) Recasted"
+                } else {
+                    return
+                }
             }
             
             self.iconImage.image = UIImage.init(icon: .castcle(.recast), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightGray)

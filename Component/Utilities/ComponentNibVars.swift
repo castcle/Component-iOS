@@ -33,6 +33,7 @@ public struct ComponentNibVars {
         public static let datePicker = "DatePickerViewController"
         public static let recastPopup = "RecastPopupViewController"
         public static let comment = "CommentViewController"
+        public static let reportSuccess = "ReportSuccessViewController"
     }
     
     // MARK: - View
@@ -42,6 +43,7 @@ public struct ComponentNibVars {
         public static let picker = "Picker"
         public static let recast = "Recast"
         public static let comment = "Comment"
+        public static let report = "Report"
     }
     
     public struct View {

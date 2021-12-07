@@ -164,7 +164,11 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     }
     
     private func setupNevBar() {
-        self.customNavigationBar(.primary, title: "Post of \(self.viewModel.content?.author.displayName ?? "")", textColor: UIColor.Asset.white)
+        if let authorId = self.viewModel.content?.authorId, let authorRef = ContentHelper.shared.getAuthorRef(id: authorId) {
+            self.customNavigationBar(.primary, title: "Post of \(authorRef.displayName)", textColor: UIColor.Asset.white)
+        } else {
+            self.customNavigationBar(.primary, title: "Error", textColor: UIColor.Asset.white)
+        }
         
         let leftIcon = NavBarButtonType.back.barButton
         leftIcon.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
@@ -281,6 +285,10 @@ extension CommentViewController: HeaderTableViewCellDelegate {
     
     func didAuthen(_ headerTableViewCell: HeaderTableViewCell) {
 //        Utility.currentViewController().presentPanModal(AuthenOpener.open(.signUpMethod) as! SignUpMethodViewController)
+    }
+    
+    func didReportSuccess(_ headerTableViewCell: HeaderTableViewCell) {
+        Utility.currentViewController().dismiss(animated: true)
     }
 }
 

@@ -76,24 +76,23 @@ public class FooterTableViewCell: UITableViewCell {
         self.commentLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.recastLabel.font = UIFont.asset(.regular, fontSize: .overline)
         
-        let displayLike: String = (content.liked.count > 0 ? "  \(String.displayCount(count: content.liked.count))" : "")
-        let displayComment: String = (content.commented.count > 0 ? "  \(String.displayCount(count: content.commented.count))" : "")
-        let displayRecast: String = (content.recasted.count > 0 ? "  \(String.displayCount(count: content.recasted.count))" : "")
+        let displayLike: String = (content.metrics.likeCount > 0 ? "  \(String.displayCount(count: content.metrics.likeCount))" : "")
+        let displayComment: String = (content.metrics.commentCount > 0 ? "  \(String.displayCount(count: content.metrics.commentCount))" : "")
+        let displayRecast: String = ((content.metrics.recastCount > 0 || content.metrics.quoteCount > 0) ? "  \(String.displayCount(count: content.metrics.recastCount + content.metrics.quoteCount))" : "")
         
-        if content.liked.isLike {
-            
+        if content.participate.liked {
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.lightBlue, postfixText: displayLike, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 18)
         } else {
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.white, postfixText: displayLike, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 18)
         }
         
-        if content.commented.isComment {
+        if content.participate.commented {
             self.commentLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.comment), iconColor: UIColor.Asset.lightBlue, postfixText: displayComment, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 15)
         } else {
             self.commentLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.comment), iconColor: UIColor.Asset.white, postfixText: displayComment, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 15)
         }
         
-        if content.recasted.isRecast {
+        if content.participate.recasted || content.participate.quoted {
             self.recastLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.recast), iconColor: UIColor.Asset.lightBlue, postfixText: displayRecast, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 18)
         } else {
             self.recastLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.recast), iconColor: UIColor.Asset.white, postfixText: displayRecast, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 18)
@@ -101,9 +100,9 @@ public class FooterTableViewCell: UITableViewCell {
     }
     
     private func likeContent(content: Content) {
-        if content.liked.isLike {
-            content.liked.count -= 1
-            content.liked.isLike.toggle()
+        if content.participate.liked {
+            content.metrics.likeCount -= 1
+            content.participate.liked.toggle()
             self.updateUi(content: content)
             self.contentRequest.castcleId = UserManager.shared.rawCastcleId
             self.contentRepository.unlikeContent(contentId: content.id, contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
@@ -111,15 +110,15 @@ public class FooterTableViewCell: UITableViewCell {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
                     } else {
-                        content.liked.count += 1
-                        content.liked.isLike.toggle()
+                        content.metrics.likeCount += 1
+                        content.participate.liked.toggle()
                         self.updateUi(content: content)
                     }
                 }
             }
         } else {
-            content.liked.count += 1
-            content.liked.isLike.toggle()
+            content.metrics.likeCount += 1
+            content.participate.liked.toggle()
             self.updateUi(content: content)
             self.contentRequest.castcleId = UserManager.shared.rawCastcleId
             self.contentRepository.likeContent(contentId: content.id, contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
@@ -127,15 +126,15 @@ public class FooterTableViewCell: UITableViewCell {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
                     } else {
-                        content.liked.count -= 1
-                        content.liked.isLike.toggle()
+                        content.metrics.likeCount -= 1
+                        content.participate.liked.toggle()
                         self.updateUi(content: content)
                     }
                 }
             }
         }
 
-        if content.liked.isLike {
+        if content.participate.liked {
             let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
             impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
             impliesAnimation.duration = 0.3 * 2
@@ -145,9 +144,9 @@ public class FooterTableViewCell: UITableViewCell {
     }
     
     private func recastContent(content: Content, castcleId: String) {
-        if content.recasted.isRecast {
-            content.recasted.count -= 1
-            content.recasted.isRecast.toggle()
+        if content.participate.recasted {
+            content.metrics.recastCount -= 1
+            content.participate.recasted.toggle()
             self.updateUi(content: content)
             self.contentRequest.castcleId = castcleId
             self.contentRepository.unrecastContent(contentId: content.id, contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
@@ -155,15 +154,15 @@ public class FooterTableViewCell: UITableViewCell {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
                     } else {
-                        content.recasted.count += 1
-                        content.recasted.isRecast.toggle()
+                        content.metrics.recastCount += 1
+                        content.participate.recasted.toggle()
                         self.updateUi(content: content)
                     }
                 }
             }
         } else {
-            content.recasted.count += 1
-            content.recasted.isRecast.toggle()
+            content.metrics.recastCount += 1
+            content.participate.recasted.toggle()
             self.updateUi(content: content)
             self.contentRequest.castcleId = castcleId
             self.contentRepository.recastContent(contentId: content.id, contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
@@ -171,8 +170,8 @@ public class FooterTableViewCell: UITableViewCell {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
                     } else {
-                        content.recasted.count -= 1
-                        content.recasted.isRecast.toggle()
+                        content.metrics.recastCount -= 1
+                        content.participate.recasted.toggle()
                         self.updateUi(content: content)
                     }
                 }
@@ -203,7 +202,7 @@ public class FooterTableViewCell: UITableViewCell {
     @IBAction func recastAction(_ sender: Any) {
         if UserManager.shared.isLogin {
             guard let content = self.content else { return }
-            let vc = ComponentOpener.open(.recast(RecastPopupViewModel(isRecasted: content.recasted.isRecast))) as? RecastPopupViewController
+            let vc = ComponentOpener.open(.recast(RecastPopupViewModel(isRecasted: content.participate.recasted))) as? RecastPopupViewController
             vc?.delegate = self
             Utility.currentViewController().presentPanModal(vc ?? RecastPopupViewController())
         } else {
