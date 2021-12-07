@@ -109,6 +109,8 @@
 		B7AC880827199BA500500F81 /* HandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880727199BA500500F81 /* HandleView.swift */; };
 		B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */; };
 		B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */; };
+		B7E64ECB275F63B300FFD78E /* Report.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7E64ECA275F63B300FFD78E /* Report.storyboard */; };
+		B7E64ECD275F63D700FFD78E /* ReportSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E64ECC275F63D700FFD78E /* ReportSuccessViewController.swift */; };
 		C4C3938BB71648406A5368E4 /* Pods_Component.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A723B2EF055ED2C75BAC143 /* Pods_Component.framework */; };
 /* End PBXBuildFile section */
 
@@ -226,6 +228,8 @@
 		B7AC880727199BA500500F81 /* HandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleView.swift; sourceTree = "<group>"; };
 		B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
+		B7E64ECA275F63B300FFD78E /* Report.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Report.storyboard; sourceTree = "<group>"; };
+		B7E64ECC275F63D700FFD78E /* ReportSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportSuccessViewController.swift; sourceTree = "<group>"; };
 		D22398FF8040ECFC1E72C75E /* Pods-Component.debug (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.debug (staging).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.debug (staging).xcconfig"; sourceTree = "<group>"; };
 		F60423AB57586FAE02619762 /* Pods-Component.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.release (production).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.release (production).xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -532,6 +536,7 @@
 				B792815E268F2C30000ED84A /* Info.plist */,
 				B75529D1269F693C005D5EB5 /* Utilities */,
 				B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */,
+				B7E64EC9275F637F00FFD78E /* Report */,
 				B7AC87FC271999CF00500F81 /* CastcleActionSheet */,
 				B717447826E258DE0014D6B5 /* Comment */,
 				B787963426C66E5F00FECC21 /* Recast */,
@@ -556,6 +561,15 @@
 				B7AC880727199BA500500F81 /* HandleView.swift */,
 			);
 			path = CastcleActionSheet;
+			sourceTree = "<group>";
+		};
+		B7E64EC9275F637F00FFD78E /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				B7E64ECA275F63B300FFD78E /* Report.storyboard */,
+				B7E64ECC275F63D700FFD78E /* ReportSuccessViewController.swift */,
+			);
+			path = Report;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -630,6 +644,7 @@
 			files = (
 				B71744B926E9EF850014D6B5 /* ImageX3TableViewCell.xib in Resources */,
 				B71744A326E7ED320014D6B5 /* ReplyTableViewCell.xib in Resources */,
+				B7E64ECB275F63B300FFD78E /* Report.storyboard in Resources */,
 				B786634E2747AC4200B13EEF /* QuoteCastBlogNoImageCell.xib in Resources */,
 				B7910E9226BC68460097C94E /* Picker.storyboard in Resources */,
 				B71744B526E9EF750014D6B5 /* ImageX2TableViewCell.xib in Resources */,
@@ -703,6 +718,7 @@
 				B71744AE26E9EF280014D6B5 /* ImageX1TableViewCell.swift in Sources */,
 				B7866366274B833400B13EEF /* QuoteCastViewModel.swift in Sources */,
 				B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */,
+				B7E64ECD275F63D700FFD78E /* ReportSuccessViewController.swift in Sources */,
 				B78795C626C6179700FECC21 /* PagerAwareProtocol.swift in Sources */,
 				B7552972269CBA14005D5EB5 /* FastCheckLayer.swift in Sources */,
 				B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */,

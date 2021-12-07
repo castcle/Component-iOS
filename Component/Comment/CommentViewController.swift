@@ -286,6 +286,10 @@ extension CommentViewController: HeaderTableViewCellDelegate {
     func didAuthen(_ headerTableViewCell: HeaderTableViewCell) {
 //        Utility.currentViewController().presentPanModal(AuthenOpener.open(.signUpMethod) as! SignUpMethodViewController)
     }
+    
+    func didReportSuccess(_ headerTableViewCell: HeaderTableViewCell) {
+        Utility.currentViewController().dismiss(animated: true)
+    }
 }
 
 extension CommentViewController: FooterTableViewCellDelegate {

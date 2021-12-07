@@ -36,6 +36,7 @@ public protocol HeaderTableViewCellDelegate {
     func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author)
     func didAuthen(_ headerTableViewCell: HeaderTableViewCell)
     func didRemoveSuccess(_ headerTableViewCell: HeaderTableViewCell)
+    func didReportSuccess(_ headerTableViewCell: HeaderTableViewCell)
 }
 
 public class HeaderTableViewCell: UITableViewCell {
@@ -52,6 +53,7 @@ public class HeaderTableViewCell: UITableViewCell {
     public var delegate: HeaderTableViewCellDelegate?
     private var userRepository: UserRepository = UserRepositoryImpl()
     private var contentRepository: ContentRepository = ContentRepositoryImpl()
+    private var reportRepository: ReportRepository = ReportRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
     private var stage: Stage = .none
     private var userRequest: UserRequest = UserRequest()
@@ -60,6 +62,7 @@ public class HeaderTableViewCell: UITableViewCell {
         case deleteContent
         case followUser
         case unfollowUser
+        case reportContent
         case none
     }
     
@@ -70,12 +73,10 @@ public class HeaderTableViewCell: UITableViewCell {
                     if authorRef.type == AuthorType.people.rawValue {
                         if authorRef.castcleId == UserManager.shared.rawCastcleId {
                             self.avatarImage.image = UserManager.shared.avatar
-                            self.moreButton.isHidden = false
                             self.followButton.isHidden = true
                         } else {
                             let url = URL(string: authorRef.avatar)
                             self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                            self.moreButton.isHidden = true
                             if authorRef.followed {
                                 self.followButton.isHidden = true
                             } else {
@@ -86,12 +87,10 @@ public class HeaderTableViewCell: UITableViewCell {
                         let realm = try! Realm()
                         if let page = realm.objects(Page.self).filter("id = '\(content.authorId)'").first {
                             self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: page.castcleId, type: .avatar)
-                            self.moreButton.isHidden = false
                             self.followButton.isHidden = true
                         } else {
                             let url = URL(string: authorRef.avatar)
                             self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                            self.moreButton.isHidden = true
                             if authorRef.followed {
                                 self.followButton.isHidden = true
                             } else {
@@ -168,14 +167,31 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     @IBAction func moreAction(_ sender: Any) {
-        let actionSheet = CCActionSheet()
-        let deleteButton = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.delete), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
-            actionSheet.dismissActionSheet()
-            self.deleteContent()
+        if let content = self.content {
+            if ContentHelper.shared.isMyAccount(id: content.authorId) {
+                let actionSheet = CCActionSheet()
+                let deleteButton = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.delete), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                    actionSheet.dismissActionSheet()
+                    self.deleteContent()
+                }
+                
+                actionSheet.addActions([deleteButton])
+                actionSheet.modalPresentationStyle  = .overFullScreen
+                Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
+            } else {
+                let actionSheet = CCActionSheet()
+                let reportButton = CCAction(title: "Report cast", image: UIImage.init(icon: .castcle(.email), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                    actionSheet.dismissActionSheet()
+                    self.reportContent()
+                }
+                
+                actionSheet.addActions([reportButton])
+                actionSheet.modalPresentationStyle  = .overFullScreen
+                Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
+            }
         }
         
-        actionSheet.addActions([deleteButton])
-        Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
+        
     }
     
     private func deleteContent() {
@@ -184,6 +200,20 @@ public class HeaderTableViewCell: UITableViewCell {
         self.contentRepository.deleteContent(contentId: content.id) { (success, response, isRefreshToken) in
             if success {
                 self.delegate?.didRemoveSuccess(self)
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
+    }
+    
+    private func reportContent() {
+        self.stage = .reportContent
+        guard let content = self.content else { return }
+        self.reportRepository.reportContent(contentId: content.id) { (success, response, isRefreshToken) in
+            if success {
+                self.delegate?.didReportSuccess(self)
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
@@ -247,6 +277,8 @@ extension HeaderTableViewCell: TokenHelperDelegate {
             self.followUser()
         } else if self.stage == .unfollowUser {
             self.unfollowUser()
+        } else if self.stage == .reportContent {
+            self.reportContent()
         }
     }
 }

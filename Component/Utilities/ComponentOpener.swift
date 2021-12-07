@@ -34,6 +34,7 @@ public enum ComponentScene {
     case datePicker
     case recast(RecastPopupViewModel)
     case comment(CommentViewModel)
+    case reportSuccess(Bool, String)
 }
 
 public struct ComponentOpener {
@@ -63,6 +64,12 @@ public struct ComponentOpener {
             let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.comment) as? CommentViewController
             vc?.viewModel = viewModel
             return vc ?? CommentViewController()
+        case .reportSuccess(let isReportContent, let castcleId):
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.report, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.reportSuccess) as? ReportSuccessViewController
+            vc?.isReportContent = isReportContent
+            vc?.castcleId = castcleId
+            return vc ?? ReportSuccessViewController()
         }
     }
 }
