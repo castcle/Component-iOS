@@ -22,7 +22,7 @@
 //  ComponentNibVars.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 15/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 15/7/2564 BE.
 //
 
 public struct ComponentNibVars {
@@ -33,6 +33,7 @@ public struct ComponentNibVars {
         public static let datePicker = "DatePickerViewController"
         public static let recastPopup = "RecastPopupViewController"
         public static let comment = "CommentViewController"
+        public static let reportSuccess = "ReportSuccessViewController"
     }
     
     // MARK: - View
@@ -42,6 +43,7 @@ public struct ComponentNibVars {
         public static let picker = "Picker"
         public static let recast = "Recast"
         public static let comment = "Comment"
+        public static let report = "Report"
     }
     
     public struct View {
@@ -54,7 +56,8 @@ public struct ComponentNibVars {
         public static let headerFeed = "HeaderTableViewCell"
         public static let footerFeed = "FooterTableViewCell"
         public static let postText = "TextTableViewCell"
-        public static let postTextLink = "TextLinkTableViewCell"
+        public static let postLink = "TextLinkTableViewCell"
+        public static let postLinkPreview = "TextLinkPreviewTableViewCell"
         public static let imageX1 = "ImageX1TableViewCell"
         public static let imageX2 = "ImageX2TableViewCell"
         public static let imageX3 = "ImageX3TableViewCell"
@@ -63,19 +66,20 @@ public struct ComponentNibVars {
         public static let blogNoImage = "BlogNoImageTableViewCell"
         public static let comment = "CommentTableViewCell"
         public static let reply = "ReplyTableViewCell"
+        public static let skeleton = "SkeletonFeedTableViewCell"
+        public static let activityHeader = "ActivityHeaderTableViewCell"
+        public static let quoteText = "QuoteCastTextCell"
+        public static let quoteLink = "QuoteCastTextLinkCell"
+        public static let quoteLinkPreview = "QuoteCastTextLinkPreviewCell"
+        public static let quoteImageX1 = "QuoteCastImageX1Cell"
+        public static let quoteImageX2 = "QuoteCastImageX2Cell"
+        public static let quoteImageX3 = "QuoteCastImageX3Cell"
+        public static let quoteImageXMore = "QuoteCastImageXMoreCell"
+        public static let quoteBlog = "QuoteCastBlogCell"
+        public static let quoteBlogNoImage = "QuoteCastBlogNoImageCell"
     }
     
     // MARK: - CollectionViewCell
     public struct CollectionViewCell {
-        public static let headerFeed = "HeaderFeedCell"
-        public static let footerFeed = "FooterFeedCell"
-        public static let postText = "TextCell"
-        public static let postTextLinkCell = "TextLinkCell"
-        public static let imageX1Cell = "ImageX1Cell"
-        public static let imageX2Cell = "ImageX2Cell"
-        public static let imageX3Cell = "ImageX3Cell"
-        public static let imageXMoreCell = "ImageXMoreCell"
-        public static let blogCell = "BlogCell"
-        public static let blogNoImageCell = "BlogNoImageCell"
     }
 }

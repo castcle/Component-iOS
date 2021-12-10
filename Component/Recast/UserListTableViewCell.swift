@@ -22,7 +22,7 @@
 //  UserListTableViewCell.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 18/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 18/8/2564 BE.
 //
 
 import UIKit
@@ -37,7 +37,7 @@ class UserListTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.avatarImage.circle(color: UIColor.Asset.white)
-        self.nameLabel.font = UIFont.asset(.medium, fontSize: .overline)
+        self.nameLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.nameLabel.textColor = UIColor.Asset.white
         self.checkImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.lightBlue)
     }
@@ -48,14 +48,12 @@ class UserListTableViewCell: UITableViewCell {
     
     func configCell(isUser: Bool, page: Page?, isSelect: Bool) {
         if isUser {
-            let url = URL(string: UserState.shared.avatar)
-            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
-            self.nameLabel.text = UserState.shared.name
+            self.avatarImage.image = UserManager.shared.avatar
+            self.nameLabel.text = UserManager.shared.displayName
         } else {
             guard let page = page else { return }
-            let url = URL(string: page.avatar)
-            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
-            self.nameLabel.text = page.name
+            self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: page.castcleId, type: .avatar)
+            self.nameLabel.text = page.displayName
         }
         
         if isSelect {

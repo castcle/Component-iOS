@@ -22,7 +22,7 @@
 //  ImageX1TableViewCell.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 9/9/2564 BE.
+//  Created by Castcle Co., Ltd. on 9/9/2564 BE.
 //
 
 import UIKit
@@ -31,12 +31,12 @@ import Networking
 import ActiveLabel
 import Lightbox
 
-class ImageX1TableViewCell: UITableViewCell {
+public class ImageX1TableViewCell: UITableViewCell {
 
     @IBOutlet var detailLabel: ActiveLabel! {
         didSet {
             self.detailLabel.customize { label in
-                label.font = UIFont.asset(.regular, fontSize: .body)
+                label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
                 label.enabledTypes = [.mention, .hashtag, .url]
                 label.textColor = UIColor.Asset.white
@@ -49,10 +49,10 @@ class ImageX1TableViewCell: UITableViewCell {
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var displayImage: UIImageView!
     
-    var feed: Feed? {
+    public var content: Content? {
         didSet {
-            guard let feed = self.feed else { return }
-            self.detailLabel.text = feed.feedPayload.contentPayload.content
+            guard let content = self.content else { return }
+            self.detailLabel.text = content.message
             self.detailLabel.handleHashtagTap { hashtag in
                 let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -64,34 +64,32 @@ class ImageX1TableViewCell: UITableViewCell {
                 Utility.currentViewController().present(alert, animated: true, completion: nil)
             }
             self.detailLabel.handleURLTap { url in
-                let alert = UIAlertController(title: nil, message: "Go to url view", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                Utility.currentViewController().present(alert, animated: true, completion: nil)
+                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
             }
-            if let imageUrl = feed.feedPayload.contentPayload.photo.first {
-                let url = URL(string: imageUrl.url)
-                self.displayImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
+            if let imageUrl = content.photo.first {
+                let url = URL(string: imageUrl.large)
+                self.displayImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
             }
         }
     }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         self.imageContainer.custom(cornerRadius: 12)
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
     @IBAction func viewImageAction(_ sender: Any) {
-        if let feed = self.feed, let image = feed.feedPayload.contentPayload.photo.first {
+        if let content = self.content, let image = content.photo.first {
             let images = [
-                LightboxImage(imageURL: URL(string: image.url)!)
+                LightboxImage(imageURL: URL(string: image.fullHd)!)
             ]
             
             LightboxConfig.CloseButton.textAttributes = [
-                .font: UIFont.asset(.medium, fontSize: .body),
+                .font: UIFont.asset(.bold, fontSize: .body),
                 .foregroundColor: UIColor.Asset.white
               ]
             LightboxConfig.CloseButton.text = "Close"
@@ -108,13 +106,13 @@ class ImageX1TableViewCell: UITableViewCell {
 }
 
 extension ImageX1TableViewCell: LightboxControllerPageDelegate {
-    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+    public func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
         // MARK: - Lightbox Move Page
     }
 }
 
 extension ImageX1TableViewCell: LightboxControllerDismissalDelegate {
-    func lightboxControllerWillDismiss(_ controller: LightboxController) {
+    public func lightboxControllerWillDismiss(_ controller: LightboxController) {
         // MARK: - Lightbox Dismiss
     }
 }

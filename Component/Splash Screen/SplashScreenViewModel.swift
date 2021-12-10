@@ -22,7 +22,7 @@
 //  SplashScreenViewModel.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 1/8/2564 BE.
+//  Created by Castcle Co., Ltd. on 1/8/2564 BE.
 //
 
 import Foundation
@@ -34,8 +34,7 @@ import SwiftyJSON
 final class SplashScreenViewModel {
    
     //MARK: Private
-    private var authenticationRepository: AuthenticationRepository
-    private var userRepository: UserRepository
+    private var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
 
     public func guestLogin() {
@@ -46,47 +45,21 @@ final class SplashScreenViewModel {
         }
     }
     
-    private func getMe() {
-        self.userRepository.getMe() { (success, response, isRefreshToken) in
-            if success {
-                do {
-                    let rawJson = try response.mapJSON()
-                    let json = JSON(rawJson)
-                    let userHelper = UserHelper()
-                    userHelper.updateLocalProfile(user: User(json: json))
-                    self.didGuestLoginFinish?()
-                } catch {}
-            } else {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
-                }
-            }
-        }
-    }
-    
     //MARK: Output
     var didGuestLoginFinish: (() -> ())?
     
-    public init(authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl(), userRepository: UserRepository = UserRepositoryImpl()) {
-        self.authenticationRepository = authenticationRepository
-        self.userRepository = userRepository
+    public init() {
         self.tokenHelper.delegate = self
         if Defaults[.accessToken].isEmpty || Defaults[.userRole].isEmpty {
             self.guestLogin()
         } else {
-            if UserState.shared.isLogin {
-                self.getMe()
-            } else {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                    self.didGuestLoginFinish?()
-                })
-            }
+            self.tokenHelper.refreshToken()
         }
     }
 }
 
 extension SplashScreenViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
-        self.getMe()
+        self.didGuestLoginFinish?()
     }
 }

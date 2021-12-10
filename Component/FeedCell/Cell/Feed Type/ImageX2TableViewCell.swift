@@ -22,7 +22,7 @@
 //  ImageX2TableViewCell.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 9/9/2564 BE.
+//  Created by Castcle Co., Ltd. on 9/9/2564 BE.
 //
 
 import UIKit
@@ -32,12 +32,12 @@ import ActiveLabel
 import Lightbox
 import Kingfisher
 
-class ImageX2TableViewCell: UITableViewCell {
+public class ImageX2TableViewCell: UITableViewCell {
 
     @IBOutlet var detailLabel: ActiveLabel! {
         didSet {
             self.detailLabel.customize { label in
-                label.font = UIFont.asset(.regular, fontSize: .body)
+                label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
                 label.enabledTypes = [.mention, .hashtag, .url]
                 label.textColor = UIColor.Asset.white
@@ -52,10 +52,10 @@ class ImageX2TableViewCell: UITableViewCell {
     @IBOutlet var firstImageView: UIImageView!
     @IBOutlet var secondImageView: UIImageView!
     
-    var feed: Feed? {
+    public var content: Content? {
         didSet {
-            guard let feed = self.feed else { return }
-            self.detailLabel.text = feed.feedPayload.contentPayload.content
+            guard let content = self.content else { return }
+            self.detailLabel.text = content.message
             self.detailLabel.handleHashtagTap { hashtag in
                 let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -67,27 +67,25 @@ class ImageX2TableViewCell: UITableViewCell {
                 Utility.currentViewController().present(alert, animated: true, completion: nil)
             }
             self.detailLabel.handleURLTap { url in
-                let alert = UIAlertController(title: nil, message: "Go to url view", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                Utility.currentViewController().present(alert, animated: true, completion: nil)
+                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
             }
             
-            if feed.feedPayload.contentPayload.photo.count >= 2 {
-                let firstUrl = URL(string: feed.feedPayload.contentPayload.photo[0].url)
-                self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
+            if content.photo.count >= 2 {
+                let firstUrl = URL(string: content.photo[0].large)
+                self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 
-                let secondUrl = URL(string: feed.feedPayload.contentPayload.photo[1].url)
-                self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
+                let secondUrl = URL(string: content.photo[1].large)
+                self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
             }
         }
     }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         self.imageContainer.custom(cornerRadius: 12)
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
@@ -100,15 +98,15 @@ class ImageX2TableViewCell: UITableViewCell {
     }
     
     private func openImage(index: Int) {
-        if let feed = self.feed, !feed.feedPayload.contentPayload.photo.isEmpty {
+        if let content = self.content, !content.photo.isEmpty {
             
             var images: [LightboxImage] = []
-            feed.feedPayload.contentPayload.photo.forEach { photo in
-                images.append(LightboxImage(imageURL: URL(string: photo.url)!))
+            content.photo.forEach { photo in
+                images.append(LightboxImage(imageURL: URL(string: photo.fullHd)!))
             }
             
             LightboxConfig.CloseButton.textAttributes = [
-                .font: UIFont.asset(.medium, fontSize: .body),
+                .font: UIFont.asset(.bold, fontSize: .body),
                 .foregroundColor: UIColor.Asset.white
               ]
             LightboxConfig.CloseButton.text = "Close"
@@ -125,13 +123,13 @@ class ImageX2TableViewCell: UITableViewCell {
 }
 
 extension ImageX2TableViewCell: LightboxControllerPageDelegate {
-    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+    public func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
         // MARK: - Lightbox Move Page
     }
 }
 
 extension ImageX2TableViewCell: LightboxControllerDismissalDelegate {
-    func lightboxControllerWillDismiss(_ controller: LightboxController) {
+    public func lightboxControllerWillDismiss(_ controller: LightboxController) {
         // MARK: - Lightbox Dismiss
     }
 }

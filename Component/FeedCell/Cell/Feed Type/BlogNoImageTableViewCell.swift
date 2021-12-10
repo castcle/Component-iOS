@@ -22,7 +22,7 @@
 //  BlogNoImageTableViewCell.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 9/9/2564 BE.
+//  Created by Castcle Co., Ltd. on 9/9/2564 BE.
 //
 
 import UIKit
@@ -31,39 +31,39 @@ import Networking
 import Kingfisher
 import Nantes
 
-class BlogNoImageTableViewCell: UITableViewCell {
+public class BlogNoImageTableViewCell: UITableViewCell {
 
     @IBOutlet var headerLabel: UILabel!
     @IBOutlet var detailLabel: NantesLabel! {
         didSet {
             let attributes = [NSAttributedString.Key.foregroundColor: UIColor.Asset.lightBlue,
-                              NSAttributedString.Key.font: UIFont.asset(.regular, fontSize: .body)]
+                              NSAttributedString.Key.font: UIFont.asset(.contentLight, fontSize: .body)]
             self.detailLabel.attributedTruncationToken = NSAttributedString(string: " Read More...", attributes: attributes)
             self.detailLabel.numberOfLines = 2
         }
     }
     @IBOutlet var blogImageView: UIImageView!
     
-    var feed: Feed? {
+    public var content: Content? {
         didSet {
-            guard let feed = self.feed else { return }
-            self.headerLabel.font = UIFont.asset(.medium, fontSize: .h2)
+            guard let content = self.content else { return }
+            self.headerLabel.font = UIFont.asset(.contentBold, fontSize: .h2)
             self.headerLabel.textColor = UIColor.Asset.white
-            self.detailLabel.font = UIFont.asset(.regular, fontSize: .body)
+            self.detailLabel.font = UIFont.asset(.contentLight, fontSize: .body)
             self.detailLabel.textColor = UIColor.Asset.lightGray
             
-            self.headerLabel.text = feed.feedPayload.contentPayload.header
-            self.detailLabel.text = feed.feedPayload.contentPayload.content
+//            self.headerLabel.text = content.contentPayload.header
+//            self.detailLabel.text = content.contentPayload.message
             
             self.blogImageView.image = UIColor.Asset.black.toImage()
         }
     }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     

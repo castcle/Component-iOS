@@ -22,7 +22,7 @@
 //  CommentTableViewCell.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 8/9/2564 BE.
+//  Created by Castcle Co., Ltd. on 8/9/2564 BE.
 //
 
 import UIKit
@@ -33,6 +33,8 @@ import ActiveLabel
 protocol CommentTableViewCellDelegate {
     func didReplay(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
     func didEdit(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
+    func didLiked(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
+    func didUnliked(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
 }
 
 class CommentTableViewCell: UITableViewCell {
@@ -61,13 +63,12 @@ class CommentTableViewCell: UITableViewCell {
     var comment: Comment? {
         didSet {
             guard let comment = self.comment else { return }
-            guard let laseMessage = comment.comments.last else { return }
-            self.commentLabel.text = laseMessage.message
+            self.commentLabel.text = comment.message
             
-            let url = URL(string: comment.author.avatar)
-            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
+            let url = URL(string: comment.author.avatar.thumbnail)
+            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
             self.displayNameLabel.text = comment.author.displayName
-            self.dateLabel.text = laseMessage.commentDate.timeAgoDisplay()
+            self.dateLabel.text = comment.commentDate.timeAgoDisplay()
             
             self.commentLabel.handleHashtagTap { hashtag in
                 let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
@@ -80,9 +81,7 @@ class CommentTableViewCell: UITableViewCell {
                 Utility.currentViewController().present(alert, animated: true, completion: nil)
             }
             self.commentLabel.handleURLTap { url in
-                let alert = UIAlertController(title: nil, message: "Go to url view", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                Utility.currentViewController().present(alert, animated: true, completion: nil)
+                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
             }
             
             self.updateUi()
@@ -95,11 +94,11 @@ class CommentTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.avatarImage.circle(color: UIColor.Asset.white)
-        self.displayNameLabel.font = UIFont.asset(.medium, fontSize: .overline)
+        self.displayNameLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.displayNameLabel.textColor = UIColor.Asset.white
         self.dateLabel.font = UIFont.asset(.regular, fontSize: .small)
         self.dateLabel.textColor = UIColor.Asset.lightGray
-        self.replayButton.titleLabel?.font = UIFont.asset(.medium, fontSize: .small)
+        self.replayButton.titleLabel?.font = UIFont.asset(.bold, fontSize: .small)
         self.replayButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.topLineView.backgroundColor = UIColor.Asset.gray
         self.bottomLineView.backgroundColor = UIColor.Asset.gray
@@ -138,7 +137,7 @@ class CommentTableViewCell: UITableViewCell {
             self.isShowActionSheet = false
         }))
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction)in
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in
             self.isShowActionSheet = false
             print("User click Cancel button")
         }))
@@ -154,18 +153,14 @@ class CommentTableViewCell: UITableViewCell {
     }
     
     @IBAction func likeAction(_ sender: Any) {
-        if UserState.shared.isLogin {
+        if UserManager.shared.isLogin {
             guard let comment = self.comment else { return }
 
-//            if feed.feedPayload.liked.isLike {
-//                self.likeRepository.unliked(feedUuid: feed.feedPayload.id) { success in
-//                    print("Unliked : \(success)")
-//                }
-//            } else {
-//                self.likeRepository.liked(feedUuid: feed.feedPayload.id) { success in
-//                    print("Liked : \(success)")
-//                }
-//            }
+            if comment.like.isLike {
+                self.delegate?.didUnliked(self, comment: comment)
+            } else {
+                self.delegate?.didLiked(self, comment: comment)
+            }
 
             comment.like.isLike.toggle()
             self.updateUi()
@@ -183,7 +178,7 @@ class CommentTableViewCell: UITableViewCell {
     private func updateUi() {
         guard let comment = self.comment else { return }
         
-        self.likeLabel.font = UIFont.asset(.medium, fontSize: .small)
+        self.likeLabel.font = UIFont.asset(.bold, fontSize: .small)
         if comment.like.isLike {
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.lightBlue, postfixText: "  Like", postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 14)
         } else {

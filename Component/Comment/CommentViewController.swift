@@ -22,13 +22,14 @@
 //  CommentViewController.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 2/9/2564 BE.
+//  Created by Castcle Co., Ltd. on 2/9/2564 BE.
 //
 
 import UIKit
 import Core
 import Networking
 import Defaults
+import JGProgressHUD
 
 class CommentViewController: UITableViewController, UITextViewDelegate {
     
@@ -38,6 +39,14 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     var sendButton: UIButton!
     var avatarImage: UIImageView!
     let commentTextField = FlexibleTextView()
+    let hud = JGProgressHUD()
+    var event: Event = .none
+    
+    enum Event {
+        case create
+        case reply
+        case none
+    }
     
     override var canBecomeFirstResponder: Bool {
         return true
@@ -70,8 +79,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
             self.avatarImage.contentMode = .scaleAspectFill
             self.avatarImage.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
 
-            let url = URL(string: UserState.shared.avatar)
-            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
+            self.avatarImage.image = UserManager.shared.avatar
             self.avatarImage.capsule(borderWidth: 1, borderColor: UIColor.Asset.white)
             customInputView?.addSubview(self.avatarImage)
             
@@ -102,11 +110,21 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     }
     
     @objc func handleSend() {
+        self.hud.show(in: self.view)
+        self.viewModel.commentRequest.message = self.commentTextField.text
+        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
+        
+        if self.event == .create {
+            self.viewModel.createComment()
+        } else if self.event == .reply {
+            self.viewModel.replayComment()
+        }
+        
         self.commentTextField.text = ""
         self.commentTextField.resignFirstResponder()
     }
     
-    enum FeedSection: Int, CaseIterable {
+    enum ContentSection: Int, CaseIterable {
         case header = 0
         case content
         case footer
@@ -125,11 +143,14 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         self.configureTableView()
         self.tableView.keyboardDismissMode = .interactive
         self.viewModel.didLoadCommentsFinish = {
+            self.hud.dismiss()
+            self.event = .create
             UIView.transition(with: self.tableView,
                               duration: 0.35,
                               options: .transitionCrossDissolve,
                               animations: { self.tableView.reloadData() })
         }
+        self.hud.textLabel.text = "Commenting"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -137,8 +158,17 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         Defaults[.screenId] = ""
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        self.commentTextField.becomeFirstResponder()
+    }
+    
     private func setupNevBar() {
-        self.customNavigationBar(.primary, title: "Post of \(self.viewModel.feed?.feedPayload.author.displayName ?? "")", textColor: UIColor.Asset.white)
+        if let authorId = self.viewModel.content?.authorId, let authorRef = ContentHelper.shared.getAuthorRef(id: authorId) {
+            self.customNavigationBar(.primary, title: "Post of \(authorRef.displayName)", textColor: UIColor.Asset.white)
+        } else {
+            self.customNavigationBar(.primary, title: "Error", textColor: UIColor.Asset.white)
+        }
         
         let leftIcon = NavBarButtonType.back.barButton
         leftIcon.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
@@ -149,7 +179,8 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.headerFeed, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.headerFeed)
         self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.footerFeed, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.footerFeed)
         self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.postText, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.postText)
-        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.postTextLink, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.postTextLink)
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.postLink, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.postLink)
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.postLinkPreview, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.postLinkPreview)
         self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.imageX1, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.imageX1)
         self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.imageX2, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.imageX2)
         self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.imageX3, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.imageX3)
@@ -181,8 +212,8 @@ extension CommentViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            if self.viewModel.feed != nil {
-                return FeedSection.allCases.count
+            if self.viewModel.content != nil {
+                return ContentSection.allCases.count
             } else {
                 return 0
             }
@@ -194,62 +225,20 @@ extension CommentViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             switch indexPath.row {
-            case FeedSection.header.rawValue:
+            case ContentSection.header.rawValue:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.headerFeed, for: indexPath as IndexPath) as? HeaderTableViewCell
                 cell?.backgroundColor = UIColor.Asset.darkGray
                 cell?.delegate = self
-                cell?.feed = self.viewModel.feed
+                cell?.content = self.viewModel.content
                 return cell ?? HeaderTableViewCell()
-            case FeedSection.footer.rawValue:
+            case ContentSection.footer.rawValue:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.footerFeed, for: indexPath as IndexPath) as? FooterTableViewCell
                 cell?.backgroundColor = UIColor.Asset.darkGray
                 cell?.delegate = self
-                cell?.feed = self.viewModel.feed
+                cell?.content = self.viewModel.content
                 return cell ?? FooterTableViewCell()
             default:
-                if self.viewModel.feed?.feedPayload.feedDisplayType == .postText {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.postText, for: indexPath as IndexPath) as? TextTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? TextTableViewCell()
-                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postLink || self.viewModel.feed?.feedPayload.feedDisplayType == .postYoutube {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.postTextLink, for: indexPath as IndexPath) as? TextLinkTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? TextLinkTableViewCell()
-                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postImageX1 {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageX1, for: indexPath as IndexPath) as? ImageX1TableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? ImageX1TableViewCell()
-                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postImageX2 {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageX2, for: indexPath as IndexPath) as? ImageX2TableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? ImageX2TableViewCell()
-                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postImageX3 {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageX3, for: indexPath as IndexPath) as? ImageX3TableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? ImageX3TableViewCell()
-                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .postImageXMore {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.imageXMore, for: indexPath as IndexPath) as? ImageXMoreTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? ImageXMoreTableViewCell()
-                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .blogImage {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.blog, for: indexPath as IndexPath) as? BlogTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? BlogTableViewCell()
-                } else if self.viewModel.feed?.feedPayload.feedDisplayType == .blogNoImage {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.blogNoImage, for: indexPath as IndexPath) as? BlogNoImageTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.feed = self.viewModel.feed
-                    return cell ?? BlogNoImageTableViewCell()
-                } else {
-                    return UITableViewCell()
-                }
+                return FeedCellHelper().renderFeedCell(content: self.viewModel.content!, tableView: tableView, indexPath: indexPath)
             }
         } else {
             let comment = self.viewModel.comments[indexPath.section - 1]
@@ -286,21 +275,29 @@ extension CommentViewController {
 }
 
 extension CommentViewController: HeaderTableViewCellDelegate {
-    func didTabProfile(_ headerTableViewCell: HeaderTableViewCell) {
-        //
+    func didRemoveSuccess(_ headerTableViewCell: HeaderTableViewCell) {
+        Utility.currentViewController().dismiss(animated: true)
+    }
+    
+    func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author) {
+        // Profile
     }
     
     func didAuthen(_ headerTableViewCell: HeaderTableViewCell) {
 //        Utility.currentViewController().presentPanModal(AuthenOpener.open(.signUpMethod) as! SignUpMethodViewController)
     }
+    
+    func didReportSuccess(_ headerTableViewCell: HeaderTableViewCell) {
+        Utility.currentViewController().dismiss(animated: true)
+    }
 }
 
 extension CommentViewController: FooterTableViewCellDelegate {
-    func didTabComment(_ footerTableViewCell: FooterTableViewCell, feed: Feed) {
+    func didTabComment(_ footerTableViewCell: FooterTableViewCell, content: Content) {
         //
     }
     
-    func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, feed: Feed, page: Page) {
+    func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: Page) {
         //
     }
     
@@ -311,22 +308,42 @@ extension CommentViewController: FooterTableViewCellDelegate {
 
 extension CommentViewController: CommentTableViewCellDelegate {
     func didReplay(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
-        self.commentTextField.text = "\(comment.author.castcleId) "
+        self.event = .reply
+        self.viewModel.commentId = comment.id
+        self.commentTextField.text = "@\(comment.author.castcleId) "
         self.commentTextField.becomeFirstResponder()
     }
     
     func didEdit(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
-        guard let lastComment = comment.comments.last else { return }
-        self.commentTextField.text = "\(lastComment.message)"
+        self.commentTextField.text = "\(comment.message)"
         self.commentTextField.becomeFirstResponder()
+    }
+    
+    func didLiked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
+        self.viewModel.commentId = comment.id
+        self.viewModel.likeComment()
+    }
+    
+    func didUnliked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
+        self.viewModel.commentId = comment.id
+        self.viewModel.unlikeComment()
     }
 }
 
 extension CommentViewController: ReplyTableViewCellDelegate {
     func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
-        guard let lastComment = replyComment.comments.last else { return }
-        self.commentTextField.text = "\(lastComment.message)"
+        self.commentTextField.text = "\(replyComment.message)"
         self.commentTextField.becomeFirstResponder()
+    }
+    
+    func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
+        self.viewModel.commentId = replyComment.id
+        self.viewModel.likeComment()
+    }
+    
+    func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
+        self.viewModel.commentId = replyComment.id
+        self.viewModel.unlikeComment()
     }
 }
 

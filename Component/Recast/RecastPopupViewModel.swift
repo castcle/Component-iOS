@@ -22,7 +22,7 @@
 //  RecastPopupViewModel.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 23/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 23/7/2564 BE.
 //
 
 import Foundation
@@ -33,7 +33,7 @@ public final class RecastPopupViewModel {
     var isRecasted: Bool = false
     var page: Page?
     
-    public init(isRecasted: Bool = false, page: Page = Page(name: UserState.shared.name, avatar: UserState.shared.avatar)) {
+    public init(isRecasted: Bool = false, page: Page = Page().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.rawCastcleId)) {
         self.isRecasted = isRecasted
         self.page = page
     }

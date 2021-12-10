@@ -19,10 +19,10 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  TextLinkCell.swift
+//  TextLinkPreviewTableViewCell.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 16/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 9/9/2564 BE.
 //
 
 import UIKit
@@ -30,13 +30,14 @@ import Core
 import Networking
 import ActiveLabel
 import SwiftLinkPreview
+import SkeletonView
 
-class TextLinkCell: UICollectionViewCell {
+public class TextLinkPreviewTableViewCell: UITableViewCell {
 
     @IBOutlet var detailLabel: ActiveLabel! {
         didSet {
             self.detailLabel.customize { label in
-                label.font = UIFont.asset(.regular, fontSize: .body)
+                label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
                 label.enabledTypes = [.mention, .hashtag, .url]
                 label.textColor = UIColor.Asset.white
@@ -52,14 +53,15 @@ class TextLinkCell: UICollectionViewCell {
     @IBOutlet var linkImage: UIImageView!
     @IBOutlet var linkTitleLabel: UILabel!
     @IBOutlet var linkDescriptionLabel: UILabel!
+    @IBOutlet var skeletonView: UIView!
     
     private var result = Response()
     private let slp = SwiftLinkPreview(cache: InMemoryCache())
     
-    var feed: Feed? {
+    public var content: Content? {
         didSet {
-            guard let feed = self.feed else { return }
-            self.detailLabel.text = feed.feedPayload.contentPayload.content
+            guard let content = self.content else { return }
+            self.detailLabel.text = content.message
             self.detailLabel.handleHashtagTap { hashtag in
                 let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -71,69 +73,78 @@ class TextLinkCell: UICollectionViewCell {
                 Utility.currentViewController().present(alert, animated: true, completion: nil)
             }
             self.detailLabel.handleURLTap { url in
-                let alert = UIAlertController(title: nil, message: "Go to url view", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                Utility.currentViewController().present(alert, animated: true, completion: nil)
+                var urlString = url.absoluteString
+                urlString = urlString.replacingOccurrences(of: "https://", with: "")
+                urlString = urlString.replacingOccurrences(of: "http://", with: "")
+                if let newUrl = URL(string: "https://\(urlString)") {
+                    Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
+                } else {
+                    return
+                }
             }
-            self.loadLink(feed: feed)
+            
+            self.skeletonView.isHidden = false
+            self.linkContainer.isHidden = true
+            if let link = content.link.first {
+                self.loadLink(link: link.url)
+            } else if let link = content.message.extractURLs().first {
+                self.loadLink(link: link.absoluteString)
+            } else {
+                self.setData()
+            }
         }
     }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
+        self.skeletonView.custom(cornerRadius: 12, borderWidth: 1, borderColor: UIColor.Asset.gray)
         self.linkContainer.custom(cornerRadius: 12)
         self.linkContainer.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.titleLinkView.backgroundColor = UIColor.Asset.darkGraphiteBlue
-        self.linkTitleLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.linkTitleLabel.font = UIFont.asset(.contentBold, fontSize: .overline)
         self.linkTitleLabel.textColor = UIColor.Asset.white
-        self.linkDescriptionLabel.font = UIFont.asset(.regular, fontSize: .small)
+        self.linkDescriptionLabel.font = UIFont.asset(.contentLight, fontSize: .small)
         self.linkDescriptionLabel.textColor = UIColor.Asset.lightGray
+        self.skeletonView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.Asset.gray))
+    }
+
+    public override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
     }
     
-    static func cellSize(width: CGFloat, text: String) -> CGSize {
-        let label = ActiveLabel(frame: CGRect(x: 0, y: 0, width: width - 30, height: CGFloat.greatestFiniteMagnitude))
-        label.numberOfLines = 0
-        label.enabledTypes = [.mention, .hashtag, .url]
-        label.text = text
-        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        label.font = UIFont.asset(.regular, fontSize: .body)
-        label.sizeToFit()
-        let imageHeight = UIView.aspectRatioCalculator(ratioWidth: 29, ratioHeight: 20, pixelsWidth: Double(width - 30))
-        return CGSize(width: width, height: (label.frame.height + 45 + CGFloat(imageHeight)))
-    }
-    
-    private func loadLink(feed: Feed) {
-        if let link = feed.feedPayload.contentPayload.link.first {
-            if let cached = self.slp.cache.slp_getCachedResponse(url: link.url) {
-                self.result = cached
-                self.setData()
-            } else {
-                self.slp.preview(link.url, onSuccess: { result in
-                    self.result = result
-                    self.setData()
-                }, onError: { error in
-                    self.setData()
-                })
-            }
-        } else {
+    private func loadLink(link: String) {
+        if let cached = self.slp.cache.slp_getCachedResponse(url: link) {
+            self.result = cached
             self.setData()
+        } else {
+            self.slp.preview(link, onSuccess: { result in
+                self.result = result
+                self.setData()
+            }, onError: { error in
+                self.setData()
+            })
         }
     }
     
     private func setData() {
+        UIView.transition(with: self, duration: 0.35, options: .transitionCrossDissolve, animations: {
+            self.skeletonView.isHidden = true
+            self.linkContainer.isHidden = false
+        })
+        
         // MARK: - Image
         if let value = self.result.image {
             let url = URL(string: value)
-            self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.5))])
+            self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
         } else {
             self.linkImage.image = UIImage.Asset.placeholder
         }
         
         // MARK: - Title
         if let value: String = self.result.title {
-            self.linkTitleLabel.text = value.isEmpty ? "No title" : value
+            self.linkTitleLabel.text = value.isEmpty ? "" : value
         } else {
-            self.linkTitleLabel.text = "No title"
+            self.linkTitleLabel.text = ""
         }
         
         // MARK: - Description

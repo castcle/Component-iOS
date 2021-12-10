@@ -22,7 +22,7 @@
 //  FooterTableViewCell.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 7/9/2564 BE.
+//  Created by Castcle Co., Ltd. on 7/9/2564 BE.
 //
 
 import UIKit
@@ -30,116 +30,179 @@ import Core
 import Networking
 import PanModal
 
-protocol FooterTableViewCellDelegate {
-    func didTabComment(_ footerTableViewCell: FooterTableViewCell, feed: Feed)
-    func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, feed: Feed, page: Page)
+public protocol FooterTableViewCellDelegate {
+    func didTabComment(_ footerTableViewCell: FooterTableViewCell, content: Content)
+    func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: Page)
     func didAuthen(_ footerTableViewCell: FooterTableViewCell)
 }
 
-class FooterTableViewCell: UITableViewCell {
+public class FooterTableViewCell: UITableViewCell {
 
     @IBOutlet var likeLabel: UILabel!
     @IBOutlet var commentLabel: UILabel!
     @IBOutlet var recastLabel: UILabel!
     
-    var feed: Feed? {
+    public var content: Content? {
         didSet {
-            self.updateUi()
+            guard let content = self.content else { return }
+            self.updateUi(content: content)
         }
     }
     
-    var delegate: FooterTableViewCellDelegate?
+    public var delegate: FooterTableViewCellDelegate?
     
     //MARK: Private
-    private var likeRepository: LikeRepository = LikeRepositoryImpl()
-    private var recastRepository: RecastRepository = RecastRepositoryImpl()
+    private var contentRepository: ContentRepository = ContentRepositoryImpl()
+    let tokenHelper: TokenHelper = TokenHelper()
+    var contentRequest: ContentRequest = ContentRequest()
+    var stateType: StateType = .none
+    enum StateType {
+        case like
+        case recast
+        case none
+    }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.tokenHelper.delegate = self
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
-    private func updateUi() {
-        guard let feed = self.feed else { return }
+    private func updateUi(content: Content) {
         self.likeLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.commentLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.recastLabel.font = UIFont.asset(.regular, fontSize: .overline)
         
-        let displayLike: String = (feed.feedPayload.liked.count > 0 ? "  \(String.displayCount(count: feed.feedPayload.liked.count))" : "")
-        let displayComment: String = (feed.feedPayload.commented.count > 0 ? "  \(String.displayCount(count: feed.feedPayload.commented.count))" : "")
-        let displayRecast: String = (feed.feedPayload.recasted.count > 0 ? "  \(String.displayCount(count: feed.feedPayload.recasted.count))" : "")
+        let displayLike: String = (content.metrics.likeCount > 0 ? "  \(String.displayCount(count: content.metrics.likeCount))" : "")
+        let displayComment: String = (content.metrics.commentCount > 0 ? "  \(String.displayCount(count: content.metrics.commentCount))" : "")
+        let displayRecast: String = ((content.metrics.recastCount > 0 || content.metrics.quoteCount > 0) ? "  \(String.displayCount(count: content.metrics.recastCount + content.metrics.quoteCount))" : "")
         
-        if feed.feedPayload.liked.isLike {
-            
+        if content.participate.liked {
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.lightBlue, postfixText: displayLike, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 18)
         } else {
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.white, postfixText: displayLike, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 18)
         }
         
-        if feed.feedPayload.commented.isComment {
+        if content.participate.commented {
             self.commentLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.comment), iconColor: UIColor.Asset.lightBlue, postfixText: displayComment, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 15)
         } else {
             self.commentLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.comment), iconColor: UIColor.Asset.white, postfixText: displayComment, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 15)
         }
         
-        if feed.feedPayload.recasted.isRecast {
+        if content.participate.recasted || content.participate.quoted {
             self.recastLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.recast), iconColor: UIColor.Asset.lightBlue, postfixText: displayRecast, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 18)
         } else {
             self.recastLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.recast), iconColor: UIColor.Asset.white, postfixText: displayRecast, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 18)
         }
     }
     
+    private func likeContent(content: Content) {
+        if content.participate.liked {
+            content.metrics.likeCount -= 1
+            content.participate.liked.toggle()
+            self.updateUi(content: content)
+            self.contentRequest.castcleId = UserManager.shared.rawCastcleId
+            self.contentRepository.unlikeContent(contentId: content.id, contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
+                if !success {
+                    if isRefreshToken {
+                        self.tokenHelper.refreshToken()
+                    } else {
+                        content.metrics.likeCount += 1
+                        content.participate.liked.toggle()
+                        self.updateUi(content: content)
+                    }
+                }
+            }
+        } else {
+            content.metrics.likeCount += 1
+            content.participate.liked.toggle()
+            self.updateUi(content: content)
+            self.contentRequest.castcleId = UserManager.shared.rawCastcleId
+            self.contentRepository.likeContent(contentId: content.id, contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
+                if !success {
+                    if isRefreshToken {
+                        self.tokenHelper.refreshToken()
+                    } else {
+                        content.metrics.likeCount -= 1
+                        content.participate.liked.toggle()
+                        self.updateUi(content: content)
+                    }
+                }
+            }
+        }
+
+        if content.participate.liked {
+            let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
+            impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
+            impliesAnimation.duration = 0.3 * 2
+            impliesAnimation.calculationMode = CAAnimationCalculationMode.cubic
+            self.likeLabel.layer.add(impliesAnimation, forKey: nil)
+        }
+    }
+    
+    private func recastContent(content: Content, castcleId: String) {
+        if content.participate.recasted {
+            content.metrics.recastCount -= 1
+            content.participate.recasted.toggle()
+            self.updateUi(content: content)
+            self.contentRequest.castcleId = castcleId
+            self.contentRepository.unrecastContent(contentId: content.id, contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
+                if !success {
+                    if isRefreshToken {
+                        self.tokenHelper.refreshToken()
+                    } else {
+                        content.metrics.recastCount += 1
+                        content.participate.recasted.toggle()
+                        self.updateUi(content: content)
+                    }
+                }
+            }
+        } else {
+            content.metrics.recastCount += 1
+            content.participate.recasted.toggle()
+            self.updateUi(content: content)
+            self.contentRequest.castcleId = castcleId
+            self.contentRepository.recastContent(contentId: content.id, contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
+                if !success {
+                    if isRefreshToken {
+                        self.tokenHelper.refreshToken()
+                    } else {
+                        content.metrics.recastCount -= 1
+                        content.participate.recasted.toggle()
+                        self.updateUi(content: content)
+                    }
+                }
+            }
+        }
+    }
+    
     @IBAction func likeAction(_ sender: Any) {
-        
-        if UserState.shared.isLogin {
-            guard let feed = self.feed else { return }
-
-            if feed.feedPayload.liked.isLike {
-                feed.feedPayload.liked.count -= 1
-                self.likeRepository.unliked(feedUuid: feed.feedPayload.id) { success in
-                    print("Unliked : \(success)")
-                }
-            } else {
-                feed.feedPayload.liked.count += 1
-                self.likeRepository.liked(feedUuid: feed.feedPayload.id) { success in
-                    print("Liked : \(success)")
-                }
-            }
-
-            feed.feedPayload.liked.isLike.toggle()
-            self.updateUi()
-
-            if feed.feedPayload.liked.isLike {
-                let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
-                impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
-                impliesAnimation.duration = 0.3 * 2
-                impliesAnimation.calculationMode = CAAnimationCalculationMode.cubic
-                self.likeLabel.layer.add(impliesAnimation, forKey: nil)
-            }
+        if UserManager.shared.isLogin {
+            guard let content = self.content else { return }
+            self.stateType = .like
+            self.likeContent(content: content)
         } else {
             self.delegate?.didAuthen(self)
         }
     }
     
     @IBAction func commentAction(_ sender: Any) {
-        if UserState.shared.isLogin {
-            guard let feed = self.feed else { return }
-            self.delegate?.didTabComment(self, feed: feed)
+        if UserManager.shared.isLogin {
+            guard let content = self.content else { return }
+            self.stateType = .recast
+            self.delegate?.didTabComment(self, content: content)
         } else {
             self.delegate?.didAuthen(self)
         }
     }
     
     @IBAction func recastAction(_ sender: Any) {
-        if UserState.shared.isLogin {
-            guard let feed = self.feed else { return }
-            let vc = ComponentOpener.open(.recast(RecastPopupViewModel(isRecasted: feed.feedPayload.recasted.isRecast))) as? RecastPopupViewController
+        if UserManager.shared.isLogin {
+            guard let content = self.content else { return }
+            let vc = ComponentOpener.open(.recast(RecastPopupViewModel(isRecasted: content.participate.recasted))) as? RecastPopupViewController
             vc?.delegate = self
             Utility.currentViewController().presentPanModal(vc ?? RecastPopupViewController())
         } else {
@@ -150,25 +213,24 @@ class FooterTableViewCell: UITableViewCell {
 }
 
 extension FooterTableViewCell: RecastPopupViewControllerDelegate {
-    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?) {
-        guard let feed = self.feed else { return }
-
+    public func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?, castcleId: String) {
+        guard let content = self.content else { return }
         if recastAction == .recast {
-            if feed.feedPayload.recasted.isRecast {
-                self.recastRepository.unrecasted(feedUuid: feed.feedPayload.id) { success in
-                    print("Unrecasted : \(success)")
-                }
-            } else {
-                self.recastRepository.recasted(feedUuid: feed.feedPayload.id) { success in
-                    print("Recasted : \(success)")
-                }
-            }
-
-            feed.feedPayload.recasted.isRecast.toggle()
-            self.updateUi()
+            self.recastContent(content: content, castcleId: castcleId)
         } else if recastAction == .quoteCast {
             guard let page = page else { return }
-            self.delegate?.didTabQuoteCast(self, feed: feed, page: page)
+            self.delegate?.didTabQuoteCast(self, content: content, page: page)
+        }
+    }
+}
+
+extension FooterTableViewCell: TokenHelperDelegate {
+    public func didRefreshTokenFinish() {
+        guard let content = self.content else { return }
+        if self.stateType == .like {
+            self.likeContent(content: content)
+        } else if self.stateType == .recast {
+            self.recastContent(content: content, castcleId: self.contentRequest.castcleId)
         }
     }
 }

@@ -22,16 +22,17 @@
 //  RecastPopupViewController.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 22/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 22/7/2564 BE.
 //
 
 import UIKit
 import Core
 import PanModal
 import Kingfisher
+import RealmSwift
 
 public protocol RecastPopupViewControllerDelegate {
-    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?)
+    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?, castcleId: String)
 }
 
 public enum RecastAction {
@@ -59,6 +60,8 @@ public class RecastPopupViewController: UIViewController {
     var delegate: RecastPopupViewControllerDelegate?
     var maxHeight = (UIScreen.main.bounds.height - 320)
     var viewModel = RecastPopupViewModel()
+    private let realm = try! Realm()
+    var pages: Results<Page>!
     
     enum UserListSection: Int, CaseIterable {
         case user = 0
@@ -72,21 +75,29 @@ public class RecastPopupViewController: UIViewController {
         self.quoteCastImage.image = UIImage.init(icon: .castcle(.pencil), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white)
         
         self.avatarImage.circle(color: UIColor.Asset.white)
-        self.displayNameLabel.font = UIFont.asset(.medium, fontSize: .overline)
+        self.displayNameLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.displayNameLabel.textColor = UIColor.Asset.white
-        self.subTitleLabel.font = UIFont.asset(.medium, fontSize: .overline)
+        self.subTitleLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.subTitleLabel.textColor = UIColor.Asset.lightGray
-        self.recastLabel.font = UIFont.asset(.medium, fontSize: .body)
+        self.recastLabel.font = UIFont.asset(.bold, fontSize: .body)
         self.recastLabel.textColor = UIColor.Asset.white
-        self.quoteCastLabel.font = UIFont.asset(.medium, fontSize: .body)
+        self.quoteCastLabel.font = UIFont.asset(.bold, fontSize: .body)
         self.quoteCastLabel.textColor = UIColor.Asset.white
-        self.chooseUserTitle.font = UIFont.asset(.medium, fontSize: .overline)
+        self.chooseUserTitle.font = UIFont.asset(.bold, fontSize: .overline)
         self.chooseUserTitle.textColor = UIColor.Asset.white
+        
+        self.pages = self.realm.objects(Page.self)
         
         if self.viewModel.isRecasted {
             self.recastLabel.text = "Unrecasted"
         } else {
             self.recastLabel.text = "Recasted"
+        }
+        
+        if self.pages.count == 0 {
+            self.moreButton.isHidden = true
+        } else {
+            self.moreButton.isHidden = false
         }
         
         self.moreButton.setImage(UIImage.init(icon: .castcle(.dropDown), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
@@ -97,9 +108,13 @@ public class RecastPopupViewController: UIViewController {
     }
     
     private func updateUser() {
-        let url = URL(string: self.viewModel.page?.avatar ?? "")
-        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.5))])
-        self.displayNameLabel.text = self.viewModel.page?.name ?? ""
+        if self.viewModel.page?.castcleId == UserManager.shared.rawCastcleId {
+            self.avatarImage.image = UserManager.shared.avatar
+        } else {
+            guard let page = self.viewModel.page else { return }
+            self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage:  page.castcleId, type: .avatar)
+        }
+        self.displayNameLabel.text = self.viewModel.page?.displayName ?? ""
     }
     
     func configureTableView() {
@@ -115,12 +130,12 @@ public class RecastPopupViewController: UIViewController {
     
     @IBAction func recastAction(_ sender: Any) {
         self.dismiss(animated: true)
-        self.delegate?.recastPopupViewController(self, didSelectRecastAction: .recast, page: nil)
+        self.delegate?.recastPopupViewController(self, didSelectRecastAction: .recast, page: nil, castcleId: self.viewModel.page?.castcleId ?? "")
     }
     
     @IBAction func quoteCastAction(_ sender: Any) {
         self.dismiss(animated: true)
-        self.delegate?.recastPopupViewController(self, didSelectRecastAction: .quoteCast, page: self.viewModel.page)
+        self.delegate?.recastPopupViewController(self, didSelectRecastAction: .quoteCast, page: self.viewModel.page, castcleId: self.viewModel.page?.castcleId ?? "")
     }
     
     @IBAction func moreActiom(_ sender: Any) {
@@ -139,7 +154,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == UserListSection.page.rawValue {
-            return UserState.shared.page.count
+            return self.pages.count
         } else {
             return 1
         }
@@ -149,14 +164,14 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
         switch indexPath.section {
         case UserListSection.user.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.userList, for: indexPath as IndexPath) as? UserListTableViewCell
-            let isSelect: Bool = (self.viewModel.page?.name == UserState.shared.name)
+            let isSelect: Bool = (self.viewModel.page?.displayName == UserManager.shared.displayName)
             cell?.configCell(isUser: true, page: nil, isSelect: isSelect)
             return cell ?? UserListTableViewCell()
         case UserListSection.page.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.userList, for: indexPath as IndexPath) as? UserListTableViewCell
-            let page: Page = UserState.shared.page[indexPath.row]
-            let isSelect: Bool = (self.viewModel.page?.name == page.name)
-            cell?.configCell(isUser: false, page: UserState.shared.page[indexPath.row], isSelect: isSelect)
+            let page: Page = self.pages[indexPath.row]
+            let isSelect: Bool = (self.viewModel.page?.displayName == page.displayName)
+            cell?.configCell(isUser: false, page: self.pages[indexPath.row], isSelect: isSelect)
             return cell ?? UserListTableViewCell()
         default:
             return UITableViewCell()
@@ -166,7 +181,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case UserListSection.user.rawValue:
-            self.viewModel.page = Page(name: UserState.shared.name, avatar: UserState.shared.avatar)
+            self.viewModel.page = Page().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.rawCastcleId)
             self.userTableView.reloadData()
             self.updateUser()
             UIView.transition(with: self.view, duration: 0.3,
@@ -175,7 +190,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
                                 self.selectView.isHidden = true
                               })
         case UserListSection.page.rawValue:
-            self.viewModel.page = UserState.shared.page[indexPath.row]
+            self.viewModel.page = self.pages[indexPath.row]
             self.userTableView.reloadData()
             self.updateUser()
             UIView.transition(with: self.view, duration: 0.3,
@@ -190,7 +205,6 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
 }
 
 extension RecastPopupViewController: PanModalPresentable {
-
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
