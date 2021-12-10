@@ -19,20 +19,50 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  Component.h
+//  RefreshAnimator.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 2/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 8/7/2564 BE.
 //
 
-#import <Foundation/Foundation.h>
+import UIKit
 
-//! Project version number for Component.
-FOUNDATION_EXPORT double ComponentVersionNumber;
-
-//! Project version string for Component.
-FOUNDATION_EXPORT const unsigned char ComponentVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <Component/PublicHeader.h>
-
-
+open class RefreshAnimator: RefreshProtocol {
+    
+    open var view: UIView
+    
+    open var insets: UIEdgeInsets
+    
+    open var trigger: CGFloat = 60.0
+    
+    open var execute: CGFloat = 60.0
+    
+    open var endDelay: CGFloat = 0
+    
+    public var hold: CGFloat   = 60
+    
+    public init() {
+        view = UIView()
+        insets = UIEdgeInsets.zero
+    }
+    
+    open func refreshBegin(view: RefreshComponent) {
+        // MARK: - Refresh Begin
+    }
+    
+    open func refreshWillEnd(view: RefreshComponent) {
+        // MARK: - Refresh Will End
+    }
+    
+    open func refreshEnd(view: RefreshComponent, finish: Bool) {
+        // MARK: - Refresh End
+    }
+    
+    open func refresh(view: RefreshComponent, progressDidChange progress: CGFloat) {
+        // MARK: - Progress Did Change
+    }
+    
+    open func refresh(view: RefreshComponent, stateDidChange state: RefreshState) {
+        // MARK: - State Did Change
+    }
+}

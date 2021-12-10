@@ -19,20 +19,16 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  Component.h
+//  UIColorExtension.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 2/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 8/7/2564 BE.
 //
 
-#import <Foundation/Foundation.h>
+import UIKit
 
-//! Project version number for Component.
-FOUNDATION_EXPORT double ComponentVersionNumber;
-
-//! Project version string for Component.
-FOUNDATION_EXPORT const unsigned char ComponentVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <Component/PublicHeader.h>
-
-
+extension UIColor {
+    public convenience init(rgb: (r: CGFloat, g: CGFloat, b: CGFloat)) {
+        self.init(red: rgb.r/255, green: rgb.g/255, blue: rgb.b/255, alpha: 1.0)
+    }
+}

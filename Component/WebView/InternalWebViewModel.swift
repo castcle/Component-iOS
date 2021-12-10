@@ -19,20 +19,28 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  Component.h
+//  InternalWebViewModel.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 2/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 27/7/2564 BE.
 //
 
-#import <Foundation/Foundation.h>
+import Foundation
 
-//! Project version number for Component.
-FOUNDATION_EXPORT double ComponentVersionNumber;
+final class InternalWebViewModel {
+   
+    // MARK: Public
+    var request: URLRequest!
+    var titleHidden: Bool = false
+    var titleWeb: String = ""
+    var detailWeb: String = ""
 
-//! Project version string for Component.
-FOUNDATION_EXPORT const unsigned char ComponentVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <Component/PublicHeader.h>
-
-
+    // MARK: Input
+    init() {
+        // MARK: Init
+    }
+    
+    init(url: URL) {
+        self.request = NSURLRequest(url: url) as URLRequest
+    }
+}

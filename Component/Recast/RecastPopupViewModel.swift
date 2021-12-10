@@ -19,20 +19,22 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  Component.h
+//  RecastPopupViewModel.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 2/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 23/7/2564 BE.
 //
 
-#import <Foundation/Foundation.h>
+import Foundation
+import Core
 
-//! Project version number for Component.
-FOUNDATION_EXPORT double ComponentVersionNumber;
-
-//! Project version string for Component.
-FOUNDATION_EXPORT const unsigned char ComponentVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <Component/PublicHeader.h>
-
-
+public final class RecastPopupViewModel {
+   
+    var isRecasted: Bool = false
+    var page: Page?
+    
+    public init(isRecasted: Bool = false, page: Page = Page().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.rawCastcleId)) {
+        self.isRecasted = isRecasted
+        self.page = page
+    }
+}

@@ -19,20 +19,34 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  Component.h
+//  RefreshProtocol.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 2/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 8/7/2564 BE.
 //
 
-#import <Foundation/Foundation.h>
+import UIKit
 
-//! Project version number for Component.
-FOUNDATION_EXPORT double ComponentVersionNumber;
-
-//! Project version string for Component.
-FOUNDATION_EXPORT const unsigned char ComponentVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <Component/PublicHeader.h>
-
-
+public protocol RefreshProtocol {
+    var view: UIView {get}
+    
+    var insets: UIEdgeInsets {set get}
+    
+    var trigger: CGFloat {set get}
+    
+    var execute: CGFloat {set get}
+    
+    var endDelay: CGFloat {set get}
+    
+    var hold: CGFloat {set get}
+    
+    mutating func refreshBegin(view: RefreshComponent)
+    
+    mutating func refreshWillEnd(view: RefreshComponent)
+    
+    mutating func refreshEnd(view: RefreshComponent, finish: Bool)
+    
+    mutating func refresh(view: RefreshComponent, progressDidChange progress: CGFloat)
+    
+    mutating func refresh(view: RefreshComponent, stateDidChange state: RefreshState)
+}

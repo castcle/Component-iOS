@@ -19,20 +19,35 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  Component.h
+//  SplashScreenViewController.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 2/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 1/8/2564 BE.
 //
 
-#import <Foundation/Foundation.h>
+import UIKit
+import Core
 
-//! Project version number for Component.
-FOUNDATION_EXPORT double ComponentVersionNumber;
+public protocol SplashScreenViewControllerDelegate {
+    func didLoadFinish(_ view: SplashScreenViewController)
+}
 
-//! Project version string for Component.
-FOUNDATION_EXPORT const unsigned char ComponentVersionString[];
+public class SplashScreenViewController: UIViewController {
 
-// In this header, you should import all the public headers of your framework using statements like #import <Component/PublicHeader.h>
+    @IBOutlet var logoImage: UIImageView!
+    @IBOutlet var backgroundImage: UIImageView!
+    
+    public var delegate: SplashScreenViewControllerDelegate?
+    var viewModel = SplashScreenViewModel()
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
 
-
+        self.backgroundImage.image = UIImage.Asset.launchScreen
+        self.logoImage.image = UIImage.Asset.castcleLogo
+        
+        self.viewModel.didGuestLoginFinish = {
+            self.delegate?.didLoadFinish(self)
+        }
+    }
+}

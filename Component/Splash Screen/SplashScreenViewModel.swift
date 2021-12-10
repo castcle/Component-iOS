@@ -19,20 +19,47 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  Component.h
+//  SplashScreenViewModel.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 2/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 1/8/2564 BE.
 //
 
-#import <Foundation/Foundation.h>
+import Foundation
+import Core
+import Networking
+import Defaults
+import SwiftyJSON
 
-//! Project version number for Component.
-FOUNDATION_EXPORT double ComponentVersionNumber;
+final class SplashScreenViewModel {
+   
+    //MARK: Private
+    private var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
+    let tokenHelper: TokenHelper = TokenHelper()
 
-//! Project version string for Component.
-FOUNDATION_EXPORT const unsigned char ComponentVersionString[];
+    public func guestLogin() {
+        self.authenticationRepository.guestLogin(uuid: Defaults[.deviceUuid]) { (success) in
+            if success {
+                self.didGuestLoginFinish?()
+            }
+        }
+    }
+    
+    //MARK: Output
+    var didGuestLoginFinish: (() -> ())?
+    
+    public init() {
+        self.tokenHelper.delegate = self
+        if Defaults[.accessToken].isEmpty || Defaults[.userRole].isEmpty {
+            self.guestLogin()
+        } else {
+            self.tokenHelper.refreshToken()
+        }
+    }
+}
 
-// In this header, you should import all the public headers of your framework using statements like #import <Component/PublicHeader.h>
-
-
+extension SplashScreenViewModel: TokenHelperDelegate {
+    func didRefreshTokenFinish() {
+        self.didGuestLoginFinish?()
+    }
+}

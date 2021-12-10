@@ -19,20 +19,24 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  Component.h
+//  PannableViewsProtocol.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 2/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 13/8/2564 BE.
 //
 
-#import <Foundation/Foundation.h>
+import UIKit
 
-//! Project version number for Component.
-FOUNDATION_EXPORT double ComponentVersionNumber;
+public protocol PannableViewsProtocol {
+    func panView() -> UIView
+}
 
-//! Project version string for Component.
-FOUNDATION_EXPORT const unsigned char ComponentVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <Component/PublicHeader.h>
-
-
+extension UIViewController: PannableViewsProtocol{
+    @objc open func panView() -> UIView{
+        if let scroll = self.view.subviews.first(where: {$0 is UIScrollView}){
+            return scroll
+        } else {
+            return self.view
+        }
+    }
+}

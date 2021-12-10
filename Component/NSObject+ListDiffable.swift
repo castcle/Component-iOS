@@ -19,20 +19,22 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  Component.h
+//  NSObject+ListDiffable.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 2/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 13/7/2564 BE.
 //
 
-#import <Foundation/Foundation.h>
+import Foundation
+import IGListKit
 
-//! Project version number for Component.
-FOUNDATION_EXPORT double ComponentVersionNumber;
-
-//! Project version string for Component.
-FOUNDATION_EXPORT const unsigned char ComponentVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <Component/PublicHeader.h>
-
-
+// MARK: - ListDiffable
+extension NSObject: ListDiffable {
+    public func diffIdentifier() -> NSObjectProtocol {
+        return self
+    }
+    
+    public func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+        return isEqual(object)
+    }
+}

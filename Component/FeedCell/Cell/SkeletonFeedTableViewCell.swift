@@ -19,20 +19,31 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  Component.h
+//  SkeletonFeedTableViewCell.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 2/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 24/10/2564 BE.
 //
 
-#import <Foundation/Foundation.h>
+import UIKit
+import Core
+import SkeletonView
 
-//! Project version number for Component.
-FOUNDATION_EXPORT double ComponentVersionNumber;
+public class SkeletonFeedTableViewCell: UITableViewCell {
 
-//! Project version string for Component.
-FOUNDATION_EXPORT const unsigned char ComponentVersionString[];
+    @IBOutlet var skeletonView: UIView!
+    
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+    }
 
-// In this header, you should import all the public headers of your framework using statements like #import <Component/PublicHeader.h>
-
-
+    public override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+    
+    public func configCell() {
+        DispatchQueue.main.async {
+            self.skeletonView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.Asset.gray))
+        }
+    }
+}
