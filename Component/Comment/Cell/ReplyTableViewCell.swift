@@ -67,16 +67,10 @@ class ReplyTableViewCell: UITableViewCell {
             self.displayNameLabel.text = replyComment.author.displayName
             self.dateLabel.text = replyComment.replyDate.timeAgoDisplay()
             
-            self.commentLabel.handleHashtagTap { hashtag in
-                let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                Utility.currentViewController().present(alert, animated: true, completion: nil)
-            }
-            self.commentLabel.handleMentionTap { mention in
-                let alert = UIAlertController(title: nil, message: "Go to mention view", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                Utility.currentViewController().present(alert, animated: true, completion: nil)
-            }
+//            self.commentLabel.handleHashtagTap { hashtag in
+//            }
+//            self.commentLabel.handleMentionTap { mention in
+//            }
             self.commentLabel.handleURLTap { url in
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
             }

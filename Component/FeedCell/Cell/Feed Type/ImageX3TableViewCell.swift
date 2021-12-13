@@ -57,16 +57,10 @@ public class ImageX3TableViewCell: UITableViewCell {
         didSet {
             guard let content = self.content else { return }
             self.detailLabel.text = content.message
-            self.detailLabel.handleHashtagTap { hashtag in
-                let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                Utility.currentViewController().present(alert, animated: true, completion: nil)
-            }
-            self.detailLabel.handleMentionTap { mention in
-                let alert = UIAlertController(title: nil, message: "Go to mention view", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                Utility.currentViewController().present(alert, animated: true, completion: nil)
-            }
+//            self.detailLabel.handleHashtagTap { hashtag in
+//            }
+//            self.detailLabel.handleMentionTap { mention in
+//            }
             self.detailLabel.handleURLTap { url in
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
             }
