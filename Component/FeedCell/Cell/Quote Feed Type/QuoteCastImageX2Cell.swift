@@ -66,10 +66,10 @@ public class QuoteCastImageX2Cell: UITableViewCell {
                 self.detailLabel.text = content.message
                 
                 if content.photo.count >= 2 {
-                    let firstUrl = URL(string: content.photo[0].large)
+                    let firstUrl = URL(string: content.photo[0].thumbnail)
                     self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                     
-                    let secondUrl = URL(string: content.photo[1].large)
+                    let secondUrl = URL(string: content.photo[1].thumbnail)
                     self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 }
                 

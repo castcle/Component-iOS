@@ -61,7 +61,7 @@ public class ImageX1TableViewCell: UITableViewCell {
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
             }
             if let imageUrl = content.photo.first {
-                let url = URL(string: imageUrl.large)
+                let url = URL(string: imageUrl.thumbnail)
                 self.displayImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
             }
         }
