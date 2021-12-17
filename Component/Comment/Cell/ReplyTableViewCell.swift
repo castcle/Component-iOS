@@ -157,11 +157,16 @@ class ReplyTableViewCell: UITableViewCell {
     private func updateUi() {
         guard let replyComment = self.replyComment else { return }
         
-        self.likeLabel.font = UIFont.asset(.bold, fontSize: .small)
+        self.likeLabel.font = UIFont.asset(.regular, fontSize: .small)
+        var likeCount = replyComment.like.count
         if replyComment.like.isLike {
-            self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.lightBlue, postfixText: "  Like", postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 14)
+            likeCount += 1
+            let displayLike: String = (likeCount > 0 ? "  \(String.displayCount(count: likeCount))" : "")
+            self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.lightBlue, postfixText: displayLike, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 14)
         } else {
-            self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.white, postfixText: "  Like", postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 14)
+            likeCount -= 1
+            let displayLike: String = (likeCount > 0 ? "  \(String.displayCount(count: likeCount))" : "")
+            self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.white, postfixText: displayLike, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 14)
         }
     }
 }

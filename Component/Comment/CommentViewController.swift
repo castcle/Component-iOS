@@ -250,7 +250,11 @@ extension CommentViewController {
                     cell?.topLineView.isHidden = true
                     cell?.bottomLineView.isHidden = false
                 } else if comment.isLast {
-                    cell?.topLineView.isHidden = false
+                    if (indexPath.section - 1) == 0 {
+                        cell?.topLineView.isHidden = true
+                    } else {
+                        cell?.topLineView.isHidden = false
+                    }
                     cell?.bottomLineView.isHidden = true
                 } else {
                     cell?.topLineView.isHidden = false
