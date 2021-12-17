@@ -180,7 +180,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
             } else {
                 let actionSheet = CCActionSheet()
-                let reportButton = CCAction(title: "Report cast", image: UIImage.init(icon: .castcle(.email), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                let reportButton = CCAction(title: "Report cast", image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
                     actionSheet.dismissActionSheet()
                     self.reportContent()
                 }
