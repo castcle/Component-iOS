@@ -71,7 +71,8 @@ public class QuoteCastBlogNoImageCell: UITableViewCell {
                 
                 if authorRef.type == AuthorType.people.rawValue {
                     if authorRef.castcleId == UserManager.shared.rawCastcleId {
-                        self.avatarImage.image = UserManager.shared.avatar
+                        let url = URL(string: UserManager.shared.avatar)
+                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                         self.followButton.isHidden = true
                     } else {
                         let url = URL(string: authorRef.avatar)

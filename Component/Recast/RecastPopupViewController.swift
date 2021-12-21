@@ -109,7 +109,8 @@ public class RecastPopupViewController: UIViewController {
     
     private func updateUser() {
         if self.viewModel.page?.castcleId == UserManager.shared.rawCastcleId {
-            self.avatarImage.image = UserManager.shared.avatar
+            let url = URL(string: UserManager.shared.avatar)
+            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
         } else {
             guard let page = self.viewModel.page else { return }
             self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage:  page.castcleId, type: .avatar)

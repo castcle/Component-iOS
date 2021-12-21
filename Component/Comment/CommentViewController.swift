@@ -79,7 +79,8 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
             self.avatarImage.contentMode = .scaleAspectFill
             self.avatarImage.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
 
-            self.avatarImage.image = UserManager.shared.avatar
+            let url = URL(string: UserManager.shared.avatar)
+            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
             self.avatarImage.capsule(borderWidth: 1, borderColor: UIColor.Asset.white)
             customInputView?.addSubview(self.avatarImage)
             
