@@ -57,6 +57,7 @@ public class HeaderTableViewCell: UITableViewCell {
     let tokenHelper: TokenHelper = TokenHelper()
     private var stage: Stage = .none
     private var userRequest: UserRequest = UserRequest()
+    private let realm = try! Realm()
     
     enum Stage {
         case deleteContent
@@ -85,8 +86,7 @@ public class HeaderTableViewCell: UITableViewCell {
                             }
                         }
                     } else {
-                        let realm = try! Realm()
-                        if let page = realm.objects(Page.self).filter("id = '\(content.authorId)'").first {
+                        if let page = self.realm.objects(Page.self).filter("id = '\(content.authorId)'").first {
                             self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: page.castcleId, type: .avatar)
                             self.followButton.isHidden = true
                         } else {
@@ -234,6 +234,13 @@ public class HeaderTableViewCell: UITableViewCell {
             } else {
                 self.userRequest.targetCastcleId = authorRef.castcleId
             }
+            
+            try! self.realm.write {
+                authorRef.followed = true
+                self.realm.add(authorRef, update: .modified)
+                NotificationCenter.default.post(name: .feedReloadContent, object: nil)
+            }
+            
             self.userRepository.follow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
@@ -257,6 +264,13 @@ public class HeaderTableViewCell: UITableViewCell {
             } else {
                 self.userRequest.targetCastcleId = authorRef.castcleId
             }
+            
+            try! self.realm.write {
+                authorRef.followed = false
+                self.realm.add(authorRef, update: .modified)
+                NotificationCenter.default.post(name: .feedReloadContent, object: nil)
+            }
+            
             self.userRepository.unfollow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
