@@ -55,6 +55,7 @@
 		B7552987269CBE49005D5EB5 /* NormalFooter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B7552983269CBE48005D5EB5 /* NormalFooter.bundle */; };
 		B75529A2269D8837005D5EB5 /* NSObject+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */; };
 		B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75529D2269F696A005D5EB5 /* ComponentNibVars.swift */; };
+		B756C8A3277337C1007AADE4 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B756C8A2277337C1007AADE4 /* TableView.swift */; };
 		B7866335274777F900B13EEF /* ActivityHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7866333274777F800B13EEF /* ActivityHeaderTableViewCell.swift */; };
 		B7866336274777F900B13EEF /* ActivityHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7866334274777F800B13EEF /* ActivityHeaderTableViewCell.xib */; };
 		B786634E2747AC4200B13EEF /* QuoteCastBlogNoImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B786633C2747AC4100B13EEF /* QuoteCastBlogNoImageCell.xib */; };
@@ -171,6 +172,7 @@
 		B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+ListDiffable.swift"; sourceTree = "<group>"; };
 		B75529D2269F696A005D5EB5 /* ComponentNibVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentNibVars.swift; sourceTree = "<group>"; };
 		B75529D4269FD885005D5EB5 /* Feed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Feed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B756C8A2277337C1007AADE4 /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		B7866333274777F800B13EEF /* ActivityHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		B7866334274777F800B13EEF /* ActivityHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		B786633C2747AC4100B13EEF /* QuoteCastBlogNoImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuoteCastBlogNoImageCell.xib; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 			children = (
 				B75529D2269F696A005D5EB5 /* ComponentNibVars.swift */,
 				B7910DF826AFE8200097C94E /* ComponentOpener.swift */,
+				B756C8A2277337C1007AADE4 /* TableView.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -537,11 +540,11 @@
 				B75529D1269F693C005D5EB5 /* Utilities */,
 				B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */,
 				B7E64EC9275F637F00FFD78E /* Report */,
+				B78795C026C6171C00FECC21 /* TProfile */,
 				B7AC87FC271999CF00500F81 /* CastcleActionSheet */,
 				B717447826E258DE0014D6B5 /* Comment */,
 				B787963426C66E5F00FECC21 /* Recast */,
 				B78795DE26C6513F00FECC21 /* FeedCell */,
-				B78795C026C6171C00FECC21 /* TProfile */,
 				B7910E8E26BC660E0097C94E /* Picker */,
 				B7910E2D26B5E1320097C94E /* Splash Screen */,
 				B7910DF326AFDCEA0097C94E /* WebView */,
@@ -768,6 +771,7 @@
 				B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */,
 				B7866335274777F900B13EEF /* ActivityHeaderTableViewCell.swift in Sources */,
 				B786634F2747AC4200B13EEF /* QuoteCastImageX2Cell.swift in Sources */,
+				B756C8A3277337C1007AADE4 /* TableView.swift in Sources */,
 				B786635F2747AC4200B13EEF /* QuoteCastImageX1Cell.swift in Sources */,
 				B7AC880427199B4700500F81 /* CCAction.swift in Sources */,
 				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,
