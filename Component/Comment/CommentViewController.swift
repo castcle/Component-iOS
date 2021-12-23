@@ -166,24 +166,16 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     
     private func setupNevBar() {
         if let authorId = self.viewModel.content?.authorId, let authorRef = ContentHelper.shared.getAuthorRef(id: authorId) {
-            self.customNavigationBar(.primary, title: "Post of \(authorRef.displayName)", textColor: UIColor.Asset.white)
+            self.customNavigationBar(.secondary, title: "Post of \(authorRef.displayName)")
         } else {
-            self.customNavigationBar(.primary, title: "Error", textColor: UIColor.Asset.white)
+            self.customNavigationBar(.secondary, title: "Error")
         }
-        
-        let leftIcon = NavBarButtonType.back.barButton
-        leftIcon.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftIcon)
     }
     
     func configureTableView() {
         self.tableView.registerFeedCell()
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
-    }
-    
-    @objc private func leftButtonAction() {
-        Utility.currentViewController().dismiss(animated: true)
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -272,7 +264,14 @@ extension CommentViewController: HeaderTableViewCellDelegate {
     }
     
     func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author) {
-        // Profile
+        let userDict: [String: String] = [
+            "type":  author.type.rawValue,
+            "id":  author.id,
+            "castcleId":  author.castcleId,
+            "displayName":  author.displayName,
+            "avatar":   author.avatar.thumbnail
+        ]
+        NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
     }
     
     func didAuthen(_ headerTableViewCell: HeaderTableViewCell) {
@@ -286,7 +285,7 @@ extension CommentViewController: HeaderTableViewCellDelegate {
 
 extension CommentViewController: FooterTableViewCellDelegate {
     func didTabComment(_ footerTableViewCell: FooterTableViewCell, content: Content) {
-        //
+        self.commentTextField.becomeFirstResponder()
     }
     
     func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: Page) {
