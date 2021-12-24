@@ -29,7 +29,6 @@ import UIKit
 import Core
 import Networking
 import ActiveLabel
-import SwiftLinkPreview
 import SkeletonView
 
 public class TextLinkTableViewCell: UITableViewCell {
@@ -55,8 +54,7 @@ public class TextLinkTableViewCell: UITableViewCell {
     @IBOutlet var linkDescriptionLabel: UILabel!
     @IBOutlet var skeletonView: UIView!
     
-    private var result = Response()
-    private let slp = SwiftLinkPreview(cache: InMemoryCache())
+    private var content: Content?
     
     public override func awakeFromNib() {
         super.awakeFromNib()
@@ -77,6 +75,7 @@ public class TextLinkTableViewCell: UITableViewCell {
     
     func configCell(content: Content?) {
         guard let content = content else { return }
+        self.content = content
         self.detailLabel.text = content.message
         
 //        self.detailLabel.handleHashtagTap { hashtag in
@@ -102,25 +101,7 @@ public class TextLinkTableViewCell: UITableViewCell {
         } else if let link = content.message.extractURLs().first {
             if let icon = UIImage.iconFromUrl(url: link.absoluteString) {
                 self.setDataWithContent(icon: icon, message: content.message)
-            } else {
-                self.loadLink(link: link.absoluteString)
             }
-        } else {
-            self.setData()
-        }
-    }
-    
-    private func loadLink(link: String) {
-        if let cached = self.slp.cache.slp_getCachedResponse(url: link) {
-            self.result = cached
-            self.setData()
-        } else {
-            self.slp.preview(link, onSuccess: { result in
-                self.result = result
-                self.setData()
-            }, onError: { error in
-                self.setData()
-            })
         }
     }
     
@@ -129,29 +110,8 @@ public class TextLinkTableViewCell: UITableViewCell {
             self.skeletonView.isHidden = true
             self.linkContainer.isHidden = false
         })
-        
-        // MARK: - Image
-        if let value = self.result.icon {
-            let url = URL(string: value)
-            self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-        } else {
-            self.linkImage.image = UIImage.Asset.placeholder
-        }
-        
-        // MARK: - Title
-        if let value: String = self.result.title {
-            self.linkTitleLabel.text = value.isEmpty ? "" : value
-        } else {
-            self.linkTitleLabel.text = ""
-        }
-        
-        // MARK: - Description
-        if let value: String = self.result.description {
-            self.linkDescriptionLabel.text = value.isEmpty ? "" : value
-        } else {
-            self.linkDescriptionLabel.text = ""
-        }
     }
+
     
     private func setDataWithContent(icon: UIImage, message: String) {
         self.skeletonView.isHidden = true
@@ -162,8 +122,11 @@ public class TextLinkTableViewCell: UITableViewCell {
     }
     
     @IBAction func openWebViewAction(_ sender: Any) {
-        if let value = self.result.url {
-            Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(value)), animated: true)
+        guard let content = self.content else { return }
+        if let link = content.link.first, let linkUrl = URL(string: link.url) {
+            Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(linkUrl)), animated: true)
+        } else if let link = content.message.extractURLs().first {
+            Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(link)), animated: true)
         }
     }
 }

@@ -30,7 +30,6 @@ import LinkPresentation
 import Core
 import Networking
 import ActiveLabel
-import SwiftLinkPreview
 import RealmSwift
 
 public class QuoteCastTextLinkPreviewCell: UITableViewCell {
@@ -61,9 +60,6 @@ public class QuoteCastTextLinkPreviewCell: UITableViewCell {
     @IBOutlet var linkDescriptionLabel: UILabel!
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
     
-    private var result = Response()
-    private let slp = SwiftLinkPreview(cache: InMemoryCache())
-    
     var viewModel: QuoteCastViewModel?
     public var content: Content? {
         didSet {
@@ -72,11 +68,7 @@ public class QuoteCastTextLinkPreviewCell: UITableViewCell {
                 self.viewModel = QuoteCastViewModel(content: content)
                 self.detailLabel.text = content.message
                 if let link = content.link.first {
-                    self.loadLink(link: link.url)
-                } else if let link = content.message.extractURLs().first {
-                    self.loadLink(link: link.absoluteString)
-                } else {
-                    self.setData()
+                    self.setData(content: content, link: link)
                 }
                 
                 
@@ -150,41 +142,23 @@ public class QuoteCastTextLinkPreviewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    private func loadLink(link: String) {
-        if let cached = self.slp.cache.slp_getCachedResponse(url: link) {
-            self.result = cached
-            self.setData()
-        } else {
-            self.slp.preview(link, onSuccess: { result in
-                self.result = result
-                self.setData()
-            }, onError: { error in
-                self.setData()
-            })
-        }
-    }
-    
-    private func setData() {
+    private func setData(content: Content, link: Link) {
         // MARK: - Image
-        if let value = self.result.image {
-            let url = URL(string: value)
-            self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-        } else {
-            self.linkImage.image = UIImage.Asset.placeholder
-        }
+        let url = URL(string: link.imagePreview)
+        self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
         
         // MARK: - Title
-        if let value: String = self.result.title {
-            self.linkTitleLabel.text = value.isEmpty ? "No title" : value
+        if link.title.isEmpty {
+            self.linkTitleLabel.text = ""
         } else {
-            self.linkTitleLabel.text = "No title"
+            self.linkTitleLabel.text = link.title
         }
         
         // MARK: - Description
-        if let value: String = self.result.description {
-            self.linkDescriptionLabel.text = value.isEmpty ? "" : value
+        if link.desc.isEmpty {
+            self.linkDescriptionLabel.text = content.message
         } else {
-            self.linkDescriptionLabel.text = ""
+            self.linkDescriptionLabel.text = link.desc
         }
     }
     

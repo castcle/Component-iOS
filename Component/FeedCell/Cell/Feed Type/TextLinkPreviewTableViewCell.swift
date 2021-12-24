@@ -29,7 +29,6 @@ import UIKit
 import Core
 import Networking
 import ActiveLabel
-import SwiftLinkPreview
 import SkeletonView
 
 public class TextLinkPreviewTableViewCell: UITableViewCell {
@@ -55,9 +54,6 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
     @IBOutlet var linkDescriptionLabel: UILabel!
     @IBOutlet var skeletonView: UIView!
     
-    private var result = Response()
-    private let slp = SwiftLinkPreview(cache: InMemoryCache())
-    
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
@@ -80,11 +76,7 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
             self.skeletonView.isHidden = false
             self.linkContainer.isHidden = true
             if let link = content.link.first {
-                self.loadLink(link: link.url)
-            } else if let link = content.message.extractURLs().first {
-                self.loadLink(link: link.absoluteString)
-            } else {
-                self.setData()
+                self.setData(content: content, link: link)
             }
         }
     }
@@ -106,52 +98,37 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    private func loadLink(link: String) {
-        if let cached = self.slp.cache.slp_getCachedResponse(url: link) {
-            self.result = cached
-            self.setData()
-        } else {
-            self.slp.preview(link, onSuccess: { result in
-                self.result = result
-                self.setData()
-            }, onError: { error in
-                self.setData()
-            })
-        }
-    }
-    
-    private func setData() {
+    private func setData(content: Content, link: Link) {
         UIView.transition(with: self, duration: 0.35, options: .transitionCrossDissolve, animations: {
             self.skeletonView.isHidden = true
             self.linkContainer.isHidden = false
         })
         
         // MARK: - Image
-        if let value = self.result.image {
-            let url = URL(string: value)
-            self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-        } else {
-            self.linkImage.image = UIImage.Asset.placeholder
-        }
+        let url = URL(string: link.imagePreview)
+        self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
         
         // MARK: - Title
-        if let value: String = self.result.title {
-            self.linkTitleLabel.text = value.isEmpty ? "" : value
-        } else {
+        if link.title.isEmpty {
             self.linkTitleLabel.text = ""
+        } else {
+            self.linkTitleLabel.text = link.title
         }
         
         // MARK: - Description
-        if let value: String = self.result.description {
-            self.linkDescriptionLabel.text = value.isEmpty ? "" : value
+        if link.desc.isEmpty {
+            self.linkDescriptionLabel.text = content.message
         } else {
-            self.linkDescriptionLabel.text = ""
+            self.linkDescriptionLabel.text = link.desc
         }
     }
     
     @IBAction func openWebViewAction(_ sender: Any) {
-        if let value = self.result.url {
-            Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(value)), animated: true)
+        guard let content = self.content else { return }
+        if let link = content.link.first, let linkUrl = URL(string: link.url) {
+            Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(linkUrl)), animated: true)
+        } else if let link = content.message.extractURLs().first {
+            Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(link)), animated: true)
         }
     }
 }
