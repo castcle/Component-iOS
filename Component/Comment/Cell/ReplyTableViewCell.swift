@@ -48,15 +48,15 @@ class ReplyTableViewCell: UITableViewCell {
             self.commentLabel.customize { label in
                 label.font = UIFont.asset(.regular, fontSize: .overline)
                 label.numberOfLines = 0
-                label.enabledTypes = [.mention, .hashtag, .url]
+                label.enabledTypes = [.mention, .url, self.customHashtag]
                 label.textColor = UIColor.Asset.white
-                label.hashtagColor = UIColor.Asset.lightBlue
                 label.mentionColor = UIColor.Asset.lightBlue
                 label.URLColor = UIColor.Asset.lightBlue
             }
         }
     }
     
+    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     var replyComment: ReplyComment? {
         didSet {
             guard let replyComment = self.replyComment else { return }
@@ -67,7 +67,10 @@ class ReplyTableViewCell: UITableViewCell {
             self.displayNameLabel.text = replyComment.author.displayName
             self.dateLabel.text = replyComment.replyDate.timeAgoDisplay()
             
-//            self.commentLabel.handleHashtagTap { hashtag in
+            self.commentLabel.customColor[self.customHashtag] = UIColor.Asset.lightBlue
+            self.commentLabel.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
+            
+//            self.detailLabel.handleCustomTap(for: self.customHashtag) { element in
 //            }
 //            self.commentLabel.handleMentionTap { mention in
 //            }

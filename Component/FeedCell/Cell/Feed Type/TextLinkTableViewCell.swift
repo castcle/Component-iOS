@@ -38,11 +38,12 @@ public class TextLinkTableViewCell: UITableViewCell {
             self.detailLabel.customize { label in
                 label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
-                label.enabledTypes = [.mention, .hashtag, .url]
+                label.enabledTypes = [.mention, .url, self.customHashtag]
                 label.textColor = UIColor.Asset.white
-                label.hashtagColor = UIColor.Asset.lightBlue
                 label.mentionColor = UIColor.Asset.lightBlue
                 label.URLColor = UIColor.Asset.lightBlue
+                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
+                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
             }
         }
     }
@@ -54,6 +55,7 @@ public class TextLinkTableViewCell: UITableViewCell {
     @IBOutlet var linkDescriptionLabel: UILabel!
     @IBOutlet var skeletonView: UIView!
     
+    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     private var content: Content?
     
     public override func awakeFromNib() {
@@ -78,8 +80,9 @@ public class TextLinkTableViewCell: UITableViewCell {
         self.content = content
         self.detailLabel.text = content.message
         
-//        self.detailLabel.handleHashtagTap { hashtag in
-//        }
+//            self.detailLabel.handleCustomTap(for: self.customHashtag) { element in
+//            }
+        
 //        self.detailLabel.handleMentionTap { mention in
 //        }
         self.detailLabel.handleURLTap { url in

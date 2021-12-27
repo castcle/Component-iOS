@@ -39,11 +39,12 @@ public class ImageX2TableViewCell: UITableViewCell {
             self.detailLabel.customize { label in
                 label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
-                label.enabledTypes = [.mention, .hashtag, .url]
+                label.enabledTypes = [.mention, .url, self.customHashtag]
                 label.textColor = UIColor.Asset.white
-                label.hashtagColor = UIColor.Asset.lightBlue
                 label.mentionColor = UIColor.Asset.lightBlue
                 label.URLColor = UIColor.Asset.lightBlue
+                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
+                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
             }
         }
     }
@@ -52,11 +53,13 @@ public class ImageX2TableViewCell: UITableViewCell {
     @IBOutlet var firstImageView: UIImageView!
     @IBOutlet var secondImageView: UIImageView!
     
+    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
             self.detailLabel.text = content.message
-//            self.detailLabel.handleHashtagTap { hashtag in
+            
+//            self.detailLabel.handleCustomTap(for: self.customHashtag) { element in
 //            }
 //            self.detailLabel.handleMentionTap { mention in
 //            }

@@ -37,23 +37,26 @@ public class TextTableViewCell: UITableViewCell {
             self.detailLabel.customize { label in
                 label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
-                label.enabledTypes = [.mention, .hashtag, .url]
+                label.enabledTypes = [.mention, .url, self.customHashtag]
                 label.textColor = UIColor.Asset.white
-                label.hashtagColor = UIColor.Asset.lightBlue
                 label.mentionColor = UIColor.Asset.lightBlue
                 label.URLColor = UIColor.Asset.lightBlue
+                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
+                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
             }
         }
     }
     
+    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
             self.detailLabel.text = content.message
-//            self.detailLabel.handleHashtagTap { hashtag in
-//            }
 //            self.detailLabel.handleMentionTap { mention in
 //            }
+//            self.detailLabel.handleCustomTap(for: self.customHashtag) { element in
+//            }
+            
             self.detailLabel.handleURLTap { url in
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
             }
