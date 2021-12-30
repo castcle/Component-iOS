@@ -198,10 +198,9 @@ public class HeaderTableViewCell: UITableViewCell {
     private func deleteContent() {
         self.stage = .deleteContent
         guard let content = self.content else { return }
+        self.delegate?.didRemoveSuccess(self)
         self.contentRepository.deleteContent(contentId: content.id) { (success, response, isRefreshToken) in
-            if success {
-                self.delegate?.didRemoveSuccess(self)
-            } else {
+            if !success {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
                 }
