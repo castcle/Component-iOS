@@ -31,7 +31,7 @@ import Networking
 import ActiveLabel
 
 protocol CommentTableViewCellDelegate {
-    func didReplay(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
+    func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
     func didEdit(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
     func didLiked(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
     func didUnliked(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
@@ -43,7 +43,7 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet var displayNameLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var likeLabel: UILabel!
-    @IBOutlet var replayButton: UIButton!
+    @IBOutlet var replyButton: UIButton!
     @IBOutlet var topLineView: UIView!
     @IBOutlet var bottomLineView: UIView!
     @IBOutlet var commentLabel: ActiveLabel! {
@@ -81,7 +81,7 @@ class CommentTableViewCell: UITableViewCell {
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
             }
             
-            self.updateUi()
+            self.updateUi(isAction: false)
         }
     }
     
@@ -95,8 +95,8 @@ class CommentTableViewCell: UITableViewCell {
         self.displayNameLabel.textColor = UIColor.Asset.white
         self.dateLabel.font = UIFont.asset(.regular, fontSize: .small)
         self.dateLabel.textColor = UIColor.Asset.lightGray
-        self.replayButton.titleLabel?.font = UIFont.asset(.bold, fontSize: .small)
-        self.replayButton.setTitleColor(UIColor.Asset.white, for: .normal)
+        self.replyButton.titleLabel?.font = UIFont.asset(.bold, fontSize: .small)
+        self.replyButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.topLineView.backgroundColor = UIColor.Asset.gray
         self.bottomLineView.backgroundColor = UIColor.Asset.gray
         
@@ -122,7 +122,7 @@ class CommentTableViewCell: UITableViewCell {
         
         alert.addAction(UIAlertAction(title: "Reply", style: .default , handler: { (UIAlertAction) in
             self.isShowActionSheet = false
-            self.delegate?.didReplay(self, comment: comment)
+            self.delegate?.didReply(self, comment: comment)
         }))
         
         alert.addAction(UIAlertAction(title: "Edit", style: .default , handler: { (UIAlertAction) in
@@ -144,25 +144,25 @@ class CommentTableViewCell: UITableViewCell {
 
         Utility.currentViewController().present(alert, animated: true)
     }
-    @IBAction func replayAction(_ sender: Any) {
+    @IBAction func replyAction(_ sender: Any) {
         guard let comment = self.comment else { return }
-        self.delegate?.didReplay(self, comment: comment)
+        self.delegate?.didReply(self, comment: comment)
     }
     
     @IBAction func likeAction(_ sender: Any) {
         if UserManager.shared.isLogin {
             guard let comment = self.comment else { return }
 
-            if comment.like.isLike {
+            if comment.participate.liked {
                 self.delegate?.didUnliked(self, comment: comment)
             } else {
                 self.delegate?.didLiked(self, comment: comment)
             }
 
-            comment.like.isLike.toggle()
-            self.updateUi()
+            comment.participate.liked.toggle()
+            self.updateUi(isAction: true)
             
-            if comment.like.isLike {
+            if comment.participate.liked {
                 let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
                 impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
                 impliesAnimation.duration = 0.3 * 2
@@ -172,17 +172,21 @@ class CommentTableViewCell: UITableViewCell {
         }
     }
     
-    private func updateUi() {
+    private func updateUi(isAction: Bool) {
         guard let comment = self.comment else { return }
         
         self.likeLabel.font = UIFont.asset(.regular, fontSize: .small)
-        var likeCount = comment.like.count
-        if comment.like.isLike {
-            likeCount += 1
+        var likeCount = comment.metrics.likeCount
+        if comment.participate.liked {
+            if isAction {
+                likeCount += 1
+            }
             let displayLike: String = (likeCount > 0 ? "  \(String.displayCount(count: likeCount))" : "")
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.lightBlue, postfixText: displayLike, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 14)
         } else {
-            likeCount -= 1
+            if isAction {
+                likeCount -= 1
+            }
             let displayLike: String = (likeCount > 0 ? "  \(String.displayCount(count: likeCount))" : "")
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.white, postfixText: displayLike, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 14)
         }

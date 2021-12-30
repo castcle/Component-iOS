@@ -87,7 +87,7 @@ public final class CommentViewModel {
         }
     }
     
-    public func replayComment () {
+    public func replyComment () {
         self.stage = .replyComment
         self.commentRepository.replyComment(contentId: self.content?.id ?? "", commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
@@ -136,7 +136,7 @@ extension CommentViewModel: TokenHelperDelegate {
         } else if self.stage == .createComment {
             self.createComment()
         } else if self.stage == .replyComment {
-            self.replayComment()
+            self.replyComment()
         } else if self.stage == .likeComment {
             self.likeComment()
         } else if self.stage == .unlikeComment {

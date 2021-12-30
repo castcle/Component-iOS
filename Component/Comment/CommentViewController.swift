@@ -118,7 +118,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         if self.event == .create {
             self.viewModel.createComment()
         } else if self.event == .reply {
-            self.viewModel.replayComment()
+            self.viewModel.replyComment()
         }
         
         self.commentTextField.text = ""
@@ -133,7 +133,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     
     enum CommentSection: Int, CaseIterable {
         case comment = 0
-        case replay
+        case reply
     }
     
     override func viewDidLoad() {
@@ -301,7 +301,7 @@ extension CommentViewController: FooterTableViewCellDelegate {
 }
 
 extension CommentViewController: CommentTableViewCellDelegate {
-    func didReplay(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
+    func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
         self.event = .reply
         self.viewModel.commentId = comment.id
         self.commentTextField.text = "@\(comment.author.castcleId) "
@@ -315,11 +315,13 @@ extension CommentViewController: CommentTableViewCellDelegate {
     
     func didLiked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
         self.viewModel.commentId = comment.id
+        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
         self.viewModel.likeComment()
     }
     
     func didUnliked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
         self.viewModel.commentId = comment.id
+        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
         self.viewModel.unlikeComment()
     }
 }

@@ -78,7 +78,7 @@ class ReplyTableViewCell: UITableViewCell {
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
             }
             
-            self.updateUi()
+            self.updateUi(isAction: false)
         }
     }
     
@@ -138,16 +138,16 @@ class ReplyTableViewCell: UITableViewCell {
         if UserManager.shared.isLogin {
             guard let replyComment = self.replyComment else { return }
 
-            if replyComment.like.isLike {
+            if replyComment.participate.liked {
                 self.delegate?.didUnliked(self, replyComment: replyComment)
             } else {
                 self.delegate?.didLiked(self, replyComment: replyComment)
             }
 
-            replyComment.like.isLike.toggle()
-            self.updateUi()
+            replyComment.participate.liked.toggle()
+            self.updateUi(isAction: true)
             
-            if replyComment.like.isLike {
+            if replyComment.participate.liked {
                 let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
                 impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
                 impliesAnimation.duration = 0.3 * 2
@@ -157,17 +157,21 @@ class ReplyTableViewCell: UITableViewCell {
         }
     }
     
-    private func updateUi() {
+    private func updateUi(isAction: Bool) {
         guard let replyComment = self.replyComment else { return }
         
         self.likeLabel.font = UIFont.asset(.regular, fontSize: .small)
-        var likeCount = replyComment.like.count
-        if replyComment.like.isLike {
-            likeCount += 1
+        var likeCount = replyComment.metrics.likeCount
+        if replyComment.participate.liked {
+            if isAction {
+                likeCount += 1
+            }
             let displayLike: String = (likeCount > 0 ? "  \(String.displayCount(count: likeCount))" : "")
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.lightBlue, postfixText: displayLike, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 14)
         } else {
-            likeCount -= 1
+            if isAction {
+                likeCount -= 1
+            }
             let displayLike: String = (likeCount > 0 ? "  \(String.displayCount(count: likeCount))" : "")
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.white, postfixText: displayLike, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 14)
         }
