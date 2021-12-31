@@ -40,11 +40,12 @@ public class ImageX3TableViewCell: UITableViewCell {
                 let readMoreType = ActiveType.custom(pattern: "...Read more")
                 label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
-                label.enabledTypes = [.mention, .hashtag, .url, readMoreType]
+                label.enabledTypes = [.mention, .url, self.customHashtag, readMoreType]
                 label.textColor = UIColor.Asset.white
-                label.hashtagColor = UIColor.Asset.lightBlue
                 label.mentionColor = UIColor.Asset.lightBlue
                 label.URLColor = UIColor.Asset.lightBlue
+                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
+                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
                 label.customColor[readMoreType] = UIColor.Asset.lightBlue
                 label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
             }
@@ -56,10 +57,10 @@ public class ImageX3TableViewCell: UITableViewCell {
     @IBOutlet var secondImageView: UIImageView!
     @IBOutlet var thirdImageView: UIImageView!
     
+    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
-            
             if content.type == .long {
                 if content.isExpand {
                     self.detailLabel.text = content.message
@@ -73,13 +74,13 @@ public class ImageX3TableViewCell: UITableViewCell {
             }
             
             if content.photo.count >= 3 {
-                let firstUrl = URL(string: content.photo[0].large)
+                let firstUrl = URL(string: content.photo[0].thumbnail)
                 self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 
-                let secondUrl = URL(string: content.photo[1].large)
+                let secondUrl = URL(string: content.photo[1].thumbnail)
                 self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 
-                let thirdUrl = URL(string: content.photo[2].large)
+                let thirdUrl = URL(string: content.photo[2].thumbnail)
                 self.thirdImageView.kf.setImage(with: thirdUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
             }
         }

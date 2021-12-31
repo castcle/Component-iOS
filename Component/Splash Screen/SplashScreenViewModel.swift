@@ -50,6 +50,9 @@ final class SplashScreenViewModel {
     
     public init() {
         self.tokenHelper.delegate = self
+    }
+    
+    public func tokenHandle() {
         if Defaults[.accessToken].isEmpty || Defaults[.userRole].isEmpty {
             self.guestLogin()
         } else {

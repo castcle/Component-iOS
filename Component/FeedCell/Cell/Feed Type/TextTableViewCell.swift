@@ -38,21 +38,22 @@ public class TextTableViewCell: UITableViewCell {
                 let readMoreType = ActiveType.custom(pattern: "...Read more")
                 label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
-                label.enabledTypes = [.mention, .hashtag, .url, readMoreType]
+                label.enabledTypes = [.mention, .url, self.customHashtag, readMoreType]
                 label.textColor = UIColor.Asset.white
-                label.hashtagColor = UIColor.Asset.lightBlue
                 label.mentionColor = UIColor.Asset.lightBlue
                 label.URLColor = UIColor.Asset.lightBlue
+                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
+                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
                 label.customColor[readMoreType] = UIColor.Asset.lightBlue
                 label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
             }
         }
     }
     
+    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
-            
             if content.type == .long {
                 if content.isExpand {
                     self.detailLabel.text = content.message

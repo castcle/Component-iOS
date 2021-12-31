@@ -39,11 +39,12 @@ public class ImageX1TableViewCell: UITableViewCell {
                 let readMoreType = ActiveType.custom(pattern: "...Read more")
                 label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
-                label.enabledTypes = [.mention, .hashtag, .url, readMoreType]
+                label.enabledTypes = [.mention, .url, self.customHashtag, readMoreType]
                 label.textColor = UIColor.Asset.white
-                label.hashtagColor = UIColor.Asset.lightBlue
                 label.mentionColor = UIColor.Asset.lightBlue
                 label.URLColor = UIColor.Asset.lightBlue
+                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
+                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
                 label.customColor[readMoreType] = UIColor.Asset.lightBlue
                 label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
             }
@@ -52,10 +53,10 @@ public class ImageX1TableViewCell: UITableViewCell {
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var displayImage: UIImageView!
     
+    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
-            
             if content.type == .long {
                 if content.isExpand {
                     self.detailLabel.text = content.message
@@ -69,7 +70,7 @@ public class ImageX1TableViewCell: UITableViewCell {
             }
             
             if let imageUrl = content.photo.first {
-                let url = URL(string: imageUrl.large)
+                let url = URL(string: imageUrl.thumbnail)
                 self.displayImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
             }
         }
