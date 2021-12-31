@@ -45,6 +45,7 @@ public class SplashScreenViewController: UIViewController {
 
         self.backgroundImage.image = UIImage.Asset.launchScreen
         self.logoImage.image = UIImage.Asset.castcleLogo
+        self.viewModel.tokenHandle()
         
         self.viewModel.didGuestLoginFinish = {
             self.delegate?.didLoadFinish(self)

@@ -44,11 +44,12 @@ public class QuoteCastImageX1Cell: UITableViewCell {
             self.detailLabel.customize { label in
                 label.font = UIFont.asset(.contentLight, fontSize: .overline)
                 label.numberOfLines = 0
-                label.enabledTypes = [.mention, .hashtag, .url]
+                label.enabledTypes = [.mention, .url, self.customHashtag]
                 label.textColor = UIColor.Asset.white
-                label.hashtagColor = UIColor.Asset.lightBlue
                 label.mentionColor = UIColor.Asset.lightBlue
                 label.URLColor = UIColor.Asset.lightBlue
+                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
+                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
             }
         }
     }
@@ -56,6 +57,7 @@ public class QuoteCastImageX1Cell: UITableViewCell {
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
     
     var viewModel: QuoteCastViewModel?
+    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     public var content: Content? {
         didSet {
             if let content = self.content {
@@ -64,13 +66,14 @@ public class QuoteCastImageX1Cell: UITableViewCell {
                 self.detailLabel.text = content.message
                 
                 if let imageUrl = content.photo.first {
-                    let url = URL(string: imageUrl.large)
+                    let url = URL(string: imageUrl.thumbnail)
                     self.firstImageView.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 }
                 
                 if authorRef.type == AuthorType.people.rawValue {
                     if authorRef.castcleId == UserManager.shared.rawCastcleId {
-                        self.avatarImage.image = UserManager.shared.avatar
+                        let url = URL(string: UserManager.shared.avatar)
+                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                         self.followButton.isHidden = true
                     } else {
                         let url = URL(string: authorRef.avatar)

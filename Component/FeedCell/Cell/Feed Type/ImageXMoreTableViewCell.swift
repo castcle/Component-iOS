@@ -38,13 +38,17 @@ public class ImageXMoreTableViewCell: UITableViewCell {
     @IBOutlet var detailLabel: ActiveLabel! {
         didSet {
             self.detailLabel.customize { label in
+                let readMoreType = ActiveType.custom(pattern: "...Read more")
                 label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
-                label.enabledTypes = [.mention, .hashtag, .url]
+                label.enabledTypes = [.mention, .url, self.customHashtag, readMoreType]
                 label.textColor = UIColor.Asset.white
-                label.hashtagColor = UIColor.Asset.lightBlue
                 label.mentionColor = UIColor.Asset.lightBlue
                 label.URLColor = UIColor.Asset.lightBlue
+                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
+                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
+                label.customColor[readMoreType] = UIColor.Asset.lightBlue
+                label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
             }
         }
     }
@@ -57,22 +61,20 @@ public class ImageXMoreTableViewCell: UITableViewCell {
     @IBOutlet var moreImageView: UIImageView!
     @IBOutlet var moreLabel: UILabel!
     
+    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
-            self.detailLabel.text = content.message
-            self.detailLabel.handleHashtagTap { hashtag in
-                let alert = UIAlertController(title: nil, message: "Go to hastag view", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                Utility.currentViewController().present(alert, animated: true, completion: nil)
-            }
-            self.detailLabel.handleMentionTap { mention in
-                let alert = UIAlertController(title: nil, message: "Go to mention view", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                Utility.currentViewController().present(alert, animated: true, completion: nil)
-            }
-            self.detailLabel.handleURLTap { url in
-                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
+            if content.type == .long {
+                if content.isExpand {
+                    self.detailLabel.text = content.message
+                    self.enableActiveLabel()
+                } else {
+                    self.detailLabel.text = "\(content.message.substringWithRange(range: 100)) ...Read more"
+                }
+            } else {
+                self.detailLabel.text = content.message
+                self.enableActiveLabel()
             }
             
             self.moreImageView.image = UIColor.Asset.black.toImage()
@@ -89,17 +91,34 @@ public class ImageXMoreTableViewCell: UITableViewCell {
             }
             
             if content.photo.count >= 4 {
-                let firstUrl = URL(string: content.photo[0].large)
+                let firstUrl = URL(string: content.photo[0].thumbnail)
                 self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 
-                let secondUrl = URL(string: content.photo[1].large)
+                let secondUrl = URL(string: content.photo[1].thumbnail)
                 self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 
-                let thirdUrl = URL(string: content.photo[2].large)
+                let thirdUrl = URL(string: content.photo[2].thumbnail)
                 self.thirdImageView.kf.setImage(with: thirdUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 
-                let fourthUrl = URL(string: content.photo[3].large)
+                let fourthUrl = URL(string: content.photo[3].thumbnail)
                 self.fourthImageView.kf.setImage(with: fourthUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
+            }
+        }
+    }
+    
+    private func enableActiveLabel() {
+        self.detailLabel.handleHashtagTap { hashtag in
+        }
+        self.detailLabel.handleMentionTap { mention in
+        }
+        self.detailLabel.handleURLTap { url in
+            var urlString = url.absoluteString
+            urlString = urlString.replacingOccurrences(of: "https://", with: "")
+            urlString = urlString.replacingOccurrences(of: "http://", with: "")
+            if let newUrl = URL(string: "https://\(urlString)") {
+                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
+            } else {
+                return
             }
         }
     }

@@ -79,7 +79,8 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
             self.avatarImage.contentMode = .scaleAspectFill
             self.avatarImage.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
 
-            self.avatarImage.image = UserManager.shared.avatar
+            let url = URL(string: UserManager.shared.avatar)
+            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
             self.avatarImage.capsule(borderWidth: 1, borderColor: UIColor.Asset.white)
             customInputView?.addSubview(self.avatarImage)
             
@@ -117,7 +118,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         if self.event == .create {
             self.viewModel.createComment()
         } else if self.event == .reply {
-            self.viewModel.replayComment()
+            self.viewModel.replyComment()
         }
         
         self.commentTextField.text = ""
@@ -132,7 +133,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     
     enum CommentSection: Int, CaseIterable {
         case comment = 0
-        case replay
+        case reply
     }
     
     override func viewDidLoad() {
@@ -165,37 +166,19 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     
     private func setupNevBar() {
         if let authorId = self.viewModel.content?.authorId, let authorRef = ContentHelper.shared.getAuthorRef(id: authorId) {
-            self.customNavigationBar(.primary, title: "Post of \(authorRef.displayName)", textColor: UIColor.Asset.white)
+            self.customNavigationBar(.secondary, title: "Post of \(authorRef.displayName)")
         } else {
-            self.customNavigationBar(.primary, title: "Error", textColor: UIColor.Asset.white)
+            self.customNavigationBar(.secondary, title: "Error")
         }
-        
-        let leftIcon = NavBarButtonType.back.barButton
-        leftIcon.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftIcon)
     }
     
     func configureTableView() {
-        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.headerFeed, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.headerFeed)
-        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.footerFeed, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.footerFeed)
-        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.postText, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.postText)
-        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.postLink, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.postLink)
-        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.postLinkPreview, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.postLinkPreview)
-        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.imageX1, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.imageX1)
-        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.imageX2, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.imageX2)
-        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.imageX3, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.imageX3)
-        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.imageXMore, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.imageXMore)
-        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.blog, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.blog)
-        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.blogNoImage, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.blogNoImage)
-        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.comment, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.comment)
-        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.reply, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.reply)
-        
+        self.tableView.registerFeedCell()
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
-    }
-    
-    @objc private func leftButtonAction() {
-        Utility.currentViewController().dismiss(animated: true)
+        
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.comment, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.comment)
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.reply, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.reply)
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -250,7 +233,11 @@ extension CommentViewController {
                     cell?.topLineView.isHidden = true
                     cell?.bottomLineView.isHidden = false
                 } else if comment.isLast {
-                    cell?.topLineView.isHidden = false
+                    if (indexPath.section - 1) == 0 {
+                        cell?.topLineView.isHidden = true
+                    } else {
+                        cell?.topLineView.isHidden = false
+                    }
                     cell?.bottomLineView.isHidden = true
                 } else {
                     cell?.topLineView.isHidden = false
@@ -280,7 +267,14 @@ extension CommentViewController: HeaderTableViewCellDelegate {
     }
     
     func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author) {
-        // Profile
+        let userDict: [String: String] = [
+            "type":  author.type.rawValue,
+            "id":  author.id,
+            "castcleId":  author.castcleId,
+            "displayName":  author.displayName,
+            "avatar":   author.avatar.thumbnail
+        ]
+        NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
     }
     
     func didAuthen(_ headerTableViewCell: HeaderTableViewCell) {
@@ -294,7 +288,7 @@ extension CommentViewController: HeaderTableViewCellDelegate {
 
 extension CommentViewController: FooterTableViewCellDelegate {
     func didTabComment(_ footerTableViewCell: FooterTableViewCell, content: Content) {
-        //
+        self.commentTextField.becomeFirstResponder()
     }
     
     func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: Page) {
@@ -307,7 +301,7 @@ extension CommentViewController: FooterTableViewCellDelegate {
 }
 
 extension CommentViewController: CommentTableViewCellDelegate {
-    func didReplay(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
+    func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
         self.event = .reply
         self.viewModel.commentId = comment.id
         self.commentTextField.text = "@\(comment.author.castcleId) "
@@ -321,11 +315,13 @@ extension CommentViewController: CommentTableViewCellDelegate {
     
     func didLiked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
         self.viewModel.commentId = comment.id
+        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
         self.viewModel.likeComment()
     }
     
     func didUnliked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
         self.viewModel.commentId = comment.id
+        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
         self.viewModel.unlikeComment()
     }
 }

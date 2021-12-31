@@ -30,7 +30,6 @@ import LinkPresentation
 import Core
 import Networking
 import ActiveLabel
-import SwiftLinkPreview
 import SkeletonView
 import RealmSwift
 
@@ -47,11 +46,12 @@ public class QuoteCastTextLinkCell: UITableViewCell {
             self.detailLabel.customize { label in
                 label.font = UIFont.asset(.contentLight, fontSize: .overline)
                 label.numberOfLines = 0
-                label.enabledTypes = [.mention, .hashtag, .url]
+                label.enabledTypes = [.mention, .url, self.customHashtag]
                 label.textColor = UIColor.Asset.white
-                label.hashtagColor = UIColor.Asset.lightBlue
                 label.mentionColor = UIColor.Asset.lightBlue
                 label.URLColor = UIColor.Asset.lightBlue
+                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
+                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
             }
         }
     }
@@ -64,9 +64,8 @@ public class QuoteCastTextLinkCell: UITableViewCell {
     @IBOutlet var skeletonView: UIView!
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
     
-    private var result = Response()
-    private let slp = SwiftLinkPreview(cache: InMemoryCache())
     var viewModel: QuoteCastViewModel?
+    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     
     public override func awakeFromNib() {
         super.awakeFromNib()
@@ -102,21 +101,19 @@ public class QuoteCastTextLinkCell: UITableViewCell {
         self.detailLabel.text = content.message
         self.skeletonView.isHidden = false
         self.linkContainer.isHidden = true
+        
         if let link = content.link.first {
             self.setDataWithContent(icon: link.type.image, message: content.message)
         } else if let link = content.message.extractURLs().first {
             if let icon = UIImage.iconFromUrl(url: link.absoluteString) {
                 self.setDataWithContent(icon: icon, message: content.message)
-            } else {
-                self.loadLink(link: link.absoluteString)
             }
-        } else {
-            self.setData()
         }
         
         if authorRef.type == AuthorType.people.rawValue {
             if authorRef.castcleId == UserManager.shared.rawCastcleId {
-                self.avatarImage.image = UserManager.shared.avatar
+                let url = URL(string: UserManager.shared.avatar)
+                self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                 self.followButton.isHidden = true
             } else {
                 let url = URL(string: authorRef.avatar)
@@ -151,49 +148,6 @@ public class QuoteCastTextLinkCell: UITableViewCell {
         } else {
             self.verifyConstraintWidth.constant = 0.0
             self.verifyIcon.isHidden = true
-        }
-    }
-    
-    private func loadLink(link: String) {
-        if let cached = self.slp.cache.slp_getCachedResponse(url: link) {
-            self.result = cached
-            self.setData()
-        } else {
-            self.slp.preview(link, onSuccess: { result in
-                self.result = result
-                self.setData()
-            }, onError: { error in
-                self.setData()
-            })
-        }
-    }
-    
-    private func setData() {
-        UIView.transition(with: self, duration: 0.35, options: .transitionCrossDissolve, animations: {
-            self.skeletonView.isHidden = true
-            self.linkContainer.isHidden = false
-        })
-        
-        // MARK: - Image
-        if let value = self.result.icon {
-            let url = URL(string: value)
-            self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-        } else {
-            self.linkImage.image = UIImage.Asset.placeholder
-        }
-        
-        // MARK: - Title
-        if let value: String = self.result.title {
-            self.linkTitleLabel.text = value.isEmpty ? "" : value
-        } else {
-            self.linkTitleLabel.text = ""
-        }
-        
-        // MARK: - Description
-        if let value: String = self.result.description {
-            self.linkDescriptionLabel.text = value.isEmpty ? "" : value
-        } else {
-            self.linkDescriptionLabel.text = ""
         }
     }
     

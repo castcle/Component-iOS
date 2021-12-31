@@ -39,7 +39,7 @@ open class NormalHeaderAnimator: UIView, RefreshProtocol {
         }
     }
     open var releaseToRefreshDescription = bundle?.localizedString(key: "CRRefreshHeaderPullingText")
-    open var loadingDescription = bundle?.localizedString(key: "CRRefreshHeaderRefreshingText")
+    open var loadingDescription = "Loading..."// bundle?.localizedString(key: "CRRefreshHeaderRefreshingText")
 
     open var view: UIView { return self }
     open var insets: UIEdgeInsets = .zero

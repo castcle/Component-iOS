@@ -109,7 +109,8 @@ public class RecastPopupViewController: UIViewController {
     
     private func updateUser() {
         if self.viewModel.page?.castcleId == UserManager.shared.rawCastcleId {
-            self.avatarImage.image = UserManager.shared.avatar
+            let url = URL(string: UserManager.shared.avatar)
+            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
         } else {
             guard let page = self.viewModel.page else { return }
             self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage:  page.castcleId, type: .avatar)
@@ -181,7 +182,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case UserListSection.user.rawValue:
-            self.viewModel.page = Page().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.rawCastcleId)
+            self.viewModel.page = Page().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.rawCastcleId, avatar: UserManager.shared.avatar, cover: UserManager.shared.cover)
             self.userTableView.reloadData()
             self.updateUser()
             UIView.transition(with: self.view, duration: 0.3,

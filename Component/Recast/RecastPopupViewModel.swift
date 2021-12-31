@@ -33,7 +33,7 @@ public final class RecastPopupViewModel {
     var isRecasted: Bool = false
     var page: Page?
     
-    public init(isRecasted: Bool = false, page: Page = Page().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.rawCastcleId)) {
+    public init(isRecasted: Bool = false, page: Page = Page().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.rawCastcleId, avatar: UserManager.shared.avatar, cover: UserManager.shared.cover)) {
         self.isRecasted = isRecasted
         self.page = page
     }
