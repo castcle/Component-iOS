@@ -36,14 +36,17 @@ public class ImageX1TableViewCell: UITableViewCell {
     @IBOutlet var detailLabel: ActiveLabel! {
         didSet {
             self.detailLabel.customize { label in
+                let readMoreType = ActiveType.custom(pattern: "...Read more")
                 label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
-                label.enabledTypes = [.mention, .url, self.customHashtag]
+                label.enabledTypes = [.mention, .url, self.customHashtag, readMoreType]
                 label.textColor = UIColor.Asset.white
                 label.mentionColor = UIColor.Asset.lightBlue
                 label.URLColor = UIColor.Asset.lightBlue
                 label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
                 label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
+                label.customColor[readMoreType] = UIColor.Asset.lightBlue
+                label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
             }
         }
     }
@@ -54,18 +57,38 @@ public class ImageX1TableViewCell: UITableViewCell {
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
-            self.detailLabel.text = content.message
-            
-//            self.detailLabel.handleCustomTap(for: self.customHashtag) { element in
-//            }
-//            self.detailLabel.handleMentionTap { mention in
-//            }
-            self.detailLabel.handleURLTap { url in
-                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
+            if content.type == .long {
+                if content.isExpand {
+                    self.detailLabel.text = content.message
+                    self.enableActiveLabel()
+                } else {
+                    self.detailLabel.text = "\(content.message.substringWithRange(range: 100)) ...Read more"
+                }
+            } else {
+                self.detailLabel.text = content.message
+                self.enableActiveLabel()
             }
+            
             if let imageUrl = content.photo.first {
                 let url = URL(string: imageUrl.thumbnail)
                 self.displayImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
+            }
+        }
+    }
+    
+    private func enableActiveLabel() {
+        self.detailLabel.handleHashtagTap { hashtag in
+        }
+        self.detailLabel.handleMentionTap { mention in
+        }
+        self.detailLabel.handleURLTap { url in
+            var urlString = url.absoluteString
+            urlString = urlString.replacingOccurrences(of: "https://", with: "")
+            urlString = urlString.replacingOccurrences(of: "http://", with: "")
+            if let newUrl = URL(string: "https://\(urlString)") {
+                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
+            } else {
+                return
             }
         }
     }
