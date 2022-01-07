@@ -78,13 +78,6 @@
 		B786635F2747AC4200B13EEF /* QuoteCastImageX1Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B786634D2747AC4200B13EEF /* QuoteCastImageX1Cell.swift */; };
 		B7866366274B833400B13EEF /* QuoteCastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7866365274B833400B13EEF /* QuoteCastViewModel.swift */; };
 		B78795AC26C5127C00FECC21 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78795AB26C5127C00FECC21 /* Networking.framework */; };
-		B78795C226C6174A00FECC21 /* TPProgressDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C126C6174A00FECC21 /* TPProgressDelegate.swift */; };
-		B78795C426C6177200FECC21 /* TPDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C326C6177200FECC21 /* TPDataSource.swift */; };
-		B78795C626C6179700FECC21 /* PagerAwareProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C526C6179700FECC21 /* PagerAwareProtocol.swift */; };
-		B78795C826C617BA00FECC21 /* BottomPageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C726C617BA00FECC21 /* BottomPageDelegate.swift */; };
-		B78795CA26C6182400FECC21 /* PannableViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795C926C6182300FECC21 /* PannableViewsProtocol.swift */; };
-		B78795CE26C6191A00FECC21 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795CD26C6191A00FECC21 /* ContainerViewController.swift */; };
-		B78795D026C6198300FECC21 /* TProfileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78795CF26C6198300FECC21 /* TProfileExtensions.swift */; };
 		B787963626C66E7300FECC21 /* Recast.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B787963526C66E7300FECC21 /* Recast.storyboard */; };
 		B787963826C66EBD00FECC21 /* RecastPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787963726C66EBC00FECC21 /* RecastPopupViewController.swift */; };
 		B787963A26C66EE900FECC21 /* RecastPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B787963926C66EE900FECC21 /* RecastPopupViewModel.swift */; };
@@ -195,13 +188,6 @@
 		B786634D2747AC4200B13EEF /* QuoteCastImageX1Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCastImageX1Cell.swift; sourceTree = "<group>"; };
 		B7866365274B833400B13EEF /* QuoteCastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCastViewModel.swift; sourceTree = "<group>"; };
 		B78795AB26C5127C00FECC21 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B78795C126C6174A00FECC21 /* TPProgressDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPProgressDelegate.swift; sourceTree = "<group>"; };
-		B78795C326C6177200FECC21 /* TPDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPDataSource.swift; sourceTree = "<group>"; };
-		B78795C526C6179700FECC21 /* PagerAwareProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerAwareProtocol.swift; sourceTree = "<group>"; };
-		B78795C726C617BA00FECC21 /* BottomPageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomPageDelegate.swift; sourceTree = "<group>"; };
-		B78795C926C6182300FECC21 /* PannableViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PannableViewsProtocol.swift; sourceTree = "<group>"; };
-		B78795CD26C6191A00FECC21 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
-		B78795CF26C6198300FECC21 /* TProfileExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TProfileExtensions.swift; sourceTree = "<group>"; };
 		B787963126C6632600FECC21 /* Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B787963526C66E7300FECC21 /* Recast.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Recast.storyboard; sourceTree = "<group>"; };
 		B787963726C66EBC00FECC21 /* RecastPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecastPopupViewController.swift; sourceTree = "<group>"; };
@@ -391,36 +377,6 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		B78795C026C6171C00FECC21 /* TProfile */ = {
-			isa = PBXGroup;
-			children = (
-				B78795CC26C6190300FECC21 /* ScrollController */,
-				B78795CB26C6188F00FECC21 /* Protocals */,
-				B78795CF26C6198300FECC21 /* TProfileExtensions.swift */,
-			);
-			path = TProfile;
-			sourceTree = "<group>";
-		};
-		B78795CB26C6188F00FECC21 /* Protocals */ = {
-			isa = PBXGroup;
-			children = (
-				B78795C126C6174A00FECC21 /* TPProgressDelegate.swift */,
-				B78795C326C6177200FECC21 /* TPDataSource.swift */,
-				B78795C526C6179700FECC21 /* PagerAwareProtocol.swift */,
-				B78795C726C617BA00FECC21 /* BottomPageDelegate.swift */,
-				B78795C926C6182300FECC21 /* PannableViewsProtocol.swift */,
-			);
-			path = Protocals;
-			sourceTree = "<group>";
-		};
-		B78795CC26C6190300FECC21 /* ScrollController */ = {
-			isa = PBXGroup;
-			children = (
-				B78795CD26C6191A00FECC21 /* ContainerViewController.swift */,
-			);
-			path = ScrollController;
-			sourceTree = "<group>";
-		};
 		B78795DE26C6513F00FECC21 /* FeedCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -540,7 +496,6 @@
 				B75529D1269F693C005D5EB5 /* Utilities */,
 				B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */,
 				B7E64EC9275F637F00FFD78E /* Report */,
-				B78795C026C6171C00FECC21 /* TProfile */,
 				B7AC87FC271999CF00500F81 /* CastcleActionSheet */,
 				B717447826E258DE0014D6B5 /* Comment */,
 				B787963426C66E5F00FECC21 /* Recast */,
@@ -716,13 +671,11 @@
 				B78663582747AC4200B13EEF /* QuoteCastTextCell.swift in Sources */,
 				B7552985269CBE49005D5EB5 /* NormalHeaderAnimator.swift in Sources */,
 				B7910DFB26B018E50097C94E /* InternalWebViewModel.swift in Sources */,
-				B78795C226C6174A00FECC21 /* TPProgressDelegate.swift in Sources */,
 				B71744B826E9EF850014D6B5 /* ImageX3TableViewCell.swift in Sources */,
 				B71744AE26E9EF280014D6B5 /* ImageX1TableViewCell.swift in Sources */,
 				B7866366274B833400B13EEF /* QuoteCastViewModel.swift in Sources */,
 				B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */,
 				B7E64ECD275F63D700FFD78E /* ReportSuccessViewController.swift in Sources */,
-				B78795C626C6179700FECC21 /* PagerAwareProtocol.swift in Sources */,
 				B7552972269CBA14005D5EB5 /* FastCheckLayer.swift in Sources */,
 				B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */,
 				B787963826C66EBD00FECC21 /* RecastPopupViewController.swift in Sources */,
@@ -745,29 +698,24 @@
 				B786635C2747AC4200B13EEF /* QuoteCastBlogNoImageCell.swift in Sources */,
 				B78663562747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.swift in Sources */,
 				B717448026E259AB0014D6B5 /* CommentViewController.swift in Sources */,
-				B78795C426C6177200FECC21 /* TPDataSource.swift in Sources */,
 				B7910E9426BC686B0097C94E /* DatePickerViewController.swift in Sources */,
 				B7910DF726AFE4090097C94E /* InternalWebViewViewController.swift in Sources */,
 				B7552978269CBA14005D5EB5 /* RefreshComponent.swift in Sources */,
 				B71744C526E9F6980014D6B5 /* BlogNoImageTableViewCell.swift in Sources */,
-				B78795D026C6198300FECC21 /* TProfileExtensions.swift in Sources */,
 				B71744A626E9E6DC0014D6B5 /* TextTableViewCell.swift in Sources */,
 				B7AC880827199BA500500F81 /* HandleView.swift in Sources */,
 				B71744C126E9F6820014D6B5 /* BlogTableViewCell.swift in Sources */,
 				B7AC880027199AD500500F81 /* CCActionSheet+Animation.swift in Sources */,
 				B78663532747AC4200B13EEF /* QuoteCastImageXMoreCell.swift in Sources */,
 				B755297E269CBA15005D5EB5 /* RefreshHeaderView.swift in Sources */,
-				B78795C826C617BA00FECC21 /* BottomPageDelegate.swift in Sources */,
 				B7AC880627199B7800500F81 /* CCAction+Style.swift in Sources */,
 				B71744B426E9EF750014D6B5 /* ImageX2TableViewCell.swift in Sources */,
 				B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */,
-				B78795CA26C6182400FECC21 /* PannableViewsProtocol.swift in Sources */,
 				B7910E3126B5E1320097C94E /* SplashScreenViewController.swift in Sources */,
 				B717449A26E7A2550014D6B5 /* FooterTableViewCell.swift in Sources */,
 				B71744BC26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.swift in Sources */,
 				B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */,
 				B7AC87FE27199A6D00500F81 /* CCActionSheet.swift in Sources */,
-				B78795CE26C6191A00FECC21 /* ContainerViewController.swift in Sources */,
 				B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */,
 				B7866335274777F900B13EEF /* ActivityHeaderTableViewCell.swift in Sources */,
 				B786634F2747AC4200B13EEF /* QuoteCastImageX2Cell.swift in Sources */,
