@@ -45,7 +45,7 @@ public class ActivityHeaderTableViewCell: UITableViewCell {
     }
     
     public func cellConfig(content: Content) {
-        if content.participate.recasted {
+        if content.referencedCasts.type == .recasted {
             if content.authorId == UserManager.shared.id {
                 self.detailLabel.text = "You Recasted"
             } else {

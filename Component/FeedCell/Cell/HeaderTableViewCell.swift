@@ -227,9 +227,10 @@ public class HeaderTableViewCell: UITableViewCell {
         guard let content = self.content else { return }
         if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
             let userId: String = UserManager.shared.rawCastcleId
-            if content.participate.recasted {
-                // Original Post
-//                self.userRequest.targetCastcleId = content.originalPost.author.castcleId
+            if content.referencedCasts.type == .recasted {
+                if let tempContent = ContentHelper.shared.getContentRef(id: content.referencedCasts.id) {
+                    self.userRequest.targetCastcleId = tempContent.authorId
+                }
             } else {
                 self.userRequest.targetCastcleId = authorRef.castcleId
             }
