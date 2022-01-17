@@ -34,10 +34,19 @@ import Kingfisher
 
 public class ImageX3TableViewCell: UITableViewCell {
 
-    @IBOutlet var detailLabel: ActiveLabel! {
+    @IBOutlet var detailLabel: ActiveLabel!
+    @IBOutlet var imageContainer: UIView!
+    @IBOutlet var firstImageView: UIImageView!
+    @IBOutlet var secondImageView: UIImageView!
+    @IBOutlet var thirdImageView: UIImageView!
+    
+    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
+    public var content: Content? {
         didSet {
+            guard let content = self.content else { return }
+            
             self.detailLabel.customize { label in
-                let readMoreType = ActiveType.custom(pattern: "...Read more")
+                let readMoreType = ActiveType.custom(pattern: "\(Localization.contentDetail.readMore.text)")
                 label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
                 label.enabledTypes = [.mention, .url, self.customHashtag, readMoreType]
@@ -49,24 +58,13 @@ public class ImageX3TableViewCell: UITableViewCell {
                 label.customColor[readMoreType] = UIColor.Asset.lightBlue
                 label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
             }
-        }
-    }
-    
-    @IBOutlet var imageContainer: UIView!
-    @IBOutlet var firstImageView: UIImageView!
-    @IBOutlet var secondImageView: UIImageView!
-    @IBOutlet var thirdImageView: UIImageView!
-    
-    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
-    public var content: Content? {
-        didSet {
-            guard let content = self.content else { return }
+            
             if content.type == .long {
                 if content.isExpand {
                     self.detailLabel.text = content.message
                     self.enableActiveLabel()
                 } else {
-                    self.detailLabel.text = "\(content.message.substringWithRange(range: 100)) ...Read more"
+                    self.detailLabel.text = "\(content.message.substringWithRange(range: 100)) \(Localization.contentDetail.readMore.text)"
                 }
             } else {
                 self.detailLabel.text = content.message

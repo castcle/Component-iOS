@@ -47,10 +47,10 @@ public class ActivityHeaderTableViewCell: UITableViewCell {
     public func cellConfig(content: Content) {
         if content.referencedCasts.type == .recasted {
             if content.authorId == UserManager.shared.id {
-                self.detailLabel.text = "You Recasted"
+                self.detailLabel.text = Localization.contentDetail.youRecasted.text
             } else {
                 if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
-                    self.detailLabel.text = "\(authorRef.displayName) Recasted"
+                    self.detailLabel.text = "\(authorRef.displayName) \(Localization.contentDetail.recasted.text)"
                 } else {
                     return
                 }

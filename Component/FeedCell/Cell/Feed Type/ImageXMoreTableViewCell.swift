@@ -35,24 +35,7 @@ import SwiftColor
 
 public class ImageXMoreTableViewCell: UITableViewCell {
 
-    @IBOutlet var detailLabel: ActiveLabel! {
-        didSet {
-            self.detailLabel.customize { label in
-                let readMoreType = ActiveType.custom(pattern: "...Read more")
-                label.font = UIFont.asset(.contentLight, fontSize: .body)
-                label.numberOfLines = 0
-                label.enabledTypes = [.mention, .url, self.customHashtag, readMoreType]
-                label.textColor = UIColor.Asset.white
-                label.mentionColor = UIColor.Asset.lightBlue
-                label.URLColor = UIColor.Asset.lightBlue
-                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
-                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
-                label.customColor[readMoreType] = UIColor.Asset.lightBlue
-                label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
-            }
-        }
-    }
-    
+    @IBOutlet var detailLabel: ActiveLabel!
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var firstImageView: UIImageView!
     @IBOutlet var secondImageView: UIImageView!
@@ -65,12 +48,27 @@ public class ImageXMoreTableViewCell: UITableViewCell {
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
+            
+            self.detailLabel.customize { label in
+                let readMoreType = ActiveType.custom(pattern: "\(Localization.contentDetail.readMore.text)")
+                label.font = UIFont.asset(.contentLight, fontSize: .body)
+                label.numberOfLines = 0
+                label.enabledTypes = [.mention, .url, self.customHashtag, readMoreType]
+                label.textColor = UIColor.Asset.white
+                label.mentionColor = UIColor.Asset.lightBlue
+                label.URLColor = UIColor.Asset.lightBlue
+                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
+                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
+                label.customColor[readMoreType] = UIColor.Asset.lightBlue
+                label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
+            }
+            
             if content.type == .long {
                 if content.isExpand {
                     self.detailLabel.text = content.message
                     self.enableActiveLabel()
                 } else {
-                    self.detailLabel.text = "\(content.message.substringWithRange(range: 100)) ...Read more"
+                    self.detailLabel.text = "\(content.message.substringWithRange(range: 100)) \(Localization.contentDetail.readMore.text)"
                 }
             } else {
                 self.detailLabel.text = content.message

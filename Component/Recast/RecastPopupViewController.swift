@@ -88,10 +88,13 @@ public class RecastPopupViewController: UIViewController {
         
         self.pages = self.realm.objects(Page.self)
         
+        self.subTitleLabel.text = Localization.contentAction.recastTitle.text
+        self.quoteCastLabel.text = Localization.contentAction.quoteCast.text
+        self.chooseUserTitle.text = Localization.contentAction.choosePageOrUser.text
         if self.viewModel.isRecasted {
-            self.recastLabel.text = "Unrecasted"
+            self.recastLabel.text = Localization.contentAction.unrecasted.text
         } else {
-            self.recastLabel.text = "Recasted"
+            self.recastLabel.text = Localization.contentAction.recasted.text
         }
         
         if self.pages.count == 0 {

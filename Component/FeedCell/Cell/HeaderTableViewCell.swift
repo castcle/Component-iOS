@@ -70,6 +70,7 @@ public class HeaderTableViewCell: UITableViewCell {
     public var content: Content? {
         didSet {
             if let content = self.content {
+                self.followButton.setTitle(Localization.contentDetail.follow.text, for: .normal)
                 if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
                     if authorRef.type == AuthorType.people.rawValue {
                         if authorRef.castcleId == UserManager.shared.rawCastcleId {
@@ -146,7 +147,7 @@ public class HeaderTableViewCell: UITableViewCell {
             if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
                 self.followButton.isHidden = true
                 self.followUser()
-                HeaderSnackBar.make(in: Utility.currentViewController().view, message: "You've followed @\(authorRef.castcleId)", duration: .lengthLong).setAction(with: "Undo", action: {
+                HeaderSnackBar.make(in: Utility.currentViewController().view, message: "\(Localization.contentAction.followed.text) @\(authorRef.castcleId)", duration: .lengthLong).setAction(with: Localization.contentAction.undo.text, action: {
                     self.followButton.isHidden = false
                     self.unfollowUser()
                 }).show()
@@ -171,7 +172,7 @@ public class HeaderTableViewCell: UITableViewCell {
         if let content = self.content {
             if ContentHelper.shared.isMyAccount(id: content.authorId) {
                 let actionSheet = CCActionSheet()
-                let deleteButton = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.delete), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                let deleteButton = CCAction(title: Localization.contentAction.delete.text, image: UIImage.init(icon: .castcle(.delete), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
                     actionSheet.dismissActionSheet()
                     self.deleteContent()
                 }
@@ -181,7 +182,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
             } else {
                 let actionSheet = CCActionSheet()
-                let reportButton = CCAction(title: "Report cast", image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                let reportButton = CCAction(title: Localization.contentAction.recasted.text, image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
                     actionSheet.dismissActionSheet()
                     self.reportContent()
                 }
@@ -259,8 +260,9 @@ public class HeaderTableViewCell: UITableViewCell {
         if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
             let userId: String = UserManager.shared.rawCastcleId
             if content.participate.recasted {
-                // Original Post
-//                self.userRequest.targetCastcleId = content.originalPost.author.castcleId
+                if let tempContent = ContentHelper.shared.getContentRef(id: content.referencedCasts.id) {
+                    self.userRequest.targetCastcleId = tempContent.authorId
+                }
             } else {
                 self.userRequest.targetCastcleId = authorRef.castcleId
             }
