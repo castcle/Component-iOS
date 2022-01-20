@@ -149,7 +149,8 @@ public class FooterTableViewCell: UITableViewCell {
             content.participate.recasted.toggle()
             self.updateUi(content: content)
             self.contentRequest.castcleId = castcleId
-            self.contentRepository.unrecastContent(contentId: content.id, contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
+            self.contentRequest.contentId = content.id
+            self.contentRepository.unrecastContent(contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
@@ -165,7 +166,8 @@ public class FooterTableViewCell: UITableViewCell {
             content.participate.recasted.toggle()
             self.updateUi(content: content)
             self.contentRequest.castcleId = castcleId
-            self.contentRepository.recastContent(contentId: content.id, contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
+            self.contentRequest.contentId = content.id
+            self.contentRepository.recastContent(contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
