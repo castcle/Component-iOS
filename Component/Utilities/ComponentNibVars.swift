@@ -77,6 +77,7 @@ public struct ComponentNibVars {
         public static let quoteImageXMore = "QuoteCastImageXMoreCell"
         public static let quoteBlog = "QuoteCastBlogCell"
         public static let quoteBlogNoImage = "QuoteCastBlogNoImageCell"
+        public static let suggestionUser = "SuggestionUserTableViewCell"
     }
     
     // MARK: - CollectionViewCell

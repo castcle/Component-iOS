@@ -36,6 +36,8 @@
 		B71744C626E9F6980014D6B5 /* BlogNoImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71744C426E9F6980014D6B5 /* BlogNoImageTableViewCell.xib */; };
 		B71B666E27251C0900191A62 /* SkeletonFeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71B666C27251C0900191A62 /* SkeletonFeedTableViewCell.swift */; };
 		B71B666F27251C0900191A62 /* SkeletonFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71B666D27251C0900191A62 /* SkeletonFeedTableViewCell.xib */; };
+		B7211E75279A84330018B3E5 /* SuggestionUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7211E73279A84330018B3E5 /* SuggestionUserTableViewCell.swift */; };
+		B7211E76279A84330018B3E5 /* SuggestionUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7211E74279A84330018B3E5 /* SuggestionUserTableViewCell.xib */; };
 		B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */; };
 		B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552957269CBA14005D5EB5 /* FastAnimator.swift */; };
 		B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552958269CBA14005D5EB5 /* FastLayer.swift */; };
@@ -147,6 +149,8 @@
 		B71744C426E9F6980014D6B5 /* BlogNoImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlogNoImageTableViewCell.xib; sourceTree = "<group>"; };
 		B71B666C27251C0900191A62 /* SkeletonFeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonFeedTableViewCell.swift; sourceTree = "<group>"; };
 		B71B666D27251C0900191A62 /* SkeletonFeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkeletonFeedTableViewCell.xib; sourceTree = "<group>"; };
+		B7211E73279A84330018B3E5 /* SuggestionUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionUserTableViewCell.swift; sourceTree = "<group>"; };
+		B7211E74279A84330018B3E5 /* SuggestionUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestionUserTableViewCell.xib; sourceTree = "<group>"; };
 		B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshAnimator.swift; sourceTree = "<group>"; };
 		B7552957269CBA14005D5EB5 /* FastAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastAnimator.swift; sourceTree = "<group>"; };
 		B7552958269CBA14005D5EB5 /* FastLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLayer.swift; sourceTree = "<group>"; };
@@ -291,6 +295,15 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		B7211E72279A83F90018B3E5 /* Suggestion */ = {
+			isa = PBXGroup;
+			children = (
+				B7211E73279A84330018B3E5 /* SuggestionUserTableViewCell.swift */,
+				B7211E74279A84330018B3E5 /* SuggestionUserTableViewCell.xib */,
+			);
+			path = Suggestion;
+			sourceTree = "<group>";
+		};
 		B755294B269CB846005D5EB5 /* Refresh */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,6 +408,7 @@
 		B78795E226C6521500FECC21 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				B7211E72279A83F90018B3E5 /* Suggestion */,
 				B786633B2747AC4100B13EEF /* Quote Feed Type */,
 				B787960026C65A3700FECC21 /* Feed Type */,
 				B717449426E791070014D6B5 /* HeaderTableViewCell.swift */,
@@ -648,6 +662,7 @@
 				B7866336274777F900B13EEF /* ActivityHeaderTableViewCell.xib in Resources */,
 				B717449B26E7A2550014D6B5 /* FooterTableViewCell.xib in Resources */,
 				B7552987269CBE49005D5EB5 /* NormalFooter.bundle in Resources */,
+				B7211E76279A84330018B3E5 /* SuggestionUserTableViewCell.xib in Resources */,
 				B786635E2747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.xib in Resources */,
 				B786635B2747AC4200B13EEF /* QuoteCastImageX2Cell.xib in Resources */,
 			);
@@ -700,6 +715,7 @@
 				B755297A269CBA14005D5EB5 /* RefreshBundle.swift in Sources */,
 				B755297C269CBA14005D5EB5 /* UIColorExtension.swift in Sources */,
 				B7910E3926B6650F0097C94E /* SplashScreenViewModel.swift in Sources */,
+				B7211E75279A84330018B3E5 /* SuggestionUserTableViewCell.swift in Sources */,
 				B786635A2747AC4200B13EEF /* QuoteCastBlogCell.swift in Sources */,
 				B71B666E27251C0900191A62 /* SkeletonFeedTableViewCell.swift in Sources */,
 				B7A71D0126FC4E380092F318 /* FeedCellHelper.swift in Sources */,
