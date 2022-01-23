@@ -34,6 +34,7 @@ public protocol SuggestionUserTableViewCellDelegate {
     func didSeeMore(_ suggestionUserTableViewCell: SuggestionUserTableViewCell, user: [Author])
     func didTabProfile(_ suggestionUserTableViewCell: SuggestionUserTableViewCell, user: Author)
     func didAuthen(_ suggestionUserTableViewCell: SuggestionUserTableViewCell)
+    func didMockViewProfile(_ suggestionUserTableViewCell: SuggestionUserTableViewCell)
 }
 
 public class SuggestionUserTableViewCell: UITableViewCell {
@@ -231,6 +232,8 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     @IBAction func firstUserProfileAction(_ sender: Any) {
         if !self.isMock && self.user.count > 0 {
             self.delegate?.didTabProfile(self, user: self.user[0])
+        } else {
+            self.delegate?.didMockViewProfile(self)
         }
     }
     
@@ -257,6 +260,8 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     @IBAction func secondUserProfileAction(_ sender: Any) {
         if !self.isMock && self.user.count > 1 {
             self.delegate?.didTabProfile(self, user: self.user[1])
+        } else {
+            self.delegate?.didMockViewProfile(self)
         }
     }
     
