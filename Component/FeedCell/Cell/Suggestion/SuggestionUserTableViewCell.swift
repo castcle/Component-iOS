@@ -57,6 +57,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     @IBOutlet weak var secondUserVerifyImage: UIImageView!
     
     public var delegate: SuggestionUserTableViewCellDelegate?
+    private var user: [Author] = []
     
     public override func awakeFromNib() {
         super.awakeFromNib()
@@ -97,26 +98,30 @@ public class SuggestionUserTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    public func configCell() {
-        self.fitstUserFollowButton.setTitle("Follow", for: .normal)
-        self.fitstUserFollowButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
-        self.fitstUserFollowButton.capsule(color: .clear, borderWidth: 1.0, borderColor: UIColor.Asset.lightBlue)
-        
-        self.secondUserFollowButton.setTitle("Following", for: .normal)
-        self.secondUserFollowButton.setTitleColor(UIColor.Asset.white, for: .normal)
-        self.secondUserFollowButton.capsule(color: UIColor.Asset.lightBlue, borderWidth: 1.0, borderColor: UIColor.Asset.lightBlue)
-        
-        let url = URL(string: UserManager.shared.avatar)
-        self.firstUserAvatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-        self.secondUserAvatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-        
-        self.firstUserNoticeLabel.text = "Chutima Kotxgapan and 21 others follow"
-        self.firstUserDisplayNameLabel.text = UserManager.shared.displayName
-        self.firstUserIdLabel.text = "@\(UserManager.shared.rawCastcleId)"
-        
-        self.secondUserNoticeLabel.text = "Chutima Kotxgapan and 21 others follow"
-        self.secondUserDisplayNameLabel.text = UserManager.shared.displayName
-        self.secondUserIdLabel.text = "@\(UserManager.shared.rawCastcleId)"
+    public func configCell(user: [Author], isMock: Bool) {
+        if isMock {
+            self.fitstUserFollowButton.setTitle("Follow", for: .normal)
+            self.fitstUserFollowButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
+            self.fitstUserFollowButton.capsule(color: .clear, borderWidth: 1.0, borderColor: UIColor.Asset.lightBlue)
+            
+            self.secondUserFollowButton.setTitle("Following", for: .normal)
+            self.secondUserFollowButton.setTitleColor(UIColor.Asset.white, for: .normal)
+            self.secondUserFollowButton.capsule(color: UIColor.Asset.lightBlue, borderWidth: 1.0, borderColor: UIColor.Asset.lightBlue)
+            
+            let url = URL(string: UserManager.shared.avatar)
+            self.firstUserAvatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+            self.secondUserAvatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+            
+            self.firstUserNoticeLabel.text = "Chutima Kotxgapan and 21 others follow"
+            self.firstUserDisplayNameLabel.text = UserManager.shared.displayName
+            self.firstUserIdLabel.text = "@\(UserManager.shared.rawCastcleId)"
+            
+            self.secondUserNoticeLabel.text = "Chutima Kotxgapan and 21 others follow"
+            self.secondUserDisplayNameLabel.text = UserManager.shared.displayName
+            self.secondUserIdLabel.text = "@\(UserManager.shared.rawCastcleId)"
+        } else {
+            self.user = user
+        }
     }
     
     @IBAction func firstUserFollowAction(_ sender: Any) {
@@ -132,6 +137,6 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     }
     
     @IBAction func showMoreAction(_ sender: Any) {
-        self.delegate?.didSeeMore(self, user: [])
+        self.delegate?.didSeeMore(self, user: self.user)
     }
 }
