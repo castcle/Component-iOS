@@ -125,6 +125,11 @@ public class SuggestionUserTableViewCell: UITableViewCell {
             self.firstUserDisplayNameLabel.text = firstUser.displayName
             self.firstUserIdLabel.text = "@\(firstUser.castcleId)"
             self.firstUserDescLabel.text = firstUser.overview
+            if firstUser.verified.official {
+                self.firstUserVerifyImage.isHidden = false
+            } else {
+                self.firstUserVerifyImage.isHidden = true
+            }
             
             let secondUser = self.user[1]
             let secondUserAvatar = URL(string: secondUser.avatar.thumbnail)
@@ -133,6 +138,11 @@ public class SuggestionUserTableViewCell: UITableViewCell {
             self.secondUserDisplayNameLabel.text = secondUser.displayName
             self.secondUserIdLabel.text = "@\(secondUser.castcleId)"
             self.secondUserDescLabel.text = secondUser.overview
+            if secondUser.verified.official {
+                self.secondUserVerifyImage.isHidden = false
+            } else {
+                self.secondUserVerifyImage.isHidden = true
+            }
         }
     }
     
