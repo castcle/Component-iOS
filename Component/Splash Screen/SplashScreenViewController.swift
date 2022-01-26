@@ -61,6 +61,8 @@ public class SplashScreenViewController: UIViewController {
     
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        EngagementHelper().sendCastcleAnalytic(event: .onScreenView, screen: .splashScreen)
+        if !UserManager.shared.accessToken.isEmpty {
+            EngagementHelper().sendCastcleAnalytic(event: .onScreenView, screen: .splashScreen)
+        }
     }
 }
