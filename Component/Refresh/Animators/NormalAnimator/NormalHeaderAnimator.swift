@@ -31,15 +31,15 @@ open class NormalHeaderAnimator: UIView, RefreshProtocol {
     
     static let bundle = RefreshBundle.bundle(name: "NormalHeader", for: NormalHeaderAnimator.self)
     
-    open var pullToRefreshDescription = bundle?.localizedString(key: "CRRefreshHeaderIdleText") {
+    open var pullToRefreshDescription = "Pull down to refresh" /*bundle?.localizedString(key: "CRRefreshHeaderIdleText")*/ {
         didSet {
             if pullToRefreshDescription != oldValue {
                 titleLabel.text = pullToRefreshDescription;
             }
         }
     }
-    open var releaseToRefreshDescription = bundle?.localizedString(key: "CRRefreshHeaderPullingText")
-    open var loadingDescription = "Loading..."// bundle?.localizedString(key: "CRRefreshHeaderRefreshingText")
+    open var releaseToRefreshDescription = "Release to refresh" // bundle?.localizedString(key: "CRRefreshHeaderPullingText")
+    open var loadingDescription = "Loading..." // bundle?.localizedString(key: "CRRefreshHeaderRefreshingText")
 
     open var view: UIView { return self }
     open var insets: UIEdgeInsets = .zero
