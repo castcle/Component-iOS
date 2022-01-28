@@ -35,12 +35,51 @@ final class SplashScreenViewModel {
    
     //MARK: Private
     private var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
+    private var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
+    var stage: Stage = .unknow
+    
+    enum Stage {
+        case guestLogin
+        case refreshToken
+        case getBadges
+        case unknow
+    }
+    
+    enum BadgeKey: String {
+        case payload
+        case badges
+    }
 
     public func guestLogin() {
+        self.stage = .guestLogin
         self.authenticationRepository.guestLogin(uuid: Defaults[.deviceUuid]) { (success) in
             if success {
                 self.didGuestLoginFinish?()
+            }
+        }
+    }
+    
+    public func getBadges() {
+        self.stage = .getBadges
+        self.notificationRepository.getBadges() { (success, response, isRefreshToken) in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    let payload = JSON(json[BadgeKey.payload.rawValue].dictionaryValue)
+                    let badges: Int = payload[BadgeKey.badges.rawValue].intValue
+                    Defaults[.notificationBadges] = badges
+                    self.didGuestLoginFinish?()
+                } catch {
+                    self.didGuestLoginFinish?()
+                }
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                } else {
+                    self.didGuestLoginFinish?()
+                }
             }
         }
     }
@@ -56,6 +95,7 @@ final class SplashScreenViewModel {
         if UserManager.shared.accessToken.isEmpty || UserManager.shared.userRole == .guest {
             self.guestLogin()
         } else {
+            self.stage = .refreshToken
             self.tokenHelper.refreshToken()
         }
     }
@@ -63,6 +103,14 @@ final class SplashScreenViewModel {
 
 extension SplashScreenViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
-        self.didGuestLoginFinish?()
+        if self.stage == .getBadges {
+            self.getBadges()
+        } else {
+            if UserManager.shared.isLogin {
+                self.getBadges()
+            } else {
+                self.didGuestLoginFinish?()
+            }
+        }
     }
 }
