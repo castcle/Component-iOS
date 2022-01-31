@@ -31,9 +31,9 @@ open class NormalFooterAnimator: UIView, RefreshProtocol {
     
     static let bundle = RefreshBundle.bundle(name: "NormalFooter", for: NormalFooterAnimator.self)
 
-    open var loadingMoreDescription = bundle?.localizedString(key: "CRRefreshFooterIdleText")
-    open var noMoreDataDescription  = bundle?.localizedString(key: "CRRefreshFooterNoMoreText")
-    open var loadingDescription     = bundle?.localizedString(key: "CRRefreshFooterRefreshingText")
+    open var loadingMoreDescription = "Loading more" // bundle?.localizedString(key: "CRRefreshFooterIdleText")
+    open var noMoreDataDescription  = "No more data" // bundle?.localizedString(key: "CRRefreshFooterNoMoreText")
+    open var loadingDescription     = "Loading..." //bundle?.localizedString(key: "CRRefreshFooterRefreshingText")
 
     open var view: UIView { return self }
     open var duration: TimeInterval = 0.3

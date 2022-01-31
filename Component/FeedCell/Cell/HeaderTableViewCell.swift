@@ -57,6 +57,7 @@ public class HeaderTableViewCell: UITableViewCell {
     let tokenHelper: TokenHelper = TokenHelper()
     private var stage: Stage = .none
     private var userRequest: UserRequest = UserRequest()
+    private var reportRequest: ReportRequest = ReportRequest()
     private let realm = try! Realm()
     
     enum Stage {
@@ -182,9 +183,13 @@ public class HeaderTableViewCell: UITableViewCell {
                 Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
             } else {
                 let actionSheet = CCActionSheet()
-                let reportButton = CCAction(title: Localization.contentAction.recasted.text, image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                let reportButton = CCAction(title: Localization.contentAction.reportCast.text, image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
                     actionSheet.dismissActionSheet()
-                    self.reportContent()
+                    if UserManager.shared.isLogin {
+                        self.reportContent()
+                    } else {
+                        self.delegate?.didAuthen(self)
+                    }
                 }
                 
                 actionSheet.addActions([reportButton])
@@ -212,7 +217,8 @@ public class HeaderTableViewCell: UITableViewCell {
     private func reportContent() {
         self.stage = .reportContent
         guard let content = self.content else { return }
-        self.reportRepository.reportContent(contentId: content.id) { (success, response, isRefreshToken) in
+        self.reportRequest.targetContentId = content.id
+        self.reportRepository.reportContent(userId: UserManager.shared.rawCastcleId, reportRequest: self.reportRequest) { (success, response, isRefreshToken) in
             if success {
                 self.delegate?.didReportSuccess(self)
             } else {
