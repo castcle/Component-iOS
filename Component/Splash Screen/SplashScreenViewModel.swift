@@ -53,7 +53,7 @@ final class SplashScreenViewModel {
     }
     
     public func tokenHandle() {
-        if Defaults[.accessToken].isEmpty || Defaults[.userRole].isEmpty {
+        if UserManager.shared.accessToken.isEmpty || UserManager.shared.userRole == .guest {
             self.guestLogin()
         } else {
             self.tokenHelper.refreshToken()

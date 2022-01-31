@@ -27,6 +27,8 @@
 
 import UIKit
 import Core
+import Networking
+import Defaults
 
 public protocol SplashScreenViewControllerDelegate {
     func didLoadFinish(_ view: SplashScreenViewController)
@@ -49,6 +51,18 @@ public class SplashScreenViewController: UIViewController {
         
         self.viewModel.didGuestLoginFinish = {
             self.delegate?.didLoadFinish(self)
+        }
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Defaults[.screenId] = ScreenId.splashScreen.rawValue
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !UserManager.shared.accessToken.isEmpty {
+            EngagementHelper().sendCastcleAnalytic(event: .onScreenView, screen: .splashScreen)
         }
     }
 }

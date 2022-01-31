@@ -18,17 +18,27 @@
 //  Please contact Castcle, 22 Phet Kasem 47/2 Alley, Bang Khae, Bangkok,
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
-//
-//  PagerAwareProtocol.swift
-//  Component
-//
-//  Created by Castcle Co., Ltd. on 13/8/2564 BE.
-//
+/*
+  Localizable.strings
+  Component
 
-import UIKit
+  Created by Castcle Co., Ltd. on 17/1/2565 BE.
+  
+*/
 
-public protocol PagerAwareProtocol {
-    var pageDelegate: BottomPageDelegate? {get set}
-    var currentViewController: UIViewController? {get}
-    var pagerTabHeight: CGFloat? {get}
-}
+// MARK: - Content Detail
+"content_detail_read_more"                  = "...Read More";
+"content_detail_you_recasted"               = "You Recasted";
+"content_detail_recasted"                   = "Recasted";
+"content_detail_follow"                     = "Follow";
+
+// MARK: - Content Action
+"content_action_recast_title"               = "Has been recasted";
+"content_action_recasted"                   = "Recasted";
+"content_action_quote_cast"                 = "Quote cast";
+"content_action_unrecasted"                 = "Unrecasted";
+"content_action_choose_page_or_user"        = "Choose Page or User";
+"content_action_report_cast"                = "Report cast";
+"content_action_followed"                   = "You've followed";
+"content_action_undo"                       = "Undo";
+"content_action_delete"                     = "Delete";

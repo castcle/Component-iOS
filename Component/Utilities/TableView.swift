@@ -22,7 +22,7 @@
 //  TableView.swift
 //  Component
 //
-//  Created by Tanakorn Phoochaliaw on 22/12/2564 BE.
+//  Created by Castcle Co., Ltd. on 22/12/2564 BE.
 //
 
 import UIKit
@@ -52,5 +52,6 @@ public extension UITableView {
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.quoteImageXMore, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.quoteImageXMore)
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.quoteBlog, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.quoteBlog)
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.quoteBlogNoImage, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.quoteBlogNoImage)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.suggestionUser, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.suggestionUser)
     }
 }

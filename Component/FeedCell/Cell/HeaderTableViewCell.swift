@@ -57,6 +57,7 @@ public class HeaderTableViewCell: UITableViewCell {
     let tokenHelper: TokenHelper = TokenHelper()
     private var stage: Stage = .none
     private var userRequest: UserRequest = UserRequest()
+    private var reportRequest: ReportRequest = ReportRequest()
     private let realm = try! Realm()
     
     enum Stage {
@@ -70,6 +71,7 @@ public class HeaderTableViewCell: UITableViewCell {
     public var content: Content? {
         didSet {
             if let content = self.content {
+                self.followButton.setTitle(Localization.contentDetail.follow.text, for: .normal)
                 if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
                     if authorRef.type == AuthorType.people.rawValue {
                         if authorRef.castcleId == UserManager.shared.rawCastcleId {
@@ -146,7 +148,7 @@ public class HeaderTableViewCell: UITableViewCell {
             if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
                 self.followButton.isHidden = true
                 self.followUser()
-                HeaderSnackBar.make(in: Utility.currentViewController().view, message: "You've followed @\(authorRef.castcleId)", duration: .lengthLong).setAction(with: "Undo", action: {
+                HeaderSnackBar.make(in: Utility.currentViewController().view, message: "\(Localization.contentAction.followed.text) @\(authorRef.castcleId)", duration: .lengthLong).setAction(with: Localization.contentAction.undo.text, action: {
                     self.followButton.isHidden = false
                     self.unfollowUser()
                 }).show()
@@ -171,7 +173,7 @@ public class HeaderTableViewCell: UITableViewCell {
         if let content = self.content {
             if ContentHelper.shared.isMyAccount(id: content.authorId) {
                 let actionSheet = CCActionSheet()
-                let deleteButton = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.delete), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                let deleteButton = CCAction(title: Localization.contentAction.delete.text, image: UIImage.init(icon: .castcle(.delete), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
                     actionSheet.dismissActionSheet()
                     self.deleteContent()
                 }
@@ -181,9 +183,13 @@ public class HeaderTableViewCell: UITableViewCell {
                 Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
             } else {
                 let actionSheet = CCActionSheet()
-                let reportButton = CCAction(title: "Report cast", image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                let reportButton = CCAction(title: Localization.contentAction.reportCast.text, image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
                     actionSheet.dismissActionSheet()
-                    self.reportContent()
+                    if UserManager.shared.isLogin {
+                        self.reportContent()
+                    } else {
+                        self.delegate?.didAuthen(self)
+                    }
                 }
                 
                 actionSheet.addActions([reportButton])
@@ -211,7 +217,8 @@ public class HeaderTableViewCell: UITableViewCell {
     private func reportContent() {
         self.stage = .reportContent
         guard let content = self.content else { return }
-        self.reportRepository.reportContent(contentId: content.id) { (success, response, isRefreshToken) in
+        self.reportRequest.targetContentId = content.id
+        self.reportRepository.reportContent(userId: UserManager.shared.rawCastcleId, reportRequest: self.reportRequest) { (success, response, isRefreshToken) in
             if success {
                 self.delegate?.didReportSuccess(self)
             } else {
@@ -227,9 +234,10 @@ public class HeaderTableViewCell: UITableViewCell {
         guard let content = self.content else { return }
         if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
             let userId: String = UserManager.shared.rawCastcleId
-            if content.participate.recasted {
-                // Original Post
-//                self.userRequest.targetCastcleId = content.originalPost.author.castcleId
+            if content.referencedCasts.type == .recasted {
+                if let tempContent = ContentHelper.shared.getContentRef(id: content.referencedCasts.id) {
+                    self.userRequest.targetCastcleId = tempContent.authorId
+                }
             } else {
                 self.userRequest.targetCastcleId = authorRef.castcleId
             }
@@ -258,8 +266,9 @@ public class HeaderTableViewCell: UITableViewCell {
         if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
             let userId: String = UserManager.shared.rawCastcleId
             if content.participate.recasted {
-                // Original Post
-//                self.userRequest.targetCastcleId = content.originalPost.author.castcleId
+                if let tempContent = ContentHelper.shared.getContentRef(id: content.referencedCasts.id) {
+                    self.userRequest.targetCastcleId = tempContent.authorId
+                }
             } else {
                 self.userRequest.targetCastcleId = authorRef.castcleId
             }

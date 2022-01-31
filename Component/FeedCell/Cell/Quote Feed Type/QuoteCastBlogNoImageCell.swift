@@ -40,14 +40,7 @@ public class QuoteCastBlogNoImageCell: UITableViewCell {
     @IBOutlet var followButton: UIButton!
     @IBOutlet var lineView: UIView!
     @IBOutlet var headerLabel: UILabel!
-    @IBOutlet var detailLabel: NantesLabel! {
-        didSet {
-            let attributes = [NSAttributedString.Key.foregroundColor: UIColor.Asset.lightBlue,
-                              NSAttributedString.Key.font: UIFont.asset(.contentLight, fontSize: .overline)]
-            self.detailLabel.attributedTruncationToken = NSAttributedString(string: " Read More...", attributes: attributes)
-            self.detailLabel.numberOfLines = 2
-        }
-    }
+    @IBOutlet var detailLabel: NantesLabel!
     @IBOutlet var blogImageView: UIImageView!
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
     
@@ -55,6 +48,12 @@ public class QuoteCastBlogNoImageCell: UITableViewCell {
     public var content: Content? {
         didSet {
             if let content = self.content {
+                
+                let attributes = [NSAttributedString.Key.foregroundColor: UIColor.Asset.lightBlue,
+                                  NSAttributedString.Key.font: UIFont.asset(.contentLight, fontSize: .overline)]
+                self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.contentDetail.readMore.text)", attributes: attributes)
+                self.detailLabel.numberOfLines = 2
+                
                 guard let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) else { return }
                 self.viewModel = QuoteCastViewModel(content: content)
                 self.detailLabel.text = content.message
