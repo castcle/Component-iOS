@@ -89,7 +89,8 @@ public class HeaderTableViewCell: UITableViewCell {
                         }
                     } else {
                         if let page = self.realm.objects(Page.self).filter("id = '\(content.authorId)'").first {
-                            self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: page.castcleId, type: .avatar)
+                            let url = URL(string: page.avatar)
+                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                             self.followButton.isHidden = true
                         } else {
                             let url = URL(string: authorRef.avatar)
