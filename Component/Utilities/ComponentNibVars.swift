@@ -78,6 +78,7 @@ public struct ComponentNibVars {
         public static let quoteBlog = "QuoteCastBlogCell"
         public static let quoteBlogNoImage = "QuoteCastBlogNoImageCell"
         public static let suggestionUser = "SuggestionUserTableViewCell"
+        public static let adsPage = "AdsPageTableViewCell"
     }
     
     // MARK: - CollectionViewCell

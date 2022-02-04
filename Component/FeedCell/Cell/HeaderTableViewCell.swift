@@ -68,59 +68,7 @@ public class HeaderTableViewCell: UITableViewCell {
         case none
     }
     
-    public var content: Content? {
-        didSet {
-            if let content = self.content {
-                self.followButton.setTitle(Localization.contentDetail.follow.text, for: .normal)
-                if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
-                    if authorRef.type == AuthorType.people.rawValue {
-                        if authorRef.castcleId == UserManager.shared.rawCastcleId {
-                            let url = URL(string: UserManager.shared.avatar)
-                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                            self.followButton.isHidden = true
-                        } else {
-                            let url = URL(string: authorRef.avatar)
-                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                            if authorRef.followed {
-                                self.followButton.isHidden = true
-                            } else {
-                                self.followButton.isHidden = false
-                            }
-                        }
-                    } else {
-                        if let page = self.realm.objects(Page.self).filter("id = '\(content.authorId)'").first {
-                            let url = URL(string: page.avatar)
-                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                            self.followButton.isHidden = true
-                        } else {
-                            let url = URL(string: authorRef.avatar)
-                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                            if authorRef.followed {
-                                self.followButton.isHidden = true
-                            } else {
-                                self.followButton.isHidden = false
-                            }
-                        }
-                    }
-
-                    self.displayNameLabel.text = authorRef.displayName
-                    self.dateLabel.text = content.postDate.timeAgoDisplay()
-                    
-                    if authorRef.official {
-                        self.verifyConstraintWidth.constant = 15.0
-                        self.verifyIcon.isHidden = false
-                    } else {
-                        self.verifyConstraintWidth.constant = 0.0
-                        self.verifyIcon.isHidden = true
-                    }
-                } else {
-                    return
-                }
-            } else {
-                return
-            }
-        }
-    }
+    private var content: Content?
     
     public override func awakeFromNib() {
         super.awakeFromNib()
@@ -141,6 +89,70 @@ public class HeaderTableViewCell: UITableViewCell {
 
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    public func configCell(feedType: FeedType, content: Content) {
+        self.content = content
+        if let content = self.content {
+            self.followButton.setTitle(Localization.contentDetail.follow.text, for: .normal)
+            if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
+                if authorRef.type == AuthorType.people.rawValue {
+                    if authorRef.castcleId == UserManager.shared.rawCastcleId {
+                        let url = URL(string: UserManager.shared.avatar)
+                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                        self.followButton.isHidden = true
+                    } else {
+                        let url = URL(string: authorRef.avatar)
+                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                        if authorRef.followed {
+                            self.followButton.isHidden = true
+                        } else {
+                            self.followButton.isHidden = false
+                        }
+                    }
+                } else {
+                    if let page = self.realm.objects(Page.self).filter("id = '\(content.authorId)'").first {
+                        let url = URL(string: page.avatar)
+                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                        self.followButton.isHidden = true
+                    } else {
+                        let url = URL(string: authorRef.avatar)
+                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                        if authorRef.followed {
+                            self.followButton.isHidden = true
+                        } else {
+                            self.followButton.isHidden = false
+                        }
+                    }
+                }
+
+                self.displayNameLabel.text = authorRef.displayName
+                if feedType == .ads {
+                    self.dateLabel.text = "Advertised"
+                } else {
+                    self.dateLabel.text = content.postDate.timeAgoDisplay()
+                }
+                self.dateLabel.text = content.postDate.timeAgoDisplay()
+                
+                if authorRef.official {
+                    self.verifyConstraintWidth.constant = 15.0
+                    self.verifyIcon.isHidden = false
+                } else {
+                    self.verifyConstraintWidth.constant = 0.0
+                    self.verifyIcon.isHidden = true
+                }
+            } else {
+                self.avatarImage.image = UIImage.Asset.userPlaceholder
+                if feedType == .ads {
+                    self.dateLabel.text = "Advertised"
+                }
+            }
+        } else {
+            self.avatarImage.image = UIImage.Asset.userPlaceholder
+            if feedType == .ads {
+                self.dateLabel.text = "Advertised"
+            }
+        }
     }
     
     @IBAction func followAction(_ sender: Any) {

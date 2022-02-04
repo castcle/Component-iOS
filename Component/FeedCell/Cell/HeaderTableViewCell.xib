@@ -35,7 +35,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Lj-Gc-WO4">
-                        <rect key="frame" x="194.5" y="7.5" width="50" height="25"/>
+                        <rect key="frame" x="149.5" y="7.5" width="50" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="Q2l-zl-H5U"/>
                             <constraint firstAttribute="height" constant="25" id="szp-Ps-sRd"/>
@@ -46,14 +46,14 @@
                             <action selector="followAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jWV-z5-5nr"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lCN-yc-Wbu">
-                        <rect key="frame" x="70" y="10" width="99.5" height="19.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Castcle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lCN-yc-Wbu">
+                        <rect key="frame" x="70" y="10" width="54.5" height="19.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aab-af-xyT">
-                        <rect key="frame" x="70" y="10.5" width="99.5" height="19"/>
+                        <rect key="frame" x="70" y="10.5" width="54.5" height="19"/>
                         <connections>
                             <action selector="viewProfileAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="nDM-PY-dDc"/>
                         </connections>
@@ -65,7 +65,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rtq-Wf-ZT5">
-                        <rect key="frame" x="174.5" y="12.5" width="15" height="15"/>
+                        <rect key="frame" x="129.5" y="12.5" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="rtq-Wf-ZT5" secondAttribute="height" multiplier="1:1" id="gen-2o-SCW"/>
                             <constraint firstAttribute="width" constant="15" id="xfC-lK-SAI"/>

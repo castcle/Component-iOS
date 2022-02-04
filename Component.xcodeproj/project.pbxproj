@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B7167F9827AD1AE800067DBD /* AdsPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7167F9627AD1AE800067DBD /* AdsPageTableViewCell.swift */; };
+		B7167F9927AD1AE800067DBD /* AdsPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7167F9727AD1AE800067DBD /* AdsPageTableViewCell.xib */; };
 		B717447C26E2595E0014D6B5 /* Comment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B717447B26E2595E0014D6B5 /* Comment.storyboard */; };
 		B717447F26E259AB0014D6B5 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B717447D26E259AB0014D6B5 /* CommentViewModel.swift */; };
 		B717448026E259AB0014D6B5 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B717447E26E259AB0014D6B5 /* CommentViewController.swift */; };
@@ -120,6 +122,8 @@
 		7D2DA64FE09C59F76CA7D23E /* Pods-Component.release (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.release (staging).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.release (staging).xcconfig"; sourceTree = "<group>"; };
 		9A723B2EF055ED2C75BAC143 /* Pods_Component.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Component.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B70446F0676E9D9C1803A9CF /* Pods-Component.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.debug (development).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.debug (development).xcconfig"; sourceTree = "<group>"; };
+		B7167F9627AD1AE800067DBD /* AdsPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsPageTableViewCell.swift; sourceTree = "<group>"; };
+		B7167F9727AD1AE800067DBD /* AdsPageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdsPageTableViewCell.xib; sourceTree = "<group>"; };
 		B717447B26E2595E0014D6B5 /* Comment.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Comment.storyboard; sourceTree = "<group>"; };
 		B717447D26E259AB0014D6B5 /* CommentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		B717447E26E259AB0014D6B5 /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
@@ -273,6 +277,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B7167F9527AD1AA600067DBD /* Ads */ = {
+			isa = PBXGroup;
+			children = (
+				B7167F9627AD1AE800067DBD /* AdsPageTableViewCell.swift */,
+				B7167F9727AD1AE800067DBD /* AdsPageTableViewCell.xib */,
+			);
+			path = Ads;
+			sourceTree = "<group>";
+		};
 		B717447826E258DE0014D6B5 /* Comment */ = {
 			isa = PBXGroup;
 			children = (
@@ -408,6 +421,7 @@
 		B78795E226C6521500FECC21 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				B7167F9527AD1AA600067DBD /* Ads */,
 				B7211E72279A83F90018B3E5 /* Suggestion */,
 				B786633B2747AC4100B13EEF /* Quote Feed Type */,
 				B787960026C65A3700FECC21 /* Feed Type */,
@@ -655,6 +669,7 @@
 				B786635D2747AC4200B13EEF /* QuoteCastImageX3Cell.xib in Resources */,
 				B7AC1E452717C67A002FC176 /* TextLinkPreviewTableViewCell.xib in Resources */,
 				B71744AF26E9EF280014D6B5 /* ImageX1TableViewCell.xib in Resources */,
+				B7167F9927AD1AE800067DBD /* AdsPageTableViewCell.xib in Resources */,
 				B71744C226E9F6820014D6B5 /* BlogTableViewCell.xib in Resources */,
 				B71744AB26E9EAB10014D6B5 /* TextLinkTableViewCell.xib in Resources */,
 				B787963626C66E7300FECC21 /* Recast.storyboard in Resources */,
@@ -737,6 +752,7 @@
 				B71744C526E9F6980014D6B5 /* BlogNoImageTableViewCell.swift in Sources */,
 				B71744A626E9E6DC0014D6B5 /* TextTableViewCell.swift in Sources */,
 				B7AC880827199BA500500F81 /* HandleView.swift in Sources */,
+				B7167F9827AD1AE800067DBD /* AdsPageTableViewCell.swift in Sources */,
 				B71744C126E9F6820014D6B5 /* BlogTableViewCell.swift in Sources */,
 				B7AC880027199AD500500F81 /* CCActionSheet+Animation.swift in Sources */,
 				B78663532747AC4200B13EEF /* QuoteCastImageXMoreCell.swift in Sources */,

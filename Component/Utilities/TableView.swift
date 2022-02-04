@@ -53,5 +53,6 @@ public extension UITableView {
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.quoteBlog, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.quoteBlog)
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.quoteBlogNoImage, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.quoteBlogNoImage)
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.suggestionUser, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.suggestionUser)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.adsPage, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.adsPage)
     }
 }
