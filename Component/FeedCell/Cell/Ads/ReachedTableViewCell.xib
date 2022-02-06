@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="67" id="KGk-i7-Jjw" customClass="ReachedTableViewCell" customModule="Component" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="67"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="67"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oaj-6q-Sfk">
+                        <rect key="frame" x="200" y="16" width="100" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="Esf-Qn-URN"/>
+                            <constraint firstAttribute="width" constant="100" id="ngx-WC-U48"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="Boost Cast"/>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s3m-Xl-Jls" customClass="GTProgressBar" customModule="GTProgressBar">
+                        <rect key="frame" x="20" y="15" width="165" height="10"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="gfy-bV-jfN"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reached 2K - 5.8K" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bOd-5A-nAC">
+                        <rect key="frame" x="20" y="35" width="165" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Oaj-6q-Sfk" secondAttribute="trailing" constant="20" id="3Fe-5V-WfQ"/>
+                    <constraint firstItem="bOd-5A-nAC" firstAttribute="leading" secondItem="s3m-Xl-Jls" secondAttribute="leading" id="8yl-UD-1bA"/>
+                    <constraint firstItem="s3m-Xl-Jls" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="Fg8-Wc-h9i"/>
+                    <constraint firstAttribute="bottom" secondItem="bOd-5A-nAC" secondAttribute="bottom" constant="15" id="Ia5-gw-0K7"/>
+                    <constraint firstItem="Oaj-6q-Sfk" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="NeB-Dx-3tY"/>
+                    <constraint firstItem="bOd-5A-nAC" firstAttribute="top" secondItem="s3m-Xl-Jls" secondAttribute="bottom" constant="10" id="Np8-10-M9v"/>
+                    <constraint firstItem="bOd-5A-nAC" firstAttribute="trailing" secondItem="s3m-Xl-Jls" secondAttribute="trailing" id="UtT-0X-lhS"/>
+                    <constraint firstItem="s3m-Xl-Jls" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Ybp-7U-Rcu"/>
+                    <constraint firstItem="Oaj-6q-Sfk" firstAttribute="leading" secondItem="s3m-Xl-Jls" secondAttribute="trailing" constant="15" id="a58-pe-lV5"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="barView" destination="s3m-Xl-Jls" id="fuk-Q7-QNR"/>
+                <outlet property="bootButton" destination="Oaj-6q-Sfk" id="z7d-47-LhP"/>
+                <outlet property="reachedLabel" destination="bOd-5A-nAC" id="p3S-bu-hvv"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="113.16964285714285"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

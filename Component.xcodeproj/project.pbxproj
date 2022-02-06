@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		B7167F9827AD1AE800067DBD /* AdsPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7167F9627AD1AE800067DBD /* AdsPageTableViewCell.swift */; };
 		B7167F9927AD1AE800067DBD /* AdsPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7167F9727AD1AE800067DBD /* AdsPageTableViewCell.xib */; };
+		B7167F9C27AFC94A00067DBD /* ReachedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7167F9A27AFC94A00067DBD /* ReachedTableViewCell.swift */; };
+		B7167F9D27AFC94A00067DBD /* ReachedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7167F9B27AFC94A00067DBD /* ReachedTableViewCell.xib */; };
 		B717447C26E2595E0014D6B5 /* Comment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B717447B26E2595E0014D6B5 /* Comment.storyboard */; };
 		B717447F26E259AB0014D6B5 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B717447D26E259AB0014D6B5 /* CommentViewModel.swift */; };
 		B717448026E259AB0014D6B5 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B717447E26E259AB0014D6B5 /* CommentViewController.swift */; };
@@ -124,6 +126,8 @@
 		B70446F0676E9D9C1803A9CF /* Pods-Component.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.debug (development).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.debug (development).xcconfig"; sourceTree = "<group>"; };
 		B7167F9627AD1AE800067DBD /* AdsPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsPageTableViewCell.swift; sourceTree = "<group>"; };
 		B7167F9727AD1AE800067DBD /* AdsPageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdsPageTableViewCell.xib; sourceTree = "<group>"; };
+		B7167F9A27AFC94A00067DBD /* ReachedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachedTableViewCell.swift; sourceTree = "<group>"; };
+		B7167F9B27AFC94A00067DBD /* ReachedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReachedTableViewCell.xib; sourceTree = "<group>"; };
 		B717447B26E2595E0014D6B5 /* Comment.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Comment.storyboard; sourceTree = "<group>"; };
 		B717447D26E259AB0014D6B5 /* CommentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		B717447E26E259AB0014D6B5 /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
@@ -282,6 +286,8 @@
 			children = (
 				B7167F9627AD1AE800067DBD /* AdsPageTableViewCell.swift */,
 				B7167F9727AD1AE800067DBD /* AdsPageTableViewCell.xib */,
+				B7167F9A27AFC94A00067DBD /* ReachedTableViewCell.swift */,
+				B7167F9B27AFC94A00067DBD /* ReachedTableViewCell.xib */,
 			);
 			path = Ads;
 			sourceTree = "<group>";
@@ -666,6 +672,7 @@
 				B78663552747AC4200B13EEF /* QuoteCastImageX1Cell.xib in Resources */,
 				B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */,
 				B71744C626E9F6980014D6B5 /* BlogNoImageTableViewCell.xib in Resources */,
+				B7167F9D27AFC94A00067DBD /* ReachedTableViewCell.xib in Resources */,
 				B786635D2747AC4200B13EEF /* QuoteCastImageX3Cell.xib in Resources */,
 				B7AC1E452717C67A002FC176 /* TextLinkPreviewTableViewCell.xib in Resources */,
 				B71744AF26E9EF280014D6B5 /* ImageX1TableViewCell.xib in Resources */,
@@ -739,6 +746,7 @@
 				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,
 				B717447F26E259AB0014D6B5 /* CommentViewModel.swift in Sources */,
+				B7167F9C27AFC94A00067DBD /* ReachedTableViewCell.swift in Sources */,
 				B7AC1E442717C67A002FC176 /* TextLinkPreviewTableViewCell.swift in Sources */,
 				B71744AA26E9EAB10014D6B5 /* TextLinkTableViewCell.swift in Sources */,
 				B7552979269CBA14005D5EB5 /* RefreshProtocol.swift in Sources */,
