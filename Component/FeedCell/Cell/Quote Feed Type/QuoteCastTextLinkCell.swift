@@ -103,11 +103,16 @@ public class QuoteCastTextLinkCell: UITableViewCell {
         self.linkContainer.isHidden = true
         
         if let link = content.link.first {
-            self.setDataWithContent(icon: link.type.image, message: content.message)
-        } else if let link = content.message.extractURLs().first {
-            if let icon = UIImage.iconFromUrl(url: link.absoluteString) {
-                self.setDataWithContent(icon: icon, message: content.message)
+            var title: String = ""
+            var desc: String = ""
+            if link.title.isEmpty && link.desc.isEmpty {
+                title = content.message
+                desc = ""
+            } else {
+                title = link.title
+                desc = link.desc
             }
+            self.setDataWithContent(icon: link.type.image, title: title, desc: desc)
         }
         
         if authorRef.type == AuthorType.people.rawValue {
@@ -151,12 +156,12 @@ public class QuoteCastTextLinkCell: UITableViewCell {
         }
     }
     
-    private func setDataWithContent(icon: UIImage, message: String) {
+    private func setDataWithContent(icon: UIImage, title: String, desc: String) {
         self.skeletonView.isHidden = true
         self.linkContainer.isHidden = false
         self.linkImage.image = icon
-        self.linkTitleLabel.text = message
-        self.linkDescriptionLabel.text = ""
+        self.linkTitleLabel.text = title
+        self.linkDescriptionLabel.text = desc
     }
     
     @IBAction func followAction(_ sender: Any) {

@@ -109,8 +109,6 @@ public class LongTextLinkPreviewTableViewCell: UITableViewCell {
         guard let content = self.content else { return }
         if let link = content.link.first, let linkUrl = URL(string: link.url) {
             Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(linkUrl)), animated: true)
-        } else if let link = content.message.extractURLs().first {
-            Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(link)), animated: true)
         }
     }
 }

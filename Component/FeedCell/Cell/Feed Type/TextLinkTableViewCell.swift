@@ -86,11 +86,16 @@ public class TextLinkTableViewCell: UITableViewCell {
         self.linkContainer.isHidden = true
         
         if let link = content.link.first {
-            self.setDataWithContent(icon: link.type.image, message: content.message)
-        } else if let link = content.message.extractURLs().first {
-            if let icon = UIImage.iconFromUrl(url: link.absoluteString) {
-                self.setDataWithContent(icon: icon, message: content.message)
+            var title: String = ""
+            var desc: String = ""
+            if link.title.isEmpty && link.desc.isEmpty {
+                title = content.message
+                desc = ""
+            } else {
+                title = link.title
+                desc = link.desc
             }
+            self.setDataWithContent(icon: link.type.image, title: title, desc: desc)
         }
     }
     
@@ -119,20 +124,18 @@ public class TextLinkTableViewCell: UITableViewCell {
     }
 
     
-    private func setDataWithContent(icon: UIImage, message: String) {
+    private func setDataWithContent(icon: UIImage, title: String, desc: String) {
         self.skeletonView.isHidden = true
         self.linkContainer.isHidden = false
         self.linkImage.image = icon
-        self.linkTitleLabel.text = message
-        self.linkDescriptionLabel.text = ""
+        self.linkTitleLabel.text = title
+        self.linkDescriptionLabel.text = desc
     }
     
     @IBAction func openWebViewAction(_ sender: Any) {
         guard let content = self.content else { return }
         if let link = content.link.first, let linkUrl = URL(string: link.url) {
             Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(linkUrl)), animated: true)
-        } else if let link = content.message.extractURLs().first {
-            Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(link)), animated: true)
         }
     }
 }
