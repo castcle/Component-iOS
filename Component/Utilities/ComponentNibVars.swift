@@ -67,6 +67,7 @@ public struct ComponentNibVars {
         public static let comment = "CommentTableViewCell"
         public static let reply = "ReplyTableViewCell"
         public static let skeleton = "SkeletonFeedTableViewCell"
+        public static let skeletonUser = "SkeletonUserTableViewCell"
         public static let activityHeader = "ActivityHeaderTableViewCell"
         public static let quoteText = "QuoteCastTextCell"
         public static let quoteLink = "QuoteCastTextLinkCell"
