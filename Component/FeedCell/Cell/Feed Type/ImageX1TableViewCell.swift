@@ -56,17 +56,8 @@ public class ImageX1TableViewCell: UITableViewCell {
                 label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
             }
             
-            if content.type == .long {
-                if content.isExpand {
-                    self.detailLabel.text = content.message
-                    self.enableActiveLabel()
-                } else {
-                    self.detailLabel.text = "\(content.message.substringWithRange(range: 100)) \(Localization.contentDetail.readMore.text)"
-                }
-            } else {
-                self.detailLabel.text = content.message
-                self.enableActiveLabel()
-            }
+            self.detailLabel.text = content.message
+            self.enableActiveLabel()
             
             if let imageUrl = content.photo.first {
                 let url = URL(string: imageUrl.thumbnail)

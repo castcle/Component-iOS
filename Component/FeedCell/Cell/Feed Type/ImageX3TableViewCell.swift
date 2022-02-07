@@ -59,17 +59,8 @@ public class ImageX3TableViewCell: UITableViewCell {
                 label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
             }
             
-            if content.type == .long {
-                if content.isExpand {
-                    self.detailLabel.text = content.message
-                    self.enableActiveLabel()
-                } else {
-                    self.detailLabel.text = "\(content.message.substringWithRange(range: 100)) \(Localization.contentDetail.readMore.text)"
-                }
-            } else {
-                self.detailLabel.text = content.message
-                self.enableActiveLabel()
-            }
+            self.detailLabel.text = content.message
+            self.enableActiveLabel()
             
             if content.photo.count >= 3 {
                 let firstUrl = URL(string: content.photo[0].thumbnail)

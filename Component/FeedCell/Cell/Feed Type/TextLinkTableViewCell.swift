@@ -79,17 +79,8 @@ public class TextLinkTableViewCell: UITableViewCell {
         }
         
         self.content = content
-        if content.type == .long {
-            if content.isExpand {
-                self.detailLabel.text = content.message
-                self.enableActiveLabel()
-            } else {
-                self.detailLabel.text = "\(content.message.substringWithRange(range: 100)) \(Localization.contentDetail.readMore.text)"
-            }
-        } else {
-            self.detailLabel.text = content.message
-            self.enableActiveLabel()
-        }
+        self.detailLabel.text = content.message
+        self.enableActiveLabel()
         
         self.skeletonView.isHidden = false
         self.linkContainer.isHidden = true
