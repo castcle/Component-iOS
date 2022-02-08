@@ -19,7 +19,7 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  ImageX3TableViewCell.swift
+//  LongImageX3TableViewCell.swift
 //  Component
 //
 //  Created by Castcle Co., Ltd. on 9/9/2564 BE.
@@ -28,39 +28,30 @@
 import UIKit
 import Core
 import Networking
-import ActiveLabel
+import Nantes
 import Lightbox
 import Kingfisher
 
-public class ImageX3TableViewCell: UITableViewCell {
+public class LongImageX3TableViewCell: UITableViewCell {
 
-    @IBOutlet var detailLabel: ActiveLabel!
+    @IBOutlet var detailLabel: NantesLabel!
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var firstImageView: UIImageView!
     @IBOutlet var secondImageView: UIImageView!
     @IBOutlet var thirdImageView: UIImageView!
     
-    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
+//    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
             
-            self.detailLabel.customize { label in
-                let readMoreType = ActiveType.custom(pattern: "\(Localization.contentDetail.readMore.text)")
-                label.font = UIFont.asset(.contentLight, fontSize: .body)
-                label.numberOfLines = 0
-                label.enabledTypes = [.mention, .url, self.customHashtag, readMoreType]
-                label.textColor = UIColor.Asset.white
-                label.mentionColor = UIColor.Asset.lightBlue
-                label.URLColor = UIColor.Asset.lightBlue
-                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
-                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
-                label.customColor[readMoreType] = UIColor.Asset.lightBlue
-                label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
-            }
-            
+            let attributes = [NSAttributedString.Key.foregroundColor: UIColor.Asset.lightBlue,
+                              NSAttributedString.Key.font: UIFont.asset(.contentLight, fontSize: .body)]
+            self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.contentDetail.readMore.text)", attributes: attributes)
+            self.detailLabel.numberOfLines = 2
+            self.detailLabel.font = UIFont.asset(.contentLight, fontSize: .body)
+            self.detailLabel.textColor = UIColor.Asset.white
             self.detailLabel.text = content.message
-            self.enableActiveLabel()
             
             if content.photo.count >= 3 {
                 let firstUrl = URL(string: content.photo[0].thumbnail)
@@ -71,23 +62,6 @@ public class ImageX3TableViewCell: UITableViewCell {
                 
                 let thirdUrl = URL(string: content.photo[2].thumbnail)
                 self.thirdImageView.kf.setImage(with: thirdUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-            }
-        }
-    }
-    
-    private func enableActiveLabel() {
-        self.detailLabel.handleHashtagTap { hashtag in
-        }
-        self.detailLabel.handleMentionTap { mention in
-        }
-        self.detailLabel.handleURLTap { url in
-            var urlString = url.absoluteString
-            urlString = urlString.replacingOccurrences(of: "https://", with: "")
-            urlString = urlString.replacingOccurrences(of: "http://", with: "")
-            if let newUrl = URL(string: "https://\(urlString)") {
-                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
-            } else {
-                return
             }
         }
     }
@@ -138,13 +112,13 @@ public class ImageX3TableViewCell: UITableViewCell {
     }
 }
 
-extension ImageX3TableViewCell: LightboxControllerPageDelegate {
+extension LongImageX3TableViewCell: LightboxControllerPageDelegate {
     public func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
         // MARK: - Lightbox Move Page
     }
 }
 
-extension ImageX3TableViewCell: LightboxControllerDismissalDelegate {
+extension LongImageX3TableViewCell: LightboxControllerDismissalDelegate {
     public func lightboxControllerWillDismiss(_ controller: LightboxController) {
         // MARK: - Lightbox Dismiss
     }

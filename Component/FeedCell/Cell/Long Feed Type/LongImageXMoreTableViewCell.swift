@@ -19,7 +19,7 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  ImageX3TableViewCell.swift
+//  LongImageXMoreTableViewCell.swift
 //  Component
 //
 //  Created by Castcle Co., Ltd. on 9/9/2564 BE.
@@ -28,41 +28,49 @@
 import UIKit
 import Core
 import Networking
-import ActiveLabel
+import Nantes
 import Lightbox
 import Kingfisher
+import SwiftColor
 
-public class ImageX3TableViewCell: UITableViewCell {
+public class LongImageXMoreTableViewCell: UITableViewCell {
 
-    @IBOutlet var detailLabel: ActiveLabel!
+    @IBOutlet var detailLabel: NantesLabel!
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var firstImageView: UIImageView!
     @IBOutlet var secondImageView: UIImageView!
     @IBOutlet var thirdImageView: UIImageView!
+    @IBOutlet var fourthImageView: UIImageView!
+    @IBOutlet var moreImageView: UIImageView!
+    @IBOutlet var moreLabel: UILabel!
     
-    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
+//    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
             
-            self.detailLabel.customize { label in
-                let readMoreType = ActiveType.custom(pattern: "\(Localization.contentDetail.readMore.text)")
-                label.font = UIFont.asset(.contentLight, fontSize: .body)
-                label.numberOfLines = 0
-                label.enabledTypes = [.mention, .url, self.customHashtag, readMoreType]
-                label.textColor = UIColor.Asset.white
-                label.mentionColor = UIColor.Asset.lightBlue
-                label.URLColor = UIColor.Asset.lightBlue
-                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
-                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
-                label.customColor[readMoreType] = UIColor.Asset.lightBlue
-                label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
+            let attributes = [NSAttributedString.Key.foregroundColor: UIColor.Asset.lightBlue,
+                              NSAttributedString.Key.font: UIFont.asset(.contentLight, fontSize: .body)]
+            self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.contentDetail.readMore.text)", attributes: attributes)
+            self.detailLabel.numberOfLines = 2
+            self.detailLabel.font = UIFont.asset(.contentLight, fontSize: .body)
+            self.detailLabel.textColor = UIColor.Asset.white
+            self.detailLabel.text = content.message
+            
+            self.moreImageView.image = UIColor.Asset.black.toImage()
+            self.moreLabel.font = UIFont.asset(.bold, fontSize: .custom(size: 45))
+            
+            if content.photo.count > 4 {
+                self.moreImageView.isHidden = false
+                self.moreImageView.alpha = 0.5
+                self.moreLabel.isHidden = false
+                self.moreLabel.text = "+\(content.photo.count - 3)"
+            } else {
+                self.moreImageView.isHidden = true
+                self.moreLabel.isHidden = true
             }
             
-            self.detailLabel.text = content.message
-            self.enableActiveLabel()
-            
-            if content.photo.count >= 3 {
+            if content.photo.count >= 4 {
                 let firstUrl = URL(string: content.photo[0].thumbnail)
                 self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 
@@ -71,23 +79,9 @@ public class ImageX3TableViewCell: UITableViewCell {
                 
                 let thirdUrl = URL(string: content.photo[2].thumbnail)
                 self.thirdImageView.kf.setImage(with: thirdUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-            }
-        }
-    }
-    
-    private func enableActiveLabel() {
-        self.detailLabel.handleHashtagTap { hashtag in
-        }
-        self.detailLabel.handleMentionTap { mention in
-        }
-        self.detailLabel.handleURLTap { url in
-            var urlString = url.absoluteString
-            urlString = urlString.replacingOccurrences(of: "https://", with: "")
-            urlString = urlString.replacingOccurrences(of: "http://", with: "")
-            if let newUrl = URL(string: "https://\(urlString)") {
-                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
-            } else {
-                return
+                
+                let fourthUrl = URL(string: content.photo[3].thumbnail)
+                self.fourthImageView.kf.setImage(with: fourthUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
             }
         }
     }
@@ -111,6 +105,10 @@ public class ImageX3TableViewCell: UITableViewCell {
     
     @IBAction func viewThirdImageAction(_ sender: Any) {
         self.openImage(index: 2)
+    }
+    
+    @IBAction func viewFourthImageAction(_ sender: Any) {
+        self.openImage(index: 3)
     }
     
     private func openImage(index: Int) {
@@ -138,13 +136,13 @@ public class ImageX3TableViewCell: UITableViewCell {
     }
 }
 
-extension ImageX3TableViewCell: LightboxControllerPageDelegate {
+extension LongImageXMoreTableViewCell: LightboxControllerPageDelegate {
     public func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
         // MARK: - Lightbox Move Page
     }
 }
 
-extension ImageX3TableViewCell: LightboxControllerDismissalDelegate {
+extension LongImageXMoreTableViewCell: LightboxControllerDismissalDelegate {
     public func lightboxControllerWillDismiss(_ controller: LightboxController) {
         // MARK: - Lightbox Dismiss
     }

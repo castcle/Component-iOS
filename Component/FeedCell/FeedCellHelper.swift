@@ -170,4 +170,45 @@ public class FeedCellHelper {
             return UITableViewCell()
         }
     }
+    
+    public func renderLongCastCell(content: Content, tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        if content.feedDisplayType == .postText {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.longText, for: indexPath as IndexPath) as? LongTextTableViewCell
+            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.content = content
+            return cell ?? LongTextTableViewCell()
+        } else if content.feedDisplayType == .postLink {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.longTextLink, for: indexPath as IndexPath) as? LongTextLinkTableViewCell
+            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.configCell(content: content)
+            return cell ?? LongTextLinkTableViewCell()
+        } else if content.feedDisplayType == .postLinkPreview {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.longTextLinkPreview, for: indexPath as IndexPath) as? LongTextLinkPreviewTableViewCell
+            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.content = content
+            return cell ?? LongTextLinkPreviewTableViewCell()
+        } else if content.feedDisplayType == .postImageX1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.longImageX1, for: indexPath as IndexPath) as? LongImageX1TableViewCell
+            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.content = content
+            return cell ?? LongImageX1TableViewCell()
+        } else if content.feedDisplayType == .postImageX2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.longImageX2, for: indexPath as IndexPath) as? LongImageX2TableViewCell
+            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.content = content
+            return cell ?? LongImageX2TableViewCell()
+        } else if content.feedDisplayType == .postImageX3 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.longImageX3, for: indexPath as IndexPath) as? LongImageX3TableViewCell
+            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.content = content
+            return cell ?? LongImageX3TableViewCell()
+        } else if content.feedDisplayType == .postImageXMore {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.longImageXMore, for: indexPath as IndexPath) as? LongImageXMoreTableViewCell
+            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.content = content
+            return cell ?? LongImageXMoreTableViewCell()
+        } else {
+            return UITableViewCell()
+        }
+    }
 }

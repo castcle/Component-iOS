@@ -19,7 +19,7 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  TextLinkTableViewCell.swift
+//  LongTextLinkTableViewCell.swift
 //  Component
 //
 //  Created by Castcle Co., Ltd. on 9/9/2564 BE.
@@ -28,12 +28,12 @@
 import UIKit
 import Core
 import Networking
-import ActiveLabel
+import Nantes
 import SkeletonView
 
-public class TextLinkTableViewCell: UITableViewCell {
+public class LongTextLinkTableViewCell: UITableViewCell {
 
-    @IBOutlet var detailLabel: ActiveLabel!
+    @IBOutlet var detailLabel: NantesLabel!
     @IBOutlet var linkContainer: UIView!
     @IBOutlet var titleLinkView: UIView!
     @IBOutlet var linkImage: UIImageView!
@@ -41,7 +41,7 @@ public class TextLinkTableViewCell: UITableViewCell {
     @IBOutlet var linkDescriptionLabel: UILabel!
     @IBOutlet var skeletonView: UIView!
     
-    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
+//    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     private var content: Content?
     
     public override func awakeFromNib() {
@@ -64,23 +64,14 @@ public class TextLinkTableViewCell: UITableViewCell {
     func configCell(content: Content?) {
         guard let content = content else { return }
         
-        self.detailLabel.customize { label in
-            let readMoreType = ActiveType.custom(pattern: "\(Localization.contentDetail.readMore.text)")
-            label.font = UIFont.asset(.contentLight, fontSize: .body)
-            label.numberOfLines = 0
-            label.enabledTypes = [.mention, .url, self.customHashtag, readMoreType]
-            label.textColor = UIColor.Asset.white
-            label.mentionColor = UIColor.Asset.lightBlue
-            label.URLColor = UIColor.Asset.lightBlue
-            label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
-            label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
-            label.customColor[readMoreType] = UIColor.Asset.lightBlue
-            label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
-        }
-        
-        self.content = content
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.Asset.lightBlue,
+                          NSAttributedString.Key.font: UIFont.asset(.contentLight, fontSize: .body)]
+        self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.contentDetail.readMore.text)", attributes: attributes)
+        self.detailLabel.numberOfLines = 2
+        self.detailLabel.font = UIFont.asset(.contentLight, fontSize: .body)
+        self.detailLabel.textColor = UIColor.Asset.white
         self.detailLabel.text = content.message
-        self.enableActiveLabel()
+        self.content = content
         
         self.skeletonView.isHidden = false
         self.linkContainer.isHidden = true
@@ -96,23 +87,6 @@ public class TextLinkTableViewCell: UITableViewCell {
                 desc = link.desc
             }
             self.setDataWithContent(icon: link.type.image, title: title, desc: desc)
-        }
-    }
-    
-    private func enableActiveLabel() {
-        self.detailLabel.handleHashtagTap { hashtag in
-        }
-        self.detailLabel.handleMentionTap { mention in
-        }
-        self.detailLabel.handleURLTap { url in
-            var urlString = url.absoluteString
-            urlString = urlString.replacingOccurrences(of: "https://", with: "")
-            urlString = urlString.replacingOccurrences(of: "http://", with: "")
-            if let newUrl = URL(string: "https://\(urlString)") {
-                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
-            } else {
-                return
-            }
         }
     }
     

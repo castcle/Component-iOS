@@ -63,17 +63,8 @@ public class ImageXMoreTableViewCell: UITableViewCell {
                 label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
             }
             
-            if content.type == .long {
-                if content.isExpand {
-                    self.detailLabel.text = content.message
-                    self.enableActiveLabel()
-                } else {
-                    self.detailLabel.text = "\(content.message.substringWithRange(range: 100)) \(Localization.contentDetail.readMore.text)"
-                }
-            } else {
-                self.detailLabel.text = content.message
-                self.enableActiveLabel()
-            }
+            self.detailLabel.text = content.message
+            self.enableActiveLabel()
             
             self.moreImageView.image = UIColor.Asset.black.toImage()
             self.moreLabel.font = UIFont.asset(.bold, fontSize: .custom(size: 45))

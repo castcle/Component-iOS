@@ -212,7 +212,7 @@ extension CommentViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.headerFeed, for: indexPath as IndexPath) as? HeaderTableViewCell
                 cell?.backgroundColor = UIColor.Asset.darkGray
                 cell?.delegate = self
-                cell?.content = self.viewModel.content
+                cell?.configCell(feedType: .content, content: self.viewModel.content ?? Content())
                 return cell ?? HeaderTableViewCell()
             case ContentSection.footer.rawValue:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.footerFeed, for: indexPath as IndexPath) as? FooterTableViewCell
