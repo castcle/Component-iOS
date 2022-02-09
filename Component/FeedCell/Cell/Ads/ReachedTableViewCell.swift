@@ -56,4 +56,10 @@ public class ReachedTableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    
+    @IBAction func bootAction(_ sender: Any) {
+        let alert = UIAlertController(title: "Error", message: "Waiting for implementation", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        Utility.currentViewController().present(alert, animated: true, completion: nil)
+    }
 }

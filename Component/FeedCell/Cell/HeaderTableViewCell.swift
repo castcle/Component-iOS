@@ -146,12 +146,14 @@ public class HeaderTableViewCell: UITableViewCell {
                 if feedType == .ads {
                     self.dateLabel.text = "Advertised"
                 }
+                self.displayNameLabel.text = "Castcle"
             }
         } else {
             self.avatarImage.image = UIImage.Asset.userPlaceholder
             if feedType == .ads {
                 self.dateLabel.text = "Advertised"
             }
+            self.displayNameLabel.text = "Castcle"
         }
     }
     
