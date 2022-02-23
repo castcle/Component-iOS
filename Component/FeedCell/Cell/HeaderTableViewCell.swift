@@ -59,6 +59,7 @@ public class HeaderTableViewCell: UITableViewCell {
     private var userRequest: UserRequest = UserRequest()
     private var reportRequest: ReportRequest = ReportRequest()
     private let realm = try! Realm()
+    var isPreview: Bool = false
     
     enum Stage {
         case deleteContent
@@ -92,6 +93,7 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     public func configCell(feedType: FeedType, content: Content) {
+        self.isPreview = false
         self.content = content
         if let content = self.content {
             self.followButton.setTitle(Localization.contentDetail.follow.text, for: .normal)
@@ -132,7 +134,6 @@ public class HeaderTableViewCell: UITableViewCell {
                 } else {
                     self.dateLabel.text = content.postDate.timeAgoDisplay()
                 }
-                self.dateLabel.text = content.postDate.timeAgoDisplay()
                 
                 if authorRef.official {
                     self.verifyConstraintWidth.constant = 15.0
@@ -157,7 +158,27 @@ public class HeaderTableViewCell: UITableViewCell {
         }
     }
     
+    public func configAdsPreViewCell(page: Page) {
+        self.isPreview = true
+        self.followButton.setTitle(Localization.contentDetail.follow.text, for: .normal)
+        let url = URL(string: page.avatar)
+        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+        self.followButton.isHidden = false
+        self.displayNameLabel.text = page.displayName
+        self.dateLabel.text = "Advertised"
+        if page.official {
+            self.verifyConstraintWidth.constant = 15.0
+            self.verifyIcon.isHidden = false
+        } else {
+            self.verifyConstraintWidth.constant = 0.0
+            self.verifyIcon.isHidden = true
+        }
+    }
+    
     @IBAction func followAction(_ sender: Any) {
+        if self.isPreview {
+            return
+        }
         if UserManager.shared.isLogin {
             guard let content = self.content else { return }
             if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
@@ -177,6 +198,9 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     @IBAction func viewProfileAction(_ sender: Any) {
+        if self.isPreview {
+            return
+        }
         if let content = self.content {
             if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
                 self.delegate?.didTabProfile(self, author: Author(authorRef: authorRef))
@@ -185,6 +209,9 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     @IBAction func moreAction(_ sender: Any) {
+        if self.isPreview {
+            return
+        }
         if let content = self.content {
             if ContentHelper.shared.isMyAccount(id: content.authorId) {
                 let actionSheet = CCActionSheet()

@@ -10,25 +10,22 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="487" id="KGk-i7-Jjw" customClass="AdsPageTableViewCell" customModule="Component" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="487"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="477" id="KGk-i7-Jjw" customClass="AdsPageTableViewCell" customModule="Component" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="477"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="487"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="477"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9P-B5-aar" customClass="ActiveLabel" customModule="ActiveLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9P-B5-aar" customClass="ActiveLabel" customModule="ActiveLabel">
                         <rect key="frame" x="15" y="10" width="290" height="76.5"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="76.5" id="gEi-Lt-Kxc"/>
-                        </constraints>
                         <string key="text">Decentralized social media. Create a fairer online ecosystem by distributing the ad revenue to the users. Monetize your data on Castcle. </string>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zvw-Hu-Iga">
-                        <rect key="frame" x="25" y="106.5" width="270" height="360.5"/>
+                        <rect key="frame" x="25" y="96.5" width="270" height="360.5"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nlI-k8-TQW">
                                 <rect key="frame" x="0.0" y="0.0" width="270" height="152"/>
@@ -57,7 +54,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="erK-0A-X8Y">
-                                <rect key="frame" x="79.5" y="194" width="15" height="15"/>
+                                <rect key="frame" x="79.5" y="194.5" width="15" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="erK-0A-X8Y" secondAttribute="height" multiplier="1:1" id="JXi-XX-Mhv"/>
                                     <constraint firstAttribute="width" constant="15" id="p8u-Ic-Bp4"/>
@@ -98,12 +95,12 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Zvw-Hu-Iga" firstAttribute="top" secondItem="z9P-B5-aar" secondAttribute="bottom" constant="20" id="5Vb-Db-qU1"/>
+                    <constraint firstItem="Zvw-Hu-Iga" firstAttribute="top" secondItem="z9P-B5-aar" secondAttribute="bottom" constant="10" id="5Vb-Db-qU1"/>
                     <constraint firstAttribute="trailing" secondItem="z9P-B5-aar" secondAttribute="trailing" constant="15" id="UHh-WV-ASw"/>
                     <constraint firstAttribute="trailing" secondItem="Zvw-Hu-Iga" secondAttribute="trailing" constant="25" id="bcU-v6-7VU"/>
-                    <constraint firstAttribute="bottom" secondItem="Zvw-Hu-Iga" secondAttribute="bottom" constant="20" id="djy-Wr-yoJ"/>
                     <constraint firstItem="z9P-B5-aar" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="lQQ-EG-d25"/>
                     <constraint firstItem="Zvw-Hu-Iga" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="qRk-5n-RhH"/>
+                    <constraint firstAttribute="bottom" secondItem="Zvw-Hu-Iga" secondAttribute="bottom" constant="20" id="vFE-CG-MBF"/>
                     <constraint firstItem="z9P-B5-aar" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="vUR-NT-w37"/>
                 </constraints>
             </tableViewCellContentView>
