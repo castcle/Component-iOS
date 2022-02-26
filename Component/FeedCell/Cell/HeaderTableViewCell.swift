@@ -294,7 +294,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 NotificationCenter.default.post(name: .feedReloadContent, object: nil)
             }
             
-            self.userRepository.unfollow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
+            self.userRepository.unfollow(userId: userId, targetCastcleId: self.userRequest.targetCastcleId) { (success, response, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
