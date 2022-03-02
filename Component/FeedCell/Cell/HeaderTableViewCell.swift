@@ -146,12 +146,14 @@ public class HeaderTableViewCell: UITableViewCell {
                 if feedType == .ads {
                     self.dateLabel.text = "Advertised"
                 }
+                self.displayNameLabel.text = "Castcle"
             }
         } else {
             self.avatarImage.image = UIImage.Asset.userPlaceholder
             if feedType == .ads {
                 self.dateLabel.text = "Advertised"
             }
+            self.displayNameLabel.text = "Castcle"
         }
     }
     
@@ -292,7 +294,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 NotificationCenter.default.post(name: .feedReloadContent, object: nil)
             }
             
-            self.userRepository.unfollow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
+            self.userRepository.unfollow(userId: userId, targetCastcleId: self.userRequest.targetCastcleId) { (success, response, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()

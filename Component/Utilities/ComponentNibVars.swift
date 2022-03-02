@@ -88,6 +88,7 @@ public struct ComponentNibVars {
         public static let longImageX2 = "LongImageX2TableViewCell"
         public static let longImageX3 = "LongImageX3TableViewCell"
         public static let longImageXMore = "LongImageXMoreTableViewCell"
+        public static let userToFollow = "UserToFollowTableViewCell"
     }
     
     // MARK: - CollectionViewCell

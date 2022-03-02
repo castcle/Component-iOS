@@ -26,6 +26,9 @@
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="Boost Cast"/>
+                        <connections>
+                            <action selector="bootAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5Ys-VU-mbn"/>
+                        </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s3m-Xl-Jls" customClass="GTProgressBar" customModule="GTProgressBar">
                         <rect key="frame" x="20" y="15" width="165" height="10"/>

@@ -29,6 +29,10 @@ import UIKit
 import Core
 import ActiveLabel
 
+public protocol AdsPageTableViewCellDelegate {
+    func didAuthen(_ adsPageTableViewCell: AdsPageTableViewCell)
+}
+
 public class AdsPageTableViewCell: UITableViewCell {
 
     @IBOutlet var detailLabel: ActiveLabel!
@@ -39,6 +43,7 @@ public class AdsPageTableViewCell: UITableViewCell {
     @IBOutlet var overviewLabel: UILabel!
     @IBOutlet var followButton: UIButton!
     
+    public var delegate: AdsPageTableViewCellDelegate?
     private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     
     public override func awakeFromNib() {
@@ -88,6 +93,16 @@ public class AdsPageTableViewCell: UITableViewCell {
             } else {
                 return
             }
+        }
+    }
+    
+    @IBAction func followAction(_ sender: Any) {
+        if UserManager.shared.isLogin {
+            let alert = UIAlertController(title: "Error", message: "Waiting for implementation", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            Utility.currentViewController().present(alert, animated: true, completion: nil)
+        } else {
+            self.delegate?.didAuthen(self)
         }
     }
 }
