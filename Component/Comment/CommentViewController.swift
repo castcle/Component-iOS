@@ -53,17 +53,17 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     }
     
     override var inputAccessoryView: UIView? {
-        if customInputView == nil {
-            customInputView = CustomView()
-            customInputView.backgroundColor = UIColor.Asset.darkGray
-            self.commentTextField.placeholder = "What's in your mind?"
+        if self.customInputView == nil {
+            self.customInputView = CustomView()
+            self.customInputView.backgroundColor = UIColor.Asset.darkGray
+            self.commentTextField.placeholder = "What's on your mind?"
             self.commentTextField.font = UIFont.asset(.regular, fontSize: .overline)
             self.commentTextField.textColor = UIColor.Asset.white
             self.commentTextField.autocorrectionType = .no
             self.commentTextField.custom(color: UIColor.Asset.darkGraphiteBlue, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
             
-            customInputView.autoresizingMask = .flexibleHeight
-            customInputView.addSubview(self.commentTextField)
+            self.customInputView.autoresizingMask = .flexibleHeight
+            self.customInputView.addSubview(self.commentTextField)
             
             
             self.sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
@@ -73,7 +73,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
             self.sendButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
             self.sendButton.clipsToBounds = true
             self.sendButton.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
-            customInputView?.addSubview(self.sendButton)
+            self.customInputView?.addSubview(self.sendButton)
             
             self.avatarImage = UIImageView()
             self.avatarImage.contentMode = .scaleAspectFill
@@ -107,7 +107,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
             self.sendButton.trailingAnchor.constraint(equalTo: customInputView.trailingAnchor, constant: -20).isActive = true
             self.sendButton.bottomAnchor.constraint(equalTo: customInputView.layoutMarginsGuide.bottomAnchor, constant: -17).isActive = true
         }
-        return customInputView
+        return self.customInputView
     }
     
     @objc func handleSend() {
