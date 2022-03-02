@@ -92,7 +92,7 @@ public class HeaderTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    public func configCell(feedType: FeedType, content: Content) {
+    public func configCell(feedType: FeedType, content: Content, isDefaultContent: Bool) {
         self.isPreview = false
         self.content = content
         if let content = self.content {
@@ -129,7 +129,9 @@ public class HeaderTableViewCell: UITableViewCell {
                 }
 
                 self.displayNameLabel.text = authorRef.displayName
-                if feedType == .ads {
+                if isDefaultContent {
+                    self.dateLabel.text = "Introduction"
+                } else if feedType == .ads {
                     self.dateLabel.text = "Advertised"
                 } else {
                     self.dateLabel.text = content.postDate.timeAgoDisplay()
@@ -144,14 +146,18 @@ public class HeaderTableViewCell: UITableViewCell {
                 }
             } else {
                 self.avatarImage.image = UIImage.Asset.userPlaceholder
-                if feedType == .ads {
+                if isDefaultContent {
+                    self.dateLabel.text = "Introduction"
+                } else if feedType == .ads {
                     self.dateLabel.text = "Advertised"
                 }
                 self.displayNameLabel.text = "Castcle"
             }
         } else {
             self.avatarImage.image = UIImage.Asset.userPlaceholder
-            if feedType == .ads {
+            if isDefaultContent {
+                self.dateLabel.text = "Introduction"
+            } else if feedType == .ads {
                 self.dateLabel.text = "Advertised"
             }
             self.displayNameLabel.text = "Castcle"
