@@ -116,7 +116,8 @@ public class RecastPopupViewController: UIViewController {
             self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
         } else {
             guard let page = self.viewModel.page else { return }
-            self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage:  page.castcleId, type: .avatar)
+            let url = URL(string: page.avatar)
+            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
         }
         self.displayNameLabel.text = self.viewModel.page?.displayName ?? ""
     }
