@@ -50,10 +50,10 @@ public class UserToFollowTableViewCell: UITableViewCell {
     private var userRepository: UserRepository = UserRepositoryImpl()
     private var user: UserInfo = UserInfo()
     let tokenHelper: TokenHelper = TokenHelper()
-    private var stage: Stage = .none
+    private var state: State = .none
     private var userRequest: UserRequest = UserRequest()
     
-    enum Stage {
+    enum State {
         case followUser
         case unfollowUser
         case none
@@ -113,7 +113,7 @@ public class UserToFollowTableViewCell: UITableViewCell {
     }
     
     private func followUser() {
-        self.stage = .followUser
+        self.state = .followUser
         let userId: String = UserManager.shared.rawCastcleId
         self.userRepository.follow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
             if !success {
@@ -125,7 +125,7 @@ public class UserToFollowTableViewCell: UITableViewCell {
     }
     
     private func unfollowUser() {
-        self.stage = .unfollowUser
+        self.state = .unfollowUser
         let userId: String = UserManager.shared.rawCastcleId
         self.userRepository.unfollow(userId: userId, targetCastcleId: self.userRequest.targetCastcleId) { (success, response, isRefreshToken) in
             if !success {
@@ -162,9 +162,9 @@ public class UserToFollowTableViewCell: UITableViewCell {
 
 extension UserToFollowTableViewCell: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        if self.stage == .followUser {
+        if self.state == .followUser {
             self.followUser()
-        } else if self.stage == .unfollowUser {
+        } else if self.state == .unfollowUser {
             self.unfollowUser()
         }
     }

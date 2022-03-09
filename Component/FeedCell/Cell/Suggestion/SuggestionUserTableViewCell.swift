@@ -63,11 +63,11 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     private var userRepository: UserRepository = UserRepositoryImpl()
     private var user: [Author] = []
     let tokenHelper: TokenHelper = TokenHelper()
-    private var stage: Stage = .none
+    private var state: State = .none
     private var userRequest: UserRequest = UserRequest()
     private let realm = try! Realm()
     
-    enum Stage {
+    enum State {
         case followUser
         case unfollowUser
         case none
@@ -177,7 +177,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     }
     
     private func followUser() {
-        self.stage = .followUser
+        self.state = .followUser
         let userId: String = UserManager.shared.rawCastcleId
         if let authorRef = ContentHelper.shared.getAuthorRef(castcleId: self.userRequest.targetCastcleId) {
             try! self.realm.write {
@@ -196,7 +196,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     }
     
     private func unfollowUser() {
-        self.stage = .unfollowUser
+        self.state = .unfollowUser
         let userId: String = UserManager.shared.rawCastcleId
         if let authorRef = ContentHelper.shared.getAuthorRef(castcleId: self.userRequest.targetCastcleId) {
             try! self.realm.write {
@@ -267,9 +267,9 @@ public class SuggestionUserTableViewCell: UITableViewCell {
 
 extension SuggestionUserTableViewCell: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        if self.stage == .followUser {
+        if self.state == .followUser {
             self.followUser()
-        } else if self.stage == .unfollowUser {
+        } else if self.state == .unfollowUser {
             self.unfollowUser()
         }
     }

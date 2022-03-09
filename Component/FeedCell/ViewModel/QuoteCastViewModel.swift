@@ -32,11 +32,11 @@ public final class QuoteCastViewModel {
    
     private var userRepository: UserRepository = UserRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
-    private var stage: Stage = .none
+    private var state: State = .none
     private var userRequest: UserRequest = UserRequest()
     private var content: Content?
     
-    enum Stage {
+    enum State {
         case followUser
         case none
     }
@@ -47,7 +47,7 @@ public final class QuoteCastViewModel {
     }
     
     func followUser() {
-        self.stage = .followUser
+        self.state = .followUser
         guard let content = self.content else { return }
         if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
             let userId: String = UserManager.shared.rawCastcleId
@@ -67,7 +67,7 @@ public final class QuoteCastViewModel {
 
 extension QuoteCastViewModel: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        if self.stage == .followUser {
+        if self.state == .followUser {
             self.followUser()
         }
     }

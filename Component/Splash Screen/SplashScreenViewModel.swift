@@ -38,9 +38,9 @@ final class SplashScreenViewModel {
     private var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     private var masterDataRepository: MasterDataRepository = MasterDataRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
-    private var stage: Stage = .none
+    private var state: State = .none
     
-    enum Stage {
+    enum State {
         case login
         case refreshToken
         case getCountryCode
@@ -48,7 +48,7 @@ final class SplashScreenViewModel {
     }
 
     public func guestLogin() {
-        self.stage = .login
+        self.state = .login
         self.authenticationRepository.guestLogin(uuid: Defaults[.deviceUuid]) { (success) in
             if success {
                 self.getCountryCode()
@@ -57,7 +57,7 @@ final class SplashScreenViewModel {
     }
     
     private func getCountryCode() {
-        self.stage = .getCountryCode
+        self.state = .getCountryCode
         self.masterDataRepository.getCountry() { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -96,7 +96,7 @@ final class SplashScreenViewModel {
         if UserManager.shared.accessToken.isEmpty || UserManager.shared.userRole == .guest {
             self.guestLogin()
         } else {
-            self.stage = .refreshToken
+            self.state = .refreshToken
             self.tokenHelper.refreshToken()
         }
     }
@@ -104,7 +104,7 @@ final class SplashScreenViewModel {
 
 extension SplashScreenViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
-        if self.stage == .getCountryCode {
+        if self.state == .getCountryCode {
             self.getCountryCode()
         } else {
             self.didGuestLoginFinish?()

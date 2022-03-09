@@ -55,13 +55,13 @@ public class HeaderTableViewCell: UITableViewCell {
     private var contentRepository: ContentRepository = ContentRepositoryImpl()
     private var reportRepository: ReportRepository = ReportRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
-    private var stage: Stage = .none
+    private var state: State = .none
     private var userRequest: UserRequest = UserRequest()
     private var reportRequest: ReportRequest = ReportRequest()
     private let realm = try! Realm()
     var isPreview: Bool = false
     
-    enum Stage {
+    enum State {
         case deleteContent
         case followUser
         case unfollowUser
@@ -250,7 +250,7 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     private func deleteContent() {
-        self.stage = .deleteContent
+        self.state = .deleteContent
         guard let content = self.content else { return }
         self.delegate?.didRemoveSuccess(self)
         self.contentRepository.deleteContent(contentId: content.id) { (success, response, isRefreshToken) in
@@ -263,7 +263,7 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     private func reportContent() {
-        self.stage = .reportContent
+        self.state = .reportContent
         guard let content = self.content else { return }
         self.reportRequest.targetContentId = content.id
         self.reportRepository.reportContent(userId: UserManager.shared.rawCastcleId, reportRequest: self.reportRequest) { (success, response, isRefreshToken) in
@@ -278,7 +278,7 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     private func followUser() {
-        self.stage = .followUser
+        self.state = .followUser
         guard let content = self.content else { return }
         if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
             let userId: String = UserManager.shared.rawCastcleId
@@ -309,7 +309,7 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     private func unfollowUser() {
-        self.stage = .unfollowUser
+        self.state = .unfollowUser
         guard let content = self.content else { return }
         if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
             let userId: String = UserManager.shared.rawCastcleId
@@ -342,13 +342,13 @@ public class HeaderTableViewCell: UITableViewCell {
 
 extension HeaderTableViewCell: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        if self.stage == .deleteContent {
+        if self.state == .deleteContent {
             self.deleteContent()
-        } else if self.stage == .followUser {
+        } else if self.state == .followUser {
             self.followUser()
-        } else if self.stage == .unfollowUser {
+        } else if self.state == .unfollowUser {
             self.unfollowUser()
-        } else if self.stage == .reportContent {
+        } else if self.state == .reportContent {
             self.reportContent()
         }
     }
