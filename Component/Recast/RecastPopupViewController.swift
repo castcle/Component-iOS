@@ -86,7 +86,7 @@ public class RecastPopupViewController: UIViewController {
         self.chooseUserTitle.font = UIFont.asset(.bold, fontSize: .overline)
         self.chooseUserTitle.textColor = UIColor.Asset.white
         
-        self.pages = self.realm.objects(Page.self)
+        self.pages = self.realm.objects(Page.self).sorted(byKeyPath: "id")
         
         self.subTitleLabel.text = Localization.contentAction.recastTitle.text
         self.quoteCastLabel.text = Localization.contentAction.quoteCast.text
