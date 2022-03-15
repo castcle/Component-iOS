@@ -29,6 +29,7 @@ import UIKit
 import Core
 import Networking
 import Defaults
+import FirebaseRemoteConfig
 
 public protocol SplashScreenViewControllerDelegate {
     func didLoadFinish(_ view: SplashScreenViewController)
@@ -41,6 +42,7 @@ public class SplashScreenViewController: UIViewController {
     
     public var delegate: SplashScreenViewControllerDelegate?
     var viewModel = SplashScreenViewModel()
+    private let remoteConfig = RemoteConfig.remoteConfig()
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,9 +51,9 @@ public class SplashScreenViewController: UIViewController {
         self.logoImage.image = UIImage.Asset.castcleLogo
         self.viewModel.tokenHandle()
         
-        self.viewModel.didGuestLoginFinish = {
-            self.delegate?.didLoadFinish(self)
-        }
+//        self.viewModel.didGuestLoginFinish = {
+//            self.delegate?.didLoadFinish(self)
+//        }
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -63,6 +65,29 @@ public class SplashScreenViewController: UIViewController {
         super.viewDidAppear(animated)
         if !UserManager.shared.accessToken.isEmpty {
             EngagementHelper().sendCastcleAnalytic(event: .onScreenView, screen: .splashScreen)
+        }
+    }
+    
+    private func fetchRemoteConfig() {
+        let appDefaults: [String: NSObject] = [
+            "version_ios": "9.9.9" as NSObject
+        ]
+        self.remoteConfig.setDefaults(appDefaults)
+        
+        let setting = RemoteConfigSettings()
+        setting.minimumFetchInterval = 0
+        self.remoteConfig.configSettings = setting
+        
+        self.remoteConfig.fetch(withExpirationDuration: 0) { status, error in
+            if status == .success, error == nil {
+                self.remoteConfig.activate() { success, error  in
+                    guard error == nil else { return }
+                    let value = self.remoteConfig.configValue(forKey: "version_ios").stringValue
+                    print(value)
+                }
+            } else {
+                print("Something went wrong")
+            }
         }
     }
 }
