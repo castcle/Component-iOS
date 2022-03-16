@@ -268,11 +268,8 @@ extension CommentViewController: HeaderTableViewCellDelegate {
     
     func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author) {
         let userDict: [String: String] = [
-            "type":  author.type.rawValue,
-            "id":  author.id,
             "castcleId":  author.castcleId,
-            "displayName":  author.displayName,
-            "avatar":   author.avatar.thumbnail
+            "displayName":  author.displayName
         ]
         NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
     }

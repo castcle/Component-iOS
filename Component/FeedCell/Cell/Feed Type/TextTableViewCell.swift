@@ -38,19 +38,15 @@ public class TextTableViewCell: UITableViewCell {
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
-            
             self.detailLabel.customize { label in
-                let readMoreType = ActiveType.custom(pattern: "\(Localization.contentDetail.readMore.text)")
                 label.font = UIFont.asset(.contentLight, fontSize: .body)
                 label.numberOfLines = 0
-                label.enabledTypes = [.mention, .url, self.customHashtag, readMoreType]
+                label.enabledTypes = [.mention, .url, self.customHashtag]
                 label.textColor = UIColor.Asset.white
                 label.mentionColor = UIColor.Asset.lightBlue
                 label.URLColor = UIColor.Asset.lightBlue
                 label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
                 label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
-                label.customColor[readMoreType] = UIColor.Asset.lightBlue
-                label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
             }
             
             self.detailLabel.text = content.message
@@ -59,9 +55,11 @@ public class TextTableViewCell: UITableViewCell {
     }
     
     private func enableActiveLabel() {
-        self.detailLabel.handleHashtagTap { hashtag in
-        }
         self.detailLabel.handleMentionTap { mention in
+            let userDict: [String: String] = [
+                "castcleId":  mention
+            ]
+            NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
         }
         self.detailLabel.handleURLTap { url in
             var urlString = url.absoluteString
@@ -72,6 +70,12 @@ public class TextTableViewCell: UITableViewCell {
             } else {
                 return
             }
+        }
+        self.detailLabel.handleCustomTap(for: self.customHashtag) { element in
+            let hashtagDict: [String: String] = [
+                "hashtag":  element
+            ]
+            NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
         }
     }
     
