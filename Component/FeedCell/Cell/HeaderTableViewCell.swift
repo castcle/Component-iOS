@@ -281,7 +281,6 @@ public class HeaderTableViewCell: UITableViewCell {
         self.state = .followUser
         guard let content = self.content else { return }
         if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
-            let userId: String = UserManager.shared.rawCastcleId
             if content.referencedCasts.type == .recasted {
                 if let tempContent = ContentHelper.shared.getContentRef(id: content.referencedCasts.id) {
                     self.userRequest.targetCastcleId = tempContent.authorId
@@ -296,7 +295,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 NotificationCenter.default.post(name: .feedReloadContent, object: nil)
             }
             
-            self.userRepository.follow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
+            self.userRepository.follow(userRequest: self.userRequest) { (success, response, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
@@ -312,7 +311,6 @@ public class HeaderTableViewCell: UITableViewCell {
         self.state = .unfollowUser
         guard let content = self.content else { return }
         if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
-            let userId: String = UserManager.shared.rawCastcleId
             if content.participate.recasted {
                 if let tempContent = ContentHelper.shared.getContentRef(id: content.referencedCasts.id) {
                     self.userRequest.targetCastcleId = tempContent.authorId
@@ -327,7 +325,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 NotificationCenter.default.post(name: .feedReloadContent, object: nil)
             }
             
-            self.userRepository.unfollow(userId: userId, targetCastcleId: self.userRequest.targetCastcleId) { (success, response, isRefreshToken) in
+            self.userRepository.unfollow(targetCastcleId: self.userRequest.targetCastcleId) { (success, response, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
