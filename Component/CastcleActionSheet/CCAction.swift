@@ -63,15 +63,22 @@ public class CCAction: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public convenience init(title: String, image: UIImage? = nil, style: CCAction.Style = .default, completion: @escaping ()->Void) {
+    public convenience init(title: String, image: UIImage? = nil, color: UIColor = UIColor.Asset.white, style: CCAction.Style = .default, completion: @escaping ()->Void) {
         self.init()
         self.button.setTitle(title, for: .normal)
         self.button.titleLabel?.font =  UIFont.asset(.bold, fontSize: .body)
-        self.imageView.image = image
+        self.button.setTitleColor(color, for: .normal)
+        if image != nil {
+            self.imageView.image = image
+        }
         self.onTapCompletion = completion
         self.isCancelButton = false
         self._style = style
-        self.setupView()
+        if image != nil {
+            self.setupView()
+        } else {
+            self.setupViewNotImage()
+        }
     }
     
     convenience init(title: String, completion: @escaping ()->Void) {
@@ -93,6 +100,13 @@ public class CCAction: UIView {
             self.setupCancelButton()
         }
         
+        self.setButtonAction()
+    }
+    
+    private func setupViewNotImage() {
+        self.addSubview(self.button)
+        self.setButtonConstraints()
+        self.button.contentHorizontalAlignment = .center
         self.setButtonAction()
     }
     
