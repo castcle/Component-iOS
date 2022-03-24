@@ -50,9 +50,8 @@ public final class QuoteCastViewModel {
         self.state = .followUser
         guard let content = self.content else { return }
         if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
-            let userId: String = UserManager.shared.rawCastcleId
             self.userRequest.targetCastcleId = authorRef.castcleId
-            self.userRepository.follow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
+            self.userRepository.follow(userRequest: self.userRequest) { (success, response, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()

@@ -30,6 +30,7 @@ import Core
 import Networking
 import Defaults
 import FirebaseRemoteConfig
+import SwiftyJSON
 
 public protocol SplashScreenViewControllerDelegate {
     func didLoadFinish(_ view: SplashScreenViewController)
@@ -49,6 +50,7 @@ public class SplashScreenViewController: UIViewController {
 
         self.backgroundImage.image = UIImage.Asset.launchScreen
         self.logoImage.image = UIImage.Asset.castcleLogo
+        self.fetchRemoteConfig()
         self.viewModel.tokenHandle()
         
         self.viewModel.didGuestLoginFinish = {
@@ -68,26 +70,56 @@ public class SplashScreenViewController: UIViewController {
         }
     }
     
-//    private func fetchRemoteConfig() {
-//        let appDefaults: [String: NSObject] = [
-//            "version_ios": "9.9.9" as NSObject
-//        ]
-//        self.remoteConfig.setDefaults(appDefaults)
-//
-//        let setting = RemoteConfigSettings()
-//        setting.minimumFetchInterval = 0
-//        self.remoteConfig.configSettings = setting
-//
-//        self.remoteConfig.fetch(withExpirationDuration: 0) { status, error in
-//            if status == .success, error == nil {
-//                self.remoteConfig.activate() { success, error  in
-//                    guard error == nil else { return }
-//                    let value = self.remoteConfig.configValue(forKey: "version_ios").stringValue
-//                    print(value)
-//                }
-//            } else {
-//                print("Something went wrong")
-//            }
-//        }
-//    }
+    private func fetchRemoteConfig() {
+        Defaults[.isForceUpdate] = false
+        Defaults[.isSoftUpdate] = false
+        let duration: Double = (Environment.appEnv == .prod ? 3600 : 0)
+        let setting = RemoteConfigSettings()
+        setting.minimumFetchInterval = duration
+        RemoteConfig.remoteConfig().configSettings = setting
+        
+        let defualt: [String: NSObject] = [
+            "version_ios": "9.9.9" as NSObject
+        ]
+        RemoteConfig.remoteConfig().setDefaults(defualt)
+        RemoteConfig.remoteConfig().fetch(withExpirationDuration: duration) { ststus, error in
+            if ststus == .success, error == nil {
+                RemoteConfig.remoteConfig().activate() { success, error in
+                    if error == nil {
+                        let json = RemoteConfig.remoteConfig().configValue(forKey: "force_version").jsonValue
+                        if let jsonForceVersion = json {
+                            let data = JSON(jsonForceVersion)
+                            let remoteConfig = RemoteConfig(json: data)
+                            Defaults[.updateUrl] = remoteConfig.ios.url
+                            Defaults[.updateTitle] = remoteConfig.meta.title.en
+                            Defaults[.updateMessage] = remoteConfig.meta.message.en
+                            Defaults[.updateButton] = remoteConfig.meta.button.en
+
+                            if CheckUpdate.shared.isUpdateApp(version: remoteConfig.ios.version) {
+                                Defaults[.isForceUpdate] = true
+                                Defaults[.isSoftUpdate] = false
+                            } else {
+                                _ = CheckUpdate.shared.getAppInfo() { (info, error) in
+                                    if let appStoreAppVersion = info?.version {
+                                        if let _ = error {
+                                            print("Error")
+                                        } else if !CheckUpdate.shared.isUpdateApp(version: appStoreAppVersion) {
+                                            print("App not update")
+                                        } else {
+                                            Defaults[.isForceUpdate] = false
+                                            Defaults[.isSoftUpdate] = true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        print("Error")
+                    }
+                }
+            } else {
+                print("Error")
+            }
+        }
+    }
 }
