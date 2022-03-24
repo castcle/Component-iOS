@@ -104,8 +104,7 @@ public class FooterTableViewCell: UITableViewCell {
             content.metrics.likeCount -= 1
             content.participate.liked.toggle()
             self.updateUi(content: content)
-            self.contentRequest.castcleId = UserManager.shared.rawCastcleId
-            self.contentRepository.unlikeContent(contentId: content.id, contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
+            self.contentRepository.unlikeContent(contentId: content.id) { (success, response, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
@@ -120,8 +119,7 @@ public class FooterTableViewCell: UITableViewCell {
             content.metrics.likeCount += 1
             content.participate.liked.toggle()
             self.updateUi(content: content)
-            self.contentRequest.castcleId = UserManager.shared.rawCastcleId
-            self.contentRepository.likeContent(contentId: content.id, contentRequest: self.contentRequest) { (success, response, isRefreshToken) in
+            self.contentRepository.likeContent(contentId: content.id) { (success, response, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
