@@ -49,7 +49,10 @@ public class SplashScreenViewController: UIViewController {
 
         self.backgroundImage.image = UIImage.Asset.launchScreen
         self.logoImage.image = UIImage.Asset.castcleLogo
-        self.viewModel.tokenHandle()
+        
+        
+        self.fetchData()
+//        self.viewModel.tokenHandle()
         
         self.viewModel.didGuestLoginFinish = {
             self.delegate?.didLoadFinish(self)
@@ -68,26 +71,33 @@ public class SplashScreenViewController: UIViewController {
         }
     }
     
-//    private func fetchRemoteConfig() {
-//        let appDefaults: [String: NSObject] = [
-//            "version_ios": "9.9.9" as NSObject
-//        ]
-//        self.remoteConfig.setDefaults(appDefaults)
-//
-//        let setting = RemoteConfigSettings()
-//        setting.minimumFetchInterval = 0
-//        self.remoteConfig.configSettings = setting
-//
-//        self.remoteConfig.fetch(withExpirationDuration: 0) { status, error in
-//            if status == .success, error == nil {
-//                self.remoteConfig.activate() { success, error  in
-//                    guard error == nil else { return }
-//                    let value = self.remoteConfig.configValue(forKey: "version_ios").stringValue
-//                    print(value)
-//                }
-//            } else {
-//                print("Something went wrong")
-//            }
-//        }
-//    }
+    private func fetchData() {
+        let duration: Double = (Environment.appEnv == .prod ? 3600 : 0)
+        let setting = RemoteConfigSettings()
+        setting.minimumFetchInterval = duration
+        RemoteConfig.remoteConfig().configSettings = setting
+        
+        let defualt: [String: NSObject] = [
+            "version_ios": "9.9.9" as NSObject
+        ]
+        RemoteConfig.remoteConfig().setDefaults(defualt)
+        RemoteConfig.remoteConfig().fetch(withExpirationDuration: duration) { ststus, error in
+            if ststus == .success, error == nil {
+                RemoteConfig.remoteConfig().activate() { success, error in
+                    if error == nil {
+                        let value = RemoteConfig.remoteConfig().configValue(forKey: "version_ios").stringValue
+                        let json = RemoteConfig.remoteConfig().configValue(forKey: "force_version").jsonValue
+                        print(json)
+                        print(value)
+                        print("=============")
+                        CheckUpdate.shared.showUpdate(withConfirmation: true)
+                    } else {
+                        print("Error \(error)")
+                    }
+                }
+            } else {
+                print("Error \(error)")
+            }
+        }
+    }
 }

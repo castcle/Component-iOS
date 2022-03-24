@@ -113,7 +113,6 @@
 		B7AC880427199B4700500F81 /* CCAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880327199B4700500F81 /* CCAction.swift */; };
 		B7AC880627199B7800500F81 /* CCAction+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880527199B7800500F81 /* CCAction+Style.swift */; };
 		B7AC880827199BA500500F81 /* HandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880727199BA500500F81 /* HandleView.swift */; };
-		B7AF495227DF43D400A51C2E /* RemoteConfigValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AF495127DF43D400A51C2E /* RemoteConfigValues.swift */; };
 		B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */; };
 		B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */; };
 		B7E64ECB275F63B300FFD78E /* Report.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7E64ECA275F63B300FFD78E /* Report.storyboard */; };
@@ -254,7 +253,6 @@
 		B7AC880327199B4700500F81 /* CCAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCAction.swift; sourceTree = "<group>"; };
 		B7AC880527199B7800500F81 /* CCAction+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CCAction+Style.swift"; sourceTree = "<group>"; };
 		B7AC880727199BA500500F81 /* HandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleView.swift; sourceTree = "<group>"; };
-		B7AF495127DF43D400A51C2E /* RemoteConfigValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteConfigValues.swift; sourceTree = "<group>"; };
 		B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
 		B7E64ECA275F63B300FFD78E /* Report.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Report.storyboard; sourceTree = "<group>"; };
@@ -415,7 +413,6 @@
 				B75529D2269F696A005D5EB5 /* ComponentNibVars.swift */,
 				B7910DF826AFE8200097C94E /* ComponentOpener.swift */,
 				B756C8A2277337C1007AADE4 /* TableView.swift */,
-				B7AF495127DF43D400A51C2E /* RemoteConfigValues.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -813,7 +810,6 @@
 				B71744B826E9EF850014D6B5 /* ImageX3TableViewCell.swift in Sources */,
 				B71744AE26E9EF280014D6B5 /* ImageX1TableViewCell.swift in Sources */,
 				B7866366274B833400B13EEF /* QuoteCastViewModel.swift in Sources */,
-				B7AF495227DF43D400A51C2E /* RemoteConfigValues.swift in Sources */,
 				B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */,
 				B7E64ECD275F63D700FFD78E /* ReportSuccessViewController.swift in Sources */,
 				B7552972269CBA14005D5EB5 /* FastCheckLayer.swift in Sources */,
