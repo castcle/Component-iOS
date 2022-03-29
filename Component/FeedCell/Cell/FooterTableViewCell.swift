@@ -41,6 +41,7 @@ public class FooterTableViewCell: UITableViewCell {
     @IBOutlet var likeLabel: UILabel!
     @IBOutlet var commentLabel: UILabel!
     @IBOutlet var recastLabel: UILabel!
+    @IBOutlet var farmLabel: UILabel!
     
     public var content: Content? {
         didSet {
@@ -75,10 +76,12 @@ public class FooterTableViewCell: UITableViewCell {
         self.likeLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.commentLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.recastLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.farmLabel.font = UIFont.asset(.regular, fontSize: .overline)
         
         let displayLike: String = (content.metrics.likeCount > 0 ? "  \(String.displayCount(count: content.metrics.likeCount))" : "")
         let displayComment: String = (content.metrics.commentCount > 0 ? "  \(String.displayCount(count: content.metrics.commentCount))" : "")
         let displayRecast: String = ((content.metrics.recastCount > 0 || content.metrics.quoteCount > 0) ? "  \(String.displayCount(count: content.metrics.recastCount + content.metrics.quoteCount))" : "")
+        let displayFarming: String = (content.metrics.farmCount > 0 ? "  \(String.displayCount(count: content.metrics.farmCount))" : "")
         
         if content.participate.liked {
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.lightBlue, postfixText: displayLike, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 18)
@@ -96,6 +99,12 @@ public class FooterTableViewCell: UITableViewCell {
             self.recastLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.recast), iconColor: UIColor.Asset.lightBlue, postfixText: displayRecast, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 18)
         } else {
             self.recastLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.recast), iconColor: UIColor.Asset.white, postfixText: displayRecast, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 18)
+        }
+        
+        if content.participate.farming {
+            self.farmLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.farm), iconColor: UIColor.Asset.lightBlue, postfixText: displayFarming, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 15)
+        } else {
+            self.farmLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.farm), iconColor: UIColor.Asset.white, postfixText: displayFarming, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 15)
         }
     }
     
@@ -192,7 +201,7 @@ public class FooterTableViewCell: UITableViewCell {
     @IBAction func commentAction(_ sender: Any) {
         if UserManager.shared.isLogin {
             guard let content = self.content else { return }
-            self.stateType = .recast
+            self.stateType = .none
             self.delegate?.didTabComment(self, content: content)
         } else {
             self.delegate?.didAuthen(self)
@@ -210,6 +219,15 @@ public class FooterTableViewCell: UITableViewCell {
         }
     }
     
+    @IBAction func farmingAction(_ sender: Any) {
+        if UserManager.shared.isLogin {
+            guard let content = self.content else { return }
+            self.stateType = .none
+            
+        } else {
+            self.delegate?.didAuthen(self)
+        }
+    }
 }
 
 extension FooterTableViewCell: RecastPopupViewControllerDelegate {
