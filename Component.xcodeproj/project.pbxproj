@@ -118,6 +118,7 @@
 		B7E49ADE27F30FD60026C7F6 /* FarmingPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7E49ADD27F30FD60026C7F6 /* FarmingPopup.storyboard */; };
 		B7E49AE027F310150026C7F6 /* FarmingPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */; };
 		B7E49AE227F3101D0026C7F6 /* FarmingPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */; };
+		B7E49AE427F3247B0026C7F6 /* FarmingLimitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49AE327F3247B0026C7F6 /* FarmingLimitViewController.swift */; };
 		B7E64ECB275F63B300FFD78E /* Report.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7E64ECA275F63B300FFD78E /* Report.storyboard */; };
 		B7E64ECD275F63D700FFD78E /* ReportSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E64ECC275F63D700FFD78E /* ReportSuccessViewController.swift */; };
 		B7FA1D8627B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FA1D8427B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift */; };
@@ -261,6 +262,7 @@
 		B7E49ADD27F30FD60026C7F6 /* FarmingPopup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FarmingPopup.storyboard; sourceTree = "<group>"; };
 		B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FarmingPopupViewController.swift; sourceTree = "<group>"; };
 		B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FarmingPopupViewModel.swift; sourceTree = "<group>"; };
+		B7E49AE327F3247B0026C7F6 /* FarmingLimitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmingLimitViewController.swift; sourceTree = "<group>"; };
 		B7E64ECA275F63B300FFD78E /* Report.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Report.storyboard; sourceTree = "<group>"; };
 		B7E64ECC275F63D700FFD78E /* ReportSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportSuccessViewController.swift; sourceTree = "<group>"; };
 		B7FA1D8427B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTextLinkPreviewTableViewCell.swift; sourceTree = "<group>"; };
@@ -632,6 +634,7 @@
 				B7E49ADD27F30FD60026C7F6 /* FarmingPopup.storyboard */,
 				B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */,
 				B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */,
+				B7E49AE327F3247B0026C7F6 /* FarmingLimitViewController.swift */,
 			);
 			path = FarmingPopup;
 			sourceTree = "<group>";
@@ -851,6 +854,7 @@
 				B7E49AE227F3101D0026C7F6 /* FarmingPopupViewModel.swift in Sources */,
 				B71744AA26E9EAB10014D6B5 /* TextLinkTableViewCell.swift in Sources */,
 				B7552979269CBA14005D5EB5 /* RefreshProtocol.swift in Sources */,
+				B7E49AE427F3247B0026C7F6 /* FarmingLimitViewController.swift in Sources */,
 				B7FA1D8627B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift in Sources */,
 				B7E49AE027F310150026C7F6 /* FarmingPopupViewController.swift in Sources */,
 				B7552986269CBE49005D5EB5 /* NormalFooterAnimator.swift in Sources */,

@@ -35,6 +35,7 @@ public struct ComponentNibVars {
         public static let comment = "CommentViewController"
         public static let reportSuccess = "ReportSuccessViewController"
         public static let farmingPopup = "FarmingPopupViewController"
+        public static let farmingLimitPopup = "FarmingLimitViewController"
     }
     
     // MARK: - View

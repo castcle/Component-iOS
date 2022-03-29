@@ -239,13 +239,24 @@ public class FooterTableViewCell: UITableViewCell {
                 vc?.delegate = self
                 Utility.currentViewController().presentPanModal(vc ?? FarmingPopupViewController())
             } else {
-                let vc = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(type: .farm))) as? FarmingPopupViewController
-                vc?.delegate = self
-                Utility.currentViewController().presentPanModal(vc ?? FarmingPopupViewController())
+                if self.randomBool() {
+                    let vc = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(type: .farm))) as? FarmingPopupViewController
+                    vc?.delegate = self
+                    Utility.currentViewController().presentPanModal(vc ?? FarmingPopupViewController())
+                } else {
+                    let vc = ComponentOpener.open(.farmingLimitPopup) as? FarmingLimitViewController
+                    vc?.delegate = self
+                    Utility.currentViewController().presentPanModal(vc ?? FarmingLimitViewController())
+                }
             }
         } else {
             self.delegate?.didAuthen(self)
         }
+    }
+    
+    // MARK: - Remove when production
+    private func randomBool() -> Bool {
+        return arc4random_uniform(2) == 0
     }
 }
 
@@ -263,6 +274,13 @@ extension FooterTableViewCell: RecastPopupViewControllerDelegate {
 
 extension FooterTableViewCell: FarmingPopupViewControllerDelegate {
     public func farmingPopupViewController(didAction view: FarmingPopupViewController) {
+        guard let content = self.content else { return }
+        self.farmingContent(content: content)
+    }
+}
+
+extension FooterTableViewCell: FarmingLimitViewControllerDelegate {
+    public func farmingLimitViewController(didAction view: FarmingLimitViewController) {
         guard let content = self.content else { return }
         self.farmingContent(content: content)
     }

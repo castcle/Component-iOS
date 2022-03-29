@@ -36,6 +36,7 @@ public enum ComponentScene {
     case comment(CommentViewModel)
     case reportSuccess(Bool, String)
     case farmingPopup(FarmingPopupViewModel)
+    case farmingLimitPopup
 }
 
 public struct ComponentOpener {
@@ -76,6 +77,10 @@ public struct ComponentOpener {
             let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.farmingPopup) as? FarmingPopupViewController
             vc?.viewModel = viewModel
             return vc ?? FarmingPopupViewController()
+        case .farmingLimitPopup:
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.farmingPopup, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.farmingLimitPopup) as? FarmingLimitViewController
+            return vc ?? FarmingLimitViewController()
         }
     }
 }
