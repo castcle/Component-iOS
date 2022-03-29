@@ -115,6 +115,9 @@
 		B7AC880827199BA500500F81 /* HandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880727199BA500500F81 /* HandleView.swift */; };
 		B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */; };
 		B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */; };
+		B7E49ADE27F30FD60026C7F6 /* FarmingPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7E49ADD27F30FD60026C7F6 /* FarmingPopup.storyboard */; };
+		B7E49AE027F310150026C7F6 /* FarmingPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */; };
+		B7E49AE227F3101D0026C7F6 /* FarmingPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */; };
 		B7E64ECB275F63B300FFD78E /* Report.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7E64ECA275F63B300FFD78E /* Report.storyboard */; };
 		B7E64ECD275F63D700FFD78E /* ReportSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E64ECC275F63D700FFD78E /* ReportSuccessViewController.swift */; };
 		B7FA1D8627B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FA1D8427B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift */; };
@@ -255,6 +258,9 @@
 		B7AC880727199BA500500F81 /* HandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleView.swift; sourceTree = "<group>"; };
 		B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
+		B7E49ADD27F30FD60026C7F6 /* FarmingPopup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FarmingPopup.storyboard; sourceTree = "<group>"; };
+		B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FarmingPopupViewController.swift; sourceTree = "<group>"; };
+		B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FarmingPopupViewModel.swift; sourceTree = "<group>"; };
 		B7E64ECA275F63B300FFD78E /* Report.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Report.storyboard; sourceTree = "<group>"; };
 		B7E64ECC275F63D700FFD78E /* ReportSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportSuccessViewController.swift; sourceTree = "<group>"; };
 		B7FA1D8427B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTextLinkPreviewTableViewCell.swift; sourceTree = "<group>"; };
@@ -583,6 +589,7 @@
 				B7A15B212795C196001E34DE /* Localizable */,
 				B75529D1269F693C005D5EB5 /* Utilities */,
 				B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */,
+				B7E49ADC27F30FB60026C7F6 /* FarmingPopup */,
 				B786902A27CCA4570029EDFE /* UserToFollow */,
 				B7E64EC9275F637F00FFD78E /* Report */,
 				B7AC87FC271999CF00500F81 /* CastcleActionSheet */,
@@ -617,6 +624,16 @@
 				B7AC880727199BA500500F81 /* HandleView.swift */,
 			);
 			path = CastcleActionSheet;
+			sourceTree = "<group>";
+		};
+		B7E49ADC27F30FB60026C7F6 /* FarmingPopup */ = {
+			isa = PBXGroup;
+			children = (
+				B7E49ADD27F30FD60026C7F6 /* FarmingPopup.storyboard */,
+				B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */,
+				B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */,
+			);
+			path = FarmingPopup;
 			sourceTree = "<group>";
 		};
 		B7E64EC9275F637F00FFD78E /* Report */ = {
@@ -747,6 +764,7 @@
 				B78663552747AC4200B13EEF /* QuoteCastImageX1Cell.xib in Resources */,
 				B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */,
 				B784D50727B18698009087E5 /* SkeletonUserTableViewCell.xib in Resources */,
+				B7E49ADE27F30FD60026C7F6 /* FarmingPopup.storyboard in Resources */,
 				B71744C626E9F6980014D6B5 /* BlogNoImageTableViewCell.xib in Resources */,
 				B7FA1D9B27B0E2C300A485A1 /* LongImageXMoreTableViewCell.xib in Resources */,
 				B7167F9D27AFC94A00067DBD /* ReachedTableViewCell.xib in Resources */,
@@ -830,9 +848,11 @@
 				B717447F26E259AB0014D6B5 /* CommentViewModel.swift in Sources */,
 				B7167F9C27AFC94A00067DBD /* ReachedTableViewCell.swift in Sources */,
 				B7AC1E442717C67A002FC176 /* TextLinkPreviewTableViewCell.swift in Sources */,
+				B7E49AE227F3101D0026C7F6 /* FarmingPopupViewModel.swift in Sources */,
 				B71744AA26E9EAB10014D6B5 /* TextLinkTableViewCell.swift in Sources */,
 				B7552979269CBA14005D5EB5 /* RefreshProtocol.swift in Sources */,
 				B7FA1D8627B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift in Sources */,
+				B7E49AE027F310150026C7F6 /* FarmingPopupViewController.swift in Sources */,
 				B7552986269CBE49005D5EB5 /* NormalFooterAnimator.swift in Sources */,
 				B786635C2747AC4200B13EEF /* QuoteCastBlogNoImageCell.swift in Sources */,
 				B78663562747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.swift in Sources */,

@@ -35,6 +35,7 @@ public enum ComponentScene {
     case recast(RecastPopupViewModel)
     case comment(CommentViewModel)
     case reportSuccess(Bool, String)
+    case farmingPopup(FarmingPopupViewModel)
 }
 
 public struct ComponentOpener {
@@ -70,6 +71,11 @@ public struct ComponentOpener {
             vc?.isReportContent = isReportContent
             vc?.castcleId = castcleId
             return vc ?? ReportSuccessViewController()
+        case .farmingPopup(let viewModel):
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.farmingPopup, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.farmingPopup) as? FarmingPopupViewController
+            vc?.viewModel = viewModel
+            return vc ?? FarmingPopupViewController()
         }
     }
 }
