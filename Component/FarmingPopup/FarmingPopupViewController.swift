@@ -30,6 +30,10 @@ import Core
 import ActiveLabel
 import PanModal
 
+public protocol FarmingPopupViewControllerDelegate {
+    func farmingPopupViewController(didAction view: FarmingPopupViewController)
+}
+
 public class FarmingPopupViewController: UIViewController {
 
     @IBOutlet var titleLabel: UILabel!
@@ -46,6 +50,7 @@ public class FarmingPopupViewController: UIViewController {
     @IBOutlet var buttonView: UIView!
     @IBOutlet var iconImage: UIImageView!
     
+    var delegate: FarmingPopupViewControllerDelegate?
     var maxHeight = (UIScreen.main.bounds.height - 400)
     var viewModel = FarmingPopupViewModel()
     
@@ -97,6 +102,7 @@ public class FarmingPopupViewController: UIViewController {
     
     @IBAction func buttonAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+        self.delegate?.farmingPopupViewController(didAction: self)
     }
 }
 

@@ -188,6 +188,18 @@ public class FooterTableViewCell: UITableViewCell {
         }
     }
     
+    private func farmingContent(content: Content) {
+        if content.participate.farming {
+            content.metrics.farmCount -= 1
+            content.participate.farming.toggle()
+            self.updateUi(content: content)
+        } else {
+            content.metrics.farmCount += 1
+            content.participate.farming.toggle()
+            self.updateUi(content: content)
+        }
+    }
+    
     @IBAction func likeAction(_ sender: Any) {
         if UserManager.shared.isLogin {
             guard let content = self.content else { return }
@@ -222,8 +234,15 @@ public class FooterTableViewCell: UITableViewCell {
     @IBAction func farmingAction(_ sender: Any) {
         if UserManager.shared.isLogin {
             guard let content = self.content else { return }
-            self.stateType = .none
-            
+            if content.participate.farming {
+                let vc = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(type: .unfarn))) as? FarmingPopupViewController
+                vc?.delegate = self
+                Utility.currentViewController().presentPanModal(vc ?? FarmingPopupViewController())
+            } else {
+                let vc = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(type: .farm))) as? FarmingPopupViewController
+                vc?.delegate = self
+                Utility.currentViewController().presentPanModal(vc ?? FarmingPopupViewController())
+            }
         } else {
             self.delegate?.didAuthen(self)
         }
@@ -239,6 +258,13 @@ extension FooterTableViewCell: RecastPopupViewControllerDelegate {
             guard let page = page else { return }
             self.delegate?.didTabQuoteCast(self, content: content, page: page)
         }
+    }
+}
+
+extension FooterTableViewCell: FarmingPopupViewControllerDelegate {
+    public func farmingPopupViewController(didAction view: FarmingPopupViewController) {
+        guard let content = self.content else { return }
+        self.farmingContent(content: content)
     }
 }
 
