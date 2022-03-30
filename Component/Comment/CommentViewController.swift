@@ -295,6 +295,10 @@ extension CommentViewController: FooterTableViewCellDelegate {
     func didAuthen(_ footerTableViewCell: FooterTableViewCell) {
 //        Utility.currentViewController().presentPanModal(AuthenOpener.open(.signUpMethod) as! SignUpMethodViewController)
     }
+    
+    func didViewFarmmingHistory(_ footerTableViewCell: FooterTableViewCell) {
+        NotificationCenter.default.post(name: .openFarmmingDelegate, object: nil, userInfo: nil)
+    }
 }
 
 extension CommentViewController: CommentTableViewCellDelegate {

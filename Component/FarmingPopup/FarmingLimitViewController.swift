@@ -31,6 +31,7 @@ import PanModal
 
 public protocol FarmingLimitViewControllerDelegate {
     func farmingLimitViewController(didAction view: FarmingLimitViewController)
+    func farmingLimitViewControllerDidViewHistory(_ view: FarmingLimitViewController)
 }
 
 public class FarmingLimitViewController: UIViewController {
@@ -111,6 +112,8 @@ public class FarmingLimitViewController: UIViewController {
     }
     
     @IBAction func historyAction(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+        self.delegate?.farmingLimitViewControllerDidViewHistory(self)
     }
 }
 

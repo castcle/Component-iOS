@@ -34,6 +34,7 @@ public protocol FooterTableViewCellDelegate {
     func didTabComment(_ footerTableViewCell: FooterTableViewCell, content: Content)
     func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: Page)
     func didAuthen(_ footerTableViewCell: FooterTableViewCell)
+    func didViewFarmmingHistory(_ footerTableViewCell: FooterTableViewCell)
 }
 
 public class FooterTableViewCell: UITableViewCell {
@@ -283,6 +284,10 @@ extension FooterTableViewCell: FarmingLimitViewControllerDelegate {
     public func farmingLimitViewController(didAction view: FarmingLimitViewController) {
         guard let content = self.content else { return }
         self.farmingContent(content: content)
+    }
+    
+    public func farmingLimitViewControllerDidViewHistory(_ view: FarmingLimitViewController) {
+        self.delegate?.didViewFarmmingHistory(self)
     }
 }
 
