@@ -93,6 +93,7 @@ public class FarmingLimitViewController: UIViewController {
         self.contentView.custom(borderWidth: 1, borderColor: UIColor.Asset.gray)
         self.avatarImage.circle()
         self.avatarImage.image = UIImage.Asset.userPlaceholder
+        self.typeImage.image = UIImage.Asset.typePageIcon
         self.contentImage.image = UIImage.Asset.placeholder
         self.displayNameLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.displayNameLabel.textColor = UIColor.Asset.white
