@@ -212,7 +212,7 @@ extension CommentViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.headerFeed, for: indexPath as IndexPath) as? HeaderTableViewCell
                 cell?.backgroundColor = UIColor.Asset.darkGray
                 cell?.delegate = self
-                cell?.configCell(feedType: .content, content: self.viewModel.content ?? Content())
+                cell?.configCell(feedType: .content, content: self.viewModel.content ?? Content(), isDefaultContent: false)
                 return cell ?? HeaderTableViewCell()
             case ContentSection.footer.rawValue:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.footerFeed, for: indexPath as IndexPath) as? FooterTableViewCell
@@ -268,11 +268,8 @@ extension CommentViewController: HeaderTableViewCellDelegate {
     
     func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author) {
         let userDict: [String: String] = [
-            "type":  author.type.rawValue,
-            "id":  author.id,
             "castcleId":  author.castcleId,
-            "displayName":  author.displayName,
-            "avatar":   author.avatar.thumbnail
+            "displayName":  author.displayName
         ]
         NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
     }

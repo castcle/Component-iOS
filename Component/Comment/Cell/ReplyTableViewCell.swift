@@ -66,14 +66,21 @@ class ReplyTableViewCell: UITableViewCell {
             self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
             self.displayNameLabel.text = replyComment.author.displayName
             self.dateLabel.text = replyComment.replyDate.timeAgoDisplay()
-            
             self.commentLabel.customColor[self.customHashtag] = UIColor.Asset.lightBlue
             self.commentLabel.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
             
-//            self.detailLabel.handleCustomTap(for: self.customHashtag) { element in
-//            }
-//            self.commentLabel.handleMentionTap { mention in
-//            }
+            self.commentLabel.handleCustomTap(for: self.customHashtag) { element in
+                let hashtagDict: [String: String] = [
+                    "hashtag":  element
+                ]
+                NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
+            }
+            self.commentLabel.handleMentionTap { mention in
+                let userDict: [String: String] = [
+                    "castcleId":  mention
+                ]
+                NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
+            }
             self.commentLabel.handleURLTap { url in
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
             }

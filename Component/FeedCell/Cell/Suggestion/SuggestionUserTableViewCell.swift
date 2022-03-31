@@ -63,11 +63,11 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     private var userRepository: UserRepository = UserRepositoryImpl()
     private var user: [Author] = []
     let tokenHelper: TokenHelper = TokenHelper()
-    private var stage: Stage = .none
+    private var state: State = .none
     private var userRequest: UserRequest = UserRequest()
     private let realm = try! Realm()
     
-    enum Stage {
+    enum State {
         case followUser
         case unfollowUser
         case none
@@ -177,8 +177,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     }
     
     private func followUser() {
-        self.stage = .followUser
-        let userId: String = UserManager.shared.rawCastcleId
+        self.state = .followUser
         if let authorRef = ContentHelper.shared.getAuthorRef(castcleId: self.userRequest.targetCastcleId) {
             try! self.realm.write {
                 authorRef.followed = true
@@ -186,7 +185,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
                 NotificationCenter.default.post(name: .feedReloadContent, object: nil)
             }
         }
-        self.userRepository.follow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
+        self.userRepository.follow(userRequest: self.userRequest) { (success, response, isRefreshToken) in
             if !success {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
@@ -196,8 +195,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     }
     
     private func unfollowUser() {
-        self.stage = .unfollowUser
-        let userId: String = UserManager.shared.rawCastcleId
+        self.state = .unfollowUser
         if let authorRef = ContentHelper.shared.getAuthorRef(castcleId: self.userRequest.targetCastcleId) {
             try! self.realm.write {
                 authorRef.followed = false
@@ -205,7 +203,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
                 NotificationCenter.default.post(name: .feedReloadContent, object: nil)
             }
         }
-        self.userRepository.unfollow(userId: userId, targetCastcleId: self.userRequest.targetCastcleId) { (success, response, isRefreshToken) in
+        self.userRepository.unfollow(targetCastcleId: self.userRequest.targetCastcleId) { (success, response, isRefreshToken) in
             if !success {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
@@ -267,9 +265,9 @@ public class SuggestionUserTableViewCell: UITableViewCell {
 
 extension SuggestionUserTableViewCell: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        if self.stage == .followUser {
+        if self.state == .followUser {
             self.followUser()
-        } else if self.stage == .unfollowUser {
+        } else if self.state == .unfollowUser {
             self.unfollowUser()
         }
     }

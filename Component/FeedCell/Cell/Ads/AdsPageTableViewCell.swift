@@ -28,6 +28,8 @@
 import UIKit
 import Core
 import ActiveLabel
+import Networking
+import Kingfisher
 
 public protocol AdsPageTableViewCellDelegate {
     func didAuthen(_ adsPageTableViewCell: AdsPageTableViewCell)
@@ -45,6 +47,7 @@ public class AdsPageTableViewCell: UITableViewCell {
     
     public var delegate: AdsPageTableViewCellDelegate?
     private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
+    var isPreview: Bool = false
     
     public override func awakeFromNib() {
         super.awakeFromNib()
@@ -59,10 +62,10 @@ public class AdsPageTableViewCell: UITableViewCell {
             label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
         }
         
+        self.avatarImageView.circle(color: UIColor.Asset.white)
         self.verifyIcon.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)
         self.coverImageView.custom(cornerRadius: 10)
         self.coverImageView.image = UIImage.Asset.placeholder
-        self.avatarImageView.circle()
         self.avatarImageView.image = UIImage.Asset.userPlaceholder
         self.displayNameLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.displayNameLabel.textColor = UIColor.Asset.white
@@ -79,12 +82,34 @@ public class AdsPageTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    private func enableActiveLabel() {
-        self.detailLabel.handleHashtagTap { hashtag in
+    public func configAdsPreViewCell(page: Page, ads: Ads) {
+        self.isPreview = true
+        self.followButton.isHidden = false
+        self.detailLabel.text = ads.campaignMessage
+        let avatar = URL(string: page.avatar)
+        let cover = URL(string: page.cover)
+        self.avatarImageView.kf.setImage(with: avatar, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+        self.coverImageView.kf.setImage(with: cover, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
+        self.displayNameLabel.text = page.displayName
+        self.overviewLabel.text = page.overview
+        if page.official {
+            self.verifyIcon.isHidden = false
+        } else {
+            self.verifyIcon.isHidden = true
         }
+    }
+    
+    private func enableActiveLabel() {
         self.detailLabel.handleMentionTap { mention in
+            let userDict: [String: String] = [
+                "castcleId":  mention
+            ]
+            NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
         }
         self.detailLabel.handleURLTap { url in
+            if self.isPreview {
+                return
+            }
             var urlString = url.absoluteString
             urlString = urlString.replacingOccurrences(of: "https://", with: "")
             urlString = urlString.replacingOccurrences(of: "http://", with: "")
@@ -94,9 +119,18 @@ public class AdsPageTableViewCell: UITableViewCell {
                 return
             }
         }
+        self.detailLabel.handleCustomTap(for: self.customHashtag) { element in
+            let hashtagDict: [String: String] = [
+                "hashtag":  element
+            ]
+            NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
+        }
     }
     
     @IBAction func followAction(_ sender: Any) {
+        if self.isPreview {
+            return
+        }
         if UserManager.shared.isLogin {
             let alert = UIAlertController(title: "Error", message: "Waiting for implementation", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))

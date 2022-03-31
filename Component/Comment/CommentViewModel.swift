@@ -36,10 +36,10 @@ public final class CommentViewModel {
     var comments: [Comment] = []
     var commentRequest: CommentRequest = CommentRequest()
     let tokenHelper: TokenHelper = TokenHelper()
-    var stage: Stage = .none
+    var state: State = .none
     var commentId: String = ""
     
-    enum Stage {
+    enum State {
         case getComments
         case createComment
         case replyComment
@@ -56,7 +56,7 @@ public final class CommentViewModel {
     }
     
     public func getComments() {
-        self.stage = .getComments
+        self.state = .getComments
         self.commentRepository.getComments(contentId: self.content?.id ?? "") { (success, response, isRefreshToken)  in
             if success {
                 do {
@@ -75,7 +75,7 @@ public final class CommentViewModel {
     }
     
     public func createComment () {
-        self.stage = .createComment
+        self.state = .createComment
         self.commentRepository.createComment(contentId: self.content?.id ?? "", commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 self.getComments()
@@ -88,7 +88,7 @@ public final class CommentViewModel {
     }
     
     public func replyComment () {
-        self.stage = .replyComment
+        self.state = .replyComment
         self.commentRepository.replyComment(contentId: self.content?.id ?? "", commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 self.getComments()
@@ -101,7 +101,7 @@ public final class CommentViewModel {
     }
     
     public func likeComment () {
-        self.stage = .likeComment
+        self.state = .likeComment
         self.commentRepository.likedComment(contentId: self.content?.id ?? "", commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 print("Like success")
@@ -114,7 +114,7 @@ public final class CommentViewModel {
     }
     
     public func unlikeComment () {
-        self.stage = .unlikeComment
+        self.state = .unlikeComment
         self.commentRepository.unlikedComment(contentId: self.content?.id ?? "", commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 print("Unlike success")
@@ -131,15 +131,15 @@ public final class CommentViewModel {
 
 extension CommentViewModel: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        if self.stage == .getComments {
+        if self.state == .getComments {
             self.getComments()
-        } else if self.stage == .createComment {
+        } else if self.state == .createComment {
             self.createComment()
-        } else if self.stage == .replyComment {
+        } else if self.state == .replyComment {
             self.replyComment()
-        } else if self.stage == .likeComment {
+        } else if self.state == .likeComment {
             self.likeComment()
-        } else if self.stage == .unlikeComment {
+        } else if self.state == .unlikeComment {
             self.unlikeComment()
         }
     }

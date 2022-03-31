@@ -110,13 +110,11 @@ public class QuoteCastTextCell: UITableViewCell {
     
     public override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.avatarImage.circle(color: UIColor.Asset.white)
         self.displayNameLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.displayNameLabel.textColor = UIColor.Asset.white
         self.dateLabel.font = UIFont.asset(.regular, fontSize: .custom(size: 10))
         self.dateLabel.textColor = UIColor.Asset.lightGray
-        
         self.followButton.titleLabel?.font = UIFont.asset(.bold, fontSize: .overline)
         self.followButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
         self.verifyIcon.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)

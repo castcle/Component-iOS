@@ -55,12 +55,13 @@ public class HeaderTableViewCell: UITableViewCell {
     private var contentRepository: ContentRepository = ContentRepositoryImpl()
     private var reportRepository: ReportRepository = ReportRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
-    private var stage: Stage = .none
+    private var state: State = .none
     private var userRequest: UserRequest = UserRequest()
     private var reportRequest: ReportRequest = ReportRequest()
     private let realm = try! Realm()
+    var isPreview: Bool = false
     
-    enum Stage {
+    enum State {
         case deleteContent
         case followUser
         case unfollowUser
@@ -91,7 +92,8 @@ public class HeaderTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    public func configCell(feedType: FeedType, content: Content) {
+    public func configCell(feedType: FeedType, content: Content, isDefaultContent: Bool) {
+        self.isPreview = false
         self.content = content
         if let content = self.content {
             self.followButton.setTitle(Localization.contentDetail.follow.text, for: .normal)
@@ -127,12 +129,13 @@ public class HeaderTableViewCell: UITableViewCell {
                 }
 
                 self.displayNameLabel.text = authorRef.displayName
-                if feedType == .ads {
+                if isDefaultContent {
+                    self.dateLabel.text = "Introduction"
+                } else if feedType == .ads {
                     self.dateLabel.text = "Advertised"
                 } else {
                     self.dateLabel.text = content.postDate.timeAgoDisplay()
                 }
-                self.dateLabel.text = content.postDate.timeAgoDisplay()
                 
                 if authorRef.official {
                     self.verifyConstraintWidth.constant = 15.0
@@ -143,21 +146,45 @@ public class HeaderTableViewCell: UITableViewCell {
                 }
             } else {
                 self.avatarImage.image = UIImage.Asset.userPlaceholder
-                if feedType == .ads {
+                if isDefaultContent {
+                    self.dateLabel.text = "Introduction"
+                } else if feedType == .ads {
                     self.dateLabel.text = "Advertised"
                 }
                 self.displayNameLabel.text = "Castcle"
             }
         } else {
             self.avatarImage.image = UIImage.Asset.userPlaceholder
-            if feedType == .ads {
+            if isDefaultContent {
+                self.dateLabel.text = "Introduction"
+            } else if feedType == .ads {
                 self.dateLabel.text = "Advertised"
             }
             self.displayNameLabel.text = "Castcle"
         }
     }
     
+    public func configAdsPreViewCell(page: Page) {
+        self.isPreview = true
+        self.followButton.setTitle(Localization.contentDetail.follow.text, for: .normal)
+        let url = URL(string: page.avatar)
+        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+        self.followButton.isHidden = false
+        self.displayNameLabel.text = page.displayName
+        self.dateLabel.text = "Advertised"
+        if page.official {
+            self.verifyConstraintWidth.constant = 15.0
+            self.verifyIcon.isHidden = false
+        } else {
+            self.verifyConstraintWidth.constant = 0.0
+            self.verifyIcon.isHidden = true
+        }
+    }
+    
     @IBAction func followAction(_ sender: Any) {
+        if self.isPreview {
+            return
+        }
         if UserManager.shared.isLogin {
             guard let content = self.content else { return }
             if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
@@ -177,6 +204,9 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     @IBAction func viewProfileAction(_ sender: Any) {
+        if self.isPreview {
+            return
+        }
         if let content = self.content {
             if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
                 self.delegate?.didTabProfile(self, author: Author(authorRef: authorRef))
@@ -185,6 +215,9 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     @IBAction func moreAction(_ sender: Any) {
+        if self.isPreview {
+            return
+        }
         if let content = self.content {
             if ContentHelper.shared.isMyAccount(id: content.authorId) {
                 let actionSheet = CCActionSheet()
@@ -217,7 +250,7 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     private func deleteContent() {
-        self.stage = .deleteContent
+        self.state = .deleteContent
         guard let content = self.content else { return }
         self.delegate?.didRemoveSuccess(self)
         self.contentRepository.deleteContent(contentId: content.id) { (success, response, isRefreshToken) in
@@ -230,7 +263,7 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     private func reportContent() {
-        self.stage = .reportContent
+        self.state = .reportContent
         guard let content = self.content else { return }
         self.reportRequest.targetContentId = content.id
         self.reportRepository.reportContent(userId: UserManager.shared.rawCastcleId, reportRequest: self.reportRequest) { (success, response, isRefreshToken) in
@@ -245,10 +278,9 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     private func followUser() {
-        self.stage = .followUser
+        self.state = .followUser
         guard let content = self.content else { return }
         if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
-            let userId: String = UserManager.shared.rawCastcleId
             if content.referencedCasts.type == .recasted {
                 if let tempContent = ContentHelper.shared.getContentRef(id: content.referencedCasts.id) {
                     self.userRequest.targetCastcleId = tempContent.authorId
@@ -263,7 +295,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 NotificationCenter.default.post(name: .feedReloadContent, object: nil)
             }
             
-            self.userRepository.follow(userId: userId, userRequest: self.userRequest) { (success, response, isRefreshToken) in
+            self.userRepository.follow(userRequest: self.userRequest) { (success, response, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
@@ -276,10 +308,9 @@ public class HeaderTableViewCell: UITableViewCell {
     }
     
     private func unfollowUser() {
-        self.stage = .unfollowUser
+        self.state = .unfollowUser
         guard let content = self.content else { return }
         if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
-            let userId: String = UserManager.shared.rawCastcleId
             if content.participate.recasted {
                 if let tempContent = ContentHelper.shared.getContentRef(id: content.referencedCasts.id) {
                     self.userRequest.targetCastcleId = tempContent.authorId
@@ -294,7 +325,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 NotificationCenter.default.post(name: .feedReloadContent, object: nil)
             }
             
-            self.userRepository.unfollow(userId: userId, targetCastcleId: self.userRequest.targetCastcleId) { (success, response, isRefreshToken) in
+            self.userRepository.unfollow(targetCastcleId: self.userRequest.targetCastcleId) { (success, response, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
@@ -309,13 +340,13 @@ public class HeaderTableViewCell: UITableViewCell {
 
 extension HeaderTableViewCell: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        if self.stage == .deleteContent {
+        if self.state == .deleteContent {
             self.deleteContent()
-        } else if self.stage == .followUser {
+        } else if self.state == .followUser {
             self.followUser()
-        } else if self.stage == .unfollowUser {
+        } else if self.state == .unfollowUser {
             self.unfollowUser()
-        } else if self.stage == .reportContent {
+        } else if self.state == .reportContent {
             self.reportContent()
         }
     }
