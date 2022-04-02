@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Sync Auto Post View Controller-->
+        <scene sceneID="eke-5c-uPv">
+            <objects>
+                <viewController storyboardIdentifier="SyncAutoPostViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="9DT-An-cZH" customClass="SyncAutoPostViewController" customModule="Component" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="A5q-6S-jft">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view alpha="0.60000002384185791" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d4f-Uu-TIH">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mta-iY-RaT">
+                                <rect key="frame" x="20" y="24" width="280" height="520"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitter-auto-post" translatesAutoresizingMaskIntoConstraints="NO" id="tQX-y9-Bbv">
+                                        <rect key="frame" x="45" y="-10" width="190" height="220"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="190" id="6Ss-5K-4xp"/>
+                                            <constraint firstAttribute="height" constant="220" id="LUZ-Hi-ubX"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y4K-eJ-H5j">
+                                        <rect key="frame" x="20" y="450" width="240" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="u5Q-gQ-yl7"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="Next"/>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hi Everyone Welcome to Castcle !" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jo2-gr-ybq">
+                                        <rect key="frame" x="10" y="210" width="260" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kf9-kX-taN">
+                                        <rect key="frame" x="15" y="244.5" width="250" height="100.5"/>
+                                        <string key="text">Greetings from Team Castcle.  We encourage you to sync your Twitter with your Castcle profile to earn more CAST token from your Tweets. If you don’t want to proceed, please uncheck the checkbox below.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Auto-sync with Twitter, Your tweet on Twitter will automatically cast on your Castcle Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25r-jm-Mkk">
+                                        <rect key="frame" x="45" y="379" width="585" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="jo2-gr-ybq" firstAttribute="leading" secondItem="mta-iY-RaT" secondAttribute="leading" constant="10" id="7Fr-zH-twt"/>
+                                    <constraint firstAttribute="width" constant="280" id="C2v-N2-JBT"/>
+                                    <constraint firstItem="Kf9-kX-taN" firstAttribute="top" secondItem="jo2-gr-ybq" secondAttribute="bottom" constant="15" id="Jar-Hj-51m"/>
+                                    <constraint firstItem="jo2-gr-ybq" firstAttribute="top" secondItem="tQX-y9-Bbv" secondAttribute="bottom" id="Jz8-CD-IPe"/>
+                                    <constraint firstItem="tQX-y9-Bbv" firstAttribute="top" secondItem="mta-iY-RaT" secondAttribute="top" constant="-10" id="LLd-R3-X65"/>
+                                    <constraint firstAttribute="trailing" secondItem="Kf9-kX-taN" secondAttribute="trailing" constant="15" id="Lmi-zZ-oot"/>
+                                    <constraint firstItem="Y4K-eJ-H5j" firstAttribute="leading" secondItem="mta-iY-RaT" secondAttribute="leading" constant="20" id="Ns1-e4-g6h"/>
+                                    <constraint firstAttribute="trailing" secondItem="Y4K-eJ-H5j" secondAttribute="trailing" constant="20" id="RDQ-yS-Wfj"/>
+                                    <constraint firstAttribute="height" constant="520" id="SgY-7w-w4o"/>
+                                    <constraint firstItem="Kf9-kX-taN" firstAttribute="leading" secondItem="mta-iY-RaT" secondAttribute="leading" constant="15" id="dDY-ZK-sdT"/>
+                                    <constraint firstAttribute="trailing" secondItem="jo2-gr-ybq" secondAttribute="trailing" constant="10" id="dw7-JW-Hs1"/>
+                                    <constraint firstAttribute="bottom" secondItem="Y4K-eJ-H5j" secondAttribute="bottom" constant="20" id="n8D-1C-sEP"/>
+                                    <constraint firstItem="tQX-y9-Bbv" firstAttribute="centerX" secondItem="mta-iY-RaT" secondAttribute="centerX" id="rzM-6L-ymk"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="lE7-R7-mqc"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="d4f-Uu-TIH" secondAttribute="bottom" id="BuJ-Ek-ohu"/>
+                            <constraint firstItem="d4f-Uu-TIH" firstAttribute="top" secondItem="A5q-6S-jft" secondAttribute="top" id="GbW-oW-Sm3"/>
+                            <constraint firstItem="d4f-Uu-TIH" firstAttribute="leading" secondItem="A5q-6S-jft" secondAttribute="leading" id="Jz9-c6-1vZ"/>
+                            <constraint firstItem="mta-iY-RaT" firstAttribute="centerY" secondItem="A5q-6S-jft" secondAttribute="centerY" id="OTN-wC-xUG"/>
+                            <constraint firstItem="mta-iY-RaT" firstAttribute="centerX" secondItem="A5q-6S-jft" secondAttribute="centerX" id="XJB-pl-k9Z"/>
+                            <constraint firstAttribute="trailing" secondItem="d4f-Uu-TIH" secondAttribute="trailing" id="eaq-mG-Yd3"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eRP-jt-xZ0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="750" y="42.25352112676056"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="twitter-auto-post" width="1170" height="780"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

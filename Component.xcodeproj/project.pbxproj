@@ -42,6 +42,9 @@
 		B71B666F27251C0900191A62 /* SkeletonFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71B666D27251C0900191A62 /* SkeletonFeedTableViewCell.xib */; };
 		B7211E75279A84330018B3E5 /* SuggestionUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7211E73279A84330018B3E5 /* SuggestionUserTableViewCell.swift */; };
 		B7211E76279A84330018B3E5 /* SuggestionUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7211E74279A84330018B3E5 /* SuggestionUserTableViewCell.xib */; };
+		B74EBE2C27F7DA440024BB94 /* PublicPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B74EBE2A27F7DA440024BB94 /* PublicPopup.storyboard */; };
+		B74EBE2D27F7DA440024BB94 /* SyncAutoPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EBE2B27F7DA440024BB94 /* SyncAutoPostViewController.swift */; };
+		B74EBE3027F7DA4F0024BB94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B74EBE2F27F7DA4F0024BB94 /* Assets.xcassets */; };
 		B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */; };
 		B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552957269CBA14005D5EB5 /* FastAnimator.swift */; };
 		B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552958269CBA14005D5EB5 /* FastLayer.swift */; };
@@ -180,6 +183,9 @@
 		B71B666D27251C0900191A62 /* SkeletonFeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkeletonFeedTableViewCell.xib; sourceTree = "<group>"; };
 		B7211E73279A84330018B3E5 /* SuggestionUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionUserTableViewCell.swift; sourceTree = "<group>"; };
 		B7211E74279A84330018B3E5 /* SuggestionUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestionUserTableViewCell.xib; sourceTree = "<group>"; };
+		B74EBE2A27F7DA440024BB94 /* PublicPopup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PublicPopup.storyboard; sourceTree = "<group>"; };
+		B74EBE2B27F7DA440024BB94 /* SyncAutoPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncAutoPostViewController.swift; sourceTree = "<group>"; };
+		B74EBE2F27F7DA4F0024BB94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshAnimator.swift; sourceTree = "<group>"; };
 		B7552957269CBA14005D5EB5 /* FastAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastAnimator.swift; sourceTree = "<group>"; };
 		B7552958269CBA14005D5EB5 /* FastLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLayer.swift; sourceTree = "<group>"; };
@@ -363,6 +369,23 @@
 				B7211E74279A84330018B3E5 /* SuggestionUserTableViewCell.xib */,
 			);
 			path = Suggestion;
+			sourceTree = "<group>";
+		};
+		B74EBE2927F7DA440024BB94 /* PublicPopup */ = {
+			isa = PBXGroup;
+			children = (
+				B74EBE2A27F7DA440024BB94 /* PublicPopup.storyboard */,
+				B74EBE2B27F7DA440024BB94 /* SyncAutoPostViewController.swift */,
+			);
+			path = PublicPopup;
+			sourceTree = "<group>";
+		};
+		B74EBE2E27F7DA4F0024BB94 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				B74EBE2F27F7DA4F0024BB94 /* Assets.xcassets */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		B755294B269CB846005D5EB5 /* Refresh */ = {
@@ -586,9 +609,11 @@
 			children = (
 				B792815D268F2C30000ED84A /* Component.h */,
 				B792815E268F2C30000ED84A /* Info.plist */,
+				B74EBE2E27F7DA4F0024BB94 /* Assets */,
 				B7A15B212795C196001E34DE /* Localizable */,
 				B75529D1269F693C005D5EB5 /* Utilities */,
 				B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */,
+				B74EBE2927F7DA440024BB94 /* PublicPopup */,
 				B7E49ADC27F30FB60026C7F6 /* FarmingPopup */,
 				B786902A27CCA4570029EDFE /* UserToFollow */,
 				B7E64EC9275F637F00FFD78E /* Report */,
@@ -737,6 +762,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B74EBE2C27F7DA440024BB94 /* PublicPopup.storyboard in Resources */,
 				B786902E27CCA48E0029EDFE /* UserToFollowTableViewCell.xib in Resources */,
 				B71744B926E9EF850014D6B5 /* ImageX3TableViewCell.xib in Resources */,
 				B71744A326E7ED320014D6B5 /* ReplyTableViewCell.xib in Resources */,
@@ -761,6 +787,7 @@
 				B717449726E791070014D6B5 /* HeaderTableViewCell.xib in Resources */,
 				B7A15B262795C40C001E34DE /* Localizable.strings in Resources */,
 				B717449F26E7E1450014D6B5 /* CommentTableViewCell.xib in Resources */,
+				B74EBE3027F7DA4F0024BB94 /* Assets.xcassets in Resources */,
 				B78663552747AC4200B13EEF /* QuoteCastImageX1Cell.xib in Resources */,
 				B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */,
 				B784D50727B18698009087E5 /* SkeletonUserTableViewCell.xib in Resources */,
@@ -833,6 +860,7 @@
 				B7552972269CBA14005D5EB5 /* FastCheckLayer.swift in Sources */,
 				B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */,
 				B787963826C66EBD00FECC21 /* RecastPopupViewController.swift in Sources */,
+				B74EBE2D27F7DA440024BB94 /* SyncAutoPostViewController.swift in Sources */,
 				B75529A2269D8837005D5EB5 /* NSObject+ListDiffable.swift in Sources */,
 				B755297A269CBA14005D5EB5 /* RefreshBundle.swift in Sources */,
 				B755297C269CBA14005D5EB5 /* UIColorExtension.swift in Sources */,
