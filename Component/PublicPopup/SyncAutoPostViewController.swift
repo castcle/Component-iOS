@@ -26,12 +26,57 @@
 //
 
 import UIKit
+import Core
+import SwiftColor
 
 class SyncAutoPostViewController: UIViewController {
 
+    @IBOutlet var backgroundView: UIView!
+    @IBOutlet var popupView: UIView!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var detailLabel: UILabel!
+    @IBOutlet var syncLabel: UILabel!
+    @IBOutlet var closeButton: UIButton!
+    @IBOutlet var checkImage: UIImageView!
+    
+    var viewModel = SyncTwitterAutoPostViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.backgroundView.backgroundColor = UIColor.Asset.black
+        self.popupView.custom(color: UIColor.Asset.white, cornerRadius: 10)
+        self.titleLabel.font = UIFont.asset(.bold, fontSize: .body)
+        self.titleLabel.textColor = UIColor.Asset.black
+        self.detailLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.detailLabel.textColor = UIColor.Asset.black
+        self.syncLabel.font = UIFont.asset(.bold, fontSize: .small)
+        self.syncLabel.textColor = UIColor.Asset.black
+        self.closeButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .h4)
+        self.closeButton.setTitleColor(UIColor.Asset.white, for: .normal)
+        self.closeButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
+        self.closeButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
+        self.updateCheckBox()
+    }
+    
+    private func updateCheckBox() {
+        if self.viewModel.isSync {
+            self.checkImage.image = UIImage.init(icon: .castcle(.checkmark), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightBlue)
+            self.checkImage.custom(cornerRadius: 2, borderWidth: 1, borderColor: UIColor.Asset.gray)
+        } else {
+            self.checkImage.image = UIImage()
+            self.checkImage.custom(cornerRadius: 2, borderWidth: 1, borderColor: UIColor.Asset.gray)
+        }
+    }
+    
+    @IBAction func closeAction(_ sender: Any) {
+        if self.viewModel.isSync {
+            self.viewModel.syncSocial()
+        }
+        self.dismiss(animated: true)
+    }
+    
+    @IBAction func checkAction(_ sender: Any) {
+        self.viewModel.isSync.toggle()
+        self.updateCheckBox()
     }
 }
