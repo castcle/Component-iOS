@@ -38,6 +38,7 @@ public enum ComponentScene {
     case farmingPopup(FarmingPopupViewModel)
     case farmingLimitPopup
     case syncAutoPostTwitter(SyncTwitterAutoPostViewModel)
+    case acceptSyncSocialPopup(AcceptSyncSocialPopupViewModel)
 }
 
 public struct ComponentOpener {
@@ -87,6 +88,11 @@ public struct ComponentOpener {
             let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.syncAutoPostTwitter) as? SyncAutoPostViewController
             vc?.viewModel = viewModel
             return vc ?? SyncAutoPostViewController()
+        case .acceptSyncSocialPopup(let viewModel):
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.publicPopup, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.acceptSyncSocialPopup) as? AcceptSyncSocialPopupViewController
+            vc?.viewModel = viewModel
+            return vc ?? AcceptSyncSocialPopupViewController()
         }
     }
 }

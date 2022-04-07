@@ -119,6 +119,8 @@
 		B7AC880827199BA500500F81 /* HandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880727199BA500500F81 /* HandleView.swift */; };
 		B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */; };
 		B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */; };
+		B7D4BC1C27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D4BC1B27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift */; };
+		B7D4BC1E27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D4BC1D27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift */; };
 		B7E49ADE27F30FD60026C7F6 /* FarmingPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7E49ADD27F30FD60026C7F6 /* FarmingPopup.storyboard */; };
 		B7E49AE027F310150026C7F6 /* FarmingPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */; };
 		B7E49AE227F3101D0026C7F6 /* FarmingPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */; };
@@ -267,6 +269,8 @@
 		B7AC880727199BA500500F81 /* HandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleView.swift; sourceTree = "<group>"; };
 		B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
+		B7D4BC1B27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptSyncSocialPopupViewController.swift; sourceTree = "<group>"; };
+		B7D4BC1D27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptSyncSocialPopupViewModel.swift; sourceTree = "<group>"; };
 		B7E49ADD27F30FD60026C7F6 /* FarmingPopup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FarmingPopup.storyboard; sourceTree = "<group>"; };
 		B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FarmingPopupViewController.swift; sourceTree = "<group>"; };
 		B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FarmingPopupViewModel.swift; sourceTree = "<group>"; };
@@ -379,8 +383,8 @@
 			isa = PBXGroup;
 			children = (
 				B74EBE2A27F7DA440024BB94 /* PublicPopup.storyboard */,
-				B74EBE2B27F7DA440024BB94 /* SyncAutoPostViewController.swift */,
-				B797240A27FAACA300111F24 /* SyncTwitterAutoPostViewModel.swift */,
+				B7D4BC1A27FEF215008ACD9F /* ViewModel */,
+				B7D4BC1927FEF1C4008ACD9F /* ViewController */,
 			);
 			path = PublicPopup;
 			sourceTree = "<group>";
@@ -656,6 +660,24 @@
 			path = CastcleActionSheet;
 			sourceTree = "<group>";
 		};
+		B7D4BC1927FEF1C4008ACD9F /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B74EBE2B27F7DA440024BB94 /* SyncAutoPostViewController.swift */,
+				B7D4BC1B27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		B7D4BC1A27FEF215008ACD9F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B797240A27FAACA300111F24 /* SyncTwitterAutoPostViewModel.swift */,
+				B7D4BC1D27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		B7E49ADC27F30FB60026C7F6 /* FarmingPopup */ = {
 			isa = PBXGroup;
 			children = (
@@ -877,6 +899,7 @@
 				B71B666E27251C0900191A62 /* SkeletonFeedTableViewCell.swift in Sources */,
 				B7A71D0126FC4E380092F318 /* FeedCellHelper.swift in Sources */,
 				B78663502747AC4200B13EEF /* QuoteCastTextLinkCell.swift in Sources */,
+				B7D4BC1E27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift in Sources */,
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
 				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,
@@ -922,6 +945,7 @@
 				B756C8A3277337C1007AADE4 /* TableView.swift in Sources */,
 				B786635F2747AC4200B13EEF /* QuoteCastImageX1Cell.swift in Sources */,
 				B7AC880427199B4700500F81 /* CCAction.swift in Sources */,
+				B7D4BC1C27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift in Sources */,
 				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,
 				B755297D269CBA15005D5EB5 /* RefreshExtension.swift in Sources */,
 				B7AC880227199B0F00500F81 /* CastcleActionSheetExtensions.swift in Sources */,
