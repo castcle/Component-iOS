@@ -249,12 +249,12 @@ extension CommentViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.reply, for: indexPath as IndexPath) as? ReplyTableViewCell
                 cell?.backgroundColor = UIColor.Asset.darkGraphiteBlue
                 cell?.delegate = self
+                cell?.configCell(replyCommentId: comment.reply[indexPath.row - 1])
                 if comment.isFirst {
                     cell?.lineView.isHidden = false
                 } else {
                     cell?.lineView.isHidden = true
                 }
-                cell?.replyComment = comment.reply[indexPath.row - 1]
                 return cell ?? ReplyTableViewCell()
             }
         }
@@ -298,10 +298,12 @@ extension CommentViewController: FooterTableViewCellDelegate {
 }
 
 extension CommentViewController: CommentTableViewCellDelegate {
-    func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
+    func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment, castcleId: String) {
         self.event = .reply
         self.viewModel.commentId = comment.id
-        self.commentTextField.text = "@\(comment.author.castcleId) "
+        if !castcleId.isEmpty {
+            self.commentTextField.text = "@\(castcleId) "
+        }
         self.commentTextField.becomeFirstResponder()
     }
     
@@ -324,17 +326,17 @@ extension CommentViewController: CommentTableViewCellDelegate {
 }
 
 extension CommentViewController: ReplyTableViewCellDelegate {
-    func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
+    func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef) {
         self.commentTextField.text = "\(replyComment.message)"
         self.commentTextField.becomeFirstResponder()
     }
     
-    func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
+    func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef) {
         self.viewModel.commentId = replyComment.id
         self.viewModel.likeComment()
     }
     
-    func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
+    func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef) {
         self.viewModel.commentId = replyComment.id
         self.viewModel.unlikeComment()
     }

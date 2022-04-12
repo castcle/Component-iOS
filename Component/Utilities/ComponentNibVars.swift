@@ -36,7 +36,7 @@ public struct ComponentNibVars {
         public static let reportSuccess = "ReportSuccessViewController"
         public static let farmingPopup = "FarmingPopupViewController"
         public static let syncAutoPostTwitter = "SyncAutoPostViewController"
-        
+        public static let acceptSyncSocialPopup = "AcceptSyncSocialPopupViewController"
     }
     
     // MARK: - View

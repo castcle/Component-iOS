@@ -31,9 +31,9 @@ import Networking
 import ActiveLabel
 
 protocol ReplyTableViewCellDelegate {
-    func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment)
-    func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment)
-    func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment)
+    func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef)
+    func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef)
+    func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef)
 }
 
 class ReplyTableViewCell: UITableViewCell {
@@ -56,40 +56,9 @@ class ReplyTableViewCell: UITableViewCell {
         }
     }
     
-    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
-    var replyComment: ReplyComment? {
-        didSet {
-            guard let replyComment = self.replyComment else { return }
-            self.commentLabel.text = replyComment.message
-            
-            let url = URL(string: replyComment.author.avatar.thumbnail)
-            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-            self.displayNameLabel.text = replyComment.author.displayName
-            self.dateLabel.text = replyComment.replyDate.timeAgoDisplay()
-            self.commentLabel.customColor[self.customHashtag] = UIColor.Asset.lightBlue
-            self.commentLabel.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
-            
-            self.commentLabel.handleCustomTap(for: self.customHashtag) { element in
-                let hashtagDict: [String: String] = [
-                    "hashtag":  element
-                ]
-                NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
-            }
-            self.commentLabel.handleMentionTap { mention in
-                let userDict: [String: String] = [
-                    "castcleId":  mention
-                ]
-                NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
-            }
-            self.commentLabel.handleURLTap { url in
-                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
-            }
-            
-            self.updateUi(isAction: false)
-        }
-    }
-    
     var delegate: ReplyTableViewCellDelegate?
+    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
+    private var commentRef = CommentRef()
     private var isShowActionSheet: Bool = false
     
     override func awakeFromNib() {
@@ -109,6 +78,45 @@ class ReplyTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    func configCell(replyCommentId: String) {
+        if let commentRef = CommentHelper.shared.getCommentRef(id: replyCommentId) {
+            self.commentRef = commentRef
+            self.commentLabel.text =  self.commentRef.message
+
+            if let authorRef = ContentHelper.shared.getAuthorRef(id: self.commentRef.authorId) {
+                let url = URL(string: UserManager.shared.avatar)
+                self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                self.displayNameLabel.text = authorRef.displayName
+            } else {
+                self.avatarImage.image = UIImage.Asset.userPlaceholder
+                self.displayNameLabel.text = "Castcle"
+            }
+            
+            self.dateLabel.text = self.commentRef.commentDate.timeAgoDisplay()
+            self.commentLabel.customColor[self.customHashtag] = UIColor.Asset.lightBlue
+            self.commentLabel.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
+
+            self.commentLabel.handleCustomTap(for: self.customHashtag) { element in
+                let hashtagDict: [String: String] = [
+                    "hashtag":  element
+                ]
+                NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
+            }
+            self.commentLabel.handleMentionTap { mention in
+                let userDict: [String: String] = [
+                    "castcleId":  mention
+                ]
+                NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
+            }
+            self.commentLabel.handleURLTap { url in
+                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
+            }
+            self.updateUi(isAction: false)
+        } else {
+            return
+        }
+    }
+    
     @objc func longPressed(sender: UILongPressGestureRecognizer) {
         if !self.isShowActionSheet {
             self.isShowActionSheet = true
@@ -117,12 +125,10 @@ class ReplyTableViewCell: UITableViewCell {
     }
     
     private func showActionSheet() {
-        guard let replyComment = self.replyComment else { return }
-        
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Edit", style: .default , handler: { (UIAlertAction) in
             self.isShowActionSheet = false
-            self.delegate?.didEdit(self, replyComment: replyComment)
+            self.delegate?.didEdit(self, replyComment: self.commentRef)
         }))
         
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler: { (UIAlertAction) in
@@ -143,18 +149,16 @@ class ReplyTableViewCell: UITableViewCell {
     
     @IBAction func likeAction(_ sender: Any) {
         if UserManager.shared.isLogin {
-            guard let replyComment = self.replyComment else { return }
-
-            if replyComment.participate.liked {
-                self.delegate?.didUnliked(self, replyComment: replyComment)
+            if self.commentRef.liked {
+                self.delegate?.didUnliked(self, replyComment: self.commentRef)
             } else {
-                self.delegate?.didLiked(self, replyComment: replyComment)
+                self.delegate?.didLiked(self, replyComment: self.commentRef)
             }
 
-            replyComment.participate.liked.toggle()
+            self.commentRef.liked.toggle()
             self.updateUi(isAction: true)
             
-            if replyComment.participate.liked {
+            if self.commentRef.liked {
                 let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
                 impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
                 impliesAnimation.duration = 0.3 * 2
@@ -165,11 +169,9 @@ class ReplyTableViewCell: UITableViewCell {
     }
     
     private func updateUi(isAction: Bool) {
-        guard let replyComment = self.replyComment else { return }
-        
         self.likeLabel.font = UIFont.asset(.regular, fontSize: .small)
-        var likeCount = replyComment.metrics.likeCount
-        if replyComment.participate.liked {
+        var likeCount = self.commentRef.likeCount
+        if self.commentRef.liked {
             if isAction {
                 likeCount += 1
             }

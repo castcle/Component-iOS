@@ -31,7 +31,7 @@ import Networking
 import ActiveLabel
 
 protocol CommentTableViewCellDelegate {
-    func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
+    func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment, castcleId: String)
     func didEdit(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
     func didLiked(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
     func didUnliked(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
@@ -64,10 +64,16 @@ class CommentTableViewCell: UITableViewCell {
         didSet {
             guard let comment = self.comment else { return }
             self.commentLabel.text = comment.message
-            
-            let url = URL(string: comment.author.avatar.thumbnail)
-            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-            self.displayNameLabel.text = comment.author.displayName
+            if let authorRef = ContentHelper.shared.getAuthorRef(id: comment.authorId) {
+                let url = URL(string: UserManager.shared.avatar)
+                self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                self.displayNameLabel.text = authorRef.displayName
+                
+            } else {
+                self.avatarImage.image = UIImage.Asset.userPlaceholder
+                self.displayNameLabel.text = "Castcle"
+            }
+
             self.dateLabel.text = comment.commentDate.timeAgoDisplay()
             self.commentLabel.customColor[self.customHashtag] = UIColor.Asset.lightBlue
             self.commentLabel.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
@@ -129,7 +135,11 @@ class CommentTableViewCell: UITableViewCell {
         
         alert.addAction(UIAlertAction(title: "Reply", style: .default , handler: { (UIAlertAction) in
             self.isShowActionSheet = false
-            self.delegate?.didReply(self, comment: comment)
+            if let authorRef = ContentHelper.shared.getAuthorRef(id: comment.authorId) {
+                self.delegate?.didReply(self, comment: comment, castcleId: authorRef.castcleId)
+            } else {
+                self.delegate?.didReply(self, comment: comment, castcleId: "")
+            }
         }))
         
         alert.addAction(UIAlertAction(title: "Edit", style: .default , handler: { (UIAlertAction) in
@@ -153,7 +163,11 @@ class CommentTableViewCell: UITableViewCell {
     }
     @IBAction func replyAction(_ sender: Any) {
         guard let comment = self.comment else { return }
-        self.delegate?.didReply(self, comment: comment)
+        if let authorRef = ContentHelper.shared.getAuthorRef(id: comment.authorId) {
+            self.delegate?.didReply(self, comment: comment, castcleId: authorRef.castcleId)
+        } else {
+            self.delegate?.didReply(self, comment: comment, castcleId: "")
+        }
     }
     
     @IBAction func likeAction(_ sender: Any) {

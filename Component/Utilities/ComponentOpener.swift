@@ -37,10 +37,10 @@ public enum ComponentScene {
     case reportSuccess(Bool, String)
     case farmingPopup(FarmingPopupViewModel)
     case syncAutoPostTwitter(SyncTwitterAutoPostViewModel)
+    case acceptSyncSocialPopup(AcceptSyncSocialPopupViewModel)
 }
 
 public struct ComponentOpener {
-    
     public static func open(_ componentScene: ComponentScene) -> UIViewController {
         switch componentScene {
         case .internalWebView(let url):
@@ -82,6 +82,11 @@ public struct ComponentOpener {
             let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.syncAutoPostTwitter) as? SyncAutoPostViewController
             vc?.viewModel = viewModel
             return vc ?? SyncAutoPostViewController()
+        case .acceptSyncSocialPopup(let viewModel):
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.publicPopup, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.acceptSyncSocialPopup) as? AcceptSyncSocialPopupViewController
+            vc?.viewModel = viewModel
+            return vc ?? AcceptSyncSocialPopupViewController()
         }
     }
 }
