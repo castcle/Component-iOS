@@ -84,7 +84,7 @@ class ReplyTableViewCell: UITableViewCell {
             self.commentLabel.text =  self.commentRef.message
 
             if let authorRef = ContentHelper.shared.getAuthorRef(id: self.commentRef.authorId) {
-                let url = URL(string: UserManager.shared.avatar)
+                let url = URL(string: authorRef.avatar)
                 self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                 self.displayNameLabel.text = authorRef.displayName
             } else {

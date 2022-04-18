@@ -65,7 +65,7 @@ class CommentTableViewCell: UITableViewCell {
             guard let comment = self.comment else { return }
             self.commentLabel.text = comment.message
             if let authorRef = ContentHelper.shared.getAuthorRef(id: comment.authorId) {
-                let url = URL(string: UserManager.shared.avatar)
+                let url = URL(string: authorRef.avatar)
                 self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                 self.displayNameLabel.text = authorRef.displayName
                 
