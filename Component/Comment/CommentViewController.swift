@@ -145,9 +145,6 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         self.tableView.keyboardDismissMode = .interactive
         self.viewModel.didLoadCommentsFinish = {
             self.hud.dismiss()
-            if self.viewModel.isReset {
-                self.tableView.cr.resetNoMore()
-            }
             self.event = .create
             UIView.transition(with: self.tableView,
                               duration: 0.35,
@@ -162,7 +159,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
                 self.tableView.cr.noticeNoMoreData()
             } else {
                 self.viewModel.commentRequest.untilId = self.viewModel.meta.oldestId
-                self.viewModel.getComments(isReset: false)
+                self.viewModel.getComments()
             }
         }
     }

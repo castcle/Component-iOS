@@ -29,6 +29,7 @@ import Core
 import Networking
 import Moya
 import SwiftyJSON
+import RealmSwift
 
 public final class CommentViewModel {
     
@@ -39,7 +40,6 @@ public final class CommentViewModel {
     let tokenHelper: TokenHelper = TokenHelper()
     var state: State = .none
     var commentId: String = ""
-    var isReset: Bool = false
     var meta: Meta = Meta()
     
     enum State {
@@ -55,13 +55,12 @@ public final class CommentViewModel {
         if let content = content {
             self.content = content
             self.comments = []
-            self.getComments(isReset: true)
+            self.getComments()
         }
     }
     
-    public func getComments(isReset: Bool) {
+    public func getComments() {
         self.state = .getComments
-        self.isReset = isReset
         self.commentRepository.getComments(contentId: self.content?.id ?? "", commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 do {
@@ -70,6 +69,7 @@ public final class CommentViewModel {
                     let commentPayload = CommentPayload(json: json)
                     self.comments.append(contentsOf: commentPayload.payload)
                     self.meta = commentPayload.meta
+                    self.modifyCommentData()
                     self.didLoadCommentsFinish?()
                 } catch {}
             } else {
@@ -84,9 +84,23 @@ public final class CommentViewModel {
         self.state = .createComment
         self.commentRepository.createComment(castcleId: UserManager.shared.rawCastcleId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
-                self.commentRequest.untilId = ""
-                self.comments = []
-                self.getComments(isReset: true)
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    let comment = Comment(json: JSON(json[JsonKey.payload.rawValue].dictionaryValue))
+                    let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
+                    let users = includes[JsonKey.users.rawValue].arrayValue
+                    let realm = try! Realm()
+                    users.forEach { user in
+                        try! realm.write {
+                            let authorRef = AuthorRef().initCustom(json: user)
+                            realm.add(authorRef, update: .modified)
+                        }
+                    }
+                    self.comments.insert(comment, at: 0)
+                    self.modifyCommentData()
+                    self.didLoadCommentsFinish?()
+                } catch {}
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
@@ -99,9 +113,30 @@ public final class CommentViewModel {
         self.state = .replyComment
         self.commentRepository.replyComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
-                self.commentRequest.untilId = ""
-                self.comments = []
-                self.getComments(isReset: true)
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    let commentJson = JSON(json[JsonKey.payload.rawValue].dictionaryValue)
+                    let replyId = commentJson["id"].stringValue
+                    let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
+                    let users = includes[JsonKey.users.rawValue].arrayValue
+                    let realm = try! Realm()
+                    try! realm.write {
+                        let commentRef = CommentRef().initCustom(json: commentJson)
+                        realm.add(commentRef, update: .modified)
+                    }
+                    users.forEach { user in
+                        try! realm.write {
+                            let authorRef = AuthorRef().initCustom(json: user)
+                            realm.add(authorRef, update: .modified)
+                        }
+                    }
+                    if let index = self.comments.firstIndex(where: { $0.id == self.commentId }) {
+                        self.comments[index].reply.append(replyId)
+                        self.modifyCommentData()
+                        self.didLoadCommentsFinish?()
+                    }
+                } catch {}
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
@@ -137,12 +172,32 @@ public final class CommentViewModel {
     }
     
     var didLoadCommentsFinish: (() -> ())?
+    
+    private func modifyCommentData() {
+        for index in (0..<self.comments.count) {
+            if index == 0 {
+                if self.comments.count == 1 {
+                    self.comments[index].isFirst = false
+                    self.comments[index].isLast = true
+                } else {
+                    self.comments[index].isFirst = true
+                    self.comments[index].isLast = false
+                }
+            } else if index == (self.comments.count - 1) {
+                self.comments[index].isFirst = false
+                self.comments[index].isLast = true
+            } else {
+                self.comments[index].isFirst = false
+                self.comments[index].isLast = false
+            }
+        }
+    }
 }
 
 extension CommentViewModel: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
         if self.state == .getComments {
-            self.getComments(isReset: self.isReset)
+            self.getComments()
         } else if self.state == .createComment {
             self.createComment()
         } else if self.state == .replyComment {
