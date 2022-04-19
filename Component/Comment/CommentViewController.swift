@@ -113,7 +113,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     @objc func handleSend() {
         self.hud.show(in: self.view)
         self.viewModel.commentRequest.message = self.commentTextField.text
-        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
+        self.viewModel.commentRequest.contentId = self.viewModel.content?.id ?? ""
         
         if self.event == .create {
             self.viewModel.createComment()
@@ -145,6 +145,9 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         self.tableView.keyboardDismissMode = .interactive
         self.viewModel.didLoadCommentsFinish = {
             self.hud.dismiss()
+            if self.viewModel.isReset {
+                self.tableView.cr.resetNoMore()
+            }
             self.event = .create
             UIView.transition(with: self.tableView,
                               duration: 0.35,
@@ -152,6 +155,16 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
                               animations: { self.tableView.reloadData() })
         }
         self.hud.textLabel.text = "Commenting"
+        
+        self.tableView.cr.addFootRefresh(animator: NormalFooterAnimator()) { [weak self] in
+            guard let self = self else { return }
+            if self.viewModel.meta.resultCount < self.viewModel.commentRequest.maxResults {
+                self.tableView.cr.noticeNoMoreData()
+            } else {
+                self.viewModel.commentRequest.untilId = self.viewModel.meta.oldestId
+                self.viewModel.getComments(isReset: false)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

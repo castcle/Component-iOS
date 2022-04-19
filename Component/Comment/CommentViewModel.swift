@@ -25,6 +25,7 @@
 //  Created by Castcle Co., Ltd. on 2/9/2564 BE.
 //
 
+import Core
 import Networking
 import Moya
 import SwiftyJSON
@@ -38,6 +39,8 @@ public final class CommentViewModel {
     let tokenHelper: TokenHelper = TokenHelper()
     var state: State = .none
     var commentId: String = ""
+    var isReset: Bool = false
+    var meta: Meta = Meta()
     
     enum State {
         case getComments
@@ -51,19 +54,22 @@ public final class CommentViewModel {
     public init(content: Content? = nil) {
         if let content = content {
             self.content = content
-            self.getComments()
+            self.comments = []
+            self.getComments(isReset: true)
         }
     }
     
-    public func getComments() {
+    public func getComments(isReset: Bool) {
         self.state = .getComments
-        self.commentRepository.getComments(contentId: self.content?.id ?? "") { (success, response, isRefreshToken)  in
+        self.isReset = isReset
+        self.commentRepository.getComments(contentId: self.content?.id ?? "", commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let commentPayload = CommentPayload(json: json)
-                    self.comments = commentPayload.payload
+                    self.comments.append(contentsOf: commentPayload.payload)
+                    self.meta = commentPayload.meta
                     self.didLoadCommentsFinish?()
                 } catch {}
             } else {
@@ -76,9 +82,11 @@ public final class CommentViewModel {
     
     public func createComment () {
         self.state = .createComment
-        self.commentRepository.createComment(contentId: self.content?.id ?? "", commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
+        self.commentRepository.createComment(castcleId: UserManager.shared.rawCastcleId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
-                self.getComments()
+                self.commentRequest.untilId = ""
+                self.comments = []
+                self.getComments(isReset: true)
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
@@ -89,9 +97,11 @@ public final class CommentViewModel {
     
     public func replyComment () {
         self.state = .replyComment
-        self.commentRepository.replyComment(contentId: self.content?.id ?? "", commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
+        self.commentRepository.replyComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
-                self.getComments()
+                self.commentRequest.untilId = ""
+                self.comments = []
+                self.getComments(isReset: true)
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
@@ -132,7 +142,7 @@ public final class CommentViewModel {
 extension CommentViewModel: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
         if self.state == .getComments {
-            self.getComments()
+            self.getComments(isReset: self.isReset)
         } else if self.state == .createComment {
             self.createComment()
         } else if self.state == .replyComment {
