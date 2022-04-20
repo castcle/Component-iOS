@@ -61,14 +61,6 @@ public class HeaderTableViewCell: UITableViewCell {
     private let realm = try! Realm()
     var isPreview: Bool = false
     
-    enum State {
-        case deleteContent
-        case followUser
-        case unfollowUser
-        case reportContent
-        case none
-    }
-    
     private var content: Content?
     
     public override func awakeFromNib() {

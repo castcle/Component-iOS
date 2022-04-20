@@ -39,13 +39,6 @@ final class SplashScreenViewModel {
     private var masterDataRepository: MasterDataRepository = MasterDataRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
     private var state: State = .none
-    
-    enum State {
-        case login
-        case refreshToken
-        case getCountryCode
-        case none
-    }
 
     public func guestLogin() {
         self.state = .login
@@ -63,7 +56,7 @@ final class SplashScreenViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let payload = json[FeedShelfKey.payload.rawValue].arrayValue
+                    let payload = json[JsonKey.payload.rawValue].arrayValue
                     let realm = try! Realm()
                     payload.forEach { item in
                         try! realm.write {

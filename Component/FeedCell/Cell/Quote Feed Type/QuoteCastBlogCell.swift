@@ -85,8 +85,9 @@ public class QuoteCastBlogCell: UITableViewCell {
                     }
                 } else {
                     let realm = try! Realm()
-                    if realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first != nil {
-                        self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: authorRef.castcleId, type: .avatar)
+                    if let page = realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first {
+                        let url = URL(string: page.avatar)
+                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                         self.followButton.isHidden = true
                     } else {
                         let url = URL(string: authorRef.avatar)

@@ -43,17 +43,6 @@ public final class CommentViewModel {
     var replyId: String = ""
     var meta: Meta = Meta()
     
-    enum State {
-        case getComments
-        case createComment
-        case replyComment
-        case likeComment
-        case unlikeComment
-        case deleteComment
-        case deleteReplyComment
-        case none
-    }
-    
     public init(content: Content? = nil) {
         if let content = content {
             self.content = content
