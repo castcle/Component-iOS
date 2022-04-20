@@ -219,7 +219,7 @@ public class HeaderTableViewCell: UITableViewCell {
             return
         }
         if let content = self.content {
-            if ContentHelper.shared.isMyAccount(id: content.authorId) {
+            if UserHelper.shared.isMyAccount(id: content.authorId) {
                 let actionSheet = CCActionSheet()
                 let deleteButton = CCAction(title: Localization.contentAction.delete.text, image: UIImage.init(icon: .castcle(.delete), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
                     actionSheet.dismissActionSheet()

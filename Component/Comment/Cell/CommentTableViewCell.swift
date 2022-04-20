@@ -33,6 +33,7 @@ import ActiveLabel
 protocol CommentTableViewCellDelegate {
     func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment, castcleId: String)
     func didEdit(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
+    func didDelete(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
     func didLiked(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
     func didUnliked(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
 }
@@ -130,36 +131,31 @@ class CommentTableViewCell: UITableViewCell {
     
     private func showActionSheet() {
         guard let comment = self.comment else { return }
-        
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Reply", style: .default , handler: { (UIAlertAction) in
+        let actionSheet = CCActionSheet(isGestureDismiss: false)
+        let cancelButton = CCAction(title: "Cancel", image: UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+            actionSheet.dismissActionSheet()
+            self.isShowActionSheet = false
+        }
+        actionSheet.addActions([cancelButton])
+        if UserHelper.shared.isMyAccount(id: comment.authorId) {
+            let deleteButton = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.deleteOne), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                actionSheet.dismissActionSheet()
+                self.isShowActionSheet = false
+                self.delegate?.didDelete(self, comment: comment)
+            }
+            actionSheet.addActions([deleteButton])
+        }
+        let replyButton = CCAction(title: "Reply", image: UIImage.init(icon: .castcle(.rightBack), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+            actionSheet.dismissActionSheet()
             self.isShowActionSheet = false
             if let authorRef = ContentHelper.shared.getAuthorRef(id: comment.authorId) {
                 self.delegate?.didReply(self, comment: comment, castcleId: authorRef.castcleId)
             } else {
                 self.delegate?.didReply(self, comment: comment, castcleId: "")
             }
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Edit", style: .default , handler: { (UIAlertAction) in
-            self.isShowActionSheet = false
-            self.delegate?.didEdit(self, comment: comment)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler: { (UIAlertAction) in
-            self.isShowActionSheet = false
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in
-            self.isShowActionSheet = false
-            print("User click Cancel button")
-        }))
-
-        // uncomment for iPad Support
-        // alert.popoverPresentationController?.sourceView = self.view
-
-        Utility.currentViewController().present(alert, animated: true)
+        }
+        actionSheet.addActions([replyButton])
+        Utility.currentViewController().present(actionSheet, animated: true)
     }
     @IBAction func replyAction(_ sender: Any) {
         guard let comment = self.comment else { return }
@@ -173,7 +169,6 @@ class CommentTableViewCell: UITableViewCell {
     @IBAction func likeAction(_ sender: Any) {
         if UserManager.shared.isLogin {
             guard let comment = self.comment else { return }
-
             if comment.participate.liked {
                 self.delegate?.didUnliked(self, comment: comment)
             } else {

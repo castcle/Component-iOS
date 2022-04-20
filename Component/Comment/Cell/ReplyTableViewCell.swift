@@ -32,6 +32,7 @@ import ActiveLabel
 
 protocol ReplyTableViewCellDelegate {
     func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef)
+    func didDelete(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef, masterCommentId: String)
     func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef)
     func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef)
 }
@@ -60,6 +61,7 @@ class ReplyTableViewCell: UITableViewCell {
     private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     private var commentRef = CommentRef()
     private var isShowActionSheet: Bool = false
+    private var masterCommentId: String = ""
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -78,7 +80,8 @@ class ReplyTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configCell(replyCommentId: String) {
+    func configCell(replyCommentId: String, masterCommentId: String) {
+        self.masterCommentId = masterCommentId
         if let commentRef = CommentHelper.shared.getCommentRef(id: replyCommentId) {
             self.commentRef = commentRef
             self.commentLabel.text =  self.commentRef.message
@@ -118,33 +121,28 @@ class ReplyTableViewCell: UITableViewCell {
     }
     
     @objc func longPressed(sender: UILongPressGestureRecognizer) {
-        if !self.isShowActionSheet {
-            self.isShowActionSheet = true
-            self.showActionSheet()
+        if UserHelper.shared.isMyAccount(id: self.commentRef.authorId) {
+            if !self.isShowActionSheet {
+                self.isShowActionSheet = true
+                self.showActionSheet()
+            }
         }
     }
     
     private func showActionSheet() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Edit", style: .default , handler: { (UIAlertAction) in
+        let actionSheet = CCActionSheet(isGestureDismiss: false)
+        let cancelButton = CCAction(title: "Cancel", image: UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+            actionSheet.dismissActionSheet()
             self.isShowActionSheet = false
-            self.delegate?.didEdit(self, replyComment: self.commentRef)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler: { (UIAlertAction) in
+        }
+        actionSheet.addActions([cancelButton])
+        let deleteButton = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.deleteOne), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+            actionSheet.dismissActionSheet()
             self.isShowActionSheet = false
-            print("User click Delete button")
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in
-            self.isShowActionSheet = false
-            print("User click Cancel button")
-        }))
-
-        // uncomment for iPad Support
-        // alert.popoverPresentationController?.sourceView = self.view
-
-        Utility.currentViewController().present(alert, animated: true)
+            self.delegate?.didDelete(self, replyComment: self.commentRef, masterCommentId: self.masterCommentId)
+        }
+        actionSheet.addActions([deleteButton])
+        Utility.currentViewController().present(actionSheet, animated: true)
     }
     
     @IBAction func likeAction(_ sender: Any) {

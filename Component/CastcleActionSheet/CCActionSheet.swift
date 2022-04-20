@@ -40,6 +40,7 @@ public class CCActionSheet: UIViewController {
     let backgroundView = UIView()
     let stackView = UIStackView()
     let handleView = HandleView()
+    var isGestureDismiss: Bool = true
     
     // MARK: - Views
     var alertView: UIView!
@@ -62,6 +63,12 @@ public class CCActionSheet: UIViewController {
     public init() {
         super.init(nibName: nil, bundle: nil)
         self.customInit()
+    }
+    
+    public init(isGestureDismiss: Bool) {
+        super.init(nibName: nil, bundle: nil)
+        self.customInit()
+        self.isGestureDismiss = isGestureDismiss
     }
     
     private func customInit() {
@@ -88,7 +95,6 @@ public class CCActionSheet: UIViewController {
     
     public func addActions(_ actions: [CCAction]) {
         self.actions.unsheft(contentsOf: actions)
-        
     }
     
     // MARK: - Setups
@@ -97,7 +103,9 @@ public class CCActionSheet: UIViewController {
         self.backgroundView.backgroundColor = UIColor.black
         self.backgroundView.alpha = 0
         self.backgroundView.frame = view.frame
-        self.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
+        if self.isGestureDismiss {
+            self.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
+        }
         self.view.addSubview(self.backgroundView)
         self.view.sendSubviewToBack(self.backgroundView)
     }

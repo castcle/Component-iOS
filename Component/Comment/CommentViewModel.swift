@@ -40,6 +40,7 @@ public final class CommentViewModel {
     let tokenHelper: TokenHelper = TokenHelper()
     var state: State = .none
     var commentId: String = ""
+    var replyId: String = ""
     var meta: Meta = Meta()
     
     enum State {
@@ -48,6 +49,8 @@ public final class CommentViewModel {
         case replyComment
         case likeComment
         case unlikeComment
+        case deleteComment
+        case deleteReplyComment
         case none
     }
     
@@ -80,7 +83,7 @@ public final class CommentViewModel {
         }
     }
     
-    public func createComment () {
+    public func createComment() {
         self.state = .createComment
         self.commentRepository.createComment(castcleId: UserManager.shared.rawCastcleId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
@@ -109,7 +112,7 @@ public final class CommentViewModel {
         }
     }
     
-    public func replyComment () {
+    public func replyComment() {
         self.state = .replyComment
         self.commentRepository.replyComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
@@ -145,7 +148,7 @@ public final class CommentViewModel {
         }
     }
     
-    public func likeComment () {
+    public func likeComment() {
         self.state = .likeComment
         self.commentRepository.likedComment(contentId: self.content?.id ?? "", commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
@@ -158,11 +161,51 @@ public final class CommentViewModel {
         }
     }
     
-    public func unlikeComment () {
+    public func unlikeComment() {
         self.state = .unlikeComment
         self.commentRepository.unlikedComment(contentId: self.content?.id ?? "", commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 print("Unlike success")
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
+    }
+    
+    public func deleteComment(commentId: String) {
+        self.state = .deleteComment
+        self.commentId = commentId
+        self.commentRepository.deleteComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId) { (success, response, isRefreshToken)  in
+            if success {
+                if let index = self.comments.firstIndex(where: { $0.id == self.commentId }) {
+                    self.comments.remove(at: index)
+                    self.modifyCommentData()
+                    self.didLoadCommentsFinish?()
+                }
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
+    }
+    
+    public func deleteReplyComment(commentId: String, replyId: String) {
+        self.state = .deleteReplyComment
+        self.commentId = commentId
+        self.replyId = replyId
+        self.commentRepository.deleteReplyComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId, replyId: self.replyId) { (success, response, isRefreshToken)  in
+            if success {
+                if let index = self.comments.firstIndex(where: { $0.id == self.commentId }) {
+                    let comment = self.comments[index]
+                    if let replyIndex = comment.reply.firstIndex(where: { $0 == self.replyId }) {
+                        self.comments[index].reply.remove(at: replyIndex)
+                        self.modifyCommentData()
+                        self.didLoadCommentsFinish?()
+                    }
+                }
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
@@ -206,6 +249,8 @@ extension CommentViewModel: TokenHelperDelegate {
             self.likeComment()
         } else if self.state == .unlikeComment {
             self.unlikeComment()
+        } else if self.state == .deleteComment {
+            self.deleteComment(commentId: self.commentId)
         }
     }
 }
