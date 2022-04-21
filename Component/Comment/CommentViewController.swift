@@ -328,13 +328,11 @@ extension CommentViewController: CommentTableViewCellDelegate {
     
     func didLiked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
         self.viewModel.commentId = comment.id
-        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
         self.viewModel.likeComment()
     }
     
     func didUnliked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
         self.viewModel.commentId = comment.id
-        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
         self.viewModel.unlikeComment()
     }
 }

@@ -139,7 +139,8 @@ public final class CommentViewModel {
     
     public func likeComment() {
         self.state = .likeComment
-        self.commentRepository.likedComment(contentId: self.content?.id ?? "", commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
+        self.commentRequest.commentId = self.commentId
+        self.commentRepository.likedComment(castcleId: UserManager.shared.rawCastcleId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 print("Like success")
             } else {
@@ -152,7 +153,7 @@ public final class CommentViewModel {
     
     public func unlikeComment() {
         self.state = .unlikeComment
-        self.commentRepository.unlikedComment(contentId: self.content?.id ?? "", commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
+        self.commentRepository.unlikedComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId) { (success, response, isRefreshToken)  in
             if success {
                 print("Unlike success")
             } else {
