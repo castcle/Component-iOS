@@ -67,12 +67,6 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     private var userRequest: UserRequest = UserRequest()
     private let realm = try! Realm()
     
-    enum State {
-        case followUser
-        case unfollowUser
-        case none
-    }
-    
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.tokenHelper.delegate = self

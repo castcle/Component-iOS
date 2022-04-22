@@ -53,12 +53,6 @@ public class UserToFollowTableViewCell: UITableViewCell {
     private var state: State = .none
     private var userRequest: UserRequest = UserRequest()
     
-    enum State {
-        case followUser
-        case unfollowUser
-        case none
-    }
-    
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.tokenHelper.delegate = self

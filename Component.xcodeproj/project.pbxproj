@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B715F5672812895A004687EA /* SelectCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B715F5662812895A004687EA /* SelectCodeViewController.swift */; };
+		B715F56B28128A64004687EA /* SelectCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B715F56928128A64004687EA /* SelectCodeTableViewCell.xib */; };
+		B715F56C28128A64004687EA /* SelectCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B715F56A28128A64004687EA /* SelectCodeTableViewCell.swift */; };
 		B7167F9827AD1AE800067DBD /* AdsPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7167F9627AD1AE800067DBD /* AdsPageTableViewCell.swift */; };
 		B7167F9927AD1AE800067DBD /* AdsPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7167F9727AD1AE800067DBD /* AdsPageTableViewCell.xib */; };
 		B7167F9C27AFC94A00067DBD /* ReachedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7167F9A27AFC94A00067DBD /* ReachedTableViewCell.swift */; };
@@ -151,6 +154,9 @@
 		7D2DA64FE09C59F76CA7D23E /* Pods-Component.release (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.release (staging).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.release (staging).xcconfig"; sourceTree = "<group>"; };
 		9A723B2EF055ED2C75BAC143 /* Pods_Component.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Component.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B70446F0676E9D9C1803A9CF /* Pods-Component.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.debug (development).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.debug (development).xcconfig"; sourceTree = "<group>"; };
+		B715F5662812895A004687EA /* SelectCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCodeViewController.swift; sourceTree = "<group>"; };
+		B715F56928128A64004687EA /* SelectCodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectCodeTableViewCell.xib; sourceTree = "<group>"; };
+		B715F56A28128A64004687EA /* SelectCodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCodeTableViewCell.swift; sourceTree = "<group>"; };
 		B7167F9627AD1AE800067DBD /* AdsPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsPageTableViewCell.swift; sourceTree = "<group>"; };
 		B7167F9727AD1AE800067DBD /* AdsPageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdsPageTableViewCell.xib; sourceTree = "<group>"; };
 		B7167F9A27AFC94A00067DBD /* ReachedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachedTableViewCell.swift; sourceTree = "<group>"; };
@@ -333,6 +339,15 @@
 				9A723B2EF055ED2C75BAC143 /* Pods_Component.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B715F56828128A42004687EA /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B715F56A28128A64004687EA /* SelectCodeTableViewCell.swift */,
+				B715F56928128A64004687EA /* SelectCodeTableViewCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		B7167F9527AD1AA600067DBD /* Ads */ = {
@@ -673,6 +688,7 @@
 				B7E924B42805747000F9D75D /* PublicPopup.storyboard */,
 				B7E924B12805747000F9D75D /* ViewModel */,
 				B7E924B52805747000F9D75D /* ViewController */,
+				B715F56828128A42004687EA /* Cell */,
 			);
 			path = PublicPopup;
 			sourceTree = "<group>";
@@ -691,6 +707,7 @@
 			children = (
 				B7E924B62805747000F9D75D /* AcceptSyncSocialPopupViewController.swift */,
 				B7E924B72805747000F9D75D /* SyncAutoPostViewController.swift */,
+				B715F5662812895A004687EA /* SelectCodeViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -805,6 +822,7 @@
 				B78663572747AC4200B13EEF /* QuoteCastTextLinkCell.xib in Resources */,
 				B71744BD26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.xib in Resources */,
 				B7FA1D9827B0E2C300A485A1 /* LongImageX3TableViewCell.xib in Resources */,
+				B715F56B28128A64004687EA /* SelectCodeTableViewCell.xib in Resources */,
 				B78663592747AC4200B13EEF /* QuoteCastBlogCell.xib in Resources */,
 				B7910E3026B5E1320097C94E /* SplashScreen.storyboard in Resources */,
 				B78663522747AC4200B13EEF /* QuoteCastTextCell.xib in Resources */,
@@ -936,11 +954,13 @@
 				B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */,
 				B7E924BB2805747000F9D75D /* AcceptSyncSocialPopupViewController.swift in Sources */,
 				B7866335274777F900B13EEF /* ActivityHeaderTableViewCell.swift in Sources */,
+				B715F5672812895A004687EA /* SelectCodeViewController.swift in Sources */,
 				B786634F2747AC4200B13EEF /* QuoteCastImageX2Cell.swift in Sources */,
 				B756C8A3277337C1007AADE4 /* TableView.swift in Sources */,
 				B786635F2747AC4200B13EEF /* QuoteCastImageX1Cell.swift in Sources */,
 				B7AC880427199B4700500F81 /* CCAction.swift in Sources */,
 				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,
+				B715F56C28128A64004687EA /* SelectCodeTableViewCell.swift in Sources */,
 				B755297D269CBA15005D5EB5 /* RefreshExtension.swift in Sources */,
 				B7E924BC2805747000F9D75D /* SyncAutoPostViewController.swift in Sources */,
 				B7AC880227199B0F00500F81 /* CastcleActionSheetExtensions.swift in Sources */,

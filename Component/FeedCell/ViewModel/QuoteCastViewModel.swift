@@ -36,11 +36,6 @@ public final class QuoteCastViewModel {
     private var userRequest: UserRequest = UserRequest()
     private var content: Content?
     
-    enum State {
-        case followUser
-        case none
-    }
-    
     public init(content: Content) {
         self.content = content
         self.tokenHelper.delegate = self
