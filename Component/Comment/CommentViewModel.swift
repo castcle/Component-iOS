@@ -84,7 +84,7 @@ public final class CommentViewModel {
                     let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
                     let users = includes[JsonKey.users.rawValue].arrayValue
                     users.forEach { user in
-                        try? self.realm.write {
+                        try! self.realm.write {
                             let authorRef = AuthorRef().initCustom(json: user)
                             self.realm.add(authorRef, update: .modified)
                         }
