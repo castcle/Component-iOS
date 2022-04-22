@@ -138,14 +138,14 @@ class CommentTableViewCell: UITableViewCell {
         }
         actionSheet.addActions([cancelButton])
         if UserHelper.shared.isMyAccount(id: comment.authorId) {
-            let deleteButton = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.deleteOne), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+            let delete = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.deleteOne), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
                 actionSheet.dismissActionSheet()
                 self.isShowActionSheet = false
                 self.delegate?.didDelete(self, comment: comment)
             }
-            actionSheet.addActions([deleteButton])
+            actionSheet.addActions([delete])
         }
-        let replyButton = CCAction(title: "Reply", image: UIImage.init(icon: .castcle(.rightBack), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+        let reply = CCAction(title: "Reply", image: UIImage.init(icon: .castcle(.rightBack), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
             actionSheet.dismissActionSheet()
             self.isShowActionSheet = false
             if let authorRef = ContentHelper.shared.getAuthorRef(id: comment.authorId) {
@@ -154,7 +154,7 @@ class CommentTableViewCell: UITableViewCell {
                 self.delegate?.didReply(self, comment: comment, castcleId: "")
             }
         }
-        actionSheet.addActions([replyButton])
+        actionSheet.addActions([reply])
         Utility.currentViewController().present(actionSheet, animated: true)
     }
     @IBAction func replyAction(_ sender: Any) {

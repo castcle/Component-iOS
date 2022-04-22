@@ -82,13 +82,18 @@ public final class CommentViewModel {
                     let comment = Comment(json: JSON(json[JsonKey.payload.rawValue].dictionaryValue))
                     let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
                     let users = includes[JsonKey.users.rawValue].arrayValue
-                    let realm = try! Realm()
-                    users.forEach { user in
-                        try! realm.write {
-                            let authorRef = AuthorRef().initCustom(json: user)
-                            realm.add(authorRef, update: .modified)
+                    do {
+                        let realm = try Realm()
+                        users.forEach { user in
+                            try! realm.write {
+                                let authorRef = AuthorRef().initCustom(json: user)
+                                realm.add(authorRef, update: .modified)
+                            }
                         }
+                    } catch {
+                        return
                     }
+                    
                     self.comments.insert(comment, at: 0)
                     self.modifyCommentData()
                     self.didLoadCommentsFinish?()
