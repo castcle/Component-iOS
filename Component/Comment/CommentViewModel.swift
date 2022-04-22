@@ -42,6 +42,7 @@ public final class CommentViewModel {
     var commentId: String = ""
     var replyId: String = ""
     var meta: Meta = Meta()
+    let realm = try! Realm()
     
     public init(content: Content? = nil) {
         if let content = content {
@@ -82,20 +83,15 @@ public final class CommentViewModel {
                     let comment = Comment(json: JSON(json[JsonKey.payload.rawValue].dictionaryValue))
                     let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
                     let users = includes[JsonKey.users.rawValue].arrayValue
-                    do {
-                        let realm = try Realm()
-                        users.forEach { user in
-                            try? realm.write {
-                                let authorRef = AuthorRef().initCustom(json: user)
-                                realm.add(authorRef, update: .modified)
-                            }
+                    users.forEach { user in
+                        try? self.realm.write {
+                            let authorRef = AuthorRef().initCustom(json: user)
+                            self.realm.add(authorRef, update: .modified)
                         }
-                        self.comments.insert(comment, at: 0)
-                        self.modifyCommentData()
-                        self.didLoadCommentsFinish?()
-                    } catch {
-                        return
                     }
+                    self.comments.insert(comment, at: 0)
+                    self.modifyCommentData()
+                    self.didLoadCommentsFinish?()
                 } catch {}
             } else {
                 if isRefreshToken {
@@ -116,15 +112,15 @@ public final class CommentViewModel {
                     let replyId = commentJson["id"].stringValue
                     let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
                     let users = includes[JsonKey.users.rawValue].arrayValue
-                    let realm = try! Realm()
-                    try! realm.write {
+                    
+                    try! self.realm.write {
                         let commentRef = CommentRef().initCustom(json: commentJson)
-                        realm.add(commentRef, update: .modified)
+                        self.realm.add(commentRef, update: .modified)
                     }
                     users.forEach { user in
-                        try! realm.write {
+                        try! self.realm.write {
                             let authorRef = AuthorRef().initCustom(json: user)
-                            realm.add(authorRef, update: .modified)
+                            self.realm.add(authorRef, update: .modified)
                         }
                     }
                     if let index = self.comments.firstIndex(where: { $0.id == self.commentId }) {
