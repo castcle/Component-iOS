@@ -85,18 +85,17 @@ public final class CommentViewModel {
                     do {
                         let realm = try Realm()
                         users.forEach { user in
-                            try! realm.write {
+                            try? realm.write {
                                 let authorRef = AuthorRef().initCustom(json: user)
                                 realm.add(authorRef, update: .modified)
                             }
                         }
+                        self.comments.insert(comment, at: 0)
+                        self.modifyCommentData()
+                        self.didLoadCommentsFinish?()
                     } catch {
                         return
                     }
-                    
-                    self.comments.insert(comment, at: 0)
-                    self.modifyCommentData()
-                    self.didLoadCommentsFinish?()
                 } catch {}
             } else {
                 if isRefreshToken {

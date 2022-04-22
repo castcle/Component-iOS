@@ -260,8 +260,10 @@ extension CommentViewController {
                 cell?.configCell(replyCommentId: comment.reply[indexPath.row - 1], masterCommentId: comment.id)
                 if comment.isFirst {
                     cell?.lineView.isHidden = false
-                } else {
+                } else if comment.isLast {
                     cell?.lineView.isHidden = true
+                } else {
+                    cell?.lineView.isHidden = false
                 }
                 return cell ?? ReplyTableViewCell()
             }
