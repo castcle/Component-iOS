@@ -37,7 +37,6 @@ public class LongImageX1TableViewCell: UITableViewCell {
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var displayImage: UIImageView!
     
-//    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }

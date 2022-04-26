@@ -29,7 +29,7 @@ import UIKit
 import LinkPresentation
 import Core
 import Networking
-import ActiveLabel
+import Atributika
 import RealmSwift
 
 public class QuoteCastTextLinkPreviewCell: UITableViewCell {
@@ -40,20 +40,7 @@ public class QuoteCastTextLinkPreviewCell: UITableViewCell {
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var followButton: UIButton!
     @IBOutlet var lineView: UIView!
-    @IBOutlet var detailLabel: ActiveLabel! {
-        didSet {
-            self.detailLabel.customize { label in
-                label.font = UIFont.asset(.contentLight, fontSize: .overline)
-                label.numberOfLines = 0
-                label.enabledTypes = [.mention, .url, self.customHashtag]
-                label.textColor = UIColor.Asset.white
-                label.mentionColor = UIColor.Asset.lightBlue
-                label.URLColor = UIColor.Asset.lightBlue
-                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
-                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
-            }
-        }
-    }
+    @IBOutlet var massageLabel: AttributedLabel!
     @IBOutlet var linkContainer: UIView!
     @IBOutlet var titleLinkView: UIView!
     @IBOutlet var linkImage: UIImageView!
@@ -62,17 +49,20 @@ public class QuoteCastTextLinkPreviewCell: UITableViewCell {
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
     
     var viewModel: QuoteCastViewModel?
-    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     public var content: Content? {
         didSet {
             if let content = self.content {
                 guard let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) else { return }
                 self.viewModel = QuoteCastViewModel(content: content)
-                self.detailLabel.text = content.message
+                self.massageLabel.numberOfLines = 0
+                self.massageLabel.attributedText = content.message
+                    .styleHashtags(AttributedContent.link)
+                    .styleMentions(AttributedContent.link)
+                    .styleLinks(AttributedContent.link)
+                    .styleAll(AttributedContent.quote)
                 if let link = content.link.first {
                     self.setData(content: content, link: link)
                 }
-                
                 
                 if authorRef.type == AuthorType.people.rawValue {
                     if authorRef.castcleId == UserManager.shared.rawCastcleId {

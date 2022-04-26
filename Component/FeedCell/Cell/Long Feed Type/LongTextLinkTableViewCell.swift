@@ -41,7 +41,6 @@ public class LongTextLinkTableViewCell: UITableViewCell {
     @IBOutlet var linkDescriptionLabel: UILabel!
     @IBOutlet var skeletonView: UIView!
     
-//    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     private var content: Content?
     
     public override func awakeFromNib() {
