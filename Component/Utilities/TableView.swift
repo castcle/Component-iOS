@@ -42,6 +42,7 @@ public extension UITableView {
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.blog, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.blog)
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.blogNoImage, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.blogNoImage)
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.skeleton, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.skeleton)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.skeletonUser, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.skeletonUser)
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.activityHeader, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.activityHeader)
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.quoteText, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.quoteText)
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.quoteLink, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.quoteLink)
@@ -53,5 +54,14 @@ public extension UITableView {
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.quoteBlog, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.quoteBlog)
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.quoteBlogNoImage, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.quoteBlogNoImage)
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.suggestionUser, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.suggestionUser)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.adsPage, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.adsPage)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.reached, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.reached)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.longText, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.longText)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.longTextLink, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.longTextLink)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.longTextLinkPreview, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.longTextLinkPreview)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.longImageX1, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.longImageX1)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.longImageX2, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.longImageX2)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.longImageX3, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.longImageX3)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.longImageXMore, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.longImageXMore)
     }
 }

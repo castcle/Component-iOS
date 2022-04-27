@@ -28,14 +28,14 @@
 import UIKit
 import Core
 import Networking
-import ActiveLabel
+import Atributika
 import Lightbox
 import Kingfisher
 import SwiftColor
 
 public class ImageXMoreTableViewCell: UITableViewCell {
 
-    @IBOutlet var detailLabel: ActiveLabel!
+    @IBOutlet var massageLabel: AttributedLabel!
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var firstImageView: UIImageView!
     @IBOutlet var secondImageView: UIImageView!
@@ -44,37 +44,16 @@ public class ImageXMoreTableViewCell: UITableViewCell {
     @IBOutlet var moreImageView: UIImageView!
     @IBOutlet var moreLabel: UILabel!
     
-    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
-            
-            self.detailLabel.customize { label in
-                let readMoreType = ActiveType.custom(pattern: "\(Localization.contentDetail.readMore.text)")
-                label.font = UIFont.asset(.contentLight, fontSize: .body)
-                label.numberOfLines = 0
-                label.enabledTypes = [.mention, .url, self.customHashtag, readMoreType]
-                label.textColor = UIColor.Asset.white
-                label.mentionColor = UIColor.Asset.lightBlue
-                label.URLColor = UIColor.Asset.lightBlue
-                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
-                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
-                label.customColor[readMoreType] = UIColor.Asset.lightBlue
-                label.customSelectedColor[readMoreType] = UIColor.Asset.lightBlue
-            }
-            
-            if content.type == .long {
-                if content.isExpand {
-                    self.detailLabel.text = content.message
-                    self.enableActiveLabel()
-                } else {
-                    self.detailLabel.text = "\(content.message.substringWithRange(range: 100)) \(Localization.contentDetail.readMore.text)"
-                }
-            } else {
-                self.detailLabel.text = content.message
-                self.enableActiveLabel()
-            }
-            
+            self.massageLabel.numberOfLines = 0
+            self.massageLabel.attributedText = content.message
+                .styleHashtags(AttributedContent.link)
+                .styleMentions(AttributedContent.link)
+                .styleLinks(AttributedContent.link)
+                .styleAll(AttributedContent.all)
+            self.enableActiveLabel()
             self.moreImageView.image = UIColor.Asset.black.toImage()
             self.moreLabel.font = UIFont.asset(.bold, fontSize: .custom(size: 45))
             
@@ -105,17 +84,28 @@ public class ImageXMoreTableViewCell: UITableViewCell {
     }
     
     private func enableActiveLabel() {
-        self.detailLabel.handleHashtagTap { hashtag in
-        }
-        self.detailLabel.handleMentionTap { mention in
-        }
-        self.detailLabel.handleURLTap { url in
-            var urlString = url.absoluteString
-            urlString = urlString.replacingOccurrences(of: "https://", with: "")
-            urlString = urlString.replacingOccurrences(of: "http://", with: "")
-            if let newUrl = URL(string: "https://\(urlString)") {
-                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
-            } else {
+        self.massageLabel.onClick = { label, detection in
+            switch detection.type {
+            case .hashtag(let tag):
+                let hashtagDict: [String: String] = [
+                    JsonKey.hashtag.rawValue: "#\(tag)"
+                ]
+                NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
+            case .mention(let name):
+                let userDict: [String: String] = [
+                    JsonKey.castcleId.rawValue: name
+                ]
+                NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
+            case .link(let url):
+                var urlString = url.absoluteString
+                urlString = urlString.replacingOccurrences(of: "https://", with: "")
+                urlString = urlString.replacingOccurrences(of: "http://", with: "")
+                if let newUrl = URL(string: "https://\(urlString)") {
+                    Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
+                } else {
+                    return
+                }
+            default:
                 return
             }
         }

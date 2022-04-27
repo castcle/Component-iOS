@@ -86,7 +86,7 @@ public class RecastPopupViewController: UIViewController {
         self.chooseUserTitle.font = UIFont.asset(.bold, fontSize: .overline)
         self.chooseUserTitle.textColor = UIColor.Asset.white
         
-        self.pages = self.realm.objects(Page.self)
+        self.pages = self.realm.objects(Page.self).sorted(byKeyPath: "id")
         
         self.subTitleLabel.text = Localization.contentAction.recastTitle.text
         self.quoteCastLabel.text = Localization.contentAction.quoteCast.text
@@ -116,7 +116,8 @@ public class RecastPopupViewController: UIViewController {
             self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
         } else {
             guard let page = self.viewModel.page else { return }
-            self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage:  page.castcleId, type: .avatar)
+            let url = URL(string: page.avatar)
+            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
         }
         self.displayNameLabel.text = self.viewModel.page?.displayName ?? ""
     }
@@ -185,7 +186,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case UserListSection.user.rawValue:
-            self.viewModel.page = Page().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.rawCastcleId, avatar: UserManager.shared.avatar, cover: UserManager.shared.cover)
+            self.viewModel.page = Page().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.rawCastcleId, avatar: UserManager.shared.avatar, cover: UserManager.shared.cover, overview: UserManager.shared.overview, official: UserManager.shared.official)
             self.userTableView.reloadData()
             self.updateUser()
             UIView.transition(with: self.view, duration: 0.3,

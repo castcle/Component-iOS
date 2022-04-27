@@ -29,6 +29,8 @@ import UIKit
 import Core
 import Networking
 import Defaults
+import FirebaseRemoteConfig
+import SwiftyJSON
 
 public protocol SplashScreenViewControllerDelegate {
     func didLoadFinish(_ view: SplashScreenViewController)
@@ -41,12 +43,14 @@ public class SplashScreenViewController: UIViewController {
     
     public var delegate: SplashScreenViewControllerDelegate?
     var viewModel = SplashScreenViewModel()
+    private let remoteConfig = RemoteConfig.remoteConfig()
     
     public override func viewDidLoad() {
         super.viewDidLoad()
 
         self.backgroundImage.image = UIImage.Asset.launchScreen
         self.logoImage.image = UIImage.Asset.castcleLogo
+        self.fetchRemoteConfig()
         self.viewModel.tokenHandle()
         
         self.viewModel.didGuestLoginFinish = {
@@ -63,6 +67,59 @@ public class SplashScreenViewController: UIViewController {
         super.viewDidAppear(animated)
         if !UserManager.shared.accessToken.isEmpty {
             EngagementHelper().sendCastcleAnalytic(event: .onScreenView, screen: .splashScreen)
+        }
+    }
+    
+    private func fetchRemoteConfig() {
+        Defaults[.isForceUpdate] = false
+        Defaults[.isSoftUpdate] = false
+        let duration: Double = (Environment.appEnv == .prod ? 3600 : 0)
+        let setting = RemoteConfigSettings()
+        setting.minimumFetchInterval = duration
+        RemoteConfig.remoteConfig().configSettings = setting
+        
+        let defualt: [String: NSObject] = [
+            "version_ios": "9.9.9" as NSObject
+        ]
+        RemoteConfig.remoteConfig().setDefaults(defualt)
+        RemoteConfig.remoteConfig().fetch(withExpirationDuration: duration) { ststus, error in
+            if ststus == .success, error == nil {
+                RemoteConfig.remoteConfig().activate() { success, error in
+                    if error == nil {
+                        let json = RemoteConfig.remoteConfig().configValue(forKey: "force_version").jsonValue
+                        if let jsonForceVersion = json {
+                            let data = JSON(jsonForceVersion)
+                            let remoteConfig = RemoteConfig(json: data)
+                            Defaults[.updateUrl] = remoteConfig.ios.url
+                            Defaults[.updateTitle] = remoteConfig.meta.title.en
+                            Defaults[.updateMessage] = remoteConfig.meta.message.en
+                            Defaults[.updateButton] = remoteConfig.meta.button.en
+
+                            if CheckUpdate.shared.isUpdateApp(version: remoteConfig.ios.version) {
+                                Defaults[.isForceUpdate] = true
+                                Defaults[.isSoftUpdate] = false
+                            } else {
+                                _ = CheckUpdate.shared.getAppInfo() { (info, error) in
+                                    if let appStoreAppVersion = info?.version {
+                                        if let _ = error {
+                                            print("Error")
+                                        } else if !CheckUpdate.shared.isUpdateApp(version: appStoreAppVersion) {
+                                            print("App not update")
+                                        } else {
+                                            Defaults[.isForceUpdate] = false
+                                            Defaults[.isSoftUpdate] = true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        print("Error")
+                    }
+                }
+            } else {
+                print("Error")
+            }
         }
     }
 }

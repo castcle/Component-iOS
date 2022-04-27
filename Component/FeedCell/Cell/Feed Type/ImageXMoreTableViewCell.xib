@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,12 +18,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="350"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bff-Nv-NHM" customClass="ActiveLabel" customModule="ActiveLabel">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q3W-ab-pgi" customClass="AttributedLabel" customModule="Atributika">
                         <rect key="frame" x="15" y="10" width="290" height="20"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fka-fP-HgW">
                         <rect key="frame" x="15" y="50" width="290" height="290"/>
                         <subviews>
@@ -120,22 +118,22 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="bff-Nv-NHM" secondAttribute="trailing" constant="15" id="3oc-Ec-7xg"/>
+                    <constraint firstAttribute="trailing" secondItem="q3W-ab-pgi" secondAttribute="trailing" constant="15" id="3W5-SN-v0C"/>
+                    <constraint firstItem="Fka-fP-HgW" firstAttribute="top" secondItem="q3W-ab-pgi" secondAttribute="bottom" constant="20" id="FoS-Xl-iJO"/>
                     <constraint firstItem="Fka-fP-HgW" firstAttribute="width" secondItem="Fka-fP-HgW" secondAttribute="height" multiplier="1:1" id="JTG-JC-HzS"/>
-                    <constraint firstItem="bff-Nv-NHM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="XdP-oV-zve"/>
-                    <constraint firstItem="bff-Nv-NHM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="lbn-RS-tkq"/>
+                    <constraint firstItem="q3W-ab-pgi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="gHW-AS-6zq"/>
                     <constraint firstItem="Fka-fP-HgW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="lv4-qT-BhI"/>
                     <constraint firstAttribute="trailing" secondItem="Fka-fP-HgW" secondAttribute="trailing" constant="15" id="qdc-Ga-KWq"/>
                     <constraint firstAttribute="bottom" secondItem="Fka-fP-HgW" secondAttribute="bottom" constant="10" id="v9H-HU-Qfj"/>
-                    <constraint firstItem="Fka-fP-HgW" firstAttribute="top" secondItem="bff-Nv-NHM" secondAttribute="bottom" constant="20" id="xXe-Nj-XbF"/>
+                    <constraint firstItem="q3W-ab-pgi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="yN6-9e-bla"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="detailLabel" destination="bff-Nv-NHM" id="OWD-Qf-60R"/>
                 <outlet property="firstImageView" destination="2i8-83-2A9" id="2Ua-jk-HfT"/>
                 <outlet property="fourthImageView" destination="K3N-Rf-xqw" id="a5z-s1-Br5"/>
                 <outlet property="imageContainer" destination="Fka-fP-HgW" id="Pda-IN-eTa"/>
+                <outlet property="massageLabel" destination="q3W-ab-pgi" id="vMX-TE-RVq"/>
                 <outlet property="moreImageView" destination="P03-tl-6fh" id="jla-52-v1f"/>
                 <outlet property="moreLabel" destination="XU4-Gq-r85" id="0xs-wx-vwq"/>
                 <outlet property="secondImageView" destination="CYE-q5-kr8" id="TSF-HG-A6E"/>
@@ -144,11 +142,6 @@
             <point key="canvasLocation" x="66.666666666666671" y="232.70089285714283"/>
         </tableViewCell>
     </objects>
-    <designables>
-        <designable name="bff-Nv-NHM">
-            <size key="intrinsicContentSize" width="39.5" height="19.5"/>
-        </designable>
-    </designables>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

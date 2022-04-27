@@ -29,7 +29,7 @@ import UIKit
 import LinkPresentation
 import Core
 import Networking
-import ActiveLabel
+import Atributika
 import SkeletonView
 import RealmSwift
 
@@ -41,21 +41,7 @@ public class QuoteCastTextLinkCell: UITableViewCell {
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var followButton: UIButton!
     @IBOutlet var lineView: UIView!
-    @IBOutlet var detailLabel: ActiveLabel! {
-        didSet {
-            self.detailLabel.customize { label in
-                label.font = UIFont.asset(.contentLight, fontSize: .overline)
-                label.numberOfLines = 0
-                label.enabledTypes = [.mention, .url, self.customHashtag]
-                label.textColor = UIColor.Asset.white
-                label.mentionColor = UIColor.Asset.lightBlue
-                label.URLColor = UIColor.Asset.lightBlue
-                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
-                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
-            }
-        }
-    }
-    
+    @IBOutlet var massageLabel: AttributedLabel!
     @IBOutlet var linkContainer: UIView!
     @IBOutlet var titleLinkView: UIView!
     @IBOutlet var linkImage: UIImageView!
@@ -65,7 +51,6 @@ public class QuoteCastTextLinkCell: UITableViewCell {
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
     
     var viewModel: QuoteCastViewModel?
-    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     
     public override func awakeFromNib() {
         super.awakeFromNib()
@@ -98,16 +83,26 @@ public class QuoteCastTextLinkCell: UITableViewCell {
         guard let content = content else { return }
         guard let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) else { return }
         self.viewModel = QuoteCastViewModel(content: content)
-        self.detailLabel.text = content.message
+        self.massageLabel.numberOfLines = 0
+        self.massageLabel.attributedText = content.message
+            .styleHashtags(AttributedContent.link)
+            .styleMentions(AttributedContent.link)
+            .styleLinks(AttributedContent.link)
+            .styleAll(AttributedContent.quote)
         self.skeletonView.isHidden = false
         self.linkContainer.isHidden = true
         
         if let link = content.link.first {
-            self.setDataWithContent(icon: link.type.image, message: content.message)
-        } else if let link = content.message.extractURLs().first {
-            if let icon = UIImage.iconFromUrl(url: link.absoluteString) {
-                self.setDataWithContent(icon: icon, message: content.message)
+            var title: String = ""
+            var desc: String = ""
+            if link.title.isEmpty && link.desc.isEmpty {
+                title = content.message
+                desc = ""
+            } else {
+                title = link.title
+                desc = link.desc
             }
+            self.setDataWithContent(icon: link.type.image, title: title, desc: desc)
         }
         
         if authorRef.type == AuthorType.people.rawValue {
@@ -126,8 +121,9 @@ public class QuoteCastTextLinkCell: UITableViewCell {
             }
         } else {
             let realm = try! Realm()
-            if realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first != nil {
-                self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: authorRef.castcleId, type: .avatar)
+            if let page = realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first {
+                let url = URL(string: page.avatar)
+                self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                 self.followButton.isHidden = true
             } else {
                 let url = URL(string: authorRef.avatar)
@@ -151,12 +147,12 @@ public class QuoteCastTextLinkCell: UITableViewCell {
         }
     }
     
-    private func setDataWithContent(icon: UIImage, message: String) {
+    private func setDataWithContent(icon: UIImage, title: String, desc: String) {
         self.skeletonView.isHidden = true
         self.linkContainer.isHidden = false
         self.linkImage.image = icon
-        self.linkTitleLabel.text = message
-        self.linkDescriptionLabel.text = ""
+        self.linkTitleLabel.text = title
+        self.linkDescriptionLabel.text = desc
     }
     
     @IBAction func followAction(_ sender: Any) {

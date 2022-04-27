@@ -34,6 +34,10 @@ public struct ComponentNibVars {
         public static let recastPopup = "RecastPopupViewController"
         public static let comment = "CommentViewController"
         public static let reportSuccess = "ReportSuccessViewController"
+        public static let farmingPopup = "FarmingPopupViewController"
+        public static let syncAutoPostTwitter = "SyncAutoPostViewController"
+        public static let acceptSyncSocialPopup = "AcceptSyncSocialPopupViewController"
+        public static let selectCode = "SelectCodeViewController"
     }
     
     // MARK: - View
@@ -44,6 +48,9 @@ public struct ComponentNibVars {
         public static let recast = "Recast"
         public static let comment = "Comment"
         public static let report = "Report"
+        public static let farmingPopup = "FarmingPopup"
+        public static let publicPopup = "PublicPopup"
+        
     }
     
     public struct View {
@@ -67,6 +74,7 @@ public struct ComponentNibVars {
         public static let comment = "CommentTableViewCell"
         public static let reply = "ReplyTableViewCell"
         public static let skeleton = "SkeletonFeedTableViewCell"
+        public static let skeletonUser = "SkeletonUserTableViewCell"
         public static let activityHeader = "ActivityHeaderTableViewCell"
         public static let quoteText = "QuoteCastTextCell"
         public static let quoteLink = "QuoteCastTextLinkCell"
@@ -78,6 +86,17 @@ public struct ComponentNibVars {
         public static let quoteBlog = "QuoteCastBlogCell"
         public static let quoteBlogNoImage = "QuoteCastBlogNoImageCell"
         public static let suggestionUser = "SuggestionUserTableViewCell"
+        public static let adsPage = "AdsPageTableViewCell"
+        public static let reached = "ReachedTableViewCell"
+        public static let longText = "LongTextTableViewCell"
+        public static let longTextLink = "LongTextLinkTableViewCell"
+        public static let longTextLinkPreview = "LongTextLinkPreviewTableViewCell"
+        public static let longImageX1 = "LongImageX1TableViewCell"
+        public static let longImageX2 = "LongImageX2TableViewCell"
+        public static let longImageX3 = "LongImageX3TableViewCell"
+        public static let longImageXMore = "LongImageXMoreTableViewCell"
+        public static let userToFollow = "UserToFollowTableViewCell"
+        public static let selectCode = "SelectCodeTableViewCell"
     }
     
     // MARK: - CollectionViewCell

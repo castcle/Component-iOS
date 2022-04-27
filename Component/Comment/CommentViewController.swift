@@ -34,7 +34,6 @@ import JGProgressHUD
 class CommentViewController: UITableViewController, UITextViewDelegate {
     
     var viewModel = CommentViewModel()
-    
     var customInputView: UIView!
     var sendButton: UIButton!
     var avatarImage: UIImageView!
@@ -53,17 +52,17 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     }
     
     override var inputAccessoryView: UIView? {
-        if customInputView == nil {
-            customInputView = CustomView()
-            customInputView.backgroundColor = UIColor.Asset.darkGray
-            self.commentTextField.placeholder = "What's in your mind?"
+        if self.customInputView == nil {
+            self.customInputView = CustomView()
+            self.customInputView.backgroundColor = UIColor.Asset.darkGray
+            self.commentTextField.placeholder = "What's on your mind?"
             self.commentTextField.font = UIFont.asset(.regular, fontSize: .overline)
             self.commentTextField.textColor = UIColor.Asset.white
             self.commentTextField.autocorrectionType = .no
             self.commentTextField.custom(color: UIColor.Asset.darkGraphiteBlue, cornerRadius: 10, borderWidth: 1, borderColor: UIColor.Asset.black)
             
-            customInputView.autoresizingMask = .flexibleHeight
-            customInputView.addSubview(self.commentTextField)
+            self.customInputView.autoresizingMask = .flexibleHeight
+            self.customInputView.addSubview(self.commentTextField)
             
             
             self.sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
@@ -73,7 +72,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
             self.sendButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
             self.sendButton.clipsToBounds = true
             self.sendButton.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
-            customInputView?.addSubview(self.sendButton)
+            self.customInputView?.addSubview(self.sendButton)
             
             self.avatarImage = UIImageView()
             self.avatarImage.contentMode = .scaleAspectFill
@@ -107,20 +106,20 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
             self.sendButton.trailingAnchor.constraint(equalTo: customInputView.trailingAnchor, constant: -20).isActive = true
             self.sendButton.bottomAnchor.constraint(equalTo: customInputView.layoutMarginsGuide.bottomAnchor, constant: -17).isActive = true
         }
-        return customInputView
+        return self.customInputView
     }
     
     @objc func handleSend() {
-        self.hud.show(in: self.view)
         self.viewModel.commentRequest.message = self.commentTextField.text
-        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
-        
+        self.viewModel.commentRequest.contentId = self.viewModel.content?.id ?? ""
         if self.event == .create {
+            self.hud.textLabel.text = "Commenting"
             self.viewModel.createComment()
         } else if self.event == .reply {
+            self.hud.textLabel.text = "Replying"
             self.viewModel.replyComment()
         }
-        
+        self.hud.show(in: self.view)
         self.commentTextField.text = ""
         self.commentTextField.resignFirstResponder()
     }
@@ -151,7 +150,20 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
                               options: .transitionCrossDissolve,
                               animations: { self.tableView.reloadData() })
         }
-        self.hud.textLabel.text = "Commenting"
+        
+        self.viewModel.didLoadContentFinish = {
+            self.tableView.reloadData()
+        }
+        
+        self.tableView.cr.addFootRefresh(animator: NormalFooterAnimator()) { [weak self] in
+            guard let self = self else { return }
+            if self.viewModel.meta.resultCount < self.viewModel.commentRequest.maxResults {
+                self.tableView.cr.noticeNoMoreData()
+            } else {
+                self.viewModel.commentRequest.untilId = self.viewModel.meta.oldestId
+                self.viewModel.getComments()
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -212,7 +224,7 @@ extension CommentViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.headerFeed, for: indexPath as IndexPath) as? HeaderTableViewCell
                 cell?.backgroundColor = UIColor.Asset.darkGray
                 cell?.delegate = self
-                cell?.content = self.viewModel.content
+                cell?.configCell(feedType: .content, content: self.viewModel.content ?? Content(), isDefaultContent: false)
                 return cell ?? HeaderTableViewCell()
             case ContentSection.footer.rawValue:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.footerFeed, for: indexPath as IndexPath) as? FooterTableViewCell
@@ -249,12 +261,14 @@ extension CommentViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.reply, for: indexPath as IndexPath) as? ReplyTableViewCell
                 cell?.backgroundColor = UIColor.Asset.darkGraphiteBlue
                 cell?.delegate = self
+                cell?.configCell(replyCommentId: comment.reply[indexPath.row - 1], masterCommentId: comment.id)
                 if comment.isFirst {
                     cell?.lineView.isHidden = false
-                } else {
+                } else if comment.isLast {
                     cell?.lineView.isHidden = true
+                } else {
+                    cell?.lineView.isHidden = false
                 }
-                cell?.replyComment = comment.reply[indexPath.row - 1]
                 return cell ?? ReplyTableViewCell()
             }
         }
@@ -268,11 +282,8 @@ extension CommentViewController: HeaderTableViewCellDelegate {
     
     func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author) {
         let userDict: [String: String] = [
-            "type":  author.type.rawValue,
-            "id":  author.id,
             "castcleId":  author.castcleId,
-            "displayName":  author.displayName,
-            "avatar":   author.avatar.thumbnail
+            "displayName":  author.displayName
         ]
         NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
     }
@@ -301,10 +312,12 @@ extension CommentViewController: FooterTableViewCellDelegate {
 }
 
 extension CommentViewController: CommentTableViewCellDelegate {
-    func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
+    func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment, castcleId: String) {
         self.event = .reply
         self.viewModel.commentId = comment.id
-        self.commentTextField.text = "@\(comment.author.castcleId) "
+        if !castcleId.isEmpty {
+            self.commentTextField.text = "@\(castcleId) "
+        }
         self.commentTextField.becomeFirstResponder()
     }
     
@@ -313,31 +326,41 @@ extension CommentViewController: CommentTableViewCellDelegate {
         self.commentTextField.becomeFirstResponder()
     }
     
+    func didDelete(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
+        self.hud.textLabel.text = "Deleting"
+        self.hud.show(in: self.view)
+        self.viewModel.deleteComment(commentId: comment.id)
+    }
+    
     func didLiked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
         self.viewModel.commentId = comment.id
-        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
         self.viewModel.likeComment()
     }
     
     func didUnliked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
         self.viewModel.commentId = comment.id
-        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
         self.viewModel.unlikeComment()
     }
 }
 
 extension CommentViewController: ReplyTableViewCellDelegate {
-    func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
+    func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef) {
         self.commentTextField.text = "\(replyComment.message)"
         self.commentTextField.becomeFirstResponder()
     }
     
-    func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
+    func didDelete(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef, masterCommentId: String) {
+        self.hud.textLabel.text = "Deleting"
+        self.hud.show(in: self.view)
+        self.viewModel.deleteReplyComment(commentId: masterCommentId, replyId: replyComment.id)
+    }
+    
+    func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef) {
         self.viewModel.commentId = replyComment.id
         self.viewModel.likeComment()
     }
     
-    func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
+    func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef) {
         self.viewModel.commentId = replyComment.id
         self.viewModel.unlikeComment()
     }

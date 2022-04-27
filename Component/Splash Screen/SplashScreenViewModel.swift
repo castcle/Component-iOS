@@ -30,11 +30,13 @@ import Core
 import Networking
 import Defaults
 import SwiftyJSON
+import RealmSwift
 
 final class SplashScreenViewModel {
    
     //MARK: Private
     private var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
+<<<<<<< HEAD
     private var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
     var stage: Stage = .unknow
@@ -53,9 +55,46 @@ final class SplashScreenViewModel {
 
     public func guestLogin() {
         self.stage = .guestLogin
+=======
+    private var masterDataRepository: MasterDataRepository = MasterDataRepositoryImpl()
+    let tokenHelper: TokenHelper = TokenHelper()
+    private var state: State = .none
+
+    public func guestLogin() {
+        self.state = .login
+>>>>>>> develop
         self.authenticationRepository.guestLogin(uuid: Defaults[.deviceUuid]) { (success) in
             if success {
-                self.didGuestLoginFinish?()
+                self.getCountryCode()
+            }
+        }
+    }
+    
+    private func getCountryCode() {
+        self.state = .getCountryCode
+        self.masterDataRepository.getCountry() { (success, response, isRefreshToken) in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    let payload = json[JsonKey.payload.rawValue].arrayValue
+                    let realm = try! Realm()
+                    payload.forEach { item in
+                        try! realm.write {
+                            let countryCode = CountryCode().initWithJson(json: item)
+                            realm.add(countryCode, update: .modified)
+                        }
+                    }
+                    self.didGuestLoginFinish?()
+                } catch {
+                    self.didGuestLoginFinish?()
+                }
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                } else {
+                    self.didGuestLoginFinish?()
+                }
             }
         }
     }
@@ -95,7 +134,11 @@ final class SplashScreenViewModel {
         if UserManager.shared.accessToken.isEmpty || UserManager.shared.userRole == .guest {
             self.guestLogin()
         } else {
+<<<<<<< HEAD
             self.stage = .refreshToken
+=======
+            self.state = .refreshToken
+>>>>>>> develop
             self.tokenHelper.refreshToken()
         }
     }
@@ -103,6 +146,7 @@ final class SplashScreenViewModel {
 
 extension SplashScreenViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
+<<<<<<< HEAD
         if self.stage == .getBadges {
             self.getBadges()
         } else {
@@ -111,6 +155,12 @@ extension SplashScreenViewModel: TokenHelperDelegate {
             } else {
                 self.didGuestLoginFinish?()
             }
+=======
+        if self.state == .getCountryCode {
+            self.getCountryCode()
+        } else {
+            self.didGuestLoginFinish?()
+>>>>>>> develop
         }
     }
 }
