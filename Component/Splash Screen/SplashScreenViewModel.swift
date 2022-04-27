@@ -25,6 +25,7 @@
 //  Created by Castcle Co., Ltd. on 1/8/2564 BE.
 //
 
+import UIKit
 import Foundation
 import Core
 import Networking
@@ -36,12 +37,13 @@ final class SplashScreenViewModel {
    
     //MARK: Private
     private var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
+    private var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
     private var masterDataRepository: MasterDataRepository = MasterDataRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
-    private var state: State = .none
+    var stage: State = .none
 
     public func guestLogin() {
-        self.state = .login
+        self.stage = .guestLogin
         self.authenticationRepository.guestLogin(uuid: Defaults[.deviceUuid]) { (success) in
             if success {
                 self.getCountryCode()
@@ -50,7 +52,7 @@ final class SplashScreenViewModel {
     }
     
     private func getCountryCode() {
-        self.state = .getCountryCode
+        self.stage = .getCountryCode
         self.masterDataRepository.getCountry() { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -78,6 +80,22 @@ final class SplashScreenViewModel {
         }
     }
     
+    public func getBadges() {
+        self.stage = .getBadges
+        self.notificationRepository.getBadges() { (success, response, isRefreshToken) in
+            if success {
+                UIApplication.shared.applicationIconBadgeNumber = Defaults[.notificationBadges]
+                self.getCountryCode()
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                } else {
+                    self.getCountryCode()
+                }
+            }
+        }
+    }
+    
     //MARK: Output
     var didGuestLoginFinish: (() -> ())?
     
@@ -87,9 +105,10 @@ final class SplashScreenViewModel {
     
     public func tokenHandle() {
         if UserManager.shared.accessToken.isEmpty || UserManager.shared.userRole == .guest {
+            UIApplication.shared.applicationIconBadgeNumber = Defaults[.notificationBadges]
             self.guestLogin()
         } else {
-            self.state = .refreshToken
+            self.stage = .refreshToken
             self.tokenHelper.refreshToken()
         }
     }
@@ -97,10 +116,16 @@ final class SplashScreenViewModel {
 
 extension SplashScreenViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
-        if self.state == .getCountryCode {
+        if self.stage == .getBadges {
+            self.getBadges()
+        } else if self.stage == .getCountryCode {
             self.getCountryCode()
         } else {
-            self.didGuestLoginFinish?()
+            if UserManager.shared.isLogin {
+                self.getBadges()
+            } else {
+                self.didGuestLoginFinish?()
+            }
         }
     }
 }
