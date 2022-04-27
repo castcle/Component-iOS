@@ -17,30 +17,23 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFL-M8-exR" customClass="ActiveLabel" customModule="ActiveLabel">
-                        <rect key="frame" x="15" y="10" width="290" height="20"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="plI-id-jh2" customClass="AttributedLabel" customModule="Atributika">
+                        <rect key="frame" x="15" y="10" width="290" height="30"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="fFL-M8-exR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="4de-nm-1Bt"/>
-                    <constraint firstAttribute="trailing" secondItem="fFL-M8-exR" secondAttribute="trailing" constant="15" id="9eK-i1-99p"/>
-                    <constraint firstItem="fFL-M8-exR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="sRg-fA-dCi"/>
-                    <constraint firstAttribute="bottom" secondItem="fFL-M8-exR" secondAttribute="bottom" constant="20" id="wal-ry-7tF"/>
+                    <constraint firstItem="plI-id-jh2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="adO-pI-v20"/>
+                    <constraint firstAttribute="bottom" secondItem="plI-id-jh2" secondAttribute="bottom" constant="10" id="k1N-r3-KMz"/>
+                    <constraint firstAttribute="trailing" secondItem="plI-id-jh2" secondAttribute="trailing" constant="15" id="qWK-SW-2GL"/>
+                    <constraint firstItem="plI-id-jh2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="uli-R8-uqc"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="detailLabel" destination="fFL-M8-exR" id="y3W-dc-45I"/>
+                <outlet property="massageLabel" destination="plI-id-jh2" id="h3E-NH-JR8"/>
             </connections>
             <point key="canvasLocation" x="66.666666666666671" y="101.78571428571428"/>
         </tableViewCell>
     </objects>
-    <designables>
-        <designable name="fFL-M8-exR">
-            <size key="intrinsicContentSize" width="39.5" height="19.5"/>
-        </designable>
-    </designables>
 </document>

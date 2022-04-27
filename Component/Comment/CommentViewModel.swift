@@ -34,6 +34,7 @@ import RealmSwift
 public final class CommentViewModel {
     
     private var commentRepository: CommentRepository = CommentRepositoryImpl()
+    private var contentRepository: ContentRepository = ContentRepositoryImpl()
     var content: Content?
     var comments: [Comment] = []
     var commentRequest: CommentRequest = CommentRequest()
@@ -49,6 +50,24 @@ public final class CommentViewModel {
             self.content = content
             self.comments = []
             self.getComments()
+        }
+    }
+    
+    private func getContentDetail() {
+        self.contentRepository.getContentDetail(contentId: self.content?.id ?? "") { (success, response, isRefreshToken)  in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    let payload = JSON(json[JsonKey.payload.rawValue].dictionaryValue)
+                    self.content = Content(json: payload)
+                    self.didLoadContentFinish?()
+                } catch {}
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
         }
     }
     
@@ -205,6 +224,7 @@ public final class CommentViewModel {
     }
     
     var didLoadCommentsFinish: (() -> ())?
+    var didLoadContentFinish: (() -> ())?
     
     private func modifyCommentData() {
         for index in (0..<self.comments.count) {

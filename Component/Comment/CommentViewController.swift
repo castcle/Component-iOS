@@ -151,6 +151,10 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
                               animations: { self.tableView.reloadData() })
         }
         
+        self.viewModel.didLoadContentFinish = {
+            self.tableView.reloadData()
+        }
+        
         self.tableView.cr.addFootRefresh(animator: NormalFooterAnimator()) { [weak self] in
             guard let self = self else { return }
             if self.viewModel.meta.resultCount < self.viewModel.commentRequest.maxResults {
