@@ -25,6 +25,7 @@
 //  Created by Castcle Co., Ltd. on 1/8/2564 BE.
 //
 
+import UIKit
 import Foundation
 import Core
 import Networking
@@ -36,33 +37,13 @@ final class SplashScreenViewModel {
    
     //MARK: Private
     private var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
-<<<<<<< HEAD
     private var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
+    private var masterDataRepository: MasterDataRepository = MasterDataRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
-    var stage: Stage = .unknow
-    
-    enum Stage {
-        case guestLogin
-        case refreshToken
-        case getBadges
-        case unknow
-    }
-    
-    enum BadgeKey: String {
-        case payload
-        case badges
-    }
+    var stage: State = .none
 
     public func guestLogin() {
         self.stage = .guestLogin
-=======
-    private var masterDataRepository: MasterDataRepository = MasterDataRepositoryImpl()
-    let tokenHelper: TokenHelper = TokenHelper()
-    private var state: State = .none
-
-    public func guestLogin() {
-        self.state = .login
->>>>>>> develop
         self.authenticationRepository.guestLogin(uuid: Defaults[.deviceUuid]) { (success) in
             if success {
                 self.getCountryCode()
@@ -71,7 +52,7 @@ final class SplashScreenViewModel {
     }
     
     private func getCountryCode() {
-        self.state = .getCountryCode
+        self.stage = .getCountryCode
         self.masterDataRepository.getCountry() { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -103,21 +84,13 @@ final class SplashScreenViewModel {
         self.stage = .getBadges
         self.notificationRepository.getBadges() { (success, response, isRefreshToken) in
             if success {
-                do {
-                    let rawJson = try response.mapJSON()
-                    let json = JSON(rawJson)
-                    let payload = JSON(json[BadgeKey.payload.rawValue].dictionaryValue)
-                    let badges: Int = payload[BadgeKey.badges.rawValue].intValue
-                    Defaults[.notificationBadges] = badges
-                    self.didGuestLoginFinish?()
-                } catch {
-                    self.didGuestLoginFinish?()
-                }
+                UIApplication.shared.applicationIconBadgeNumber = Defaults[.notificationBadges]
+                self.getCountryCode()
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
                 } else {
-                    self.didGuestLoginFinish?()
+                    self.getCountryCode()
                 }
             }
         }
@@ -132,13 +105,10 @@ final class SplashScreenViewModel {
     
     public func tokenHandle() {
         if UserManager.shared.accessToken.isEmpty || UserManager.shared.userRole == .guest {
+            UIApplication.shared.applicationIconBadgeNumber = Defaults[.notificationBadges]
             self.guestLogin()
         } else {
-<<<<<<< HEAD
             self.stage = .refreshToken
-=======
-            self.state = .refreshToken
->>>>>>> develop
             self.tokenHelper.refreshToken()
         }
     }
@@ -146,21 +116,16 @@ final class SplashScreenViewModel {
 
 extension SplashScreenViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
-<<<<<<< HEAD
         if self.stage == .getBadges {
             self.getBadges()
+        } else if self.stage == .getCountryCode {
+            self.getCountryCode()
         } else {
             if UserManager.shared.isLogin {
                 self.getBadges()
             } else {
                 self.didGuestLoginFinish?()
             }
-=======
-        if self.state == .getCountryCode {
-            self.getCountryCode()
-        } else {
-            self.didGuestLoginFinish?()
->>>>>>> develop
         }
     }
 }
