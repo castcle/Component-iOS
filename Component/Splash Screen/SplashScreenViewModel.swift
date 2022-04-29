@@ -84,7 +84,7 @@ final class SplashScreenViewModel {
         self.stage = .getBadges
         self.notificationRepository.getBadges() { (success, response, isRefreshToken) in
             if success {
-                UIApplication.shared.applicationIconBadgeNumber = Defaults[.notificationBadges]
+                UIApplication.shared.applicationIconBadgeNumber = UserManager.shared.badgeCount
                 self.getCountryCode()
             } else {
                 if isRefreshToken {
@@ -105,7 +105,7 @@ final class SplashScreenViewModel {
     
     public func tokenHandle() {
         if UserManager.shared.accessToken.isEmpty || UserManager.shared.userRole == .guest {
-            UIApplication.shared.applicationIconBadgeNumber = Defaults[.notificationBadges]
+            UIApplication.shared.applicationIconBadgeNumber = UserManager.shared.badgeCount
             self.guestLogin()
         } else {
             self.stage = .refreshToken
