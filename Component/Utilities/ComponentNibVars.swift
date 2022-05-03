@@ -34,6 +34,10 @@ public struct ComponentNibVars {
         public static let recastPopup = "RecastPopupViewController"
         public static let comment = "CommentViewController"
         public static let reportSuccess = "ReportSuccessViewController"
+        public static let farmingPopup = "FarmingPopupViewController"
+        public static let syncAutoPostTwitter = "SyncAutoPostViewController"
+        public static let acceptSyncSocialPopup = "AcceptSyncSocialPopupViewController"
+        public static let selectCode = "SelectCodeViewController"
     }
     
     // MARK: - View
@@ -44,6 +48,9 @@ public struct ComponentNibVars {
         public static let recast = "Recast"
         public static let comment = "Comment"
         public static let report = "Report"
+        public static let farmingPopup = "FarmingPopup"
+        public static let publicPopup = "PublicPopup"
+        
     }
     
     public struct View {
@@ -89,6 +96,7 @@ public struct ComponentNibVars {
         public static let longImageX3 = "LongImageX3TableViewCell"
         public static let longImageXMore = "LongImageXMoreTableViewCell"
         public static let userToFollow = "UserToFollowTableViewCell"
+        public static let selectCode = "SelectCodeTableViewCell"
     }
     
     // MARK: - CollectionViewCell

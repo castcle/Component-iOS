@@ -18,12 +18,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="265"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gY-d9-6ZW" customClass="ActiveLabel" customModule="ActiveLabel">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rx7-Ok-oaH" customClass="AttributedLabel" customModule="Atributika">
                         <rect key="frame" x="15" y="10" width="290" height="20"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pw7-Sw-IsE">
                         <rect key="frame" x="15" y="55" width="290" height="200"/>
                         <subviews>
@@ -153,38 +151,33 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="8gY-d9-6ZW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="3PC-00-biR"/>
-                    <constraint firstAttribute="trailing" secondItem="8gY-d9-6ZW" secondAttribute="trailing" constant="15" id="71W-U1-eq1"/>
+                    <constraint firstItem="pw7-Sw-IsE" firstAttribute="top" secondItem="rx7-Ok-oaH" secondAttribute="bottom" constant="25" id="0Im-tU-pgT"/>
+                    <constraint firstItem="rx7-Ok-oaH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="1OP-P6-y7Z"/>
                     <constraint firstItem="pw7-Sw-IsE" firstAttribute="top" secondItem="DnD-uN-gp6" secondAttribute="top" id="8Sn-NM-krq"/>
-                    <constraint firstItem="8gY-d9-6ZW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="BNW-d4-e65"/>
                     <constraint firstAttribute="trailing" secondItem="DnD-uN-gp6" secondAttribute="trailing" constant="15" id="IN7-aM-u76"/>
                     <constraint firstAttribute="bottom" secondItem="DnD-uN-gp6" secondAttribute="bottom" constant="10" id="LDN-70-cVc"/>
-                    <constraint firstItem="DnD-uN-gp6" firstAttribute="top" secondItem="8gY-d9-6ZW" secondAttribute="bottom" constant="25" id="T9s-12-tUb"/>
                     <constraint firstItem="pw7-Sw-IsE" firstAttribute="bottom" secondItem="DnD-uN-gp6" secondAttribute="bottom" id="Z8Q-FW-IKQ"/>
                     <constraint firstItem="DnD-uN-gp6" firstAttribute="width" secondItem="DnD-uN-gp6" secondAttribute="height" multiplier="29:20" id="bDn-97-Gu8"/>
                     <constraint firstItem="pw7-Sw-IsE" firstAttribute="leading" secondItem="DnD-uN-gp6" secondAttribute="leading" id="bHH-TT-G2g"/>
+                    <constraint firstAttribute="trailing" secondItem="rx7-Ok-oaH" secondAttribute="trailing" constant="15" id="bzw-4N-9Pp"/>
                     <constraint firstItem="pw7-Sw-IsE" firstAttribute="trailing" secondItem="DnD-uN-gp6" secondAttribute="trailing" id="dS7-JL-wwZ"/>
                     <constraint firstItem="DnD-uN-gp6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="lvd-eE-PbS"/>
+                    <constraint firstItem="rx7-Ok-oaH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="usi-Ed-nl7"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="detailLabel" destination="8gY-d9-6ZW" id="GiI-Po-1Sh"/>
                 <outlet property="linkContainer" destination="DnD-uN-gp6" id="bw4-AZ-Wp9"/>
                 <outlet property="linkDescriptionLabel" destination="tUL-xi-0p8" id="O1g-Y4-7XF"/>
                 <outlet property="linkImage" destination="T5t-De-s0k" id="i0P-5U-yIx"/>
                 <outlet property="linkTitleLabel" destination="eAe-kD-1vb" id="M16-ad-y1e"/>
+                <outlet property="massageLabel" destination="rx7-Ok-oaH" id="1XS-YS-xoB"/>
                 <outlet property="skeletonView" destination="pw7-Sw-IsE" id="EZN-t5-B5p"/>
                 <outlet property="titleLinkView" destination="0yD-Ju-rkh" id="ZNw-Kr-BOV"/>
             </connections>
             <point key="canvasLocation" x="66.666666666666671" y="174.77678571428569"/>
         </tableViewCell>
     </objects>
-    <designables>
-        <designable name="8gY-d9-6ZW">
-            <size key="intrinsicContentSize" width="39.5" height="19.5"/>
-        </designable>
-    </designables>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

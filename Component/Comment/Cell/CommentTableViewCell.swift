@@ -31,8 +31,9 @@ import Networking
 import ActiveLabel
 
 protocol CommentTableViewCellDelegate {
-    func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
+    func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment, castcleId: String)
     func didEdit(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
+    func didDelete(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
     func didLiked(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
     func didUnliked(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
 }
@@ -64,10 +65,16 @@ class CommentTableViewCell: UITableViewCell {
         didSet {
             guard let comment = self.comment else { return }
             self.commentLabel.text = comment.message
-            
-            let url = URL(string: comment.author.avatar.thumbnail)
-            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-            self.displayNameLabel.text = comment.author.displayName
+            if let authorRef = ContentHelper.shared.getAuthorRef(id: comment.authorId) {
+                let url = URL(string: authorRef.avatar)
+                self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                self.displayNameLabel.text = authorRef.displayName
+                
+            } else {
+                self.avatarImage.image = UIImage.Asset.userPlaceholder
+                self.displayNameLabel.text = "Castcle"
+            }
+
             self.dateLabel.text = comment.commentDate.timeAgoDisplay()
             self.commentLabel.customColor[self.customHashtag] = UIColor.Asset.lightBlue
             self.commentLabel.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
@@ -124,42 +131,44 @@ class CommentTableViewCell: UITableViewCell {
     
     private func showActionSheet() {
         guard let comment = self.comment else { return }
-        
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Reply", style: .default , handler: { (UIAlertAction) in
+        let actionSheet = CCActionSheet(isGestureDismiss: false)
+        let cancelButton = CCAction(title: "Cancel", image: UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+            actionSheet.dismissActionSheet()
             self.isShowActionSheet = false
-            self.delegate?.didReply(self, comment: comment)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Edit", style: .default , handler: { (UIAlertAction) in
+        }
+        actionSheet.addActions([cancelButton])
+        if UserHelper.shared.isMyAccount(id: comment.authorId) {
+            let delete = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.deleteOne), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                actionSheet.dismissActionSheet()
+                self.isShowActionSheet = false
+                self.delegate?.didDelete(self, comment: comment)
+            }
+            actionSheet.addActions([delete])
+        }
+        let reply = CCAction(title: "Reply", image: UIImage.init(icon: .castcle(.rightBack), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+            actionSheet.dismissActionSheet()
             self.isShowActionSheet = false
-            self.delegate?.didEdit(self, comment: comment)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler: { (UIAlertAction) in
-            self.isShowActionSheet = false
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in
-            self.isShowActionSheet = false
-            print("User click Cancel button")
-        }))
-
-        // uncomment for iPad Support
-        // alert.popoverPresentationController?.sourceView = self.view
-
-        Utility.currentViewController().present(alert, animated: true)
+            if let authorRef = ContentHelper.shared.getAuthorRef(id: comment.authorId) {
+                self.delegate?.didReply(self, comment: comment, castcleId: authorRef.castcleId)
+            } else {
+                self.delegate?.didReply(self, comment: comment, castcleId: "")
+            }
+        }
+        actionSheet.addActions([reply])
+        Utility.currentViewController().present(actionSheet, animated: true)
     }
     @IBAction func replyAction(_ sender: Any) {
         guard let comment = self.comment else { return }
-        self.delegate?.didReply(self, comment: comment)
+        if let authorRef = ContentHelper.shared.getAuthorRef(id: comment.authorId) {
+            self.delegate?.didReply(self, comment: comment, castcleId: authorRef.castcleId)
+        } else {
+            self.delegate?.didReply(self, comment: comment, castcleId: "")
+        }
     }
     
     @IBAction func likeAction(_ sender: Any) {
         if UserManager.shared.isLogin {
             guard let comment = self.comment else { return }
-
             if comment.participate.liked {
                 self.delegate?.didUnliked(self, comment: comment)
             } else {

@@ -35,10 +35,13 @@ public enum ComponentScene {
     case recast(RecastPopupViewModel)
     case comment(CommentViewModel)
     case reportSuccess(Bool, String)
+    case farmingPopup(FarmingPopupViewModel)
+    case syncAutoPostTwitter(SyncTwitterAutoPostViewModel)
+    case acceptSyncSocialPopup(AcceptSyncSocialPopupViewModel)
+    case selectCode
 }
 
 public struct ComponentOpener {
-    
     public static func open(_ componentScene: ComponentScene) -> UIViewController {
         switch componentScene {
         case .internalWebView(let url):
@@ -70,6 +73,25 @@ public struct ComponentOpener {
             vc?.isReportContent = isReportContent
             vc?.castcleId = castcleId
             return vc ?? ReportSuccessViewController()
+        case .farmingPopup(let viewModel):
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.farmingPopup, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.farmingPopup) as? FarmingPopupViewController
+            vc?.viewModel = viewModel
+            return vc ?? FarmingPopupViewController()
+        case .syncAutoPostTwitter(let viewModel):
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.publicPopup, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.syncAutoPostTwitter) as? SyncAutoPostViewController
+            vc?.viewModel = viewModel
+            return vc ?? SyncAutoPostViewController()
+        case .acceptSyncSocialPopup(let viewModel):
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.publicPopup, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.acceptSyncSocialPopup) as? AcceptSyncSocialPopupViewController
+            vc?.viewModel = viewModel
+            return vc ?? AcceptSyncSocialPopupViewController()
+        case .selectCode:
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.publicPopup, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.selectCode)
+            return vc
         }
     }
 }

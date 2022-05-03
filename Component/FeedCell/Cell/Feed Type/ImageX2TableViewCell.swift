@@ -28,34 +28,26 @@
 import UIKit
 import Core
 import Networking
-import ActiveLabel
+import Atributika
 import Lightbox
 import Kingfisher
 
 public class ImageX2TableViewCell: UITableViewCell {
 
-    @IBOutlet var detailLabel: ActiveLabel!
+    @IBOutlet var massageLabel: AttributedLabel!
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var firstImageView: UIImageView!
     @IBOutlet var secondImageView: UIImageView!
     
-    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
-            
-            self.detailLabel.customize { label in
-                label.font = UIFont.asset(.contentLight, fontSize: .body)
-                label.numberOfLines = 0
-                label.enabledTypes = [.mention, .url, self.customHashtag]
-                label.textColor = UIColor.Asset.white
-                label.mentionColor = UIColor.Asset.lightBlue
-                label.URLColor = UIColor.Asset.lightBlue
-                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
-                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
-            }
-            
-            self.detailLabel.text = content.message
+            self.massageLabel.numberOfLines = 0
+            self.massageLabel.attributedText = content.message
+                .styleHashtags(AttributedContent.link)
+                .styleMentions(AttributedContent.link)
+                .styleLinks(AttributedContent.link)
+                .styleAll(AttributedContent.all)
             self.enableActiveLabel()
             
             if content.photo.count >= 2 {
@@ -69,27 +61,30 @@ public class ImageX2TableViewCell: UITableViewCell {
     }
     
     private func enableActiveLabel() {
-        self.detailLabel.handleMentionTap { mention in
-            let userDict: [String: String] = [
-                "castcleId":  mention
-            ]
-            NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
-        }
-        self.detailLabel.handleURLTap { url in
-            var urlString = url.absoluteString
-            urlString = urlString.replacingOccurrences(of: "https://", with: "")
-            urlString = urlString.replacingOccurrences(of: "http://", with: "")
-            if let newUrl = URL(string: "https://\(urlString)") {
-                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
-            } else {
+        self.massageLabel.onClick = { label, detection in
+            switch detection.type {
+            case .hashtag(let tag):
+                let hashtagDict: [String: String] = [
+                    JsonKey.hashtag.rawValue: "#\(tag)"
+                ]
+                NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
+            case .mention(let name):
+                let userDict: [String: String] = [
+                    JsonKey.castcleId.rawValue: name
+                ]
+                NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
+            case .link(let url):
+                var urlString = url.absoluteString
+                urlString = urlString.replacingOccurrences(of: "https://", with: "")
+                urlString = urlString.replacingOccurrences(of: "http://", with: "")
+                if let newUrl = URL(string: "https://\(urlString)") {
+                    Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
+                } else {
+                    return
+                }
+            default:
                 return
             }
-        }
-        self.detailLabel.handleCustomTap(for: self.customHashtag) { element in
-            let hashtagDict: [String: String] = [
-                "hashtag":  element
-            ]
-            NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
         }
     }
     

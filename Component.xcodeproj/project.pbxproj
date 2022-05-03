@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B715F5672812895A004687EA /* SelectCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B715F5662812895A004687EA /* SelectCodeViewController.swift */; };
+		B715F56B28128A64004687EA /* SelectCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B715F56928128A64004687EA /* SelectCodeTableViewCell.xib */; };
+		B715F56C28128A64004687EA /* SelectCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B715F56A28128A64004687EA /* SelectCodeTableViewCell.swift */; };
 		B7167F9827AD1AE800067DBD /* AdsPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7167F9627AD1AE800067DBD /* AdsPageTableViewCell.swift */; };
 		B7167F9927AD1AE800067DBD /* AdsPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7167F9727AD1AE800067DBD /* AdsPageTableViewCell.xib */; };
 		B7167F9C27AFC94A00067DBD /* ReachedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7167F9A27AFC94A00067DBD /* ReachedTableViewCell.swift */; };
@@ -42,6 +45,7 @@
 		B71B666F27251C0900191A62 /* SkeletonFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71B666D27251C0900191A62 /* SkeletonFeedTableViewCell.xib */; };
 		B7211E75279A84330018B3E5 /* SuggestionUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7211E73279A84330018B3E5 /* SuggestionUserTableViewCell.swift */; };
 		B7211E76279A84330018B3E5 /* SuggestionUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7211E74279A84330018B3E5 /* SuggestionUserTableViewCell.xib */; };
+		B74EBE3027F7DA4F0024BB94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B74EBE2F27F7DA4F0024BB94 /* Assets.xcassets */; };
 		B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */; };
 		B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552957269CBA14005D5EB5 /* FastAnimator.swift */; };
 		B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552958269CBA14005D5EB5 /* FastLayer.swift */; };
@@ -115,8 +119,16 @@
 		B7AC880827199BA500500F81 /* HandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880727199BA500500F81 /* HandleView.swift */; };
 		B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */; };
 		B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */; };
+		B7E49ADE27F30FD60026C7F6 /* FarmingPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7E49ADD27F30FD60026C7F6 /* FarmingPopup.storyboard */; };
+		B7E49AE027F310150026C7F6 /* FarmingPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */; };
+		B7E49AE227F3101D0026C7F6 /* FarmingPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */; };
 		B7E64ECB275F63B300FFD78E /* Report.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7E64ECA275F63B300FFD78E /* Report.storyboard */; };
 		B7E64ECD275F63D700FFD78E /* ReportSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E64ECC275F63D700FFD78E /* ReportSuccessViewController.swift */; };
+		B7E924B82805747000F9D75D /* SyncTwitterAutoPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E924B22805747000F9D75D /* SyncTwitterAutoPostViewModel.swift */; };
+		B7E924B92805747000F9D75D /* AcceptSyncSocialPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E924B32805747000F9D75D /* AcceptSyncSocialPopupViewModel.swift */; };
+		B7E924BA2805747000F9D75D /* PublicPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7E924B42805747000F9D75D /* PublicPopup.storyboard */; };
+		B7E924BB2805747000F9D75D /* AcceptSyncSocialPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E924B62805747000F9D75D /* AcceptSyncSocialPopupViewController.swift */; };
+		B7E924BC2805747000F9D75D /* SyncAutoPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E924B72805747000F9D75D /* SyncAutoPostViewController.swift */; };
 		B7FA1D8627B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FA1D8427B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift */; };
 		B7FA1D8727B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7FA1D8527B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.xib */; };
 		B7FA1D8A27B0DB3000A485A1 /* LongTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7FA1D8827B0DB3000A485A1 /* LongTextTableViewCell.xib */; };
@@ -142,6 +154,9 @@
 		7D2DA64FE09C59F76CA7D23E /* Pods-Component.release (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.release (staging).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.release (staging).xcconfig"; sourceTree = "<group>"; };
 		9A723B2EF055ED2C75BAC143 /* Pods_Component.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Component.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B70446F0676E9D9C1803A9CF /* Pods-Component.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.debug (development).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.debug (development).xcconfig"; sourceTree = "<group>"; };
+		B715F5662812895A004687EA /* SelectCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCodeViewController.swift; sourceTree = "<group>"; };
+		B715F56928128A64004687EA /* SelectCodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectCodeTableViewCell.xib; sourceTree = "<group>"; };
+		B715F56A28128A64004687EA /* SelectCodeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCodeTableViewCell.swift; sourceTree = "<group>"; };
 		B7167F9627AD1AE800067DBD /* AdsPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsPageTableViewCell.swift; sourceTree = "<group>"; };
 		B7167F9727AD1AE800067DBD /* AdsPageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdsPageTableViewCell.xib; sourceTree = "<group>"; };
 		B7167F9A27AFC94A00067DBD /* ReachedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachedTableViewCell.swift; sourceTree = "<group>"; };
@@ -177,6 +192,7 @@
 		B71B666D27251C0900191A62 /* SkeletonFeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkeletonFeedTableViewCell.xib; sourceTree = "<group>"; };
 		B7211E73279A84330018B3E5 /* SuggestionUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionUserTableViewCell.swift; sourceTree = "<group>"; };
 		B7211E74279A84330018B3E5 /* SuggestionUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestionUserTableViewCell.xib; sourceTree = "<group>"; };
+		B74EBE2F27F7DA4F0024BB94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshAnimator.swift; sourceTree = "<group>"; };
 		B7552957269CBA14005D5EB5 /* FastAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastAnimator.swift; sourceTree = "<group>"; };
 		B7552958269CBA14005D5EB5 /* FastLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLayer.swift; sourceTree = "<group>"; };
@@ -255,8 +271,16 @@
 		B7AC880727199BA500500F81 /* HandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleView.swift; sourceTree = "<group>"; };
 		B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
+		B7E49ADD27F30FD60026C7F6 /* FarmingPopup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FarmingPopup.storyboard; sourceTree = "<group>"; };
+		B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FarmingPopupViewController.swift; sourceTree = "<group>"; };
+		B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FarmingPopupViewModel.swift; sourceTree = "<group>"; };
 		B7E64ECA275F63B300FFD78E /* Report.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Report.storyboard; sourceTree = "<group>"; };
 		B7E64ECC275F63D700FFD78E /* ReportSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportSuccessViewController.swift; sourceTree = "<group>"; };
+		B7E924B22805747000F9D75D /* SyncTwitterAutoPostViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncTwitterAutoPostViewModel.swift; sourceTree = "<group>"; };
+		B7E924B32805747000F9D75D /* AcceptSyncSocialPopupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptSyncSocialPopupViewModel.swift; sourceTree = "<group>"; };
+		B7E924B42805747000F9D75D /* PublicPopup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PublicPopup.storyboard; sourceTree = "<group>"; };
+		B7E924B62805747000F9D75D /* AcceptSyncSocialPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptSyncSocialPopupViewController.swift; sourceTree = "<group>"; };
+		B7E924B72805747000F9D75D /* SyncAutoPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncAutoPostViewController.swift; sourceTree = "<group>"; };
 		B7FA1D8427B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTextLinkPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		B7FA1D8527B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LongTextLinkPreviewTableViewCell.xib; sourceTree = "<group>"; };
 		B7FA1D8827B0DB3000A485A1 /* LongTextTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LongTextTableViewCell.xib; sourceTree = "<group>"; };
@@ -317,6 +341,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B715F56828128A42004687EA /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B715F56A28128A64004687EA /* SelectCodeTableViewCell.swift */,
+				B715F56928128A64004687EA /* SelectCodeTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		B7167F9527AD1AA600067DBD /* Ads */ = {
 			isa = PBXGroup;
 			children = (
@@ -357,6 +390,14 @@
 				B7211E74279A84330018B3E5 /* SuggestionUserTableViewCell.xib */,
 			);
 			path = Suggestion;
+			sourceTree = "<group>";
+		};
+		B74EBE2E27F7DA4F0024BB94 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				B74EBE2F27F7DA4F0024BB94 /* Assets.xcassets */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		B755294B269CB846005D5EB5 /* Refresh */ = {
@@ -580,9 +621,12 @@
 			children = (
 				B792815D268F2C30000ED84A /* Component.h */,
 				B792815E268F2C30000ED84A /* Info.plist */,
+				B74EBE2E27F7DA4F0024BB94 /* Assets */,
 				B7A15B212795C196001E34DE /* Localizable */,
 				B75529D1269F693C005D5EB5 /* Utilities */,
 				B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */,
+				B7E924B02805747000F9D75D /* PublicPopup */,
+				B7E49ADC27F30FB60026C7F6 /* FarmingPopup */,
 				B786902A27CCA4570029EDFE /* UserToFollow */,
 				B7E64EC9275F637F00FFD78E /* Report */,
 				B7AC87FC271999CF00500F81 /* CastcleActionSheet */,
@@ -619,6 +663,16 @@
 			path = CastcleActionSheet;
 			sourceTree = "<group>";
 		};
+		B7E49ADC27F30FB60026C7F6 /* FarmingPopup */ = {
+			isa = PBXGroup;
+			children = (
+				B7E49ADD27F30FD60026C7F6 /* FarmingPopup.storyboard */,
+				B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */,
+				B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */,
+			);
+			path = FarmingPopup;
+			sourceTree = "<group>";
+		};
 		B7E64EC9275F637F00FFD78E /* Report */ = {
 			isa = PBXGroup;
 			children = (
@@ -626,6 +680,36 @@
 				B7E64ECC275F63D700FFD78E /* ReportSuccessViewController.swift */,
 			);
 			path = Report;
+			sourceTree = "<group>";
+		};
+		B7E924B02805747000F9D75D /* PublicPopup */ = {
+			isa = PBXGroup;
+			children = (
+				B7E924B42805747000F9D75D /* PublicPopup.storyboard */,
+				B7E924B12805747000F9D75D /* ViewModel */,
+				B7E924B52805747000F9D75D /* ViewController */,
+				B715F56828128A42004687EA /* Cell */,
+			);
+			path = PublicPopup;
+			sourceTree = "<group>";
+		};
+		B7E924B12805747000F9D75D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B7E924B22805747000F9D75D /* SyncTwitterAutoPostViewModel.swift */,
+				B7E924B32805747000F9D75D /* AcceptSyncSocialPopupViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B7E924B52805747000F9D75D /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B7E924B62805747000F9D75D /* AcceptSyncSocialPopupViewController.swift */,
+				B7E924B72805747000F9D75D /* SyncAutoPostViewController.swift */,
+				B715F5662812895A004687EA /* SelectCodeViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		B7FA1D8327B0D24300A485A1 /* Long Feed Type */ = {
@@ -738,15 +822,18 @@
 				B78663572747AC4200B13EEF /* QuoteCastTextLinkCell.xib in Resources */,
 				B71744BD26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.xib in Resources */,
 				B7FA1D9827B0E2C300A485A1 /* LongImageX3TableViewCell.xib in Resources */,
+				B715F56B28128A64004687EA /* SelectCodeTableViewCell.xib in Resources */,
 				B78663592747AC4200B13EEF /* QuoteCastBlogCell.xib in Resources */,
 				B7910E3026B5E1320097C94E /* SplashScreen.storyboard in Resources */,
 				B78663522747AC4200B13EEF /* QuoteCastTextCell.xib in Resources */,
 				B717449726E791070014D6B5 /* HeaderTableViewCell.xib in Resources */,
 				B7A15B262795C40C001E34DE /* Localizable.strings in Resources */,
 				B717449F26E7E1450014D6B5 /* CommentTableViewCell.xib in Resources */,
+				B74EBE3027F7DA4F0024BB94 /* Assets.xcassets in Resources */,
 				B78663552747AC4200B13EEF /* QuoteCastImageX1Cell.xib in Resources */,
 				B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */,
 				B784D50727B18698009087E5 /* SkeletonUserTableViewCell.xib in Resources */,
+				B7E49ADE27F30FD60026C7F6 /* FarmingPopup.storyboard in Resources */,
 				B71744C626E9F6980014D6B5 /* BlogNoImageTableViewCell.xib in Resources */,
 				B7FA1D9B27B0E2C300A485A1 /* LongImageXMoreTableViewCell.xib in Resources */,
 				B7167F9D27AFC94A00067DBD /* ReachedTableViewCell.xib in Resources */,
@@ -756,6 +843,7 @@
 				B7167F9927AD1AE800067DBD /* AdsPageTableViewCell.xib in Resources */,
 				B71744C226E9F6820014D6B5 /* BlogTableViewCell.xib in Resources */,
 				B71744AB26E9EAB10014D6B5 /* TextLinkTableViewCell.xib in Resources */,
+				B7E924BA2805747000F9D75D /* PublicPopup.storyboard in Resources */,
 				B787963626C66E7300FECC21 /* Recast.storyboard in Resources */,
 				B7910DF526AFE32A0097C94E /* WebView.storyboard in Resources */,
 				B7FA1D9D27B0E2C300A485A1 /* LongImageX2TableViewCell.xib in Resources */,
@@ -823,6 +911,7 @@
 				B786635A2747AC4200B13EEF /* QuoteCastBlogCell.swift in Sources */,
 				B71B666E27251C0900191A62 /* SkeletonFeedTableViewCell.swift in Sources */,
 				B7A71D0126FC4E380092F318 /* FeedCellHelper.swift in Sources */,
+				B7E924B82805747000F9D75D /* SyncTwitterAutoPostViewModel.swift in Sources */,
 				B78663502747AC4200B13EEF /* QuoteCastTextLinkCell.swift in Sources */,
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
 				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
@@ -830,9 +919,11 @@
 				B717447F26E259AB0014D6B5 /* CommentViewModel.swift in Sources */,
 				B7167F9C27AFC94A00067DBD /* ReachedTableViewCell.swift in Sources */,
 				B7AC1E442717C67A002FC176 /* TextLinkPreviewTableViewCell.swift in Sources */,
+				B7E49AE227F3101D0026C7F6 /* FarmingPopupViewModel.swift in Sources */,
 				B71744AA26E9EAB10014D6B5 /* TextLinkTableViewCell.swift in Sources */,
 				B7552979269CBA14005D5EB5 /* RefreshProtocol.swift in Sources */,
 				B7FA1D8627B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift in Sources */,
+				B7E49AE027F310150026C7F6 /* FarmingPopupViewController.swift in Sources */,
 				B7552986269CBE49005D5EB5 /* NormalFooterAnimator.swift in Sources */,
 				B786635C2747AC4200B13EEF /* QuoteCastBlogNoImageCell.swift in Sources */,
 				B78663562747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.swift in Sources */,
@@ -861,19 +952,24 @@
 				B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */,
 				B7AC87FE27199A6D00500F81 /* CCActionSheet.swift in Sources */,
 				B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */,
+				B7E924BB2805747000F9D75D /* AcceptSyncSocialPopupViewController.swift in Sources */,
 				B7866335274777F900B13EEF /* ActivityHeaderTableViewCell.swift in Sources */,
+				B715F5672812895A004687EA /* SelectCodeViewController.swift in Sources */,
 				B786634F2747AC4200B13EEF /* QuoteCastImageX2Cell.swift in Sources */,
 				B756C8A3277337C1007AADE4 /* TableView.swift in Sources */,
 				B786635F2747AC4200B13EEF /* QuoteCastImageX1Cell.swift in Sources */,
 				B7AC880427199B4700500F81 /* CCAction.swift in Sources */,
 				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,
+				B715F56C28128A64004687EA /* SelectCodeTableViewCell.swift in Sources */,
 				B755297D269CBA15005D5EB5 /* RefreshExtension.swift in Sources */,
+				B7E924BC2805747000F9D75D /* SyncAutoPostViewController.swift in Sources */,
 				B7AC880227199B0F00500F81 /* CastcleActionSheetExtensions.swift in Sources */,
 				B71744A226E7ED320014D6B5 /* ReplyTableViewCell.swift in Sources */,
 				B78663512747AC4200B13EEF /* QuoteCastImageX3Cell.swift in Sources */,
 				B717449E26E7E1450014D6B5 /* CommentTableViewCell.swift in Sources */,
 				B786902D27CCA48E0029EDFE /* UserToFollowTableViewCell.swift in Sources */,
 				B755297B269CBA14005D5EB5 /* RefreshFooterView.swift in Sources */,
+				B7E924B92805747000F9D75D /* AcceptSyncSocialPopupViewModel.swift in Sources */,
 				B7FA1D8B27B0DB3000A485A1 /* LongTextTableViewCell.swift in Sources */,
 				B787963A26C66EE900FECC21 /* RecastPopupViewModel.swift in Sources */,
 			);

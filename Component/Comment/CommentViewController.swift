@@ -34,7 +34,6 @@ import JGProgressHUD
 class CommentViewController: UITableViewController, UITextViewDelegate {
     
     var viewModel = CommentViewModel()
-    
     var customInputView: UIView!
     var sendButton: UIButton!
     var avatarImage: UIImageView!
@@ -111,16 +110,16 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     }
     
     @objc func handleSend() {
-        self.hud.show(in: self.view)
         self.viewModel.commentRequest.message = self.commentTextField.text
-        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
-        
+        self.viewModel.commentRequest.contentId = self.viewModel.content?.id ?? ""
         if self.event == .create {
+            self.hud.textLabel.text = "Commenting"
             self.viewModel.createComment()
         } else if self.event == .reply {
+            self.hud.textLabel.text = "Replying"
             self.viewModel.replyComment()
         }
-        
+        self.hud.show(in: self.view)
         self.commentTextField.text = ""
         self.commentTextField.resignFirstResponder()
     }
@@ -151,7 +150,20 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
                               options: .transitionCrossDissolve,
                               animations: { self.tableView.reloadData() })
         }
-        self.hud.textLabel.text = "Commenting"
+        
+        self.viewModel.didLoadContentFinish = {
+            self.tableView.reloadData()
+        }
+        
+        self.tableView.cr.addFootRefresh(animator: NormalFooterAnimator()) { [weak self] in
+            guard let self = self else { return }
+            if self.viewModel.meta.resultCount < self.viewModel.commentRequest.maxResults {
+                self.tableView.cr.noticeNoMoreData()
+            } else {
+                self.viewModel.commentRequest.untilId = self.viewModel.meta.oldestId
+                self.viewModel.getComments()
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -249,12 +261,14 @@ extension CommentViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.reply, for: indexPath as IndexPath) as? ReplyTableViewCell
                 cell?.backgroundColor = UIColor.Asset.darkGraphiteBlue
                 cell?.delegate = self
+                cell?.configCell(replyCommentId: comment.reply[indexPath.row - 1], masterCommentId: comment.id)
                 if comment.isFirst {
                     cell?.lineView.isHidden = false
-                } else {
+                } else if comment.isLast {
                     cell?.lineView.isHidden = true
+                } else {
+                    cell?.lineView.isHidden = false
                 }
-                cell?.replyComment = comment.reply[indexPath.row - 1]
                 return cell ?? ReplyTableViewCell()
             }
         }
@@ -298,10 +312,12 @@ extension CommentViewController: FooterTableViewCellDelegate {
 }
 
 extension CommentViewController: CommentTableViewCellDelegate {
-    func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
+    func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment, castcleId: String) {
         self.event = .reply
         self.viewModel.commentId = comment.id
-        self.commentTextField.text = "@\(comment.author.castcleId) "
+        if !castcleId.isEmpty {
+            self.commentTextField.text = "@\(castcleId) "
+        }
         self.commentTextField.becomeFirstResponder()
     }
     
@@ -310,31 +326,41 @@ extension CommentViewController: CommentTableViewCellDelegate {
         self.commentTextField.becomeFirstResponder()
     }
     
+    func didDelete(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
+        self.hud.textLabel.text = "Deleting"
+        self.hud.show(in: self.view)
+        self.viewModel.deleteComment(commentId: comment.id)
+    }
+    
     func didLiked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
         self.viewModel.commentId = comment.id
-        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
         self.viewModel.likeComment()
     }
     
     func didUnliked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
         self.viewModel.commentId = comment.id
-        self.viewModel.commentRequest.castcleId = UserManager.shared.rawCastcleId
         self.viewModel.unlikeComment()
     }
 }
 
 extension CommentViewController: ReplyTableViewCellDelegate {
-    func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
+    func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef) {
         self.commentTextField.text = "\(replyComment.message)"
         self.commentTextField.becomeFirstResponder()
     }
     
-    func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
+    func didDelete(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef, masterCommentId: String) {
+        self.hud.textLabel.text = "Deleting"
+        self.hud.show(in: self.view)
+        self.viewModel.deleteReplyComment(commentId: masterCommentId, replyId: replyComment.id)
+    }
+    
+    func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef) {
         self.viewModel.commentId = replyComment.id
         self.viewModel.likeComment()
     }
     
-    func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment) {
+    func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef) {
         self.viewModel.commentId = replyComment.id
         self.viewModel.unlikeComment()
     }
