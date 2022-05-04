@@ -34,6 +34,7 @@ public enum ComponentScene {
     case datePicker
     case recast(RecastPopupViewModel)
     case comment(CommentViewModel)
+    case commentDetail(CommentDetailViewModel)
     case reportSuccess(Bool, String)
     case farmingPopup(FarmingPopupViewModel)
     case syncAutoPostTwitter(SyncTwitterAutoPostViewModel)
@@ -67,6 +68,11 @@ public struct ComponentOpener {
             let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.comment) as? CommentViewController
             vc?.viewModel = viewModel
             return vc ?? CommentViewController()
+        case .commentDetail(let viewModel):
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.comment, bundle: ConfigBundle.component)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.commentDetail) as? CommentDetailViewController
+            vc?.viewModel = viewModel
+            return vc ?? CommentDetailViewController()
         case .reportSuccess(let isReportContent, let castcleId):
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.report, bundle: ConfigBundle.component)
             let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.reportSuccess) as? ReportSuccessViewController

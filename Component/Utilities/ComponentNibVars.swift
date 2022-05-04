@@ -33,6 +33,7 @@ public struct ComponentNibVars {
         public static let datePicker = "DatePickerViewController"
         public static let recastPopup = "RecastPopupViewController"
         public static let comment = "CommentViewController"
+        public static let commentDetail = "CommentDetailViewController"
         public static let reportSuccess = "ReportSuccessViewController"
         public static let farmingPopup = "FarmingPopupViewController"
         public static let syncAutoPostTwitter = "SyncAutoPostViewController"
@@ -98,6 +99,7 @@ public struct ComponentNibVars {
         public static let longImageXMore = "LongImageXMoreTableViewCell"
         public static let userToFollow = "UserToFollowTableViewCell"
         public static let selectCode = "SelectCodeTableViewCell"
+        public static let viewCast = "ViewCastTableViewCell"
     }
     
     // MARK: - CollectionViewCell

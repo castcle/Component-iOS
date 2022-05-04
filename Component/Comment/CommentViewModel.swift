@@ -35,26 +35,32 @@ public final class CommentViewModel {
     
     private var commentRepository: CommentRepository = CommentRepositoryImpl()
     private var contentRepository: ContentRepository = ContentRepositoryImpl()
-    var content: Content?
+    var content: Content = Content()
+    private var contentId: String = ""
     var comments: [Comment] = []
     var commentRequest: CommentRequest = CommentRequest()
     let tokenHelper: TokenHelper = TokenHelper()
     var state: State = .none
+    var contentLoadState: LoadState = .loading
+    var commentLoadState: LoadState = .loading
     var commentId: String = ""
     var replyId: String = ""
     var meta: Meta = Meta()
     let realm = try! Realm()
     
-    public init(content: Content? = nil) {
-        if let content = content {
-            self.content = content
+    public init(contentId: String = "") {
+        if !contentId.isEmpty {
+            self.tokenHelper.delegate = self
+            self.contentId = contentId
             self.comments = []
+            self.getContentDetail()
             self.getComments()
         }
     }
     
     private func getContentDetail() {
-        self.contentRepository.getContentDetail(contentId: self.content?.id ?? "") { (success, response, isRefreshToken)  in
+        self.state = .getContentDetail
+        self.contentRepository.getContentDetail(contentId: self.contentId) { (success, response, isRefreshToken)  in
             if success {
                 do {
                     let rawJson = try response.mapJSON()
@@ -73,7 +79,7 @@ public final class CommentViewModel {
     
     public func getComments() {
         self.state = .getComments
-        self.commentRepository.getComments(contentId: self.content?.id ?? "", commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
+        self.commentRepository.getComments(contentId: self.contentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 do {
                     let rawJson = try response.mapJSON()
@@ -261,6 +267,10 @@ extension CommentViewModel: TokenHelperDelegate {
             self.unlikeComment()
         } else if self.state == .deleteComment {
             self.deleteComment(commentId: self.commentId)
+        } else if self.state == .deleteReplyComment {
+            self.deleteReplyComment(commentId: self.commentId, replyId: self.replyId)
+        } else if self.state == .getContentDetail {
+            self.getContentDetail()
         }
     }
 }

@@ -102,7 +102,7 @@ public class AdsPageTableViewCell: UITableViewCell {
     private func enableActiveLabel() {
         self.detailLabel.handleMentionTap { mention in
             let userDict: [String: String] = [
-                "castcleId":  mention
+                JsonKey.castcleId.rawValue: mention
             ]
             NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
         }
@@ -121,7 +121,7 @@ public class AdsPageTableViewCell: UITableViewCell {
         }
         self.detailLabel.handleCustomTap(for: self.customHashtag) { element in
             let hashtagDict: [String: String] = [
-                "hashtag":  element
+                JsonKey.hashtag.rawValue: element
             ]
             NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
         }

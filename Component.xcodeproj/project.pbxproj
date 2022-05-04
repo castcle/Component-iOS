@@ -108,6 +108,10 @@
 		B79281D226959A84000ED84A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B79281D126959A84000ED84A /* Core.framework */; };
 		B79A8ECF28222C1800918716 /* SkeletonNotifyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79A8ECD28222C1800918716 /* SkeletonNotifyTableViewCell.swift */; };
 		B79A8ED028222C1800918716 /* SkeletonNotifyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B79A8ECE28222C1800918716 /* SkeletonNotifyTableViewCell.xib */; };
+		B79A8ED62822A38400918716 /* CommentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79A8ED52822A38400918716 /* CommentDetailViewController.swift */; };
+		B79A8ED82822A55E00918716 /* CommentDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79A8ED72822A55E00918716 /* CommentDetailViewModel.swift */; };
+		B79A8EDF2822BBEB00918716 /* ViewCastTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B79A8EDD2822BBEB00918716 /* ViewCastTableViewCell.xib */; };
+		B79A8EE02822BBEB00918716 /* ViewCastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B79A8EDE2822BBEB00918716 /* ViewCastTableViewCell.swift */; };
 		B7A15B232795C1A1001E34DE /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A15B222795C1A1001E34DE /* Localizable.swift */; };
 		B7A15B262795C40C001E34DE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7A15B282795C40C001E34DE /* Localizable.strings */; };
 		B7A71D0126FC4E380092F318 /* FeedCellHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A71D0026FC4E380092F318 /* FeedCellHelper.swift */; };
@@ -261,6 +265,10 @@
 		B79281D126959A84000ED84A /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B79A8ECD28222C1800918716 /* SkeletonNotifyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonNotifyTableViewCell.swift; sourceTree = "<group>"; };
 		B79A8ECE28222C1800918716 /* SkeletonNotifyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkeletonNotifyTableViewCell.xib; sourceTree = "<group>"; };
+		B79A8ED52822A38400918716 /* CommentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailViewController.swift; sourceTree = "<group>"; };
+		B79A8ED72822A55E00918716 /* CommentDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDetailViewModel.swift; sourceTree = "<group>"; };
+		B79A8EDD2822BBEB00918716 /* ViewCastTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewCastTableViewCell.xib; sourceTree = "<group>"; };
+		B79A8EDE2822BBEB00918716 /* ViewCastTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewCastTableViewCell.swift; sourceTree = "<group>"; };
 		B7A15B222795C1A1001E34DE /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		B7A15B272795C40C001E34DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B7A15B292795C414001E34DE /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -370,7 +378,9 @@
 			children = (
 				B717447B26E2595E0014D6B5 /* Comment.storyboard */,
 				B717447E26E259AB0014D6B5 /* CommentViewController.swift */,
+				B79A8ED52822A38400918716 /* CommentDetailViewController.swift */,
 				B717447D26E259AB0014D6B5 /* CommentViewModel.swift */,
+				B79A8ED72822A55E00918716 /* CommentDetailViewModel.swift */,
 				B717447A26E259040014D6B5 /* Cell */,
 			);
 			path = Comment;
@@ -383,6 +393,8 @@
 				B717449D26E7E1450014D6B5 /* CommentTableViewCell.xib */,
 				B71744A026E7ED310014D6B5 /* ReplyTableViewCell.swift */,
 				B71744A126E7ED310014D6B5 /* ReplyTableViewCell.xib */,
+				B79A8EDE2822BBEB00918716 /* ViewCastTableViewCell.swift */,
+				B79A8EDD2822BBEB00918716 /* ViewCastTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -825,6 +837,7 @@
 				B786634E2747AC4200B13EEF /* QuoteCastBlogNoImageCell.xib in Resources */,
 				B7910E9226BC68460097C94E /* Picker.storyboard in Resources */,
 				B71744B526E9EF750014D6B5 /* ImageX2TableViewCell.xib in Resources */,
+				B79A8EDF2822BBEB00918716 /* ViewCastTableViewCell.xib in Resources */,
 				B7FA1D8A27B0DB3000A485A1 /* LongTextTableViewCell.xib in Resources */,
 				B78663542747AC4200B13EEF /* QuoteCastImageXMoreCell.xib in Resources */,
 				B7FA1D9E27B0E2C300A485A1 /* LongImageX1TableViewCell.xib in Resources */,
@@ -905,6 +918,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B78663582747AC4200B13EEF /* QuoteCastTextCell.swift in Sources */,
+				B79A8ED82822A55E00918716 /* CommentDetailViewModel.swift in Sources */,
 				B7FA1D9C27B0E2C300A485A1 /* LongImageX2TableViewCell.swift in Sources */,
 				B7FA1D8F27B0DF6300A485A1 /* LongTextLinkTableViewCell.swift in Sources */,
 				B7552985269CBE49005D5EB5 /* NormalHeaderAnimator.swift in Sources */,
@@ -927,7 +941,9 @@
 				B71B666E27251C0900191A62 /* SkeletonFeedTableViewCell.swift in Sources */,
 				B7A71D0126FC4E380092F318 /* FeedCellHelper.swift in Sources */,
 				B7E924B82805747000F9D75D /* SyncTwitterAutoPostViewModel.swift in Sources */,
+				B79A8EE02822BBEB00918716 /* ViewCastTableViewCell.swift in Sources */,
 				B78663502747AC4200B13EEF /* QuoteCastTextLinkCell.swift in Sources */,
+				B79A8ED62822A38400918716 /* CommentDetailViewController.swift in Sources */,
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
 				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,

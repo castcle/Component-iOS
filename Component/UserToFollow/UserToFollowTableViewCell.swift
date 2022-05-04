@@ -64,7 +64,7 @@ public class UserToFollowTableViewCell: UITableViewCell {
         self.userIdLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.userIdLabel.textColor = UIColor.Asset.white
         self.userDescLabel.font = UIFont.asset(.regular, fontSize: .overline)
-        self.userDescLabel.textColor = UIColor.Asset.white
+        self.userDescLabel.textColor = UIColor.Asset.lightGray
         self.userVerifyImage.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)
         self.userFollowButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .small)
     }

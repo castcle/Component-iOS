@@ -29,6 +29,7 @@ import UIKit
 import Core
 import Networking
 import ActiveLabel
+import RealmSwift
 
 protocol ReplyTableViewCellDelegate {
     func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef)
@@ -62,6 +63,7 @@ class ReplyTableViewCell: UITableViewCell {
     private var commentRef = CommentRef()
     private var isShowActionSheet: Bool = false
     private var masterCommentId: String = ""
+    let realm = try! Realm()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -101,13 +103,13 @@ class ReplyTableViewCell: UITableViewCell {
 
             self.commentLabel.handleCustomTap(for: self.customHashtag) { element in
                 let hashtagDict: [String: String] = [
-                    "hashtag":  element
+                    JsonKey.hashtag.rawValue: element
                 ]
                 NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
             }
             self.commentLabel.handleMentionTap { mention in
                 let userDict: [String: String] = [
-                    "castcleId":  mention
+                    JsonKey.castcleId.rawValue: mention
                 ]
                 NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
             }
@@ -153,7 +155,9 @@ class ReplyTableViewCell: UITableViewCell {
                 self.delegate?.didLiked(self, replyComment: self.commentRef)
             }
 
-            self.commentRef.liked.toggle()
+            try! self.realm.write {
+                self.commentRef.liked.toggle()
+            }
             self.updateUi(isAction: true)
             
             if self.commentRef.liked {

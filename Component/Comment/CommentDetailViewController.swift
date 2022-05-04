@@ -19,10 +19,10 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  CommentViewController.swift
+//  CommentDetailViewController.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 2/9/2564 BE.
+//  Created by Castcle Co., Ltd. on 4/5/2565 BE.
 //
 
 import UIKit
@@ -31,21 +31,14 @@ import Networking
 import Defaults
 import JGProgressHUD
 
-class CommentViewController: UITableViewController, UITextViewDelegate {
-    
-    var viewModel = CommentViewModel()
+class CommentDetailViewController: UITableViewController, UITextViewDelegate {
+
+    var viewModel = CommentDetailViewModel()
     var customInputView: UIView!
     var sendButton: UIButton!
     var avatarImage: UIImageView!
     let commentTextField = FlexibleTextView()
     let hud = JGProgressHUD()
-    var event: Event = .none
-    
-    enum Event {
-        case create
-        case reply
-        case none
-    }
     
     override var canBecomeFirstResponder: Bool {
         return true
@@ -55,7 +48,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         if self.customInputView == nil {
             self.customInputView = CustomView()
             self.customInputView.backgroundColor = UIColor.Asset.darkGray
-            self.commentTextField.placeholder = "What's on your mind?"
+            self.commentTextField.placeholder = "Write your reply"
             self.commentTextField.font = UIFont.asset(.regular, fontSize: .overline)
             self.commentTextField.textColor = UIColor.Asset.white
             self.commentTextField.autocorrectionType = .no
@@ -112,24 +105,13 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     @objc func handleSend() {
         if !self.commentTextField.text.isEmpty {
             self.viewModel.commentRequest.message = self.commentTextField.text
-            self.viewModel.commentRequest.contentId = self.viewModel.content.id
-            if self.event == .create {
-                self.hud.textLabel.text = "Commenting"
-                self.viewModel.createComment()
-            } else if self.event == .reply {
-                self.hud.textLabel.text = "Replying"
-                self.viewModel.replyComment()
-            }
+            self.viewModel.commentRequest.contentId = self.viewModel.contentId
+            self.hud.textLabel.text = "Replying"
+            self.viewModel.replyComment()
             self.hud.show(in: self.view)
             self.commentTextField.text = ""
             self.commentTextField.resignFirstResponder()
         }
-    }
-    
-    enum ContentSection: Int, CaseIterable {
-        case header = 0
-        case content
-        case footer
     }
     
     enum CommentSection: Int, CaseIterable {
@@ -145,12 +127,11 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         self.configureTableView()
         self.tableView.keyboardDismissMode = .interactive
         self.commentTextField.isEditable = false
-        self.viewModel.didLoadCommentsFinish = {
+        self.viewModel.didLoadCommentFinish = {
             self.hud.dismiss()
             self.viewModel.commentLoadState = .loaded
             self.enableTextField()
             self.tableView.isScrollEnabled = true
-            self.event = .create
             if self.viewModel.meta.resultCount < self.viewModel.commentRequest.maxResults {
                 self.tableView.cr.noticeNoMoreData()
             }
@@ -160,11 +141,9 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
                               animations: { self.tableView.reloadData() })
         }
         
-        self.viewModel.didLoadContentFinish = {
-            self.setupNevBar()
-            self.viewModel.contentLoadState = .loaded
-            self.enableTextField()
-            self.tableView.reloadData()
+        self.viewModel.didDeleteCommentFinish = {
+            Utility.currentViewController().navigationController?.popViewController(animated: true)
+            ApiHelper.displayMessage(title: "Success", message: "Delete comment success")
         }
         
         self.tableView.cr.addFootRefresh(animator: NormalFooterAnimator()) { [weak self] in
@@ -173,36 +152,28 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
                 self.tableView.cr.noticeNoMoreData()
             } else {
                 self.viewModel.commentRequest.untilId = self.viewModel.meta.oldestId
-                self.viewModel.getComments()
+                self.viewModel.getCommentDetail()
             }
         }
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Defaults[.screenId] = ""
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-//        self.commentTextField.becomeFirstResponder()
-    }
-    
     private func setupNevBar() {
-        if !self.viewModel.content.authorId.isEmpty, let authorRef = ContentHelper.shared.getAuthorRef(id: self.viewModel.content.authorId) {
-            self.customNavigationBar(.secondary, title: "Cast of \(authorRef.displayName)")
-        } else {
-            self.customNavigationBar(.secondary, title: "Cast")
-        }
+        self.customNavigationBar(.secondary, title: "Comment")
     }
     
     func configureTableView() {
         self.tableView.isScrollEnabled = false
-        self.tableView.registerFeedCell()
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 100
         self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.comment, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.comment)
         self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.reply, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.reply)
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.skeletonNotify, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.skeletonNotify)
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.viewCast, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.viewCast)
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -212,104 +183,62 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     }
     
     private func enableTextField() {
-        if self.viewModel.contentLoadState == .loaded && self.viewModel.commentLoadState == .loaded {
+        if self.viewModel.commentLoadState == .loaded {
             self.commentTextField.isEditable = true
         }
     }
 }
 
-extension CommentViewController {
+extension CommentDetailViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         if self.viewModel.commentLoadState == .loading {
-            return 2
+            return 1
         } else {
-            return (1 + self.viewModel.comments.count)
+            return 2
         }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            if self.viewModel.contentLoadState == .loading {
-                return 1
-            } else {
-                return ContentSection.allCases.count
-            }
+            return 1
         } else {
             if self.viewModel.commentLoadState == .loading {
                 return 1
             } else {
-                return 1 + self.viewModel.comments[section - 1].reply.count
+                return 1 + self.viewModel.replyList.count
             }
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            if self.viewModel.contentLoadState == .loading {
-                let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.skeleton, for: indexPath as IndexPath) as? SkeletonFeedTableViewCell
-                cell?.backgroundColor = UIColor.Asset.darkGray
-                cell?.configCell()
-                return cell ?? SkeletonFeedTableViewCell()
-            } else {
-                switch indexPath.row {
-                case ContentSection.header.rawValue:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.headerFeed, for: indexPath as IndexPath) as? HeaderTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.delegate = self
-                    cell?.configCell(feedType: .content, content: self.viewModel.content, isDefaultContent: false)
-                    return cell ?? HeaderTableViewCell()
-                case ContentSection.footer.rawValue:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.footerFeed, for: indexPath as IndexPath) as? FooterTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.delegate = self
-                    cell?.content = self.viewModel.content
-                    return cell ?? FooterTableViewCell()
-                default:
-                    return FeedCellHelper().renderFeedCell(content: self.viewModel.content, tableView: tableView, indexPath: indexPath)
-                }
-            }
-        } else {
             if self.viewModel.commentLoadState == .loading {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.skeletonNotify, for: indexPath as IndexPath) as? SkeletonNotifyTableViewCell
                 cell?.backgroundColor = UIColor.Asset.darkGray
                 cell?.configCell()
                 return cell ?? SkeletonNotifyTableViewCell()
             } else {
-                let comment = self.viewModel.comments[indexPath.section - 1]
-                if indexPath.row == 0 {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.comment, for: indexPath as IndexPath) as? CommentTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGraphiteBlue
-                    cell?.delegate = self
-                    if comment.isFirst {
-                        cell?.topLineView.isHidden = true
-                        cell?.bottomLineView.isHidden = false
-                    } else if comment.isLast {
-                        if (indexPath.section - 1) == 0 {
-                            cell?.topLineView.isHidden = true
-                        } else {
-                            cell?.topLineView.isHidden = false
-                        }
-                        cell?.bottomLineView.isHidden = true
-                    } else {
-                        cell?.topLineView.isHidden = false
-                        cell?.bottomLineView.isHidden = false
-                    }
-                    cell?.comment = comment
-                    return cell ?? CommentTableViewCell()
-                } else {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.reply, for: indexPath as IndexPath) as? ReplyTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGraphiteBlue
-                    cell?.delegate = self
-                    cell?.configCell(replyCommentId: comment.reply[indexPath.row - 1], masterCommentId: comment.id)
-                    if comment.isFirst {
-                        cell?.lineView.isHidden = false
-                    } else if comment.isLast {
-                        cell?.lineView.isHidden = true
-                    } else {
-                        cell?.lineView.isHidden = false
-                    }
-                    return cell ?? ReplyTableViewCell()
-                }
+                let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.viewCast, for: indexPath as IndexPath) as? ViewCastTableViewCell
+                cell?.backgroundColor = UIColor.Asset.darkGraphiteBlue
+                cell?.configCell(contentId: self.viewModel.contentId)
+                return cell ?? ViewCastTableViewCell()
+            }
+        } else {
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.comment, for: indexPath as IndexPath) as? CommentTableViewCell
+                cell?.backgroundColor = UIColor.Asset.darkGraphiteBlue
+                cell?.delegate = self
+                cell?.topLineView.isHidden = true
+                cell?.bottomLineView.isHidden = true
+                cell?.comment = self.viewModel.comment
+                return cell ?? CommentTableViewCell()
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.reply, for: indexPath as IndexPath) as? ReplyTableViewCell
+                cell?.backgroundColor = UIColor.Asset.darkGraphiteBlue
+                cell?.delegate = self
+                cell?.configCell(replyCommentId: self.viewModel.replyList[indexPath.row - 1].id, masterCommentId: self.viewModel.comment.id)
+                cell?.lineView.isHidden = true
+                return cell ?? ReplyTableViewCell()
             }
         }
     }
@@ -333,46 +262,8 @@ extension CommentViewController {
     }
 }
 
-extension CommentViewController: HeaderTableViewCellDelegate {
-    func didRemoveSuccess(_ headerTableViewCell: HeaderTableViewCell) {
-        Utility.currentViewController().dismiss(animated: true)
-    }
-    
-    func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author) {
-        let userDict: [String: String] = [
-            JsonKey.castcleId.rawValue: author.castcleId,
-            JsonKey.displayName.rawValue: author.displayName
-        ]
-        NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
-    }
-    
-    func didAuthen(_ headerTableViewCell: HeaderTableViewCell) {
-//        Utility.currentViewController().presentPanModal(AuthenOpener.open(.signUpMethod) as! SignUpMethodViewController)
-    }
-    
-    func didReportSuccess(_ headerTableViewCell: HeaderTableViewCell) {
-        Utility.currentViewController().dismiss(animated: true)
-    }
-}
-
-extension CommentViewController: FooterTableViewCellDelegate {
-    func didTabComment(_ footerTableViewCell: FooterTableViewCell, content: Content) {
-        self.commentTextField.becomeFirstResponder()
-    }
-    
-    func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: Page) {
-        //
-    }
-    
-    func didAuthen(_ footerTableViewCell: FooterTableViewCell) {
-//        Utility.currentViewController().presentPanModal(AuthenOpener.open(.signUpMethod) as! SignUpMethodViewController)
-    }
-}
-
-extension CommentViewController: CommentTableViewCellDelegate {
+extension CommentDetailViewController: CommentTableViewCellDelegate {
     func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment, castcleId: String) {
-        self.event = .reply
-        self.viewModel.commentId = comment.id
         if !castcleId.isEmpty {
             self.commentTextField.text = "@\(castcleId) "
         }
@@ -387,21 +278,19 @@ extension CommentViewController: CommentTableViewCellDelegate {
     func didDelete(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
         self.hud.textLabel.text = "Deleting"
         self.hud.show(in: self.view)
-        self.viewModel.deleteComment(commentId: comment.id)
+        self.viewModel.deleteComment()
     }
     
     func didLiked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
-        self.viewModel.commentId = comment.id
-        self.viewModel.likeComment()
+        self.viewModel.likeComment(isComment: true)
     }
     
     func didUnliked(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
-        self.viewModel.commentId = comment.id
-        self.viewModel.unlikeComment()
+        self.viewModel.unlikeComment(isComment: true)
     }
 }
 
-extension CommentViewController: ReplyTableViewCellDelegate {
+extension CommentDetailViewController: ReplyTableViewCellDelegate {
     func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef) {
         self.commentTextField.text = "\(replyComment.message)"
         self.commentTextField.becomeFirstResponder()
@@ -410,22 +299,16 @@ extension CommentViewController: ReplyTableViewCellDelegate {
     func didDelete(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef, masterCommentId: String) {
         self.hud.textLabel.text = "Deleting"
         self.hud.show(in: self.view)
-        self.viewModel.deleteReplyComment(commentId: masterCommentId, replyId: replyComment.id)
+        self.viewModel.deleteReplyComment(replyId: replyComment.id)
     }
     
     func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef) {
-        self.viewModel.commentId = replyComment.id
-        self.viewModel.likeComment()
+        self.viewModel.replyCommentId = replyComment.id
+        self.viewModel.likeComment(isComment: false)
     }
     
     func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef) {
-        self.viewModel.commentId = replyComment.id
-        self.viewModel.unlikeComment()
-    }
-}
-
-class CustomView: UIView {
-    override var intrinsicContentSize: CGSize {
-        return CGSize.zero
+        self.viewModel.replyCommentId = replyComment.id
+        self.viewModel.unlikeComment(isComment: false)
     }
 }
