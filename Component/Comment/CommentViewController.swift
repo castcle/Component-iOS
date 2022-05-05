@@ -409,7 +409,7 @@ extension CommentViewController: HeaderTableViewCellDelegate {
     }
     
     func didAuthen(_ headerTableViewCell: HeaderTableViewCell) {
-//        Utility.currentViewController().presentPanModal(AuthenOpener.open(.signUpMethod) as! SignUpMethodViewController)
+        // Not use
     }
     
     func didReportSuccess(_ headerTableViewCell: HeaderTableViewCell) {
@@ -427,7 +427,7 @@ extension CommentViewController: FooterTableViewCellDelegate {
     }
     
     func didAuthen(_ footerTableViewCell: FooterTableViewCell) {
-//        Utility.currentViewController().presentPanModal(AuthenOpener.open(.signUpMethod) as! SignUpMethodViewController)
+        // Not use
     }
 }
 
