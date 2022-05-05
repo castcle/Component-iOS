@@ -68,7 +68,6 @@ public final class CommentDetailViewModel {
                     let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
                     let users = includes[JsonKey.users.rawValue].arrayValue
                     let replyData = json[JsonKey.reply.rawValue].arrayValue
-                    
                     replyData.forEach { reply in
                         self.replyList.append(Comment(json: reply))
                         try! self.realm.write {
