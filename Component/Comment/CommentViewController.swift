@@ -126,12 +126,6 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         }
     }
     
-//    enum ContentSection: Int, CaseIterable {
-//        case header = 0
-//        case content
-//        case footer
-//    }
-    
     enum CommentSection: Int, CaseIterable {
         case comment = 0
         case reply
