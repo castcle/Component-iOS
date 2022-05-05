@@ -66,7 +66,23 @@ public final class CommentViewModel {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let payload = JSON(json[JsonKey.payload.rawValue].dictionaryValue)
+                    let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
+                    let casts = includes[JsonKey.casts.rawValue].arrayValue
+                    let users = includes[JsonKey.users.rawValue].arrayValue
+                    
                     self.content = Content(json: payload)
+                    casts.forEach { cast in
+                        try! self.realm.write {
+                            let contentRef = ContentRef().initCustom(json: cast)
+                            self.realm.add(contentRef, update: .modified)
+                        }
+                    }
+                    users.forEach { user in
+                        try! self.realm.write {
+                            let authorRef = AuthorRef().initCustom(json: user)
+                            self.realm.add(authorRef, update: .modified)
+                        }
+                    }
                     self.didLoadContentFinish?()
                 } catch {}
             } else {

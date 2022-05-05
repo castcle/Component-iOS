@@ -126,11 +126,11 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         }
     }
     
-    enum ContentSection: Int, CaseIterable {
-        case header = 0
-        case content
-        case footer
-    }
+//    enum ContentSection: Int, CaseIterable {
+//        case header = 0
+//        case content
+//        case footer
+//    }
     
     enum CommentSection: Int, CaseIterable {
         case comment = 0
@@ -232,7 +232,11 @@ extension CommentViewController {
             if self.viewModel.contentLoadState == .loading {
                 return 1
             } else {
-                return ContentSection.allCases.count
+                if self.viewModel.content.referencedCasts.type == .quoted {
+                    return 4
+                } else {
+                    return 3
+                }
             }
         } else {
             if self.viewModel.commentLoadState == .loading {
@@ -251,21 +255,24 @@ extension CommentViewController {
                 cell?.configCell()
                 return cell ?? SkeletonFeedTableViewCell()
             } else {
-                switch indexPath.row {
-                case ContentSection.header.rawValue:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.headerFeed, for: indexPath as IndexPath) as? HeaderTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.delegate = self
-                    cell?.configCell(feedType: .content, content: self.viewModel.content, isDefaultContent: false)
-                    return cell ?? HeaderTableViewCell()
-                case ContentSection.footer.rawValue:
-                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.footerFeed, for: indexPath as IndexPath) as? FooterTableViewCell
-                    cell?.backgroundColor = UIColor.Asset.darkGray
-                    cell?.delegate = self
-                    cell?.content = self.viewModel.content
-                    return cell ?? FooterTableViewCell()
-                default:
-                    return FeedCellHelper().renderFeedCell(content: self.viewModel.content, tableView: tableView, indexPath: indexPath)
+                if self.viewModel.content.referencedCasts.type == .quoted {
+                    if indexPath.row == 0 {
+                        return self.renderFeedCell(content: self.viewModel.content, cellType: .header, tableView: tableView, indexPath: indexPath)
+                    } else if indexPath.row == 1 {
+                        return self.renderFeedCell(content: self.viewModel.content, cellType: .content, tableView: tableView, indexPath: indexPath)
+                    } else if indexPath.row == 2 {
+                        return self.renderFeedCell(content: self.viewModel.content, cellType: .quote, tableView: tableView, indexPath: indexPath)
+                    } else {
+                        return self.renderFeedCell(content: self.viewModel.content, cellType: .footer, tableView: tableView, indexPath: indexPath)
+                    }
+                } else {
+                    if indexPath.row == 0 {
+                        return self.renderFeedCell(content: self.viewModel.content, cellType: .header, tableView: tableView, indexPath: indexPath)
+                    } else if indexPath.row == 1 {
+                        return self.renderFeedCell(content: self.viewModel.content, cellType: .content, tableView: tableView, indexPath: indexPath)
+                    } else {
+                        return self.renderFeedCell(content: self.viewModel.content, cellType: .footer, tableView: tableView, indexPath: indexPath)
+                    }
                 }
             }
         } else {
@@ -329,6 +336,67 @@ extension CommentViewController {
             return footerView
         } else {
             return UIView()
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 && self.viewModel.contentLoadState == .loaded {
+            if self.viewModel.content.type == .long && indexPath.row == 1 {
+                self.viewModel.content.isExpand.toggle()
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
+    }
+    
+    func renderFeedCell(content: Content, cellType: FeedCellType, tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        var originalContent = Content()
+        if content.referencedCasts.type == .recasted || content.referencedCasts.type == .quoted {
+            if let tempContent = ContentHelper.shared.getContentRef(id: content.referencedCasts.id) {
+                originalContent = tempContent
+            }
+        }
+        switch cellType {
+        case .activity:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.activityHeader, for: indexPath as IndexPath) as? ActivityHeaderTableViewCell
+            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.cellConfig(content: content)
+            return cell ?? ActivityHeaderTableViewCell()
+        case .header:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.headerFeed, for: indexPath as IndexPath) as? HeaderTableViewCell
+            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.delegate = self
+            if content.referencedCasts.type == .recasted {
+                cell?.configCell(feedType: .content, content: originalContent, isDefaultContent: false)
+            } else {
+                cell?.configCell(feedType: .content, content: content, isDefaultContent: false)
+            }
+            return cell ?? HeaderTableViewCell()
+        case .footer:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.footerFeed, for: indexPath as IndexPath) as? FooterTableViewCell
+            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.delegate = self
+            if content.referencedCasts.type == .recasted {
+                cell?.content = originalContent
+            } else {
+                cell?.content = content
+            }
+            return cell ?? FooterTableViewCell()
+        case .quote:
+            return FeedCellHelper().renderQuoteCastCell(content: originalContent, tableView: self.tableView, indexPath: indexPath, isRenderForFeed: true)
+        default:
+            if content.referencedCasts.type == .recasted {
+                if originalContent.type == .long && !content.isOriginalExpand {
+                    return FeedCellHelper().renderLongCastCell(content: originalContent, tableView: self.tableView, indexPath: indexPath)
+                } else {
+                    return FeedCellHelper().renderFeedCell(content: originalContent, tableView: self.tableView, indexPath: indexPath)
+                }
+            } else {
+                if content.type == .long && !content.isExpand {
+                    return FeedCellHelper().renderLongCastCell(content: content, tableView: self.tableView, indexPath: indexPath)
+                } else {
+                    return FeedCellHelper().renderFeedCell(content: content, tableView: self.tableView, indexPath: indexPath)
+                }
+            }
         }
     }
 }

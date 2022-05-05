@@ -40,10 +40,10 @@ final class SplashScreenViewModel {
     private var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
     private var masterDataRepository: MasterDataRepository = MasterDataRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
-    var stage: State = .none
+    var state: State = .none
 
     public func guestLogin() {
-        self.stage = .guestLogin
+        self.state = .guestLogin
         self.authenticationRepository.guestLogin(uuid: Defaults[.deviceUuid]) { (success) in
             if success {
                 self.getCountryCode()
@@ -52,7 +52,7 @@ final class SplashScreenViewModel {
     }
     
     private func getCountryCode() {
-        self.stage = .getCountryCode
+        self.state = .getCountryCode
         self.masterDataRepository.getCountry() { (success, response, isRefreshToken) in
             if success {
                 do {
@@ -81,7 +81,7 @@ final class SplashScreenViewModel {
     }
     
     public func getBadges() {
-        self.stage = .getBadges
+        self.state = .getBadges
         self.notificationRepository.getBadges() { (success, response, isRefreshToken) in
             if success {
                 UIApplication.shared.applicationIconBadgeNumber = UserManager.shared.badgeCount
@@ -108,7 +108,7 @@ final class SplashScreenViewModel {
             UIApplication.shared.applicationIconBadgeNumber = UserManager.shared.badgeCount
             self.guestLogin()
         } else {
-            self.stage = .refreshToken
+            self.state = .refreshToken
             self.tokenHelper.refreshToken()
         }
     }
@@ -116,9 +116,9 @@ final class SplashScreenViewModel {
 
 extension SplashScreenViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
-        if self.stage == .getBadges {
+        if self.state == .getBadges {
             self.getBadges()
-        } else if self.stage == .getCountryCode {
+        } else if self.state == .getCountryCode {
             self.getCountryCode()
         } else {
             if UserManager.shared.isLogin {
