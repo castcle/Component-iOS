@@ -69,7 +69,6 @@ public final class CommentViewModel {
                     let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
                     let casts = includes[JsonKey.casts.rawValue].arrayValue
                     let users = includes[JsonKey.users.rawValue].arrayValue
-                    
                     self.content = Content(json: payload)
                     casts.forEach { cast in
                         try! self.realm.write {
