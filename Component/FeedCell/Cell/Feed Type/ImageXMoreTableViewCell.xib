@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q3W-ab-pgi" customClass="AttributedLabel" customModule="Atributika">
-                        <rect key="frame" x="15" y="10" width="290" height="20"/>
+                        <rect key="frame" x="15" y="10" width="290" height="40"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fka-fP-HgW">
@@ -119,7 +119,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="q3W-ab-pgi" secondAttribute="trailing" constant="15" id="3W5-SN-v0C"/>
-                    <constraint firstItem="Fka-fP-HgW" firstAttribute="top" secondItem="q3W-ab-pgi" secondAttribute="bottom" constant="20" id="FoS-Xl-iJO"/>
+                    <constraint firstItem="Fka-fP-HgW" firstAttribute="top" secondItem="q3W-ab-pgi" secondAttribute="bottom" id="FoS-Xl-iJO"/>
                     <constraint firstItem="Fka-fP-HgW" firstAttribute="width" secondItem="Fka-fP-HgW" secondAttribute="height" multiplier="1:1" id="JTG-JC-HzS"/>
                     <constraint firstItem="q3W-ab-pgi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="gHW-AS-6zq"/>
                     <constraint firstItem="Fka-fP-HgW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="lv4-qT-BhI"/>

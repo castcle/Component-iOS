@@ -50,7 +50,7 @@ public class QuoteCastImageX1Cell: UITableViewCell {
                 guard let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) else { return }
                 self.viewModel = QuoteCastViewModel(content: content)
                 self.massageLabel.numberOfLines = 0
-                self.massageLabel.attributedText = content.message
+                self.massageLabel.attributedText = (content.message.isEmpty ? "" : "\(content.message)\n")
                     .styleHashtags(AttributedContent.link)
                     .styleMentions(AttributedContent.link)
                     .styleLinks(AttributedContent.link)

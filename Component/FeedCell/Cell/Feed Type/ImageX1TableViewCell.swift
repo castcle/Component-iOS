@@ -41,7 +41,7 @@ public class ImageX1TableViewCell: UITableViewCell {
         didSet {
             guard let content = self.content else { return }
             self.massageLabel.numberOfLines = 0
-            self.massageLabel.attributedText = content.message
+            self.massageLabel.attributedText = (content.message.isEmpty ? "" : "\(content.message)\n")
                 .styleHashtags(AttributedContent.link)
                 .styleMentions(AttributedContent.link)
                 .styleLinks(AttributedContent.link)
