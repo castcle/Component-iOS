@@ -55,6 +55,7 @@ public class QuoteCastTextLinkPreviewCell: UITableViewCell {
                 guard let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) else { return }
                 self.viewModel = QuoteCastViewModel(content: content)
                 self.massageLabel.numberOfLines = 0
+                self.massageLabel.isSelectable = true
                 self.massageLabel.attributedText = content.message
                     .styleHashtags(AttributedContent.link)
                     .styleMentions(AttributedContent.link)

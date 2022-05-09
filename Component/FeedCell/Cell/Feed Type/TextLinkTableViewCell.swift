@@ -63,6 +63,7 @@ public class TextLinkTableViewCell: UITableViewCell {
     func configCell(content: Content?) {
         guard let content = content else { return }
         self.massageLabel.numberOfLines = 0
+        self.massageLabel.isSelectable = true
         self.massageLabel.attributedText = content.message
             .styleHashtags(AttributedContent.link)
             .styleMentions(AttributedContent.link)
