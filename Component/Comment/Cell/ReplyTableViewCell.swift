@@ -31,9 +31,9 @@ import Networking
 import ActiveLabel
 import RealmSwift
 
-protocol ReplyTableViewCellDelegate {
+protocol ReplyTableViewCellDelegate: AnyObject {
     func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef)
-    func didDelete(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef, masterCommentId: String)
+    func didDelete(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef, originalCommentId: String)
     func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef)
     func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef)
 }
@@ -57,14 +57,13 @@ class ReplyTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     var delegate: ReplyTableViewCellDelegate?
     private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     private var commentRef = CommentRef()
     private var isShowActionSheet: Bool = false
-    private var masterCommentId: String = ""
-    let realm = try! Realm()
-    
+    private var originalCommentId: String = ""
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.avatarImage.circle(color: UIColor.Asset.white)
@@ -73,7 +72,6 @@ class ReplyTableViewCell: UITableViewCell {
         self.dateLabel.font = UIFont.asset(.regular, fontSize: .small)
         self.dateLabel.textColor = UIColor.Asset.lightGray
         self.lineView.backgroundColor = UIColor.Asset.gray
-        
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
         self.commentLabel.addGestureRecognizer(longPressRecognizer)
     }
@@ -81,9 +79,9 @@ class ReplyTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
-    func configCell(replyCommentId: String, masterCommentId: String) {
-        self.masterCommentId = masterCommentId
+
+    func configCell(replyCommentId: String, originalCommentId: String) {
+        self.originalCommentId = originalCommentId
         if let commentRef = CommentHelper.shared.getCommentRef(id: replyCommentId) {
             self.commentRef = commentRef
             self.commentLabel.text =  self.commentRef.message
@@ -96,7 +94,7 @@ class ReplyTableViewCell: UITableViewCell {
                 self.avatarImage.image = UIImage.Asset.userPlaceholder
                 self.displayNameLabel.text = "Castcle"
             }
-            
+
             self.dateLabel.text = self.commentRef.commentDate.timeAgoDisplay()
             self.commentLabel.customColor[self.customHashtag] = UIColor.Asset.lightBlue
             self.commentLabel.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
@@ -121,7 +119,7 @@ class ReplyTableViewCell: UITableViewCell {
             return
         }
     }
-    
+
     @objc func longPressed(sender: UILongPressGestureRecognizer) {
         if UserHelper.shared.isMyAccount(id: self.commentRef.authorId) {
             if !self.isShowActionSheet {
@@ -130,7 +128,7 @@ class ReplyTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     private func showActionSheet() {
         let actionSheet = CCActionSheet(isGestureDismiss: false)
         let cancelButton = CCAction(title: "Cancel", image: UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
@@ -141,12 +139,12 @@ class ReplyTableViewCell: UITableViewCell {
         let deleteButton = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.deleteOne), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
             actionSheet.dismissActionSheet()
             self.isShowActionSheet = false
-            self.delegate?.didDelete(self, replyComment: self.commentRef, masterCommentId: self.masterCommentId)
+            self.delegate?.didDelete(self, replyComment: self.commentRef, originalCommentId: self.originalCommentId)
         }
         actionSheet.addActions([deleteButton])
         Utility.currentViewController().present(actionSheet, animated: true)
     }
-    
+
     @IBAction func likeAction(_ sender: Any) {
         if UserManager.shared.isLogin {
             if self.commentRef.liked {
@@ -154,22 +152,24 @@ class ReplyTableViewCell: UITableViewCell {
             } else {
                 self.delegate?.didLiked(self, replyComment: self.commentRef)
             }
-
-            try! self.realm.write {
-                self.commentRef.liked.toggle()
-            }
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    self.commentRef.liked.toggle()
+                }
+            } catch {}
             self.updateUi(isAction: true)
-            
+
             if self.commentRef.liked {
                 let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
-                impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
+                impliesAnimation.values = [1.0, 1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
                 impliesAnimation.duration = 0.3 * 2
                 impliesAnimation.calculationMode = CAAnimationCalculationMode.cubic
                 self.likeLabel.layer.add(impliesAnimation, forKey: nil)
             }
         }
     }
-    
+
     private func updateUi(isAction: Bool) {
         self.likeLabel.font = UIFont.asset(.regular, fontSize: .small)
         var likeCount = self.commentRef.likeCount

@@ -30,7 +30,7 @@ import Core
 import Networking
 import ActiveLabel
 
-protocol CommentTableViewCellDelegate {
+protocol CommentTableViewCellDelegate: AnyObject {
     func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment, castcleId: String)
     func didEdit(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
     func didDelete(_ commentTableViewCell: CommentTableViewCell, comment: Comment)
@@ -59,7 +59,7 @@ class CommentTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     var comment: Comment? {
         didSet {
@@ -69,7 +69,6 @@ class CommentTableViewCell: UITableViewCell {
                 let url = URL(string: authorRef.avatar)
                 self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                 self.displayNameLabel.text = authorRef.displayName
-                
             } else {
                 self.avatarImage.image = UIImage.Asset.userPlaceholder
                 self.displayNameLabel.text = "Castcle"
@@ -78,7 +77,6 @@ class CommentTableViewCell: UITableViewCell {
             self.dateLabel.text = comment.commentDate.timeAgoDisplay()
             self.commentLabel.customColor[self.customHashtag] = UIColor.Asset.lightBlue
             self.commentLabel.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
-            
             self.commentLabel.handleCustomTap(for: self.customHashtag) { element in
                 let hashtagDict: [String: String] = [
                     JsonKey.hashtag.rawValue: element
@@ -94,14 +92,13 @@ class CommentTableViewCell: UITableViewCell {
             self.commentLabel.handleURLTap { url in
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
             }
-            
             self.updateUi(isAction: false)
         }
     }
-    
+
     var delegate: CommentTableViewCellDelegate?
     private var isShowActionSheet: Bool = false
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.avatarImage.circle(color: UIColor.Asset.white)
@@ -113,7 +110,6 @@ class CommentTableViewCell: UITableViewCell {
         self.replyButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.topLineView.backgroundColor = UIColor.Asset.gray
         self.bottomLineView.backgroundColor = UIColor.Asset.gray
-        
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
         self.commentLabel.addGestureRecognizer(longPressRecognizer)
     }
@@ -121,14 +117,14 @@ class CommentTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     @objc func longPressed(sender: UILongPressGestureRecognizer) {
         if !self.isShowActionSheet {
             self.isShowActionSheet = true
             self.showActionSheet()
         }
     }
-    
+
     private func showActionSheet() {
         guard let comment = self.comment else { return }
         let actionSheet = CCActionSheet(isGestureDismiss: false)
@@ -165,7 +161,7 @@ class CommentTableViewCell: UITableViewCell {
             self.delegate?.didReply(self, comment: comment, castcleId: "")
         }
     }
-    
+
     @IBAction func likeAction(_ sender: Any) {
         if UserManager.shared.isLogin {
             guard let comment = self.comment else { return }
@@ -177,20 +173,18 @@ class CommentTableViewCell: UITableViewCell {
 
             comment.participate.liked.toggle()
             self.updateUi(isAction: true)
-            
             if comment.participate.liked {
                 let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
-                impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
+                impliesAnimation.values = [1.0, 1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
                 impliesAnimation.duration = 0.3 * 2
                 impliesAnimation.calculationMode = CAAnimationCalculationMode.cubic
                 self.likeLabel.layer.add(impliesAnimation, forKey: nil)
             }
         }
     }
-    
+
     private func updateUi(isAction: Bool) {
         guard let comment = self.comment else { return }
-        
         self.likeLabel.font = UIFont.asset(.regular, fontSize: .small)
         var likeCount = comment.metrics.likeCount
         if comment.participate.liked {

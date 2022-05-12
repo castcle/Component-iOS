@@ -31,7 +31,7 @@ import Core
 class SelectCodeTableViewCell: UITableViewCell {
 
     @IBOutlet var titleLabel: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.titleLabel.font = UIFont.asset(.regular, fontSize: .body)

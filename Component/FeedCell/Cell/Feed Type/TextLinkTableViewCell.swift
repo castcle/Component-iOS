@@ -40,9 +40,9 @@ public class TextLinkTableViewCell: UITableViewCell {
     @IBOutlet var linkTitleLabel: UILabel!
     @IBOutlet var linkDescriptionLabel: UILabel!
     @IBOutlet var skeletonView: UIView!
-    
+
     private var content: Content?
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.skeletonView.custom(cornerRadius: 12, borderWidth: 1, borderColor: UIColor.Asset.gray)
@@ -59,7 +59,7 @@ public class TextLinkTableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     func configCell(content: Content?) {
         guard let content = content else { return }
         self.massageLabel.numberOfLines = 0
@@ -86,9 +86,9 @@ public class TextLinkTableViewCell: UITableViewCell {
             self.setDataWithContent(icon: link.type.image, title: title, desc: desc)
         }
     }
-    
+
     private func enableActiveLabel() {
-        self.massageLabel.onClick = { label, detection in
+        self.massageLabel.onClick = { _, detection in
             switch detection.type {
             case .hashtag(let tag):
                 let hashtagDict: [String: String] = [
@@ -114,7 +114,7 @@ public class TextLinkTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     private func setData() {
         UIView.transition(with: self, duration: 0.35, options: .transitionCrossDissolve, animations: {
             self.skeletonView.isHidden = true
@@ -122,7 +122,6 @@ public class TextLinkTableViewCell: UITableViewCell {
         })
     }
 
-    
     private func setDataWithContent(icon: UIImage, title: String, desc: String) {
         self.skeletonView.isHidden = true
         self.linkContainer.isHidden = false
@@ -130,7 +129,7 @@ public class TextLinkTableViewCell: UITableViewCell {
         self.linkTitleLabel.text = title
         self.linkDescriptionLabel.text = desc
     }
-    
+
     @IBAction func openWebViewAction(_ sender: Any) {
         guard let content = self.content else { return }
         if let link = content.link.first, let linkUrl = URL(string: link.url) {

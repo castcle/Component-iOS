@@ -33,7 +33,7 @@ class UserListTableViewCell: UITableViewCell {
     @IBOutlet var avatarImage: UIImageView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var checkImage: UIImageView!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.avatarImage.circle(color: UIColor.Asset.white)
@@ -45,7 +45,7 @@ class UserListTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     func configCell(isUser: Bool, page: Page?, isSelect: Bool) {
         if isUser {
             let url = URL(string: UserManager.shared.avatar)
@@ -57,7 +57,7 @@ class UserListTableViewCell: UITableViewCell {
             self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
             self.nameLabel.text = page.displayName
         }
-        
+
         if isSelect {
             self.checkImage.isHidden = false
             self.backgroundColor = UIColor.Asset.darkGray
@@ -66,5 +66,4 @@ class UserListTableViewCell: UITableViewCell {
             self.backgroundColor = UIColor.Asset.darkGraphiteBlue
         }
     }
-    
 }

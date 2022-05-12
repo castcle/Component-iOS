@@ -32,7 +32,7 @@ import SwiftyJSON
 import RealmSwift
 
 public final class CommentDetailViewModel {
-    
+
     private var commentRepository: CommentRepository = CommentRepositoryImpl()
     private var isComment: Bool = true
     var contentId: String = ""
@@ -45,8 +45,7 @@ public final class CommentDetailViewModel {
     var state: State = .none
     var commentLoadState: LoadState = .loading
     var meta: Meta = Meta()
-    let realm = try! Realm()
-    
+
     public init(contentId: String = "", commentId: String = "") {
         if !contentId.isEmpty && !commentId.isEmpty {
             self.tokenHelper.delegate = self
@@ -61,6 +60,7 @@ public final class CommentDetailViewModel {
         self.commentRepository.getCommentDetail(contentId: self.contentId, commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 do {
+                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     self.comment = Comment(json: JSON(json[JsonKey.payload.rawValue].dictionaryValue))
@@ -68,17 +68,17 @@ public final class CommentDetailViewModel {
                     let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
                     let users = includes[JsonKey.users.rawValue].arrayValue
                     let replyData = json[JsonKey.reply.rawValue].arrayValue
-                    replyData.forEach { reply in
-                        self.replyList.append(Comment(json: reply))
-                        try! self.realm.write {
+                    try realm.write {
+                        replyData.forEach { reply in
+                            self.replyList.append(Comment(json: reply))
                             let commentRef = CommentRef().initCustom(json: reply)
-                            self.realm.add(commentRef, update: .modified)
+                            realm.add(commentRef, update: .modified)
                         }
                     }
-                    users.forEach { user in
-                        try! self.realm.write {
+                    try realm.write {
+                        users.forEach { user in
                             let authorRef = AuthorRef().initCustom(json: user)
-                            self.realm.add(authorRef, update: .modified)
+                            realm.add(authorRef, update: .modified)
                         }
                     }
                     self.didLoadCommentFinish?()
@@ -96,21 +96,21 @@ public final class CommentDetailViewModel {
         self.commentRepository.replyComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 do {
+                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let commentJson = JSON(json[JsonKey.payload.rawValue].dictionaryValue)
                     let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
                     let users = includes[JsonKey.users.rawValue].arrayValue
-
-                    try! self.realm.write {
+                    try realm.write {
                         self.replyList.append(Comment(json: commentJson))
                         let commentRef = CommentRef().initCustom(json: commentJson)
-                        self.realm.add(commentRef, update: .modified)
+                        realm.add(commentRef, update: .modified)
                     }
-                    users.forEach { user in
-                        try! self.realm.write {
+                    try realm.write {
+                        users.forEach { user in
                             let authorRef = AuthorRef().initCustom(json: user)
-                            self.realm.add(authorRef, update: .modified)
+                            realm.add(authorRef, update: .modified)
                         }
                     }
                     self.didLoadCommentFinish?()
@@ -127,7 +127,7 @@ public final class CommentDetailViewModel {
         self.state = .likeComment
         self.isComment = isComment
         self.commentRequest.commentId = (isComment ? self.commentId : self.replyCommentId)
-        self.commentRepository.likedComment(castcleId: UserManager.shared.rawCastcleId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
+        self.commentRepository.likedComment(castcleId: UserManager.shared.rawCastcleId, commentRequest: self.commentRequest) { (success, _, isRefreshToken)  in
             if success {
                 print("Like success")
             } else {
@@ -141,7 +141,7 @@ public final class CommentDetailViewModel {
     public func unlikeComment(isComment: Bool) {
         self.state = .unlikeComment
         self.isComment = isComment
-        self.commentRepository.unlikedComment(castcleId: UserManager.shared.rawCastcleId, commentId: (isComment ? self.commentId : self.replyCommentId)) { (success, response, isRefreshToken)  in
+        self.commentRepository.unlikedComment(castcleId: UserManager.shared.rawCastcleId, commentId: (isComment ? self.commentId : self.replyCommentId)) { (success, _, isRefreshToken)  in
             if success {
                 print("Unlike success")
             } else {
@@ -154,7 +154,7 @@ public final class CommentDetailViewModel {
 
     public func deleteComment() {
         self.state = .deleteComment
-        self.commentRepository.deleteComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId) { (success, response, isRefreshToken)  in
+        self.commentRepository.deleteComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId) { (success, _, isRefreshToken)  in
             if success {
                 self.didDeleteCommentFinish?()
             } else {
@@ -168,7 +168,7 @@ public final class CommentDetailViewModel {
     public func deleteReplyComment(replyId: String) {
         self.state = .deleteReplyComment
         self.replyCommentId = replyId
-        self.commentRepository.deleteReplyComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId, replyId: self.replyCommentId) { (success, response, isRefreshToken)  in
+        self.commentRepository.deleteReplyComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId, replyId: self.replyCommentId) { (success, _, isRefreshToken)  in
             if success {
                 if let replyIndex = self.replyList.firstIndex(where: { $0.id == self.replyCommentId }) {
                     self.replyList.remove(at: replyIndex)
@@ -182,8 +182,8 @@ public final class CommentDetailViewModel {
         }
     }
 
-    var didLoadCommentFinish: (() -> ())?
-    var didDeleteCommentFinish: (() -> ())?
+    var didLoadCommentFinish: (() -> Void)?
+    var didDeleteCommentFinish: (() -> Void)?
 }
 
 extension CommentDetailViewModel: TokenHelperDelegate {

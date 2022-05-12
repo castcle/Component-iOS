@@ -29,19 +29,19 @@ import Core
 import Networking
 
 final public class SyncTwitterAutoPostViewModel {
-    
+
     private let userRepository: UserRepository = UserRepositoryImpl()
     var isSync: Bool = true
     var pageSocial: PageSocial = PageSocial()
     let tokenHelper: TokenHelper = TokenHelper()
-    
+
     public init(pageSocial: PageSocial = PageSocial()) {
         self.pageSocial = pageSocial
         self.tokenHelper.delegate = self
     }
-    
+
     func syncSocial() {
-        self.userRepository.syncSocial(userId: UserManager.shared.rawCastcleId, pageSocial: self.pageSocial) { (success, response, isRefreshToken) in
+        self.userRepository.syncSocial(userId: UserManager.shared.rawCastcleId, pageSocial: self.pageSocial) { (success, _, isRefreshToken) in
             if !success {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()

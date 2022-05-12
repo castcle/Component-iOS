@@ -34,7 +34,7 @@ public class ReachedTableViewCell: UITableViewCell {
     @IBOutlet weak var bootButton: UIButton!
     @IBOutlet weak var reachedLabel: UILabel!
     @IBOutlet weak var barView: GTProgressBar!
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.reachedLabel.font = UIFont.asset(.regular, fontSize: .small)
@@ -43,7 +43,6 @@ public class ReachedTableViewCell: UITableViewCell {
         self.bootButton.setTitleColor(UIColor.Asset.white, for: .normal)
         self.bootButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
         self.bootButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.clear)
-        
         self.barView.progress = 0.65
         self.barView.barBorderColor = UIColor.clear
         self.barView.barFillColor = UIColor.Asset.lightBlue
@@ -56,7 +55,7 @@ public class ReachedTableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     @IBAction func bootAction(_ sender: Any) {
         let alert = UIAlertController(title: "Error", message: "Waiting for implementation", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))

@@ -33,7 +33,7 @@ public class SkeletonNotifyTableViewCell: UITableViewCell {
 
     @IBOutlet var skeletonView: UIView!
     @IBOutlet var avatarView: UIView!
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -41,7 +41,7 @@ public class SkeletonNotifyTableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     public func configCell() {
         DispatchQueue.main.async {
             self.skeletonView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.Asset.gray))

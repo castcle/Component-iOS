@@ -47,57 +47,57 @@ public struct ComponentOpener {
         switch componentScene {
         case .internalWebView(let url):
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.internalWebView, bundle: ConfigBundle.component)
-            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.internalWebView) as? InternalWebViewController
-            vc?.viewModel = InternalWebViewModel(url: url)
-            return vc ?? UIViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.internalWebView) as? InternalWebViewController
+            viewController?.viewModel = InternalWebViewModel(url: url)
+            return viewController ?? UIViewController()
         case .splashScreen:
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.splashScreen, bundle: ConfigBundle.component)
-            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.splashScreen) as? SplashScreenViewController
-            return vc ?? UIViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.splashScreen) as? SplashScreenViewController
+            return viewController ?? UIViewController()
         case .datePicker:
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.picker, bundle: ConfigBundle.component)
-            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.datePicker) as? DatePickerViewController
-            return vc ?? UIViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.datePicker) as? DatePickerViewController
+            return viewController ?? UIViewController()
         case .recast(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.recast, bundle: ConfigBundle.component)
-            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.recastPopup) as? RecastPopupViewController
-            vc?.viewModel = viewModel
-            return vc ?? RecastPopupViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.recastPopup) as? RecastPopupViewController
+            viewController?.viewModel = viewModel
+            return viewController ?? RecastPopupViewController()
         case .comment(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.comment, bundle: ConfigBundle.component)
-            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.comment) as? CommentViewController
-            vc?.viewModel = viewModel
-            return vc ?? CommentViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.comment) as? CommentViewController
+            viewController?.viewModel = viewModel
+            return viewController ?? CommentViewController()
         case .commentDetail(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.comment, bundle: ConfigBundle.component)
-            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.commentDetail) as? CommentDetailViewController
-            vc?.viewModel = viewModel
-            return vc ?? CommentDetailViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.commentDetail) as? CommentDetailViewController
+            viewController?.viewModel = viewModel
+            return viewController ?? CommentDetailViewController()
         case .reportSuccess(let isReportContent, let castcleId):
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.report, bundle: ConfigBundle.component)
-            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.reportSuccess) as? ReportSuccessViewController
-            vc?.isReportContent = isReportContent
-            vc?.castcleId = castcleId
-            return vc ?? ReportSuccessViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.reportSuccess) as? ReportSuccessViewController
+            viewController?.isReportContent = isReportContent
+            viewController?.castcleId = castcleId
+            return viewController ?? ReportSuccessViewController()
         case .farmingPopup(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.farmingPopup, bundle: ConfigBundle.component)
-            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.farmingPopup) as? FarmingPopupViewController
-            vc?.viewModel = viewModel
-            return vc ?? FarmingPopupViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.farmingPopup) as? FarmingPopupViewController
+            viewController?.viewModel = viewModel
+            return viewController ?? FarmingPopupViewController()
         case .syncAutoPostTwitter(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.publicPopup, bundle: ConfigBundle.component)
-            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.syncAutoPostTwitter) as? SyncAutoPostViewController
-            vc?.viewModel = viewModel
-            return vc ?? SyncAutoPostViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.syncAutoPostTwitter) as? SyncAutoPostViewController
+            viewController?.viewModel = viewModel
+            return viewController ?? SyncAutoPostViewController()
         case .acceptSyncSocialPopup(let viewModel):
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.publicPopup, bundle: ConfigBundle.component)
-            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.acceptSyncSocialPopup) as? AcceptSyncSocialPopupViewController
-            vc?.viewModel = viewModel
-            return vc ?? AcceptSyncSocialPopupViewController()
+            let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.acceptSyncSocialPopup) as? AcceptSyncSocialPopupViewController
+            viewController?.viewModel = viewModel
+            return viewController ?? AcceptSyncSocialPopupViewController()
         case .selectCode:
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.publicPopup, bundle: ConfigBundle.component)
-            let vc = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.selectCode)
-            return vc
+            let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.selectCode)
+            return viewController
         }
     }
 }

@@ -33,15 +33,15 @@ private var kRefreshFooterKey = "kRefreshFooterKey"
 public typealias RefreshView = UIScrollView
 
 extension RefreshView {
-    public var cr: RefreshDSL {
+    public var coreRefresh: RefreshDSL {
         return RefreshDSL(scroll: self)
     }
 }
 
 public struct RefreshDSL: RefreshViewProtocol {
-    
+
     public var scroll: RefreshView
-    
+
     internal init(scroll: RefreshView) {
         self.scroll = scroll
     }
@@ -50,53 +50,52 @@ public struct RefreshDSL: RefreshViewProtocol {
     public func addHeadRefresh(animator: RefreshProtocol = NormalHeaderAnimator(), handler: @escaping RefreshHandler) -> RefreshHeaderView {
         return RefreshMake.addHeadRefreshTo(refresh: scroll, animator: animator, handler: handler)
     }
-    
+
     public func beginHeaderRefresh() {
         header?.beginRefreshing()
     }
-    
+
     public func endHeaderRefresh() {
         header?.endRefreshing()
     }
-    
+
     public func removeHeader() {
         var headRefresh = RefreshMake(scroll: scroll)
         headRefresh.removeHeader()
     }
-    
+
     @discardableResult
     public func addFootRefresh(animator: RefreshProtocol = NormalFooterAnimator(), handler: @escaping RefreshHandler) -> RefreshFooterView {
         return RefreshMake.addFootRefreshTo(refresh: scroll, animator: animator, handler: handler)
     }
-    
+
     public func noticeNoMoreData() {
         footer?.endRefreshing()
         footer?.noticeNoMoreData()
     }
-    
+
     public func resetNoMore() {
         footer?.resetNoMoreData()
     }
-    
+
     public func endLoadingMore() {
         footer?.endRefreshing()
     }
-    
+
     public func removeFooter() {
         var footRefresh = RefreshMake(scroll: scroll)
         footRefresh.removeFooter()
     }
 }
 
-
 public struct RefreshMake: RefreshViewProtocol {
-    
+
     public var scroll: RefreshView
-    
+
     internal init(scroll: RefreshView) {
         self.scroll = scroll
     }
-    
+
     @discardableResult
     internal static func addHeadRefreshTo(refresh: RefreshView, animator: RefreshProtocol = NormalHeaderAnimator(), handler: @escaping RefreshHandler) -> RefreshHeaderView {
         var make = RefreshMake(scroll: refresh)
@@ -108,13 +107,13 @@ public struct RefreshMake: RefreshViewProtocol {
         make.header = header
         return header
     }
-    
+
     public mutating func removeHeader() {
         header?.endRefreshing()
         header?.removeFromSuperview()
         header = nil
     }
-    
+
     @discardableResult
     internal static func addFootRefreshTo(refresh: RefreshView, animator: RefreshProtocol = NormalFooterAnimator(), handler: @escaping RefreshHandler) -> RefreshFooterView {
         var make = RefreshMake(scroll: refresh)
@@ -126,7 +125,7 @@ public struct RefreshMake: RefreshViewProtocol {
         make.footer = footer
         return footer
     }
-    
+
     public mutating func removeFooter() {
         footer?.endRefreshing()
         footer?.removeFromSuperview()
@@ -135,13 +134,13 @@ public struct RefreshMake: RefreshViewProtocol {
 }
 
 public protocol RefreshViewProtocol {
-    var scroll: RefreshView {set get}
-    var header: RefreshHeaderView? {set get}
-    var footer: RefreshFooterView? {set get}
+    var scroll: RefreshView {get set}
+    var header: RefreshHeaderView? {get set}
+    var footer: RefreshFooterView? {get set}
 }
 
 extension RefreshViewProtocol {
-    
+
     public var header: RefreshHeaderView? {
         get {
             return (objc_getAssociatedObject(scroll, &kRefreshHeaderKey) as? RefreshHeaderView)
@@ -150,7 +149,7 @@ extension RefreshViewProtocol {
             objc_setAssociatedObject(scroll, &kRefreshHeaderKey, newValue, .OBJC_ASSOCIATION_RETAIN)
         }
     }
-    
+
     public var footer: RefreshFooterView? {
         get {
             return (objc_getAssociatedObject(scroll, &kRefreshFooterKey) as? RefreshFooterView)

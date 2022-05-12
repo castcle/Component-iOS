@@ -38,7 +38,7 @@ public class ImageX2TableViewCell: UITableViewCell {
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var firstImageView: UIImageView!
     @IBOutlet var secondImageView: UIImageView!
-    
+
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
@@ -50,19 +50,18 @@ public class ImageX2TableViewCell: UITableViewCell {
                 .styleLinks(AttributedContent.link)
                 .styleAll(AttributedContent.all)
             self.enableActiveLabel()
-            
+
             if content.photo.count >= 2 {
                 let firstUrl = URL(string: content.photo[0].thumbnail)
                 self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-                
                 let secondUrl = URL(string: content.photo[1].thumbnail)
                 self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
             }
         }
     }
-    
+
     private func enableActiveLabel() {
-        self.massageLabel.onClick = { label, detection in
+        self.massageLabel.onClick = { _, detection in
             switch detection.type {
             case .hashtag(let tag):
                 let hashtagDict: [String: String] = [
@@ -88,7 +87,7 @@ public class ImageX2TableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.imageContainer.custom(cornerRadius: 12)
@@ -97,35 +96,31 @@ public class ImageX2TableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     @IBAction func viewFirstImageAction(_ sender: Any) {
         self.openImage(index: 0)
     }
-    
+
     @IBAction func viewSecondImageAction(_ sender: Any) {
         self.openImage(index: 1)
     }
-    
+
     private func openImage(index: Int) {
         if let content = self.content, !content.photo.isEmpty {
-            
             var images: [LightboxImage] = []
             content.photo.forEach { photo in
                 images.append(LightboxImage(imageURL: URL(string: photo.fullHd)!))
             }
-            
             LightboxConfig.CloseButton.textAttributes = [
                 .font: UIFont.asset(.bold, fontSize: .body),
                 .foregroundColor: UIColor.Asset.white
               ]
             LightboxConfig.CloseButton.text = "Close"
-            
             let controller = LightboxController(images: images, startIndex: index)
             controller.pageDelegate = self
             controller.dismissalDelegate = self
             controller.dynamicBackground = true
             controller.footerView.isHidden = true
-
             Utility.currentViewController().present(controller, animated: true, completion: nil)
         }
     }

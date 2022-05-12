@@ -36,26 +36,25 @@ public class LongImageX1TableViewCell: UITableViewCell {
     @IBOutlet var detailLabel: NantesLabel!
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var displayImage: UIImageView!
-    
+
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
-            
             let attributes = [NSAttributedString.Key.foregroundColor: UIColor.Asset.lightBlue,
                               NSAttributedString.Key.font: UIFont.asset(.contentLight, fontSize: .body)]
-            self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.contentDetail.readMore.text)", attributes: attributes)
+            self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.ContentDetail.readMore.text)", attributes: attributes)
             self.detailLabel.numberOfLines = 2
             self.detailLabel.font = UIFont.asset(.contentLight, fontSize: .body)
             self.detailLabel.textColor = UIColor.Asset.white
             self.detailLabel.text = content.message
-            
+
             if let imageUrl = content.photo.first {
                 let url = URL(string: imageUrl.thumbnail)
                 self.displayImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
             }
         }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.imageContainer.custom(cornerRadius: 12)
@@ -64,19 +63,19 @@ public class LongImageX1TableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     @IBAction func viewImageAction(_ sender: Any) {
         if let content = self.content, let image = content.photo.first {
             let images = [
                 LightboxImage(imageURL: URL(string: image.fullHd)!)
             ]
-            
+
             LightboxConfig.CloseButton.textAttributes = [
                 .font: UIFont.asset(.bold, fontSize: .body),
                 .foregroundColor: UIColor.Asset.white
               ]
             LightboxConfig.CloseButton.text = "Close"
-            
+
             let controller = LightboxController(images: images)
             controller.pageDelegate = self
             controller.dismissalDelegate = self

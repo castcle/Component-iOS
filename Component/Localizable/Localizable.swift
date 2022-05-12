@@ -28,9 +28,9 @@
 import Core
 
 extension Localization {
-    
+
     // MARK: - Content Detail
-    public enum contentDetail {
+    public enum ContentDetail {
         case readMore
         case youRecasted
         case recasted
@@ -49,9 +49,9 @@ extension Localization {
             }
         }
     }
-    
+
     // MARK: - Content Action
-    public enum contentAction {
+    public enum ContentAction {
         case recastTitle
         case recasted
         case quoteCast
@@ -61,7 +61,7 @@ extension Localization {
         case followed
         case undo
         case delete
-        
+
         public var text: String {
             switch self {
             case .recastTitle:

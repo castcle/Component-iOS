@@ -44,16 +44,16 @@ extension UIView {
             self.layer.maskedCorners = corners
         } else {
             var cornerMask = UIRectCorner()
-            if(corners.contains(.layerMinXMinYCorner)){
+            if corners.contains(.layerMinXMinYCorner) {
                 cornerMask.insert(.topLeft)
             }
-            if(corners.contains(.layerMaxXMinYCorner)){
+            if corners.contains(.layerMaxXMinYCorner) {
                 cornerMask.insert(.topRight)
             }
-            if(corners.contains(.layerMinXMaxYCorner)){
+            if corners.contains(.layerMinXMaxYCorner) {
                 cornerMask.insert(.bottomLeft)
             }
-            if(corners.contains(.layerMaxXMaxYCorner)){
+            if corners.contains(.layerMaxXMaxYCorner) {
                 cornerMask.insert(.bottomRight)
             }
             let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: cornerMask, cornerRadii: CGSize(width: radius, height: radius))

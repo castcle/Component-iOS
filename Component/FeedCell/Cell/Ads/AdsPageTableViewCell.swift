@@ -31,7 +31,7 @@ import ActiveLabel
 import Networking
 import Kingfisher
 
-public protocol AdsPageTableViewCellDelegate {
+public protocol AdsPageTableViewCellDelegate: AnyObject {
     func didAuthen(_ adsPageTableViewCell: AdsPageTableViewCell)
 }
 
@@ -44,11 +44,11 @@ public class AdsPageTableViewCell: UITableViewCell {
     @IBOutlet var displayNameLabel: UILabel!
     @IBOutlet var overviewLabel: UILabel!
     @IBOutlet var followButton: UIButton!
-    
+
     public var delegate: AdsPageTableViewCellDelegate?
     private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
     var isPreview: Bool = false
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.detailLabel.customize { label in
@@ -61,7 +61,7 @@ public class AdsPageTableViewCell: UITableViewCell {
             label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
             label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
         }
-        
+
         self.avatarImageView.circle(color: UIColor.Asset.white)
         self.verifyIcon.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)
         self.coverImageView.custom(cornerRadius: 10)
@@ -81,7 +81,7 @@ public class AdsPageTableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     public func configAdsPreViewCell(page: Page, ads: Ads) {
         self.isPreview = true
         self.followButton.isHidden = false
@@ -98,7 +98,7 @@ public class AdsPageTableViewCell: UITableViewCell {
             self.verifyIcon.isHidden = true
         }
     }
-    
+
     private func enableActiveLabel() {
         self.detailLabel.handleMentionTap { mention in
             let userDict: [String: String] = [
@@ -126,7 +126,7 @@ public class AdsPageTableViewCell: UITableViewCell {
             NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
         }
     }
-    
+
     @IBAction func followAction(_ sender: Any) {
         if self.isPreview {
             return

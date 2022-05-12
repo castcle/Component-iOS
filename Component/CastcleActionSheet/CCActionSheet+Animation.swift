@@ -29,7 +29,7 @@ import Foundation
 import UIKit
 
 extension CCActionSheet {
-    
+
     // MARK: - Animation
     func showController() {
         UIView.setAnimationsEnabled(true)
@@ -39,8 +39,8 @@ extension CCActionSheet {
         }, completion: nil)
         UIView.setAnimationsEnabled(false)
     }
-    
-    func hideController(completion: ((Bool)->Void)? = nil) {
+
+    func hideController(completion: ((Bool) -> Void)? = nil) {
         UIView.animate(withDuration: 0.55, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.02, options: .curveLinear, animations: {
             self.alertView.transform = CGAffineTransform(translationX: 0, y: self.alertView.frame.height)
             self.backgroundView.alpha = 0
@@ -48,7 +48,7 @@ extension CCActionSheet {
             completion?(bool)
         }
     }
-    
+
     @objc func panGestureRecognizerHandler(_ sender: UIPanGestureRecognizer) {
         let touchPoint = sender.location(in: view.window)
         switch sender.state {

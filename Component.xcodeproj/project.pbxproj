@@ -56,7 +56,6 @@
 		B7552979269CBA14005D5EB5 /* RefreshProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552962269CBA14005D5EB5 /* RefreshProtocol.swift */; };
 		B755297A269CBA14005D5EB5 /* RefreshBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552963269CBA14005D5EB5 /* RefreshBundle.swift */; };
 		B755297B269CBA14005D5EB5 /* RefreshFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552964269CBA14005D5EB5 /* RefreshFooterView.swift */; };
-		B755297C269CBA14005D5EB5 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552965269CBA14005D5EB5 /* UIColorExtension.swift */; };
 		B755297D269CBA15005D5EB5 /* RefreshExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552966269CBA14005D5EB5 /* RefreshExtension.swift */; };
 		B755297E269CBA15005D5EB5 /* RefreshHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552967269CBA14005D5EB5 /* RefreshHeaderView.swift */; };
 		B7552984269CBE48005D5EB5 /* NormalHeader.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B7552980269CBE48005D5EB5 /* NormalHeader.bundle */; };
@@ -209,7 +208,6 @@
 		B7552962269CBA14005D5EB5 /* RefreshProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshProtocol.swift; sourceTree = "<group>"; };
 		B7552963269CBA14005D5EB5 /* RefreshBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshBundle.swift; sourceTree = "<group>"; };
 		B7552964269CBA14005D5EB5 /* RefreshFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshFooterView.swift; sourceTree = "<group>"; };
-		B7552965269CBA14005D5EB5 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		B7552966269CBA14005D5EB5 /* RefreshExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshExtension.swift; sourceTree = "<group>"; };
 		B7552967269CBA14005D5EB5 /* RefreshHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshHeaderView.swift; sourceTree = "<group>"; };
 		B7552980269CBE48005D5EB5 /* NormalHeader.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NormalHeader.bundle; sourceTree = "<group>"; };
@@ -427,7 +425,6 @@
 				B7552964269CBA14005D5EB5 /* RefreshFooterView.swift */,
 				B7552967269CBA14005D5EB5 /* RefreshHeaderView.swift */,
 				B7552962269CBA14005D5EB5 /* RefreshProtocol.swift */,
-				B7552965269CBA14005D5EB5 /* UIColorExtension.swift */,
 			);
 			path = Refresh;
 			sourceTree = "<group>";
@@ -934,7 +931,6 @@
 				B787963826C66EBD00FECC21 /* RecastPopupViewController.swift in Sources */,
 				B75529A2269D8837005D5EB5 /* NSObject+ListDiffable.swift in Sources */,
 				B755297A269CBA14005D5EB5 /* RefreshBundle.swift in Sources */,
-				B755297C269CBA14005D5EB5 /* UIColorExtension.swift in Sources */,
 				B7910E3926B6650F0097C94E /* SplashScreenViewModel.swift in Sources */,
 				B7211E75279A84330018B3E5 /* SuggestionUserTableViewCell.swift in Sources */,
 				B786635A2747AC4200B13EEF /* QuoteCastBlogCell.swift in Sources */,

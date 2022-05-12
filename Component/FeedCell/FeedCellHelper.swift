@@ -32,7 +32,7 @@ public class FeedCellHelper {
     public init() {
         // Init FeedCellHelper
     }
-    
+
     public func renderFeedCell(content: Content, tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         if content.feedDisplayType == .postText {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.postText, for: indexPath as IndexPath) as? TextTableViewCell
@@ -83,7 +83,7 @@ public class FeedCellHelper {
             return UITableViewCell()
         }
     }
-    
+
     public func renderQuoteCastCell(content: Content, tableView: UITableView, indexPath: IndexPath, isRenderForFeed: Bool) -> UITableViewCell {
         if content.feedDisplayType == .postText {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.quoteText, for: indexPath as IndexPath) as? QuoteCastTextCell
@@ -170,7 +170,7 @@ public class FeedCellHelper {
             return UITableViewCell()
         }
     }
-    
+
     public func renderLongCastCell(content: Content, tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         if content.feedDisplayType == .postText {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.longText, for: indexPath as IndexPath) as? LongTextTableViewCell

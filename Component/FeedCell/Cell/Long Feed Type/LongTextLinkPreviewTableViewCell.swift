@@ -30,7 +30,6 @@ import Core
 import Networking
 import Nantes
 import SkeletonView
-import Nantes
 
 public class LongTextLinkPreviewTableViewCell: UITableViewCell {
 
@@ -41,19 +40,17 @@ public class LongTextLinkPreviewTableViewCell: UITableViewCell {
     @IBOutlet var linkTitleLabel: UILabel!
     @IBOutlet var linkDescriptionLabel: UILabel!
     @IBOutlet var skeletonView: UIView!
-    
+
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
-            
             let attributes = [NSAttributedString.Key.foregroundColor: UIColor.Asset.lightBlue,
                               NSAttributedString.Key.font: UIFont.asset(.contentLight, fontSize: .body)]
-            self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.contentDetail.readMore.text)", attributes: attributes)
+            self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.ContentDetail.readMore.text)", attributes: attributes)
             self.detailLabel.numberOfLines = 2
             self.detailLabel.font = UIFont.asset(.contentLight, fontSize: .body)
             self.detailLabel.textColor = UIColor.Asset.white
             self.detailLabel.text = content.message
-            
             self.skeletonView.isHidden = false
             self.linkContainer.isHidden = true
             if let link = content.link.first {
@@ -61,7 +58,7 @@ public class LongTextLinkPreviewTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.skeletonView.custom(cornerRadius: 12, borderWidth: 1, borderColor: UIColor.Asset.gray)
@@ -78,24 +75,24 @@ public class LongTextLinkPreviewTableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     private func setData(content: Content, link: Link) {
         UIView.transition(with: self, duration: 0.35, options: .transitionCrossDissolve, animations: {
             self.skeletonView.isHidden = true
             self.linkContainer.isHidden = false
         })
-        
+
         // MARK: - Image
         let url = URL(string: link.imagePreview)
         self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-        
+
         // MARK: - Title
         if link.title.isEmpty {
             self.linkTitleLabel.text = ""
         } else {
             self.linkTitleLabel.text = link.title
         }
-        
+
         // MARK: - Description
         if link.desc.isEmpty {
             self.linkDescriptionLabel.text = content.message
@@ -103,7 +100,7 @@ public class LongTextLinkPreviewTableViewCell: UITableViewCell {
             self.linkDescriptionLabel.text = link.desc
         }
     }
-    
+
     @IBAction func openWebViewAction(_ sender: Any) {
         guard let content = self.content else { return }
         if let link = content.link.first, let linkUrl = URL(string: link.url) {

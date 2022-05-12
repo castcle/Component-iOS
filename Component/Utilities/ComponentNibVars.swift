@@ -40,7 +40,7 @@ public struct ComponentNibVars {
         public static let acceptSyncSocialPopup = "AcceptSyncSocialPopupViewController"
         public static let selectCode = "SelectCodeViewController"
     }
-    
+
     // MARK: - View
     public struct Storyboard {
         public static let internalWebView = "WebView"
@@ -51,13 +51,12 @@ public struct ComponentNibVars {
         public static let report = "Report"
         public static let farmingPopup = "FarmingPopup"
         public static let publicPopup = "PublicPopup"
-        
     }
-    
+
     public struct View {
         public static let comment = "CommentKeyboardInput"
     }
-    
+
     // MARK: - TableViewCell
     public struct TableViewCell {
         public static let userList = "UserListTableViewCell"
@@ -101,7 +100,7 @@ public struct ComponentNibVars {
         public static let selectCode = "SelectCodeTableViewCell"
         public static let viewCast = "ViewCastTableViewCell"
     }
-    
+
     // MARK: - CollectionViewCell
     public struct CollectionViewCell {
     }

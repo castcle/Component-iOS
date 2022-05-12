@@ -33,7 +33,7 @@ public class ActivityHeaderTableViewCell: UITableViewCell {
 
     @IBOutlet var iconImage: UIImageView!
     @IBOutlet var detailLabel: UILabel!
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.detailLabel.font = UIFont.asset(.regular, fontSize: .small)
@@ -43,19 +43,19 @@ public class ActivityHeaderTableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     public func cellConfig(content: Content) {
         if content.referencedCasts.type == .recasted {
             if content.authorId == UserManager.shared.id {
-                self.detailLabel.text = Localization.contentDetail.youRecasted.text
+                self.detailLabel.text = Localization.ContentDetail.youRecasted.text
             } else {
                 if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
-                    self.detailLabel.text = "\(authorRef.displayName) \(Localization.contentDetail.recasted.text)"
+                    self.detailLabel.text = "\(authorRef.displayName) \(Localization.ContentDetail.recasted.text)"
                 } else {
                     return
                 }
             }
-            
+
             self.iconImage.image = UIImage.init(icon: .castcle(.recast), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightGray)
         } else {
             self.iconImage.image = UIImage.init(icon: .castcle(.quoteCast), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightGray)

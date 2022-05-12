@@ -45,7 +45,7 @@ public class QuoteCastImageX3Cell: UITableViewCell {
     @IBOutlet var secondImageView: UIImageView!
     @IBOutlet var thirdImageView: UIImageView!
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
-    
+
     var viewModel: QuoteCastViewModel?
     public var content: Content? {
         didSet {
@@ -59,18 +59,18 @@ public class QuoteCastImageX3Cell: UITableViewCell {
                     .styleMentions(AttributedContent.link)
                     .styleLinks(AttributedContent.link)
                     .styleAll(AttributedContent.quote)
-                
+
                 if content.photo.count >= 3 {
                     let firstUrl = URL(string: content.photo[0].thumbnail)
                     self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-                    
+
                     let secondUrl = URL(string: content.photo[1].thumbnail)
                     self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-                    
+
                     let thirdUrl = URL(string: content.photo[2].thumbnail)
                     self.thirdImageView.kf.setImage(with: thirdUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 }
-                
+
                 if authorRef.type == AuthorType.people.rawValue {
                     if authorRef.castcleId == UserManager.shared.rawCastcleId {
                         let url = URL(string: UserManager.shared.avatar)
@@ -86,22 +86,23 @@ public class QuoteCastImageX3Cell: UITableViewCell {
                         }
                     }
                 } else {
-                    let realm = try! Realm()
-                    if let page = realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first {
-                        let url = URL(string: page.avatar)
-                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        self.followButton.isHidden = true
-                    } else {
-                        let url = URL(string: authorRef.avatar)
-                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        if authorRef.followed {
+                    do {
+                        let realm = try Realm()
+                        if let page = realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first {
+                            let url = URL(string: page.avatar)
+                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                             self.followButton.isHidden = true
                         } else {
-                            self.followButton.isHidden = false
+                            let url = URL(string: authorRef.avatar)
+                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                            if authorRef.followed {
+                                self.followButton.isHidden = true
+                            } else {
+                                self.followButton.isHidden = false
+                            }
                         }
-                    }
+                    } catch {}
                 }
-                
                 self.displayNameLabel.text = authorRef.displayName
                 self.dateLabel.text = content.postDate.timeAgoDisplay()
                 if authorRef.official {
@@ -116,16 +117,14 @@ public class QuoteCastImageX3Cell: UITableViewCell {
             }
         }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.avatarImage.circle(color: UIColor.Asset.white)
         self.displayNameLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.displayNameLabel.textColor = UIColor.Asset.white
         self.dateLabel.font = UIFont.asset(.regular, fontSize: .custom(size: 10))
         self.dateLabel.textColor = UIColor.Asset.lightGray
-        
         self.followButton.titleLabel?.font = UIFont.asset(.bold, fontSize: .overline)
         self.followButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
         self.verifyIcon.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)
@@ -136,7 +135,7 @@ public class QuoteCastImageX3Cell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     @IBAction func followAction(_ sender: Any) {
         guard let viewModel = self.viewModel else { return }
         viewModel.followUser()

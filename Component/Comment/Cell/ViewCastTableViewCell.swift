@@ -32,9 +32,9 @@ class ViewCastTableViewCell: UITableViewCell {
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var viewButton: UIButton!
-    
+
     private var contentId: String = ""
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.titleLabel.font = UIFont.asset(.regular, fontSize: .overline)
@@ -48,12 +48,12 @@ class ViewCastTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     func configCell(contentId: String) {
         self.titleLabel.text = "View Original Cast"
         self.contentId = contentId
     }
-    
+
     @IBAction func viewAction(_ sender: Any) {
         let castDict: [String: String] = [
             JsonKey.contentId.rawValue: contentId

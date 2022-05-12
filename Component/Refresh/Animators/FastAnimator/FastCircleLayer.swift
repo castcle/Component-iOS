@@ -29,32 +29,21 @@ import UIKit
 import Core
 
 class FastCircleLayer: CALayer {
-    
+
     let color: UIColor
-    
     let pointColor: UIColor
-    
     let lineWidth: CGFloat
-    
     let circle = CAShapeLayer()
-    
     let point  = CAShapeLayer()
-        
     private let pointBack = CALayer()
-    
     private var rotated: CGFloat = 0
-    
     private var rotatedSpeed: CGFloat = 0
-    
     private var speedInterval: CGFloat = 0
-    
     private var stop: Bool = false
-    
     private(set) var check: FastCheckLayer?
-    
     var codeTimer: DispatchSourceTimer?
-    
-    //MARK: Initial Methods
+
+    // MARK: - Initial Methods
     init(frame: CGRect,
          color: UIColor = UIColor.Asset.lightBlue,
          pointColor: UIColor = UIColor.Asset.white,
@@ -72,23 +61,22 @@ class FastCircleLayer: CALayer {
         drawPoint()
         addCheckLayer()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    //MARK: Public Methods
+
+    // MARK: - Public Methods
     func startAnimation() {
         circle.isHidden = false
         point.isHidden  = false
-        
         codeTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
         codeTimer?.schedule(deadline: .now(), repeating: .milliseconds(42))
         codeTimer?.setEventHandler(handler: { [weak self] in
             guard let self = self else {
                 return
             }
-            self.rotated = self.rotated - self.rotatedSpeed
+            self.rotated -= self.rotatedSpeed
             if self.stop {
                 let count = Int(self.rotated / CGFloat(Double.pi * 2))
                 if (CGFloat(Double.pi * 2 * Double(count)) - self.rotated) >= 1.1 {
@@ -105,9 +93,9 @@ class FastCircleLayer: CALayer {
             }
             if self.rotatedSpeed < 0.65 {
                 if self.speedInterval < 0.02 {
-                    self.speedInterval = self.speedInterval + 0.001
+                    self.speedInterval += 0.001
                 }
-                self.rotatedSpeed = self.rotatedSpeed + self.speedInterval
+                self.rotatedSpeed += self.speedInterval
             }
             var transform = CGAffineTransform.identity
             transform = transform.rotated(by: self.rotated)
@@ -116,10 +104,9 @@ class FastCircleLayer: CALayer {
             }
         })
         codeTimer?.resume()
-        
         addPointAnimation()
     }
-    
+
     func endAnimation(finish: Bool) {
         if finish {
             stop = false
@@ -131,14 +118,14 @@ class FastCircleLayer: CALayer {
             point.isHidden  = true
             codeTimer?.cancel()
             check?.endAnimation()
-        }else {
+        } else {
             DispatchQueue.global().async {
                 self.stop = true
             }
         }
     }
-    
-    //MARK: Privater Methods
+
+    // MARK: - Privater Methods
     private func drawCircle() {
         let width  = frame.size.width
         let height = frame.size.height
@@ -173,7 +160,7 @@ class FastCircleLayer: CALayer {
         pointBack.addSublayer(point)
         point.isHidden = true
     }
-    
+
     private func addPointAnimation() {
         let width  = frame.size.width
         let path = CABasicAnimation(keyPath: "path")
@@ -192,7 +179,7 @@ class FastCircleLayer: CALayer {
         path.fillMode = CAMediaTimingFillMode.forwards
         point.add(path, forKey: "path")
     }
-    
+
     private func addCheckLayer() {
         check = FastCheckLayer(frame: CGRect(x: 0,
                                              y: 0,

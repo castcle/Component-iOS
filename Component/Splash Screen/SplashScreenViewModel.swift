@@ -34,11 +34,11 @@ import SwiftyJSON
 import RealmSwift
 
 final class SplashScreenViewModel {
-   
-    //MARK: Private
+
+    // MARK: - Private
     private var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
     private var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
-    private var masterDataRepository: MasterDataRepository = MasterDataRepositoryImpl()
+    private var dataRepository: DataRepository = DataRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
     var state: State = .none
 
@@ -50,18 +50,18 @@ final class SplashScreenViewModel {
             }
         }
     }
-    
+
     private func getCountryCode() {
         self.state = .getCountryCode
-        self.masterDataRepository.getCountry() { (success, response, isRefreshToken) in
+        self.dataRepository.getCountry { (success, response, isRefreshToken) in
             if success {
                 do {
+                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let payload = json[JsonKey.payload.rawValue].arrayValue
-                    let realm = try! Realm()
-                    payload.forEach { item in
-                        try! realm.write {
+                    try realm.write {
+                        payload.forEach { item in
                             let countryCode = CountryCode().initWithJson(json: item)
                             realm.add(countryCode, update: .modified)
                         }
@@ -79,10 +79,10 @@ final class SplashScreenViewModel {
             }
         }
     }
-    
+
     public func getBadges() {
         self.state = .getBadges
-        self.notificationRepository.getBadges() { (success, response, isRefreshToken) in
+        self.notificationRepository.getBadges { (success, _, isRefreshToken) in
             if success {
                 UIApplication.shared.applicationIconBadgeNumber = UserManager.shared.badgeCount
                 self.getCountryCode()
@@ -95,14 +95,14 @@ final class SplashScreenViewModel {
             }
         }
     }
-    
-    //MARK: Output
-    var didGuestLoginFinish: (() -> ())?
-    
+
+    // MARK: - Output
+    var didGuestLoginFinish: (() -> Void)?
+
     public init() {
         self.tokenHelper.delegate = self
     }
-    
+
     public func tokenHandle() {
         if UserManager.shared.accessToken.isEmpty || UserManager.shared.userRole == .guest {
             UIApplication.shared.applicationIconBadgeNumber = UserManager.shared.badgeCount
