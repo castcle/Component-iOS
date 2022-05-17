@@ -99,6 +99,7 @@ public struct ComponentNibVars {
         public static let userToFollow = "UserToFollowTableViewCell"
         public static let selectCode = "SelectCodeTableViewCell"
         public static let viewCast = "ViewCastTableViewCell"
+        public static let reactionCast = "ReactionCastTableViewCell"
     }
 
     // MARK: - CollectionViewCell

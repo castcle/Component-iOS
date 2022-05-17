@@ -193,6 +193,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         self.tableView.estimatedRowHeight = 100
         self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.comment, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.comment)
         self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.reply, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.reply)
+        self.tableView.register(UINib(nibName: ComponentNibVars.TableViewCell.reactionCast, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.reactionCast)
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -213,7 +214,7 @@ extension CommentViewController {
         if self.viewModel.commentLoadState == .loading {
             return 2
         } else {
-            return (1 + self.viewModel.comments.count)
+            return (2 + self.viewModel.comments.count)
         }
     }
 
@@ -228,11 +229,21 @@ extension CommentViewController {
                     return 3
                 }
             }
+        } else if section == 1 {
+            if self.viewModel.commentLoadState == .loading {
+                return 0
+            } else {
+                if self.viewModel.content.metrics.likeCount == 0 && self.viewModel.content.metrics.recastCount == 0 && self.viewModel.content.metrics.quoteCount == 0 {
+                    return 0
+                } else {
+                    return 1
+                }
+            }
         } else {
             if self.viewModel.commentLoadState == .loading {
                 return 1
             } else {
-                return 1 + self.viewModel.comments[section - 1].reply.count
+                return 1 + self.viewModel.comments[section - 2].reply.count
             }
         }
     }
@@ -265,6 +276,11 @@ extension CommentViewController {
                     }
                 }
             }
+        } else if indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.reactionCast, for: indexPath as IndexPath) as? ReactionCastTableViewCell
+            cell?.backgroundColor = UIColor.clear
+            cell?.configCell(content: self.viewModel.content)
+            return cell ?? ReactionCastTableViewCell()
         } else {
             if self.viewModel.commentLoadState == .loading {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.skeletonNotify, for: indexPath as IndexPath) as? SkeletonNotifyTableViewCell
@@ -272,7 +288,7 @@ extension CommentViewController {
                 cell?.configCell()
                 return cell ?? SkeletonNotifyTableViewCell()
             } else {
-                let comment = self.viewModel.comments[indexPath.section - 1]
+                let comment = self.viewModel.comments[indexPath.section - 2]
                 if indexPath.row == 0 {
                     let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.comment, for: indexPath as IndexPath) as? CommentTableViewCell
                     cell?.backgroundColor = UIColor.Asset.darkGraphiteBlue
@@ -281,7 +297,7 @@ extension CommentViewController {
                         cell?.topLineView.isHidden = true
                         cell?.bottomLineView.isHidden = false
                     } else if comment.isLast {
-                        if (indexPath.section - 1) == 0 {
+                        if (indexPath.section - 2) == 0 {
                             cell?.topLineView.isHidden = true
                         } else {
                             cell?.topLineView.isHidden = false
@@ -297,7 +313,7 @@ extension CommentViewController {
                     let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.reply, for: indexPath as IndexPath) as? ReplyTableViewCell
                     cell?.backgroundColor = UIColor.Asset.darkGraphiteBlue
                     cell?.delegate = self
-                    cell?.configCell(replyCommentId: comment.reply[indexPath.row - 1], originalCommentId: comment.id)
+                    cell?.configCell(replyCommentId: comment.reply[indexPath.row - 2], originalCommentId: comment.id)
                     if comment.isFirst {
                         cell?.lineView.isHidden = false
                     } else if comment.isLast {
