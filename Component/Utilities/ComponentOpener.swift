@@ -27,6 +27,7 @@
 
 import UIKit
 import Core
+import Networking
 
 public enum ComponentScene {
     case internalWebView(URL)
@@ -40,6 +41,8 @@ public enum ComponentScene {
     case syncAutoPostTwitter(SyncTwitterAutoPostViewModel)
     case acceptSyncSocialPopup(AcceptSyncSocialPopupViewModel)
     case selectCode
+    case reaction(Content, ReactionType)
+    case userReactionList(UserReactionListViewModel)
 }
 
 public struct ComponentOpener {
@@ -98,6 +101,17 @@ public struct ComponentOpener {
             let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.publicPopup, bundle: ConfigBundle.component)
             let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.selectCode)
             return viewController
+        case .reaction(let content, let type):
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.comment, bundle: ConfigBundle.component)
+            let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.reaction) as? ReactionViewController
+            viewController?.content = content
+            viewController?.type = type
+            return viewController ?? ReactionViewController()
+        case .userReactionList(let viewModel):
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.comment, bundle: ConfigBundle.component)
+            let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.userReactionList) as? UserReactionListViewController
+            viewController?.viewModel = viewModel
+            return viewController ?? UserReactionListViewController()
         }
     }
 }

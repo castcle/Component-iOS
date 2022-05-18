@@ -45,6 +45,11 @@
 		B71B666F27251C0900191A62 /* SkeletonFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71B666D27251C0900191A62 /* SkeletonFeedTableViewCell.xib */; };
 		B7211E75279A84330018B3E5 /* SuggestionUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7211E73279A84330018B3E5 /* SuggestionUserTableViewCell.swift */; };
 		B7211E76279A84330018B3E5 /* SuggestionUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7211E74279A84330018B3E5 /* SuggestionUserTableViewCell.xib */; };
+		B72FDEF62835645000748D13 /* ReactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72FDEF52835645000748D13 /* ReactionViewController.swift */; };
+		B72FDEF82835646700748D13 /* UserReactionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72FDEF72835646700748D13 /* UserReactionListViewController.swift */; };
+		B72FDEFB2835666000748D13 /* UserReactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72FDEF92835666000748D13 /* UserReactionTableViewCell.swift */; };
+		B72FDEFC2835666000748D13 /* UserReactionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B72FDEFA2835666000748D13 /* UserReactionTableViewCell.xib */; };
+		B72FDEFE28356C7300748D13 /* UserReactionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72FDEFD28356C7300748D13 /* UserReactionListViewModel.swift */; };
 		B74EBE3027F7DA4F0024BB94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B74EBE2F27F7DA4F0024BB94 /* Assets.xcassets */; };
 		B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */; };
 		B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552957269CBA14005D5EB5 /* FastAnimator.swift */; };
@@ -199,6 +204,11 @@
 		B71B666D27251C0900191A62 /* SkeletonFeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkeletonFeedTableViewCell.xib; sourceTree = "<group>"; };
 		B7211E73279A84330018B3E5 /* SuggestionUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionUserTableViewCell.swift; sourceTree = "<group>"; };
 		B7211E74279A84330018B3E5 /* SuggestionUserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestionUserTableViewCell.xib; sourceTree = "<group>"; };
+		B72FDEF52835645000748D13 /* ReactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionViewController.swift; sourceTree = "<group>"; };
+		B72FDEF72835646700748D13 /* UserReactionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReactionListViewController.swift; sourceTree = "<group>"; };
+		B72FDEF92835666000748D13 /* UserReactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReactionTableViewCell.swift; sourceTree = "<group>"; };
+		B72FDEFA2835666000748D13 /* UserReactionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserReactionTableViewCell.xib; sourceTree = "<group>"; };
+		B72FDEFD28356C7300748D13 /* UserReactionListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReactionListViewModel.swift; sourceTree = "<group>"; };
 		B74EBE2F27F7DA4F0024BB94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshAnimator.swift; sourceTree = "<group>"; };
 		B7552957269CBA14005D5EB5 /* FastAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastAnimator.swift; sourceTree = "<group>"; };
@@ -379,10 +389,8 @@
 			isa = PBXGroup;
 			children = (
 				B717447B26E2595E0014D6B5 /* Comment.storyboard */,
-				B717447E26E259AB0014D6B5 /* CommentViewController.swift */,
-				B79A8ED52822A38400918716 /* CommentDetailViewController.swift */,
-				B717447D26E259AB0014D6B5 /* CommentViewModel.swift */,
-				B79A8ED72822A55E00918716 /* CommentDetailViewModel.swift */,
+				B72FDF002835792100748D13 /* ViewModel */,
+				B72FDEFF2835791C00748D13 /* ViewController */,
 				B717447A26E259040014D6B5 /* Cell */,
 			);
 			path = Comment;
@@ -399,6 +407,8 @@
 				B79A8EDD2822BBEB00918716 /* ViewCastTableViewCell.xib */,
 				B7BC095F282E286F00BA36E8 /* ReactionCastTableViewCell.swift */,
 				B7BC0960282E286F00BA36E8 /* ReactionCastTableViewCell.xib */,
+				B72FDEF92835666000748D13 /* UserReactionTableViewCell.swift */,
+				B72FDEFA2835666000748D13 /* UserReactionTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -410,6 +420,27 @@
 				B7211E74279A84330018B3E5 /* SuggestionUserTableViewCell.xib */,
 			);
 			path = Suggestion;
+			sourceTree = "<group>";
+		};
+		B72FDEFF2835791C00748D13 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B717447E26E259AB0014D6B5 /* CommentViewController.swift */,
+				B79A8ED52822A38400918716 /* CommentDetailViewController.swift */,
+				B72FDEF52835645000748D13 /* ReactionViewController.swift */,
+				B72FDEF72835646700748D13 /* UserReactionListViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		B72FDF002835792100748D13 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B717447D26E259AB0014D6B5 /* CommentViewModel.swift */,
+				B79A8ED72822A55E00918716 /* CommentDetailViewModel.swift */,
+				B72FDEFD28356C7300748D13 /* UserReactionListViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		B74EBE2E27F7DA4F0024BB94 /* Assets */ = {
@@ -884,6 +915,7 @@
 				B7552987269CBE49005D5EB5 /* NormalFooter.bundle in Resources */,
 				B7FA1D8E27B0DF6300A485A1 /* LongTextLinkTableViewCell.xib in Resources */,
 				B7211E76279A84330018B3E5 /* SuggestionUserTableViewCell.xib in Resources */,
+				B72FDEFC2835666000748D13 /* UserReactionTableViewCell.xib in Resources */,
 				B786635E2747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.xib in Resources */,
 				B786635B2747AC4200B13EEF /* QuoteCastImageX2Cell.xib in Resources */,
 			);
@@ -950,6 +982,7 @@
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
 				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,
+				B72FDEFE28356C7300748D13 /* UserReactionListViewModel.swift in Sources */,
 				B79A8ECF28222C1800918716 /* SkeletonNotifyTableViewCell.swift in Sources */,
 				B717447F26E259AB0014D6B5 /* CommentViewModel.swift in Sources */,
 				B7167F9C27AFC94A00067DBD /* ReachedTableViewCell.swift in Sources */,
@@ -963,6 +996,7 @@
 				B786635C2747AC4200B13EEF /* QuoteCastBlogNoImageCell.swift in Sources */,
 				B78663562747AC4200B13EEF /* QuoteCastTextLinkPreviewCell.swift in Sources */,
 				B7FA1D9F27B0E2C300A485A1 /* LongImageX1TableViewCell.swift in Sources */,
+				B72FDEF82835646700748D13 /* UserReactionListViewController.swift in Sources */,
 				B717448026E259AB0014D6B5 /* CommentViewController.swift in Sources */,
 				B7910E9426BC686B0097C94E /* DatePickerViewController.swift in Sources */,
 				B7910DF726AFE4090097C94E /* InternalWebViewViewController.swift in Sources */,
@@ -988,12 +1022,14 @@
 				B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */,
 				B7AC87FE27199A6D00500F81 /* CCActionSheet.swift in Sources */,
 				B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */,
+				B72FDEF62835645000748D13 /* ReactionViewController.swift in Sources */,
 				B7E924BB2805747000F9D75D /* AcceptSyncSocialPopupViewController.swift in Sources */,
 				B7866335274777F900B13EEF /* ActivityHeaderTableViewCell.swift in Sources */,
 				B715F5672812895A004687EA /* SelectCodeViewController.swift in Sources */,
 				B786634F2747AC4200B13EEF /* QuoteCastImageX2Cell.swift in Sources */,
 				B756C8A3277337C1007AADE4 /* TableView.swift in Sources */,
 				B786635F2747AC4200B13EEF /* QuoteCastImageX1Cell.swift in Sources */,
+				B72FDEFB2835666000748D13 /* UserReactionTableViewCell.swift in Sources */,
 				B7AC880427199B4700500F81 /* CCAction.swift in Sources */,
 				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,
 				B715F56C28128A64004687EA /* SelectCodeTableViewCell.swift in Sources */,

@@ -39,6 +39,8 @@ public struct ComponentNibVars {
         public static let syncAutoPostTwitter = "SyncAutoPostViewController"
         public static let acceptSyncSocialPopup = "AcceptSyncSocialPopupViewController"
         public static let selectCode = "SelectCodeViewController"
+        public static let reaction = "ReactionViewController"
+        public static let userReactionList = "UserReactionListViewController"
     }
 
     // MARK: - View
@@ -100,6 +102,7 @@ public struct ComponentNibVars {
         public static let selectCode = "SelectCodeTableViewCell"
         public static let viewCast = "ViewCastTableViewCell"
         public static let reactionCast = "ReactionCastTableViewCell"
+        public static let userReaction = "UserReactionTableViewCell"
     }
 
     // MARK: - CollectionViewCell

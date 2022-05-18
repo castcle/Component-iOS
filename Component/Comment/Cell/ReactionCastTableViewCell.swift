@@ -70,10 +70,12 @@ class ReactionCastTableViewCell: UITableViewCell {
             label.customColor[quoteCastsType] = UIColor.Asset.white
             label.customSelectedColor[quoteCastsType] = UIColor.Asset.gray
             label.handleCustomTap(for: likesType) { _ in
-                // Todo
+                let viewController = ComponentOpener.open(.reaction(content, .like)) as? ReactionViewController
+                Utility.currentViewController().present(viewController ?? ReactionViewController(), animated: true)
             }
             label.handleCustomTap(for: recastsType) { _ in
-                // Todp
+                let viewController = ComponentOpener.open(.reaction(content, .recast)) as? ReactionViewController
+                Utility.currentViewController().present(viewController ?? ReactionViewController(), animated: true)
             }
             label.handleCustomTap(for: quoteCastsType) { _ in
                 let contentDict: [String: String] = [
