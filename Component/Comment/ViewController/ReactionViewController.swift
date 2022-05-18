@@ -81,7 +81,7 @@ class ReactionViewController: ButtonBarPagerTabStripViewController {
         vc2?.pageIndex = 1
         vc2?.pageTitle = "Recasts"
         let recastViewController = vc2 ?? UserReactionListViewController()
-        
+
         var section: [UIViewController] = []
         if self.content.metrics.likeCount > 0 {
             section.append(likeViewController)
