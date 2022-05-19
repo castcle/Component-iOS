@@ -28,66 +28,61 @@
 import UIKit
 import Core
 import Networking
-import ActiveLabel
+import Atributika
 import Lightbox
 
 public class ImageX1TableViewCell: UITableViewCell {
 
-    @IBOutlet var detailLabel: ActiveLabel!
+    @IBOutlet var massageLabel: AttributedLabel!
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var displayImage: UIImageView!
-    
-    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
+
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
-            
-            self.detailLabel.customize { label in
-                label.font = UIFont.asset(.contentLight, fontSize: .body)
-                label.numberOfLines = 0
-                label.enabledTypes = [.mention, .url, self.customHashtag]
-                label.textColor = UIColor.Asset.white
-                label.mentionColor = UIColor.Asset.lightBlue
-                label.URLColor = UIColor.Asset.lightBlue
-                label.customColor[self.customHashtag] = UIColor.Asset.lightBlue
-                label.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
-            }
-            
-            self.detailLabel.text = content.message
+            self.massageLabel.numberOfLines = 0
+            self.massageLabel.isSelectable = true
+            self.massageLabel.attributedText = (content.message.isEmpty ? "" : "\(content.message)\n")
+                .styleHashtags(AttributedContent.link)
+                .styleMentions(AttributedContent.link)
+                .styleLinks(AttributedContent.link)
+                .styleAll(AttributedContent.all)
             self.enableActiveLabel()
-            
             if let imageUrl = content.photo.first {
                 let url = URL(string: imageUrl.thumbnail)
                 self.displayImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
             }
         }
     }
-    
+
     private func enableActiveLabel() {
-        self.detailLabel.handleMentionTap { mention in
-            let userDict: [String: String] = [
-                "castcleId":  mention
-            ]
-            NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
-        }
-        self.detailLabel.handleURLTap { url in
-            var urlString = url.absoluteString
-            urlString = urlString.replacingOccurrences(of: "https://", with: "")
-            urlString = urlString.replacingOccurrences(of: "http://", with: "")
-            if let newUrl = URL(string: "https://\(urlString)") {
-                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
-            } else {
+        self.massageLabel.onClick = { _, detection in
+            switch detection.type {
+            case .hashtag(let tag):
+                let hashtagDict: [String: String] = [
+                    JsonKey.hashtag.rawValue: "#\(tag)"
+                ]
+                NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
+            case .mention(let name):
+                let userDict: [String: String] = [
+                    JsonKey.castcleId.rawValue: name
+                ]
+                NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
+            case .link(let url):
+                var urlString = url.absoluteString
+                urlString = urlString.replacingOccurrences(of: "https://", with: "")
+                urlString = urlString.replacingOccurrences(of: "http://", with: "")
+                if let newUrl = URL(string: "https://\(urlString)") {
+                    Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
+                } else {
+                    return
+                }
+            default:
                 return
             }
         }
-        self.detailLabel.handleCustomTap(for: self.customHashtag) { element in
-            let hashtagDict: [String: String] = [
-                "hashtag":  element
-            ]
-            NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
-        }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.imageContainer.custom(cornerRadius: 12)
@@ -96,25 +91,22 @@ public class ImageX1TableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     @IBAction func viewImageAction(_ sender: Any) {
         if let content = self.content, let image = content.photo.first {
             let images = [
                 LightboxImage(imageURL: URL(string: image.fullHd)!)
             ]
-            
             LightboxConfig.CloseButton.textAttributes = [
                 .font: UIFont.asset(.bold, fontSize: .body),
                 .foregroundColor: UIColor.Asset.white
               ]
             LightboxConfig.CloseButton.text = "Close"
-            
             let controller = LightboxController(images: images)
             controller.pageDelegate = self
             controller.dismissalDelegate = self
             controller.dynamicBackground = true
             controller.footerView.isHidden = true
-
             Utility.currentViewController().present(controller, animated: true, completion: nil)
         }
     }

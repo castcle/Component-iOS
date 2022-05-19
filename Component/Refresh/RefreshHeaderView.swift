@@ -28,19 +28,19 @@
 import UIKit
 
 open class RefreshHeaderView: RefreshComponent {
-    
+
     fileprivate var previousOffsetY: CGFloat = 0.0
     fileprivate var scrollViewBounces: Bool  = true
     fileprivate var insetTDelta: CGFloat     = 0.0
     fileprivate var holdInsetTDelta: CGFloat = 0.0
     private var isEnding: Bool = false
-    
+
     public convenience init(animator: RefreshProtocol = NormalHeaderAnimator(), handler: @escaping RefreshHandler) {
         self.init(frame: .zero)
         self.handler  = handler
         self.animator = animator
     }
-    
+
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
         DispatchQueue.main.async { [weak self] in
@@ -49,7 +49,7 @@ open class RefreshHeaderView: RefreshComponent {
 
         }
     }
-    
+
     open override func start() {
         guard let scrollView = scrollView else { return }
         ignoreObserver(true)
@@ -61,16 +61,13 @@ open class RefreshHeaderView: RefreshComponent {
         insets.top          += animator.execute
         insetTDelta          = -animator.execute
         holdInsetTDelta      = -(animator.execute - animator.hold)
-        var point = scrollView.contentOffset;
+        var point = scrollView.contentOffset
         point.y = -insets.top
         UIView.animate(withDuration: RefreshComponent.animationDuration, animations: {
-            
             scrollView.contentOffset.y = self.previousOffsetY
             scrollView.contentInset    = insets
-            scrollView.setContentOffset(point, animated: false);
-            
-            
-        }) { (finished) in
+            scrollView.setContentOffset(point, animated: false)
+        }) { (_) in
             DispatchQueue.main.async {
                 self.handler?()
                 self.ignoreObserver(false)
@@ -78,7 +75,7 @@ open class RefreshHeaderView: RefreshComponent {
             }
         }
     }
-    
+
     open override func stop() {
         guard let scrollView = scrollView else { return }
         ignoreObserver(true)
@@ -96,7 +93,7 @@ open class RefreshHeaderView: RefreshComponent {
             animator.refreshEnd(view: self, finish: false)
             UIView.animate(withDuration: RefreshComponent.animationDuration, animations: {
                 scrollView.contentInset.top += self.insetTDelta - self.holdInsetTDelta
-            }) { (finished) in
+            }) { (_) in
                 DispatchQueue.main.async {
                     self.state = .idle
                     super.stop()
@@ -118,7 +115,7 @@ open class RefreshHeaderView: RefreshComponent {
         }
     }
 
-    open override func offsetChange(change: [NSKeyValueChangeKey : Any]?) {
+    open override func offsetChange(change: [NSKeyValueChangeKey: Any]?) {
         guard let scrollView = scrollView else { return }
         super.offsetChange(change: change)
         guard isRefreshing == false else {
@@ -132,7 +129,7 @@ open class RefreshHeaderView: RefreshComponent {
             insetTDelta      = scrollViewInsets.top - scrollingTop
             return
         }
-        
+
         var isRecordingProgress = false
         defer {
             if isRecordingProgress {
@@ -140,7 +137,7 @@ open class RefreshHeaderView: RefreshComponent {
                 animator.refresh(view: self, progressDidChange: percent)
             }
         }
-        
+
         let offsets = previousOffsetY + scrollViewInsets.top
         if offsets < -animator.trigger {
             if !isRefreshing {

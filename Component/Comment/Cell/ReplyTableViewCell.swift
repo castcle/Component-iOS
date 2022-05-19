@@ -29,11 +29,13 @@ import UIKit
 import Core
 import Networking
 import ActiveLabel
+import RealmSwift
 
-protocol ReplyTableViewCellDelegate {
-    func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment)
-    func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment)
-    func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: ReplyComment)
+protocol ReplyTableViewCellDelegate: AnyObject {
+    func didEdit(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef)
+    func didDelete(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef, originalCommentId: String)
+    func didLiked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef)
+    func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef)
 }
 
 class ReplyTableViewCell: UITableViewCell {
@@ -55,43 +57,13 @@ class ReplyTableViewCell: UITableViewCell {
             }
         }
     }
-    
-    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
-    var replyComment: ReplyComment? {
-        didSet {
-            guard let replyComment = self.replyComment else { return }
-            self.commentLabel.text = replyComment.message
-            
-            let url = URL(string: replyComment.author.avatar.thumbnail)
-            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-            self.displayNameLabel.text = replyComment.author.displayName
-            self.dateLabel.text = replyComment.replyDate.timeAgoDisplay()
-            self.commentLabel.customColor[self.customHashtag] = UIColor.Asset.lightBlue
-            self.commentLabel.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
-            
-            self.commentLabel.handleCustomTap(for: self.customHashtag) { element in
-                let hashtagDict: [String: String] = [
-                    "hashtag":  element
-                ]
-                NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
-            }
-            self.commentLabel.handleMentionTap { mention in
-                let userDict: [String: String] = [
-                    "castcleId":  mention
-                ]
-                NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
-            }
-            self.commentLabel.handleURLTap { url in
-                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
-            }
-            
-            self.updateUi(isAction: false)
-        }
-    }
-    
+
     var delegate: ReplyTableViewCellDelegate?
+    private let customHashtag = ActiveType.custom(pattern: RegexpParser.hashtagPattern)
+    private var commentRef = CommentRef()
     private var isShowActionSheet: Bool = false
-    
+    private var originalCommentId: String = ""
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.avatarImage.circle(color: UIColor.Asset.white)
@@ -100,7 +72,6 @@ class ReplyTableViewCell: UITableViewCell {
         self.dateLabel.font = UIFont.asset(.regular, fontSize: .small)
         self.dateLabel.textColor = UIColor.Asset.lightGray
         self.lineView.backgroundColor = UIColor.Asset.gray
-        
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
         self.commentLabel.addGestureRecognizer(longPressRecognizer)
     }
@@ -108,68 +79,101 @@ class ReplyTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
-    @objc func longPressed(sender: UILongPressGestureRecognizer) {
-        if !self.isShowActionSheet {
-            self.isShowActionSheet = true
-            self.showActionSheet()
-        }
-    }
-    
-    private func showActionSheet() {
-        guard let replyComment = self.replyComment else { return }
-        
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Edit", style: .default , handler: { (UIAlertAction) in
-            self.isShowActionSheet = false
-            self.delegate?.didEdit(self, replyComment: replyComment)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler: { (UIAlertAction) in
-            self.isShowActionSheet = false
-            print("User click Delete button")
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in
-            self.isShowActionSheet = false
-            print("User click Cancel button")
-        }))
 
-        // uncomment for iPad Support
-        // alert.popoverPresentationController?.sourceView = self.view
+    func configCell(replyCommentId: String, originalCommentId: String) {
+        self.originalCommentId = originalCommentId
+        if let commentRef = CommentHelper.shared.getCommentRef(id: replyCommentId) {
+            self.commentRef = commentRef
+            self.commentLabel.text =  self.commentRef.message
 
-        Utility.currentViewController().present(alert, animated: true)
-    }
-    
-    @IBAction func likeAction(_ sender: Any) {
-        if UserManager.shared.isLogin {
-            guard let replyComment = self.replyComment else { return }
-
-            if replyComment.participate.liked {
-                self.delegate?.didUnliked(self, replyComment: replyComment)
+            if let authorRef = ContentHelper.shared.getAuthorRef(id: self.commentRef.authorId) {
+                let url = URL(string: authorRef.avatar)
+                self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                self.displayNameLabel.text = authorRef.displayName
             } else {
-                self.delegate?.didLiked(self, replyComment: replyComment)
+                self.avatarImage.image = UIImage.Asset.userPlaceholder
+                self.displayNameLabel.text = "Castcle"
             }
 
-            replyComment.participate.liked.toggle()
+            self.dateLabel.text = self.commentRef.commentDate.timeAgoDisplay()
+            self.commentLabel.customColor[self.customHashtag] = UIColor.Asset.lightBlue
+            self.commentLabel.customSelectedColor[self.customHashtag] = UIColor.Asset.lightBlue
+
+            self.commentLabel.handleCustomTap(for: self.customHashtag) { element in
+                let hashtagDict: [String: String] = [
+                    JsonKey.hashtag.rawValue: element
+                ]
+                NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
+            }
+            self.commentLabel.handleMentionTap { mention in
+                let userDict: [String: String] = [
+                    JsonKey.castcleId.rawValue: mention
+                ]
+                NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
+            }
+            self.commentLabel.handleURLTap { url in
+                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(url)), animated: true)
+            }
+            self.updateUi(isAction: false)
+        } else {
+            return
+        }
+    }
+
+    @objc func longPressed(sender: UILongPressGestureRecognizer) {
+        if UserHelper.shared.isMyAccount(id: self.commentRef.authorId) {
+            if !self.isShowActionSheet {
+                self.isShowActionSheet = true
+                self.showActionSheet()
+            }
+        }
+    }
+
+    private func showActionSheet() {
+        let actionSheet = CCActionSheet(isGestureDismiss: false)
+        let cancelButton = CCAction(title: "Cancel", image: UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+            actionSheet.dismissActionSheet()
+            self.isShowActionSheet = false
+        }
+        actionSheet.addActions([cancelButton])
+        let deleteButton = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.deleteOne), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+            actionSheet.dismissActionSheet()
+            self.isShowActionSheet = false
+            self.delegate?.didDelete(self, replyComment: self.commentRef, originalCommentId: self.originalCommentId)
+        }
+        actionSheet.addActions([deleteButton])
+        Utility.currentViewController().present(actionSheet, animated: true)
+    }
+
+    @IBAction func likeAction(_ sender: Any) {
+        if UserManager.shared.isLogin {
+            if self.commentRef.liked {
+                self.delegate?.didUnliked(self, replyComment: self.commentRef)
+            } else {
+                self.delegate?.didLiked(self, replyComment: self.commentRef)
+            }
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    self.commentRef.liked.toggle()
+                }
+            } catch {}
             self.updateUi(isAction: true)
-            
-            if replyComment.participate.liked {
+
+            if self.commentRef.liked {
                 let impliesAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
-                impliesAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
+                impliesAnimation.values = [1.0, 1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
                 impliesAnimation.duration = 0.3 * 2
                 impliesAnimation.calculationMode = CAAnimationCalculationMode.cubic
                 self.likeLabel.layer.add(impliesAnimation, forKey: nil)
             }
         }
     }
-    
+
     private func updateUi(isAction: Bool) {
-        guard let replyComment = self.replyComment else { return }
-        
         self.likeLabel.font = UIFont.asset(.regular, fontSize: .small)
-        var likeCount = replyComment.metrics.likeCount
-        if replyComment.participate.liked {
+        var likeCount = self.commentRef.likeCount
+        if self.commentRef.liked {
             if isAction {
                 likeCount += 1
             }

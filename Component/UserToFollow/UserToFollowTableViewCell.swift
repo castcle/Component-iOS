@@ -30,7 +30,7 @@ import Core
 import Networking
 import Kingfisher
 
-public protocol UserToFollowTableViewCellDelegate {
+public protocol UserToFollowTableViewCellDelegate: AnyObject {
     func didTabProfile(_ userToFollowTableViewCell: UserToFollowTableViewCell, author: Author)
     func didAuthen(_ userToFollowTableViewCell: UserToFollowTableViewCell)
 }
@@ -45,20 +45,14 @@ public class UserToFollowTableViewCell: UITableViewCell {
     @IBOutlet weak var userDescLabel: UILabel!
     @IBOutlet weak var userFollowButton: UIButton!
     @IBOutlet weak var userVerifyImage: UIImageView!
-    
+
     public var delegate: UserToFollowTableViewCellDelegate?
     private var userRepository: UserRepository = UserRepositoryImpl()
     private var user: UserInfo = UserInfo()
     let tokenHelper: TokenHelper = TokenHelper()
     private var state: State = .none
     private var userRequest: UserRequest = UserRequest()
-    
-    enum State {
-        case followUser
-        case unfollowUser
-        case none
-    }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.tokenHelper.delegate = self
@@ -70,7 +64,7 @@ public class UserToFollowTableViewCell: UITableViewCell {
         self.userIdLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.userIdLabel.textColor = UIColor.Asset.white
         self.userDescLabel.font = UIFont.asset(.regular, fontSize: .overline)
-        self.userDescLabel.textColor = UIColor.Asset.white
+        self.userDescLabel.textColor = UIColor.Asset.lightGray
         self.userVerifyImage.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)
         self.userFollowButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .small)
     }
@@ -78,7 +72,7 @@ public class UserToFollowTableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     public func configCell(user: UserInfo) {
         self.user = user
         let userAvatar = URL(string: self.user.images.avatar.thumbnail)
@@ -99,7 +93,7 @@ public class UserToFollowTableViewCell: UITableViewCell {
         }
         self.updateUserFollow()
     }
-    
+
     private func updateUserFollow() {
         if self.user.followed {
             self.userFollowButton.setTitle("Following", for: .normal)
@@ -111,10 +105,10 @@ public class UserToFollowTableViewCell: UITableViewCell {
             self.userFollowButton.capsule(color: .clear, borderWidth: 1.0, borderColor: UIColor.Asset.lightBlue)
         }
     }
-    
+
     private func followUser() {
         self.state = .followUser
-        self.userRepository.follow(userRequest: self.userRequest) { (success, response, isRefreshToken) in
+        self.userRepository.follow(userRequest: self.userRequest) { (success, _, isRefreshToken) in
             if !success {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
@@ -122,10 +116,10 @@ public class UserToFollowTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     private func unfollowUser() {
         self.state = .unfollowUser
-        self.userRepository.unfollow(targetCastcleId: self.userRequest.targetCastcleId) { (success, response, isRefreshToken) in
+        self.userRepository.unfollow(targetCastcleId: self.userRequest.targetCastcleId) { (success, _, isRefreshToken) in
             if !success {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
@@ -133,7 +127,7 @@ public class UserToFollowTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     @IBAction func userFollowAction(_ sender: Any) {
         if UserManager.shared.isLogin {
             self.userRequest.targetCastcleId = self.user.castcleId
@@ -148,7 +142,7 @@ public class UserToFollowTableViewCell: UITableViewCell {
             self.delegate?.didAuthen(self)
         }
     }
-    
+
     @IBAction func userProfileAction(_ sender: Any) {
         let author: Author = Author()
         author.type = self.user.type

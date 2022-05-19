@@ -43,32 +43,22 @@ public class QuoteCastBlogCell: UITableViewCell {
     @IBOutlet var detailLabel: NantesLabel!
     @IBOutlet var blogImageView: UIImageView!
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
-    
+
     var viewModel: QuoteCastViewModel?
     public var content: Content? {
         didSet {
             if let content = self.content {
-                
                 let attributes = [NSAttributedString.Key.foregroundColor: UIColor.Asset.lightBlue,
                                   NSAttributedString.Key.font: UIFont.asset(.contentLight, fontSize: .overline)]
-                self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.contentDetail.readMore.text)", attributes: attributes)
+                self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.ContentDetail.readMore.text)", attributes: attributes)
                 self.detailLabel.numberOfLines = 2
-                
                 guard let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) else { return }
                 self.viewModel = QuoteCastViewModel(content: content)
                 self.detailLabel.text = content.message
-                
-                self.headerLabel.font = UIFont.asset(.contentBold, fontSize: .h4)
+                self.headerLabel.font = UIFont.asset(.contentBold, fontSize: .head4)
                 self.headerLabel.textColor = UIColor.Asset.white
                 self.detailLabel.font = UIFont.asset(.contentLight, fontSize: .overline)
                 self.detailLabel.textColor = UIColor.Asset.lightGray
-                
-//                self.headerLabel.text = content.contentPayload.header
-//                self.detailLabel.text = content.contentPayload.message
-//                
-//                let imageUrl = URL(string: content.cover.thumbnail)
-//                self.blogImageView.kf.setImage(with: imageUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-                
                 if authorRef.type == AuthorType.people.rawValue {
                     if authorRef.castcleId == UserManager.shared.rawCastcleId {
                         let url = URL(string: UserManager.shared.avatar)
@@ -84,21 +74,24 @@ public class QuoteCastBlogCell: UITableViewCell {
                         }
                     }
                 } else {
-                    let realm = try! Realm()
-                    if realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first != nil {
-                        self.avatarImage.image = ImageHelper.shared.loadImageFromDocumentDirectory(nameOfImage: authorRef.castcleId, type: .avatar)
-                        self.followButton.isHidden = true
-                    } else {
-                        let url = URL(string: authorRef.avatar)
-                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        if authorRef.followed {
+                    do {
+                        let realm = try Realm()
+                        if let page = realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first {
+                            let url = URL(string: page.avatar)
+                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                             self.followButton.isHidden = true
                         } else {
-                            self.followButton.isHidden = false
+                            let url = URL(string: authorRef.avatar)
+                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                            if authorRef.followed {
+                                self.followButton.isHidden = true
+                            } else {
+                                self.followButton.isHidden = false
+                            }
                         }
-                    }
+                    } catch {}
                 }
-                
+
                 self.displayNameLabel.text = authorRef.displayName
                 self.dateLabel.text = content.postDate.timeAgoDisplay()
                 if authorRef.official {
@@ -113,16 +106,14 @@ public class QuoteCastBlogCell: UITableViewCell {
             }
         }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.avatarImage.circle(color: UIColor.Asset.white)
         self.displayNameLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.displayNameLabel.textColor = UIColor.Asset.white
         self.dateLabel.font = UIFont.asset(.regular, fontSize: .custom(size: 10))
         self.dateLabel.textColor = UIColor.Asset.lightGray
-        
         self.followButton.titleLabel?.font = UIFont.asset(.bold, fontSize: .overline)
         self.followButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
         self.verifyIcon.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)
@@ -132,7 +123,7 @@ public class QuoteCastBlogCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     @IBAction func followAction(_ sender: Any) {
         guard let viewModel = self.viewModel else { return }
         viewModel.followUser()

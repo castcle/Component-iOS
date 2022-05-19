@@ -29,11 +29,11 @@ import Core
 import Networking
 
 final public class AcceptSyncSocialPopupViewModel {
-    
+
     var pageSocial: PageSocial = PageSocial()
     var socialType: SocialType = .unknow
     var userInfo: UserInfo = UserInfo()
-    
+
     public init(socialType: SocialType, pageSocial: PageSocial = PageSocial(), userInfo: UserInfo = UserInfo()) {
         self.socialType = socialType
         self.pageSocial = pageSocial

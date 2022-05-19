@@ -36,21 +36,19 @@ public class BlogTableViewCell: UITableViewCell {
     @IBOutlet var headerLabel: UILabel!
     @IBOutlet var detailLabel: NantesLabel!
     @IBOutlet var blogImageView: UIImageView!
-    
+
     public var content: Content? {
         didSet {
-//            guard let content = self.content else { return }
-            
             let attributes = [NSAttributedString.Key.foregroundColor: UIColor.Asset.lightBlue,
                               NSAttributedString.Key.font: UIFont.asset(.contentLight, fontSize: .body)]
-            self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.contentDetail.readMore.text)", attributes: attributes)
+            self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.ContentDetail.readMore.text)", attributes: attributes)
             self.detailLabel.numberOfLines = 2
-            
-            self.headerLabel.font = UIFont.asset(.contentBold, fontSize: .h3)
+
+            self.headerLabel.font = UIFont.asset(.contentBold, fontSize: .head3)
             self.headerLabel.textColor = UIColor.Asset.white
             self.detailLabel.font = UIFont.asset(.contentLight, fontSize: .body)
             self.detailLabel.textColor = UIColor.Asset.lightGray
-            
+
 //            self.headerLabel.text = content.contentPayload.header
 //            self.detailLabel.text = content.contentPayload.message
 //            
@@ -58,7 +56,7 @@ public class BlogTableViewCell: UITableViewCell {
 //            self.blogImageView.kf.setImage(with: imageUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
         }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -66,5 +64,4 @@ public class BlogTableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
 }

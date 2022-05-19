@@ -32,9 +32,9 @@ public enum FarmingType {
 }
 
 final public class FarmingPopupViewModel {
-    
+
     var farmingType: FarmingType = .farm
-    
+
     public init(type: FarmingType = .farm) {
         self.farmingType = type
     }

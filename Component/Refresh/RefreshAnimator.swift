@@ -28,40 +28,35 @@
 import UIKit
 
 open class RefreshAnimator: RefreshProtocol {
-    
+
     open var view: UIView
-    
     open var insets: UIEdgeInsets
-    
     open var trigger: CGFloat = 60.0
-    
     open var execute: CGFloat = 60.0
-    
     open var endDelay: CGFloat = 0
-    
     public var hold: CGFloat   = 60
-    
+
     public init() {
         view = UIView()
         insets = UIEdgeInsets.zero
     }
-    
+
     open func refreshBegin(view: RefreshComponent) {
         // MARK: - Refresh Begin
     }
-    
+
     open func refreshWillEnd(view: RefreshComponent) {
         // MARK: - Refresh Will End
     }
-    
+
     open func refreshEnd(view: RefreshComponent, finish: Bool) {
         // MARK: - Refresh End
     }
-    
+
     open func refresh(view: RefreshComponent, progressDidChange progress: CGFloat) {
         // MARK: - Progress Did Change
     }
-    
+
     open func refresh(view: RefreshComponent, stateDidChange state: RefreshState) {
         // MARK: - State Did Change
     }

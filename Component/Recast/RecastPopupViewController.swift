@@ -31,7 +31,7 @@ import PanModal
 import Kingfisher
 import RealmSwift
 
-public protocol RecastPopupViewControllerDelegate {
+public protocol RecastPopupViewControllerDelegate: AnyObject {
     func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?, castcleId: String)
 }
 
@@ -50,30 +50,28 @@ public class RecastPopupViewController: UIViewController {
     @IBOutlet var recastLabel: UILabel!
     @IBOutlet var quoteCastLabel: UILabel!
     @IBOutlet var moreButton: UIButton!
-    
     @IBOutlet var selectView: UIView!
     @IBOutlet var chooseUserHeader: UIView!
     @IBOutlet var chooseUserTitle: UILabel!
     @IBOutlet var userTableView: UITableView!
     @IBOutlet var selectViewHeight: NSLayoutConstraint!
-    
+
     var delegate: RecastPopupViewControllerDelegate?
     var maxHeight = (UIScreen.main.bounds.height - 320)
     var viewModel = RecastPopupViewModel()
-    private let realm = try! Realm()
     var pages: Results<Page>!
-    
+
     enum UserListSection: Int, CaseIterable {
         case user = 0
         case page
     }
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
         self.recastImage.image = UIImage.init(icon: .castcle(.recast), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white)
         self.quoteCastImage.image = UIImage.init(icon: .castcle(.pencil), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white)
-        
+
         self.avatarImage.circle(color: UIColor.Asset.white)
         self.displayNameLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.displayNameLabel.textColor = UIColor.Asset.white
@@ -85,31 +83,34 @@ public class RecastPopupViewController: UIViewController {
         self.quoteCastLabel.textColor = UIColor.Asset.white
         self.chooseUserTitle.font = UIFont.asset(.bold, fontSize: .overline)
         self.chooseUserTitle.textColor = UIColor.Asset.white
-        
-        self.pages = self.realm.objects(Page.self).sorted(byKeyPath: "id")
-        
-        self.subTitleLabel.text = Localization.contentAction.recastTitle.text
-        self.quoteCastLabel.text = Localization.contentAction.quoteCast.text
-        self.chooseUserTitle.text = Localization.contentAction.choosePageOrUser.text
+
+        do {
+            let realm = try Realm()
+            self.pages = realm.objects(Page.self).sorted(byKeyPath: "id")
+        } catch {}
+
+        self.subTitleLabel.text = Localization.ContentAction.recastTitle.text
+        self.quoteCastLabel.text = Localization.ContentAction.quoteCast.text
+        self.chooseUserTitle.text = Localization.ContentAction.choosePageOrUser.text
         if self.viewModel.isRecasted {
-            self.recastLabel.text = Localization.contentAction.unrecasted.text
+            self.recastLabel.text = Localization.ContentAction.unrecasted.text
         } else {
-            self.recastLabel.text = Localization.contentAction.recasted.text
+            self.recastLabel.text = Localization.ContentAction.recasted.text
         }
-        
+
         if self.pages.count == 0 {
             self.moreButton.isHidden = true
         } else {
             self.moreButton.isHidden = false
         }
-        
+
         self.moreButton.setImage(UIImage.init(icon: .castcle(.dropDown), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
         self.configureTableView()
         self.updateUser()
         self.selectViewHeight.constant = 250
         self.selectView.isHidden = true
     }
-    
+
     private func updateUser() {
         if self.viewModel.page?.castcleId == UserManager.shared.rawCastcleId {
             let url = URL(string: UserManager.shared.avatar)
@@ -121,28 +122,26 @@ public class RecastPopupViewController: UIViewController {
         }
         self.displayNameLabel.text = self.viewModel.page?.displayName ?? ""
     }
-    
+
     func configureTableView() {
         self.userTableView.delegate = self
         self.userTableView.dataSource = self
-        
         self.userTableView.register(UINib(nibName: ComponentNibVars.TableViewCell.userList, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.userList)
-        
         self.userTableView.rowHeight = UITableView.automaticDimension
         self.userTableView.estimatedRowHeight = 100
         self.userTableView.backgroundColor = UIColor.Asset.darkGraphiteBlue
     }
-    
+
     @IBAction func recastAction(_ sender: Any) {
         self.dismiss(animated: true)
         self.delegate?.recastPopupViewController(self, didSelectRecastAction: .recast, page: nil, castcleId: self.viewModel.page?.castcleId ?? "")
     }
-    
+
     @IBAction func quoteCastAction(_ sender: Any) {
         self.dismiss(animated: true)
         self.delegate?.recastPopupViewController(self, didSelectRecastAction: .quoteCast, page: self.viewModel.page, castcleId: self.viewModel.page?.castcleId ?? "")
     }
-    
+
     @IBAction func moreActiom(_ sender: Any) {
         UIView.transition(with: self.view, duration: 0.3,
                           options: .transitionCrossDissolve,
@@ -156,7 +155,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
     public func numberOfSections(in tableView: UITableView) -> Int {
         return UserListSection.allCases.count
     }
-    
+
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == UserListSection.page.rawValue {
             return self.pages.count
@@ -164,7 +163,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
             return 1
         }
     }
-    
+
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case UserListSection.user.rawValue:
@@ -182,7 +181,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
             return UITableViewCell()
         }
     }
-    
+
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case UserListSection.user.rawValue:

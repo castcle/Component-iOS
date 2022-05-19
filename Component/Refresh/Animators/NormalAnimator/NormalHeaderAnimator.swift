@@ -28,13 +28,12 @@
 import UIKit
 
 open class NormalHeaderAnimator: UIView, RefreshProtocol {
-    
+
     static let bundle = RefreshBundle.bundle(name: "NormalHeader", for: NormalHeaderAnimator.self)
-    
     open var pullToRefreshDescription = "Pull down to refresh" /*bundle?.localizedString(key: "CRRefreshHeaderIdleText")*/ {
         didSet {
             if pullToRefreshDescription != oldValue {
-                titleLabel.text = pullToRefreshDescription;
+                titleLabel.text = pullToRefreshDescription
             }
         }
     }
@@ -53,7 +52,7 @@ open class NormalHeaderAnimator: UIView, RefreshProtocol {
         imageView.image = bundle?.imageFromBundle("refresh_arrow")
         return imageView
     }()
-    
+
     fileprivate let titleLabel: UILabel = {
         let label = UILabel.init(frame: CGRect.zero)
         label.font = UIFont.systemFont(ofSize: 14.0)
@@ -61,13 +60,13 @@ open class NormalHeaderAnimator: UIView, RefreshProtocol {
         label.textAlignment = .left
         return label
     }()
-    
+
     fileprivate let indicatorView: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView.init(style: UIActivityIndicatorView.Style.medium)
         indicatorView.isHidden = true
         return indicatorView
     }()
-    
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         titleLabel.text = pullToRefreshDescription
@@ -75,11 +74,11 @@ open class NormalHeaderAnimator: UIView, RefreshProtocol {
         self.addSubview(titleLabel)
         self.addSubview(indicatorView)
     }
-    
+
     public required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     open func refreshBegin(view: RefreshComponent) {
         indicatorView.startAnimating()
         indicatorView.isHidden = false
@@ -87,27 +86,27 @@ open class NormalHeaderAnimator: UIView, RefreshProtocol {
         titleLabel.text        = loadingDescription
         imageView.transform    = CGAffineTransform(rotationAngle: 0.000001 - CGFloat(Double.pi))
     }
-  
+
     open func refreshEnd(view: RefreshComponent, finish: Bool) {
         if finish {
             indicatorView.stopAnimating()
             indicatorView.isHidden = true
             imageView.isHidden = false
             imageView.transform = CGAffineTransform.identity
-        }else {
+        } else {
             titleLabel.text = pullToRefreshDescription
             setNeedsLayout()
         }
     }
-    
+
     public func refreshWillEnd(view: RefreshComponent) {
         // MARK: - Refresh Will End
     }
-    
+
     open func refresh(view: RefreshComponent, progressDidChange progress: CGFloat) {
         // MARK: - Progress Did Change
     }
-    
+
     open func refresh(view: RefreshComponent, stateDidChange state: RefreshState) {
         switch state {
         case .refreshing:
@@ -116,21 +115,15 @@ open class NormalHeaderAnimator: UIView, RefreshProtocol {
         case .pulling:
             titleLabel.text = releaseToRefreshDescription
             self.setNeedsLayout()
-            UIView.animate(withDuration: 0.2, delay: 0.0, options: UIView.AnimationOptions(), animations: {
-                [weak self] in
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: UIView.AnimationOptions(), animations: { [weak self] in
                 self?.imageView.transform = CGAffineTransform(rotationAngle: 0.000001 - CGFloat(Double.pi))
-            }) { (animated) in
-                // MARK: - Block animated
-            }
+            })
         case .idle:
             titleLabel.text = pullToRefreshDescription
             self.setNeedsLayout()
-            UIView.animate(withDuration: 0.2, delay: 0.0, options: UIView.AnimationOptions(), animations: {
-                [weak self] in
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: UIView.AnimationOptions(), animations: { [weak self] in
                 self?.imageView.transform = CGAffineTransform.identity
-            }) { (animated) in
-                // MARK: - Block animated
-            }
+            })
         default:
             break
         }
@@ -138,16 +131,14 @@ open class NormalHeaderAnimator: UIView, RefreshProtocol {
 
     open override func layoutSubviews() {
         super.layoutSubviews()
-        let s = bounds.size
-        let w = s.width
-        let h = s.height
-        
+        let viewSize = bounds.size
+        let viewWidth = viewSize.width
+        let viewHeight = viewSize.height
         UIView.performWithoutAnimation {
             titleLabel.sizeToFit()
-            titleLabel.center = .init(x: w / 2.0, y: h / 2.0)
-            indicatorView.center = .init(x: titleLabel.frame.origin.x - 16.0, y: h / 2.0)
-            imageView.frame = CGRect.init(x: titleLabel.frame.origin.x - 28.0, y: (h - 18.0) / 2.0, width: 18.0, height: 18.0)
+            titleLabel.center = .init(x: viewWidth / 2.0, y: viewHeight / 2.0)
+            indicatorView.center = .init(x: titleLabel.frame.origin.x - 16.0, y: viewHeight / 2.0)
+            imageView.frame = CGRect.init(x: titleLabel.frame.origin.x - 28.0, y: (viewHeight - 18.0) / 2.0, width: 18.0, height: 18.0)
         }
     }
-    
 }

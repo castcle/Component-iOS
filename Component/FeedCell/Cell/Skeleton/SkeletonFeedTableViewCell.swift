@@ -19,16 +19,31 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  UIColorExtension.swift
+//  SkeletonFeedTableViewCell.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 8/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 24/10/2564 BE.
 //
 
 import UIKit
+import Core
+import SkeletonView
 
-extension UIColor {
-    public convenience init(rgb: (r: CGFloat, g: CGFloat, b: CGFloat)) {
-        self.init(red: rgb.r/255, green: rgb.g/255, blue: rgb.b/255, alpha: 1.0)
+public class SkeletonFeedTableViewCell: UITableViewCell {
+
+    @IBOutlet var skeletonView: UIView!
+
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+
+    public override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+
+    public func configCell() {
+        DispatchQueue.main.async {
+            self.skeletonView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.Asset.gray))
+        }
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,12 +18,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="223"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bc6-DU-RkU" customClass="ActiveLabel" customModule="ActiveLabel">
-                        <rect key="frame" x="15" y="10" width="290" height="20"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eWR-C5-r8K" customClass="AttributedLabel" customModule="Atributika">
+                        <rect key="frame" x="15" y="10" width="290" height="40"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Uh-le-UJ5">
                         <rect key="frame" x="15" y="50" width="290" height="163"/>
                         <subviews>
@@ -70,30 +68,25 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="5Uh-le-UJ5" secondAttribute="bottom" constant="10" id="7Lx-zZ-Za7"/>
-                    <constraint firstItem="Bc6-DU-RkU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="TFR-iB-T57"/>
-                    <constraint firstAttribute="trailing" secondItem="Bc6-DU-RkU" secondAttribute="trailing" constant="15" id="aOJ-6r-GpH"/>
-                    <constraint firstItem="Bc6-DU-RkU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="b5B-MU-ZTa"/>
-                    <constraint firstItem="5Uh-le-UJ5" firstAttribute="top" secondItem="Bc6-DU-RkU" secondAttribute="bottom" constant="20" id="cIk-eK-Szk"/>
+                    <constraint firstAttribute="trailing" secondItem="eWR-C5-r8K" secondAttribute="trailing" constant="15" id="2w4-1B-gXa"/>
+                    <constraint firstItem="eWR-C5-r8K" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="ATU-5g-rwC"/>
+                    <constraint firstItem="5Uh-le-UJ5" firstAttribute="top" secondItem="eWR-C5-r8K" secondAttribute="bottom" id="XrM-DC-mgR"/>
                     <constraint firstItem="5Uh-le-UJ5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="f5i-2E-Ip9"/>
+                    <constraint firstAttribute="bottom" secondItem="5Uh-le-UJ5" secondAttribute="bottom" constant="10" id="gE8-EK-7Sf"/>
                     <constraint firstAttribute="trailing" secondItem="5Uh-le-UJ5" secondAttribute="trailing" constant="15" id="goL-tH-cA0"/>
+                    <constraint firstItem="eWR-C5-r8K" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="x3X-6o-xXZ"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="detailLabel" destination="Bc6-DU-RkU" id="jCk-2X-4NO"/>
                 <outlet property="firstImageView" destination="LRh-3W-aPD" id="F5P-Oq-fe0"/>
                 <outlet property="imageContainer" destination="5Uh-le-UJ5" id="aIj-ox-NSH"/>
+                <outlet property="massageLabel" destination="eWR-C5-r8K" id="No7-zN-1U1"/>
                 <outlet property="secondImageView" destination="dPL-Bn-yrc" id="0Ws-lh-F4D"/>
             </connections>
             <point key="canvasLocation" x="66.666666666666671" y="163.72767857142856"/>
         </tableViewCell>
     </objects>
-    <designables>
-        <designable name="Bc6-DU-RkU">
-            <size key="intrinsicContentSize" width="39.5" height="19.5"/>
-        </designable>
-    </designables>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -29,35 +29,25 @@ import UIKit
 import Core
 
 open class FastAnimator: UIView, RefreshProtocol {
-    
+
     open var view: UIView { return self }
-    
     open var insets: UIEdgeInsets = .zero
-    
     open var trigger: CGFloat = 55.0
-    
     open var execute: CGFloat = 55.0
-    
     open var endDelay: CGFloat = 1.5
-    
     open var hold: CGFloat = 55.0
-    
     private(set) var color: UIColor = UIColor.Asset.lightBlue
-    
     private(set) var arrowColor: UIColor = UIColor.Asset.lightBlue
-    
     private(set) var lineWidth: CGFloat = 1
-    
     private(set) var fastLayer: FastLayer?
 
-
-    //MARK: RefreshProtocol
+    // MARK: - RefreshProtocol
     open func refreshBegin(view: RefreshComponent) {
         fastLayer?.arrow?.startAnimation().animationEnd = { [weak self] in
             self?.fastLayer?.circle?.startAnimation()
         }
     }
-    
+
     open func refreshEnd(view: RefreshComponent, finish: Bool) {
         if finish {
             fastLayer?.arrow?.endAnimation()
@@ -65,11 +55,11 @@ open class FastAnimator: UIView, RefreshProtocol {
             fastLayer?.arrow?.setAffineTransform(CGAffineTransform.identity)
         }
     }
-    
+
     open func refreshWillEnd(view: RefreshComponent) {
         fastLayer?.circle?.endAnimation(finish: false)
     }
-    
+
     open func refresh(view: RefreshComponent, progressDidChange progress: CGFloat) {
         if progress >= 1 {
             let transform = CGAffineTransform.identity.rotated(by: CGFloat(Double.pi))
@@ -79,17 +69,17 @@ open class FastAnimator: UIView, RefreshProtocol {
             fastLayer?.arrow?.setAffineTransform(transform)
         }
     }
-    
+
     open func refresh(view: RefreshComponent, stateDidChange state: RefreshState) {
         // MARK: - State Did Change
     }
-    
-    //MARK: Override
+
+    // MARK: - Override
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.clear
     }
-    
+
     open override func layoutSubviews() {
         super.layoutSubviews()
         if fastLayer == nil {
@@ -104,19 +94,16 @@ open class FastAnimator: UIView, RefreshProtocol {
             layer.addSublayer(fastLayer!)
         }
     }
-    
-    //MARK: Initial Methods
-    public init(frame: CGRect,
-             color: UIColor = UIColor.Asset.lightBlue,
-             arrowColor: UIColor = UIColor.Asset.white,
-             lineWidth: CGFloat = 1) {
+
+    // MARK: - Initial Methods
+    public init(frame: CGRect, color: UIColor = UIColor.Asset.lightBlue, arrowColor: UIColor = UIColor.Asset.white, lineWidth: CGFloat = 1) {
         self.color      = color
         self.arrowColor = arrowColor
         self.lineWidth  = lineWidth
         super.init(frame: frame)
         backgroundColor = UIColor.clear
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

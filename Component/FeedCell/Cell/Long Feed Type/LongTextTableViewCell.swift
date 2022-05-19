@@ -33,21 +33,20 @@ import Nantes
 public class LongTextTableViewCell: UITableViewCell {
 
     @IBOutlet var detailLabel: NantesLabel!
-    
+
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
-            
             let attributes = [NSAttributedString.Key.foregroundColor: UIColor.Asset.lightBlue,
                               NSAttributedString.Key.font: UIFont.asset(.contentLight, fontSize: .body)]
-            self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.contentDetail.readMore.text)", attributes: attributes)
+            self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.ContentDetail.readMore.text)", attributes: attributes)
             self.detailLabel.numberOfLines = 2
             self.detailLabel.font = UIFont.asset(.contentLight, fontSize: .body)
             self.detailLabel.textColor = UIColor.Asset.white
             self.detailLabel.text = content.message
         }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
     }

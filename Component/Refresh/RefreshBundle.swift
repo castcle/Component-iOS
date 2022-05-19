@@ -28,14 +28,14 @@
 import UIKit
 
 class RefreshBundle {
-    
+
     var bundle: Bundle
     private let imagePath = "/images"
-    
+
     init(bundle: Bundle) {
         self.bundle = bundle
     }
-    
+
     @discardableResult
     static func bundle(name: String, for aClass: Swift.AnyClass) -> RefreshBundle? {
         let bundle = Bundle(for: aClass)
@@ -46,15 +46,15 @@ class RefreshBundle {
         }
         return nil
     }
-    
+
     func imageFromBundle(_ imageName: String) -> UIImage? {
-        var imageName = imageName
+        var name = imageName
         if UIScreen.main.scale == 2 {
-            imageName = imageName + "@2x"
+            name += "@2x"
         } else if UIScreen.main.scale == 3 {
-            imageName = imageName + "@3x"
+            name += "@3x"
         }
-        
+
         if let bundle = Bundle(path: self.bundle.bundlePath + self.imagePath) {
             if let path = bundle.path(forResource: imageName, ofType: "png") {
                 let image = UIImage(contentsOfFile: path)
@@ -63,7 +63,7 @@ class RefreshBundle {
         }
         return nil
     }
-    
+
     func localizedString(key: String) -> String {
         if let current = Locale.current.languageCode {
             var language = ""

@@ -30,18 +30,18 @@ import WebKit
 import Core
 import Defaults
 
-class InternalWebViewController: UIViewController{
+class InternalWebViewController: UIViewController {
 
     @IBOutlet var progressView: UIProgressView!
     @IBOutlet var webView: WKWebView!
-    
+
     public var viewModel: InternalWebViewModel = InternalWebViewModel()
     let loadingText: String = "Loading ..."
     enum WebViewKeyPath: String {
         case estimatedProgress
         case title
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         Defaults[.screenId] = ""
@@ -52,27 +52,27 @@ class InternalWebViewController: UIViewController{
         self.webView.load(self.viewModel.request)
         self.addWebViewObservers()
     }
-    
+
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.removeWebViewObservers()
     }
-    
+
     private func addWebViewObservers() {
         self.webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         self.webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: .new, context: nil)
         self.webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
         self.webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
     }
-    
+
     private func removeWebViewObservers() {
         self.webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         self.webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
         self.webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
         self.webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward))
     }
-    
-    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+
+    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         switch keyPath {
         case WebViewKeyPath.estimatedProgress.rawValue:
             self.progressView.progress = Float(self.webView.estimatedProgress)
@@ -98,13 +98,11 @@ class InternalWebViewController: UIViewController{
 }
 
 extension InternalWebViewController: WKNavigationDelegate {
-    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
-        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         switch navigationAction.navigationType {
         case .linkActivated:
             webView.load(navigationAction.request)
         default:
-            // TODO: Handle other types
             break
         }
         decisionHandler(.allow)

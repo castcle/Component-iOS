@@ -27,7 +27,7 @@
 
 import UIKit
 
-public typealias RefreshHandler = (() -> ())
+public typealias RefreshHandler = (() -> Void)
 
 public enum RefreshState {
     case idle
@@ -38,15 +38,10 @@ public enum RefreshState {
 }
 
 open class RefreshComponent: UIView {
-    
     open weak var scrollView: UIScrollView?
-    
     open var scrollViewInsets: UIEdgeInsets = .zero
-    
     open var handler: RefreshHandler?
-    
     open var animator: RefreshProtocol!
-    
     open var state: RefreshState = .idle {
         didSet {
             if state != oldValue {
@@ -56,28 +51,25 @@ open class RefreshComponent: UIView {
             }
         }
     }
-    
+
     fileprivate var isObservingScrollView = false
-    
-    fileprivate var isIgnoreObserving     = false
-    
-    fileprivate(set) var isRefreshing     = false
-    
+    fileprivate var isIgnoreObserving = false
+    fileprivate(set) var isRefreshing = false
     public override init(frame: CGRect) {
         super.init(frame: frame)
         autoresizingMask = [.flexibleLeftMargin, .flexibleWidth, .flexibleRightMargin]
     }
-    
+
     public convenience init(animator: RefreshProtocol = RefreshAnimator(), handler: @escaping RefreshHandler) {
         self.init(frame: .zero)
         self.handler  = handler
         self.animator = animator
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     open override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
         removeObserver()
@@ -89,7 +81,7 @@ open class RefreshComponent: UIView {
             }
         }
     }
-    
+
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
         scrollView = superview as? UIScrollView
@@ -109,14 +101,14 @@ open class RefreshComponent: UIView {
             ]
         }
     }
-    
-    //MARK: Public Methods
-    public final func beginRefreshing() -> Void {
+
+    // MARK: - Public Methods
+    public final func beginRefreshing() {
         guard !isRefreshing else { return }
         if self.window != nil {
             state = .refreshing
             start()
-        }else {
+        } else {
             if state != .refreshing {
                 state = .willRefresh
                 DispatchQueue.main.async {
@@ -129,43 +121,40 @@ open class RefreshComponent: UIView {
             }
         }
     }
-    
-    public final func endRefreshing() -> Void {
+
+    public final func endRefreshing() {
         guard isRefreshing else { return }
         self.stop()
     }
-    
+
     public func ignoreObserver(_ ignore: Bool = false) {
         isIgnoreObserving = ignore
     }
-    
+
     public func start() {
         isRefreshing = true
     }
-    
+
     public func stop() {
         isRefreshing = false
     }
-    
-    public func sizeChange(change: [NSKeyValueChangeKey : Any]?) {
+
+    public func sizeChange(change: [NSKeyValueChangeKey: Any]?) {
         // MARK: - Size Change
     }
-    
-    public func offsetChange(change: [NSKeyValueChangeKey : Any]?) {
+
+    public func offsetChange(change: [NSKeyValueChangeKey: Any]?) {
         // MARK: - Offset Change
     }
 }
 
-
-
-//MARK: Observer Methods 
+// MARK: - Observer Methods
 extension RefreshComponent {
-    
     fileprivate static var context            = "RefreshContext"
     fileprivate static let offsetKeyPath      = "contentOffset"
     fileprivate static let contentSizeKeyPath = "contentSize"
     public static let animationDuration       = 0.25
-    
+
     fileprivate func removeObserver() {
         if let scrollView = superview as? UIScrollView, isObservingScrollView {
             scrollView.removeObserver(self, forKeyPath: RefreshComponent.offsetKeyPath, context: &RefreshComponent.context)
@@ -173,7 +162,7 @@ extension RefreshComponent {
             isObservingScrollView = false
         }
     }
-    
+
     fileprivate func addObserver(_ view: UIView?) {
         if let scrollView = view as? UIScrollView, !isObservingScrollView {
             scrollView.addObserver(self, forKeyPath: RefreshComponent.offsetKeyPath, options: [.initial, .new], context: &RefreshComponent.context)
@@ -181,8 +170,8 @@ extension RefreshComponent {
             isObservingScrollView = true
         }
     }
-    
-    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         if context == &RefreshComponent.context {
             guard isUserInteractionEnabled && !isHidden else {
                 return

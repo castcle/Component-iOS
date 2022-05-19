@@ -29,7 +29,7 @@ import UIKit
 import Core
 import PanModal
 
-public protocol FarmingLimitViewControllerDelegate {
+public protocol FarmingLimitViewControllerDelegate: AnyObject {
     func farmingLimitViewController(didAction view: FarmingLimitViewController)
     func farmingLimitViewControllerDidViewHistory(_ view: FarmingLimitViewController)
 }
@@ -49,7 +49,6 @@ public class FarmingLimitViewController: UIViewController {
     @IBOutlet var buttonView: UIView!
     @IBOutlet var iconImage: UIImageView!
     @IBOutlet var historyButton: UIButton!
-    
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var typeImage: UIImageView!
@@ -59,10 +58,10 @@ public class FarmingLimitViewController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var balanceTitleLabel: UILabel!
     @IBOutlet weak var balanceLabel: UILabel!
-    
+
     var delegate: FarmingLimitViewControllerDelegate?
     var maxHeight = (UIScreen.main.bounds.height - 530)
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.titleLabel.font = UIFont.asset(.bold, fontSize: .body)
@@ -75,21 +74,21 @@ public class FarmingLimitViewController: UIViewController {
         self.avalidBalanceTitleLabel.textColor = UIColor.Asset.white
         self.totalBalanceTitleLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.totalBalanceTitleLabel.textColor = UIColor.Asset.white
-        self.farmBalanceLabel.font = UIFont.asset(.medium, fontSize: .h4)
+        self.farmBalanceLabel.font = UIFont.asset(.medium, fontSize: .head4)
         self.farmBalanceLabel.textColor = UIColor.Asset.white
-        self.avalidBalanceLabel.font = UIFont.asset(.medium, fontSize: .h4)
+        self.avalidBalanceLabel.font = UIFont.asset(.medium, fontSize: .head4)
         self.avalidBalanceLabel.textColor = UIColor.Asset.denger
-        self.totalBalanceLabel.font = UIFont.asset(.medium, fontSize: .h4)
+        self.totalBalanceLabel.font = UIFont.asset(.medium, fontSize: .head4)
         self.totalBalanceLabel.textColor = UIColor.Asset.white
         self.buttonLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.buttonLabel.textColor = UIColor.Asset.white
-        self.buttonCashLabel.font = UIFont.asset(.medium, fontSize: .h4)
+        self.buttonCashLabel.font = UIFont.asset(.medium, fontSize: .head4)
         self.buttonCashLabel.textColor = UIColor.Asset.white
         self.iconImage.image = UIImage.init(icon: .castcle(.farm), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white)
         self.buttonView.custom(color: UIColor.Asset.warning, cornerRadius: 10)
         self.historyButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .overline)
         self.historyButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
-        
+
         self.contentView.custom(borderWidth: 1, borderColor: UIColor.Asset.gray)
         self.avatarImage.circle()
         self.avatarImage.image = UIImage.Asset.userPlaceholder
@@ -106,12 +105,12 @@ public class FarmingLimitViewController: UIViewController {
         self.messageLabel.font = UIFont.asset(.regular, fontSize: .small)
         self.messageLabel.textColor = UIColor.Asset.white
     }
-    
+
     @IBAction func buttonAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
         self.delegate?.farmingLimitViewController(didAction: self)
     }
-    
+
     @IBAction func historyAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
         self.delegate?.farmingLimitViewControllerDidViewHistory(self)
