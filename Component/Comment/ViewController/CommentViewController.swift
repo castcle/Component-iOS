@@ -441,6 +441,10 @@ extension CommentViewController: FooterTableViewCellDelegate {
     func didAuthen(_ footerTableViewCell: FooterTableViewCell) {
         // Not use
     }
+
+    func didViewFarmmingHistory(_ footerTableViewCell: FooterTableViewCell) {
+        //
+    }
 }
 
 extension CommentViewController: CommentTableViewCellDelegate {

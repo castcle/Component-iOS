@@ -34,6 +34,7 @@ public protocol FooterTableViewCellDelegate: AnyObject {
     func didTabComment(_ footerTableViewCell: FooterTableViewCell, content: Content)
     func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: Page)
     func didAuthen(_ footerTableViewCell: FooterTableViewCell)
+    func didViewFarmmingHistory(_ footerTableViewCell: FooterTableViewCell)
 }
 
 public class FooterTableViewCell: UITableViewCell {
@@ -41,6 +42,7 @@ public class FooterTableViewCell: UITableViewCell {
     @IBOutlet var likeLabel: UILabel!
     @IBOutlet var commentLabel: UILabel!
     @IBOutlet var recastLabel: UILabel!
+    @IBOutlet var farmLabel: UILabel!
 
     public var content: Content? {
         didSet {
@@ -50,8 +52,6 @@ public class FooterTableViewCell: UITableViewCell {
     }
 
     public var delegate: FooterTableViewCellDelegate?
-
-    // MARK: - Private
     private var contentRepository: ContentRepository = ContentRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
     var contentRequest: ContentRequest = ContentRequest()
@@ -75,10 +75,11 @@ public class FooterTableViewCell: UITableViewCell {
         self.likeLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.commentLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.recastLabel.font = UIFont.asset(.regular, fontSize: .overline)
-
+        self.farmLabel.font = UIFont.asset(.regular, fontSize: .overline)
         let displayLike: String = (content.metrics.likeCount > 0 ? "  \(String.displayCount(count: content.metrics.likeCount))" : "")
         let displayComment: String = (content.metrics.commentCount > 0 ? "  \(String.displayCount(count: content.metrics.commentCount))" : "")
         let displayRecast: String = ((content.metrics.recastCount > 0 || content.metrics.quoteCount > 0) ? "  \(String.displayCount(count: content.metrics.recastCount + content.metrics.quoteCount))" : "")
+        let displayFarming: String = (content.metrics.farmCount > 0 ? "  \(String.displayCount(count: content.metrics.farmCount))" : "")
 
         if content.participate.liked {
             self.likeLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.like), iconColor: UIColor.Asset.lightBlue, postfixText: displayLike, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 18)
@@ -96,6 +97,12 @@ public class FooterTableViewCell: UITableViewCell {
             self.recastLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.recast), iconColor: UIColor.Asset.lightBlue, postfixText: displayRecast, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 18)
         } else {
             self.recastLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.recast), iconColor: UIColor.Asset.white, postfixText: displayRecast, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 18)
+        }
+
+        if content.participate.farming {
+            self.farmLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.farm), iconColor: UIColor.Asset.lightBlue, postfixText: displayFarming, postfixTextColor: UIColor.Asset.lightBlue, size: nil, iconSize: 15)
+        } else {
+            self.farmLabel.setIcon(prefixText: "", prefixTextColor: .clear, icon: .castcle(.farm), iconColor: UIColor.Asset.white, postfixText: displayFarming, postfixTextColor: UIColor.Asset.white, size: nil, iconSize: 15)
         }
     }
 
@@ -179,6 +186,18 @@ public class FooterTableViewCell: UITableViewCell {
         }
     }
 
+    private func farmingContent(content: Content) {
+        if content.participate.farming {
+            content.metrics.farmCount -= 1
+            content.participate.farming.toggle()
+            self.updateUi(content: content)
+        } else {
+            content.metrics.farmCount += 1
+            content.participate.farming.toggle()
+            self.updateUi(content: content)
+        }
+    }
+
     @IBAction func likeAction(_ sender: Any) {
         if UserManager.shared.isLogin {
             guard let content = self.content else { return }
@@ -192,7 +211,7 @@ public class FooterTableViewCell: UITableViewCell {
     @IBAction func commentAction(_ sender: Any) {
         if UserManager.shared.isLogin {
             guard let content = self.content else { return }
-            self.stateType = .recast
+            self.stateType = .none
             self.delegate?.didTabComment(self, content: content)
         } else {
             self.delegate?.didAuthen(self)
@@ -209,6 +228,34 @@ public class FooterTableViewCell: UITableViewCell {
             self.delegate?.didAuthen(self)
         }
     }
+
+    @IBAction func farmingAction(_ sender: Any) {
+        if UserManager.shared.isLogin {
+            guard let content = self.content else { return }
+            if content.participate.farming {
+                let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(type: .unfarn))) as? FarmingPopupViewController
+                viewController?.delegate = self
+                Utility.currentViewController().presentPanModal(viewController ?? FarmingPopupViewController())
+            } else {
+                if self.randomBool() {
+                    let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(type: .farm))) as? FarmingPopupViewController
+                    viewController?.delegate = self
+                    Utility.currentViewController().presentPanModal(viewController ?? FarmingPopupViewController())
+                } else {
+                    let viewController = ComponentOpener.open(.farmingLimitPopup) as? FarmingLimitViewController
+                    viewController?.delegate = self
+                    Utility.currentViewController().presentPanModal(viewController ?? FarmingLimitViewController())
+                }
+            }
+        } else {
+            self.delegate?.didAuthen(self)
+        }
+    }
+
+    // MARK: - Remove when production
+    private func randomBool() -> Bool {
+        return arc4random_uniform(2) == 0
+    }
 }
 
 extension FooterTableViewCell: RecastPopupViewControllerDelegate {
@@ -220,6 +267,24 @@ extension FooterTableViewCell: RecastPopupViewControllerDelegate {
             guard let page = page else { return }
             self.delegate?.didTabQuoteCast(self, content: content, page: page)
         }
+    }
+}
+
+extension FooterTableViewCell: FarmingPopupViewControllerDelegate {
+    public func farmingPopupViewController(didAction view: FarmingPopupViewController) {
+        guard let content = self.content else { return }
+        self.farmingContent(content: content)
+    }
+}
+
+extension FooterTableViewCell: FarmingLimitViewControllerDelegate {
+    public func farmingLimitViewController(didAction view: FarmingLimitViewController) {
+        guard let content = self.content else { return }
+        self.farmingContent(content: content)
+    }
+
+    public func farmingLimitViewControllerDidViewHistory(_ view: FarmingLimitViewController) {
+        self.delegate?.didViewFarmmingHistory(self)
     }
 }
 

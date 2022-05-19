@@ -19,7 +19,7 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  FarmingPopupViewController.swift
+//  FarmingLimitViewController.swift
 //  Component
 //
 //  Created by Castcle Co., Ltd. on 29/3/2565 BE.
@@ -27,14 +27,14 @@
 
 import UIKit
 import Core
-import ActiveLabel
 import PanModal
 
-public protocol FarmingPopupViewControllerDelegate: AnyObject {
-    func farmingPopupViewController(didAction view: FarmingPopupViewController)
+public protocol FarmingLimitViewControllerDelegate: AnyObject {
+    func farmingLimitViewController(didAction view: FarmingLimitViewController)
+    func farmingLimitViewControllerDidViewHistory(_ view: FarmingLimitViewController)
 }
 
-public class FarmingPopupViewController: UIViewController {
+public class FarmingLimitViewController: UIViewController {
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var countLabel: UILabel!
@@ -46,20 +46,28 @@ public class FarmingPopupViewController: UIViewController {
     @IBOutlet var totalBalanceLabel: UILabel!
     @IBOutlet var buttonLabel: UILabel!
     @IBOutlet var buttonCashLabel: UILabel!
-    @IBOutlet var noteLabel: ActiveLabel!
     @IBOutlet var buttonView: UIView!
     @IBOutlet var iconImage: UIImageView!
+    @IBOutlet var historyButton: UIButton!
+    @IBOutlet var contentView: UIView!
+    @IBOutlet weak var avatarImage: UIImageView!
+    @IBOutlet weak var typeImage: UIImageView!
+    @IBOutlet weak var displayNameLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet var contentImage: UIImageView!
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var balanceTitleLabel: UILabel!
+    @IBOutlet weak var balanceLabel: UILabel!
 
-    var delegate: FarmingPopupViewControllerDelegate?
-    var maxHeight = (UIScreen.main.bounds.height - 400)
-    var viewModel = FarmingPopupViewModel()
+    var delegate: FarmingLimitViewControllerDelegate?
+    var maxHeight = (UIScreen.main.bounds.height - 530)
 
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.titleLabel.font = UIFont.asset(.bold, fontSize: .body)
         self.titleLabel.textColor = UIColor.Asset.white
         self.countLabel.font = UIFont.asset(.medium, fontSize: .body)
-        self.countLabel.textColor = UIColor.Asset.lightBlue
+        self.countLabel.textColor = UIColor.Asset.denger
         self.farmBalanceTitleLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.farmBalanceTitleLabel.textColor = UIColor.Asset.white
         self.avalidBalanceTitleLabel.font = UIFont.asset(.regular, fontSize: .overline)
@@ -69,7 +77,7 @@ public class FarmingPopupViewController: UIViewController {
         self.farmBalanceLabel.font = UIFont.asset(.medium, fontSize: .head4)
         self.farmBalanceLabel.textColor = UIColor.Asset.white
         self.avalidBalanceLabel.font = UIFont.asset(.medium, fontSize: .head4)
-        self.avalidBalanceLabel.textColor = UIColor.Asset.white
+        self.avalidBalanceLabel.textColor = UIColor.Asset.denger
         self.totalBalanceLabel.font = UIFont.asset(.medium, fontSize: .head4)
         self.totalBalanceLabel.textColor = UIColor.Asset.white
         self.buttonLabel.font = UIFont.asset(.regular, fontSize: .body)
@@ -77,36 +85,39 @@ public class FarmingPopupViewController: UIViewController {
         self.buttonCashLabel.font = UIFont.asset(.medium, fontSize: .head4)
         self.buttonCashLabel.textColor = UIColor.Asset.white
         self.iconImage.image = UIImage.init(icon: .castcle(.farm), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white)
-        self.noteLabel.customize { label in
-            label.font = UIFont.asset(.regular, fontSize: .overline)
-            label.numberOfLines = 0
-            label.textColor = UIColor.Asset.white
-            let learnMore = ActiveType.custom(pattern: "Learn more")
-            label.enabledTypes = [learnMore]
-            label.customColor[learnMore] = UIColor.Asset.lightBlue
-            label.customSelectedColor[learnMore] = UIColor.Asset.gray
-            label.handleCustomTap(for: learnMore) { _ in
-            }
-        }
+        self.buttonView.custom(color: UIColor.Asset.warning, cornerRadius: 10)
+        self.historyButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .overline)
+        self.historyButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
 
-        if self.viewModel.farmingType == .unfarn {
-            self.titleLabel.text = "Undo farm this cast "
-            self.buttonLabel.text = "Undo farming"
-            self.buttonView.custom(color: UIColor.Asset.denger, cornerRadius: 10)
-        } else {
-            self.titleLabel.text = "Farm this cast "
-            self.buttonLabel.text = "Farm this cast "
-            self.buttonView.custom(color: UIColor.Asset.lightBlue, cornerRadius: 10)
-        }
+        self.contentView.custom(borderWidth: 1, borderColor: UIColor.Asset.gray)
+        self.avatarImage.circle()
+        self.avatarImage.image = UIImage.Asset.userPlaceholder
+        self.typeImage.image = UIImage.Asset.typePageIcon
+        self.contentImage.image = UIImage.Asset.placeholder
+        self.displayNameLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.displayNameLabel.textColor = UIColor.Asset.white
+        self.balanceTitleLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.balanceTitleLabel.textColor = UIColor.Asset.white
+        self.balanceLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.balanceLabel.textColor = UIColor.Asset.lightBlue
+        self.dateLabel.font = UIFont.asset(.regular, fontSize: .small)
+        self.dateLabel.textColor = UIColor.Asset.white
+        self.messageLabel.font = UIFont.asset(.regular, fontSize: .small)
+        self.messageLabel.textColor = UIColor.Asset.white
     }
 
     @IBAction func buttonAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
-        self.delegate?.farmingPopupViewController(didAction: self)
+        self.delegate?.farmingLimitViewController(didAction: self)
+    }
+
+    @IBAction func historyAction(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+        self.delegate?.farmingLimitViewControllerDidViewHistory(self)
     }
 }
 
-extension FarmingPopupViewController: PanModalPresentable {
+extension FarmingLimitViewController: PanModalPresentable {
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
