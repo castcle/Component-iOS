@@ -42,6 +42,7 @@
                             <constraint firstItem="fJF-E4-YSC" firstAttribute="trailing" secondItem="ZqP-gE-eoi" secondAttribute="trailing" id="dwY-8I-O0p"/>
                             <constraint firstItem="ZqP-gE-eoi" firstAttribute="centerX" secondItem="N9t-Mg-9Pu" secondAttribute="centerX" id="geu-BV-ZBd"/>
                             <constraint firstItem="ZqP-gE-eoi" firstAttribute="centerY" secondItem="N9t-Mg-9Pu" secondAttribute="centerY" id="heS-Li-7lI"/>
+                            <constraint firstAttribute="width" constant="80" id="kWu-mB-9F1"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bsO-aa-VGV">
@@ -132,11 +133,10 @@
                     <constraint firstAttribute="bottom" secondItem="bsO-aa-VGV" secondAttribute="bottom" id="KYK-95-ENd"/>
                     <constraint firstItem="LRI-za-YbT" firstAttribute="width" secondItem="N9t-Mg-9Pu" secondAttribute="width" id="LvZ-da-tMD"/>
                     <constraint firstItem="LRI-za-YbT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="QFU-Kn-Mha"/>
+                    <constraint firstItem="FA3-Bt-KTo" firstAttribute="leading" secondItem="LRI-za-YbT" secondAttribute="trailing" id="Rsj-eG-peN"/>
                     <constraint firstItem="N9t-Mg-9Pu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Trd-PO-Fkk"/>
-                    <constraint firstItem="N9t-Mg-9Pu" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.25" id="Ugd-Us-LPz"/>
                     <constraint firstItem="bsO-aa-VGV" firstAttribute="width" secondItem="N9t-Mg-9Pu" secondAttribute="width" id="WeU-nu-9Ue"/>
                     <constraint firstAttribute="bottom" secondItem="LRI-za-YbT" secondAttribute="bottom" id="XoE-2i-YLX"/>
-                    <constraint firstAttribute="trailing" secondItem="FA3-Bt-KTo" secondAttribute="trailing" id="deF-w0-RAP"/>
                     <constraint firstItem="N9t-Mg-9Pu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="hsF-jU-Yt2"/>
                     <constraint firstItem="FA3-Bt-KTo" firstAttribute="width" secondItem="N9t-Mg-9Pu" secondAttribute="width" id="iOa-Is-WPx"/>
                     <constraint firstItem="FA3-Bt-KTo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="sJX-5T-Ehi"/>
@@ -148,9 +148,14 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="commentLabel" destination="67Y-KQ-hEH" id="O83-XF-88Y"/>
+                <outlet property="commentView" destination="bsO-aa-VGV" id="CZj-4o-b8x"/>
                 <outlet property="farmLabel" destination="cjh-Qu-WdB" id="ZJW-gq-j47"/>
+                <outlet property="farmView" destination="FA3-Bt-KTo" id="i99-ts-d3E"/>
                 <outlet property="likeLabel" destination="ZqP-gE-eoi" id="YAt-u5-2KR"/>
+                <outlet property="likeView" destination="N9t-Mg-9Pu" id="Gbr-y4-04K"/>
                 <outlet property="recastLabel" destination="3jg-aq-Hbr" id="FAl-T0-NLF"/>
+                <outlet property="recastView" destination="LRI-za-YbT" id="hCi-ZF-3oC"/>
+                <outlet property="widthConstraint" destination="kWu-mB-9F1" id="JIF-tF-BId"/>
             </connections>
             <point key="canvasLocation" x="66.666666666666671" y="98.102678571428569"/>
         </tableViewCell>

@@ -29,6 +29,7 @@ import UIKit
 import Core
 import Networking
 import PanModal
+import Defaults
 
 public protocol FooterTableViewCellDelegate: AnyObject {
     func didTabComment(_ footerTableViewCell: FooterTableViewCell, content: Content)
@@ -43,6 +44,11 @@ public class FooterTableViewCell: UITableViewCell {
     @IBOutlet var commentLabel: UILabel!
     @IBOutlet var recastLabel: UILabel!
     @IBOutlet var farmLabel: UILabel!
+    @IBOutlet var widthConstraint: NSLayoutConstraint!
+    @IBOutlet var likeView: UIView!
+    @IBOutlet var commentView: UIView!
+    @IBOutlet var recastView: UIView!
+    @IBOutlet var farmView: UIView!
 
     public var content: Content? {
         didSet {
@@ -65,6 +71,9 @@ public class FooterTableViewCell: UITableViewCell {
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.tokenHelper.delegate = self
+        let footerItem: CGFloat = (Defaults[.isFarmingEnable] ? 4.0 : 3.0)
+        self.farmView.isHidden = (Defaults[.isFarmingEnable] ? false : true)
+        self.widthConstraint.constant = (UIScreen.main.bounds.width / footerItem)
     }
 
     public override func setSelected(_ selected: Bool, animated: Bool) {

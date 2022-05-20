@@ -119,5 +119,6 @@ public class SplashScreenViewController: UIViewController {
                 print("Error")
             }
         }
+        Defaults[.isFarmingEnable] = RemoteConfig.remoteConfig().configValue(forKey: "farming_enable").boolValue
     }
 }
