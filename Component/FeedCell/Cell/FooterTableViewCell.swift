@@ -30,6 +30,7 @@ import Core
 import Networking
 import PanModal
 import Defaults
+import SwiftDate
 
 public protocol FooterTableViewCellDelegate: AnyObject {
     func didTabComment(_ footerTableViewCell: FooterTableViewCell, content: Content)
@@ -246,7 +247,7 @@ public class FooterTableViewCell: UITableViewCell {
                 viewController?.delegate = self
                 Utility.currentViewController().presentPanModal(viewController ?? FarmingPopupViewController())
             } else {
-                if self.randomBool() {
+                if Date().second % 2 == 0 {
                     let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(type: .farm))) as? FarmingPopupViewController
                     viewController?.delegate = self
                     Utility.currentViewController().presentPanModal(viewController ?? FarmingPopupViewController())
@@ -259,11 +260,6 @@ public class FooterTableViewCell: UITableViewCell {
         } else {
             self.delegate?.didAuthen(self)
         }
-    }
-
-    // MARK: - Remove when production
-    private func randomBool() -> Bool {
-        return arc4random_uniform(2) == 0
     }
 }
 
