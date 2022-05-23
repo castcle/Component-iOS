@@ -435,7 +435,11 @@ extension CommentViewController: FooterTableViewCellDelegate {
     }
 
     func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: Page) {
-        //
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            let viewController = PostOpener.open(.post(PostViewModel(postType: .quoteCast, content: content, page: page)))
+            viewController.modalPresentationStyle = .fullScreen
+            Utility.currentViewController().present(viewController, animated: true, completion: nil)
+        }
     }
 
     func didAuthen(_ footerTableViewCell: FooterTableViewCell) {

@@ -7,6 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B7117044283B917500FF985A /* Post.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B711702C283B917500FF985A /* Post.storyboard */; };
+		B7117045283B917500FF985A /* PostOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = B711702E283B917500FF985A /* PostOpener.swift */; };
+		B7117046283B917500FF985A /* PostNibVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = B711702F283B917500FF985A /* PostNibVars.swift */; };
+		B7117047283B917500FF985A /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7117031283B917500FF985A /* PostViewController.swift */; };
+		B7117048283B917500FF985A /* PostTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7117033283B917500FF985A /* PostTextViewModel.swift */; };
+		B7117049283B917500FF985A /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7117034283B917500FF985A /* PostViewModel.swift */; };
+		B711704A283B917500FF985A /* HashtagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7117037283B917500FF985A /* HashtagTableViewCell.swift */; };
+		B711704B283B917500FF985A /* MentionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7117038283B917500FF985A /* MentionTableViewCell.swift */; };
+		B711704C283B917500FF985A /* PostTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7117039283B917500FF985A /* PostTextTableViewCell.xib */; };
+		B711704D283B917600FF985A /* HeaderPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B711703A283B917500FF985A /* HeaderPostTableViewCell.swift */; };
+		B711704E283B917600FF985A /* HeaderPostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B711703B283B917500FF985A /* HeaderPostTableViewCell.xib */; };
+		B711704F283B917600FF985A /* ImagePostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B711703C283B917500FF985A /* ImagePostTableViewCell.xib */; };
+		B7117050283B917600FF985A /* HashtagTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B711703D283B917500FF985A /* HashtagTableViewCell.xib */; };
+		B7117051283B917600FF985A /* MentionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B711703E283B917500FF985A /* MentionTableViewCell.xib */; };
+		B7117052283B917600FF985A /* PostTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B711703F283B917500FF985A /* PostTextTableViewCell.swift */; };
+		B7117053283B917600FF985A /* ImagePostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7117040283B917500FF985A /* ImagePostTableViewCell.swift */; };
+		B7117054283B917600FF985A /* CastKeyboardInput.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7117042283B917500FF985A /* CastKeyboardInput.xib */; };
+		B7117055283B917600FF985A /* CastKeyboardInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7117043283B917500FF985A /* CastKeyboardInput.swift */; };
 		B7167F9827AD1AE800067DBD /* AdsPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7167F9627AD1AE800067DBD /* AdsPageTableViewCell.swift */; };
 		B7167F9927AD1AE800067DBD /* AdsPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7167F9727AD1AE800067DBD /* AdsPageTableViewCell.xib */; };
 		B7167F9C27AFC94A00067DBD /* ReachedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7167F9A27AFC94A00067DBD /* ReachedTableViewCell.swift */; };
@@ -167,6 +185,24 @@
 		7D2DA64FE09C59F76CA7D23E /* Pods-Component.release (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.release (staging).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.release (staging).xcconfig"; sourceTree = "<group>"; };
 		9A723B2EF055ED2C75BAC143 /* Pods_Component.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Component.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B70446F0676E9D9C1803A9CF /* Pods-Component.debug (development).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Component.debug (development).xcconfig"; path = "Target Support Files/Pods-Component/Pods-Component.debug (development).xcconfig"; sourceTree = "<group>"; };
+		B711702C283B917500FF985A /* Post.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Post.storyboard; sourceTree = "<group>"; };
+		B711702E283B917500FF985A /* PostOpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostOpener.swift; sourceTree = "<group>"; };
+		B711702F283B917500FF985A /* PostNibVars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostNibVars.swift; sourceTree = "<group>"; };
+		B7117031283B917500FF985A /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		B7117033283B917500FF985A /* PostTextViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTextViewModel.swift; sourceTree = "<group>"; };
+		B7117034283B917500FF985A /* PostViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
+		B7117037283B917500FF985A /* HashtagTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagTableViewCell.swift; sourceTree = "<group>"; };
+		B7117038283B917500FF985A /* MentionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MentionTableViewCell.swift; sourceTree = "<group>"; };
+		B7117039283B917500FF985A /* PostTextTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTextTableViewCell.xib; sourceTree = "<group>"; };
+		B711703A283B917500FF985A /* HeaderPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderPostTableViewCell.swift; sourceTree = "<group>"; };
+		B711703B283B917500FF985A /* HeaderPostTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderPostTableViewCell.xib; sourceTree = "<group>"; };
+		B711703C283B917500FF985A /* ImagePostTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePostTableViewCell.xib; sourceTree = "<group>"; };
+		B711703D283B917500FF985A /* HashtagTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HashtagTableViewCell.xib; sourceTree = "<group>"; };
+		B711703E283B917500FF985A /* MentionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MentionTableViewCell.xib; sourceTree = "<group>"; };
+		B711703F283B917500FF985A /* PostTextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTextTableViewCell.swift; sourceTree = "<group>"; };
+		B7117040283B917500FF985A /* ImagePostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePostTableViewCell.swift; sourceTree = "<group>"; };
+		B7117042283B917500FF985A /* CastKeyboardInput.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CastKeyboardInput.xib; sourceTree = "<group>"; };
+		B7117043283B917500FF985A /* CastKeyboardInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CastKeyboardInput.swift; sourceTree = "<group>"; };
 		B7167F9627AD1AE800067DBD /* AdsPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsPageTableViewCell.swift; sourceTree = "<group>"; };
 		B7167F9727AD1AE800067DBD /* AdsPageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdsPageTableViewCell.xib; sourceTree = "<group>"; };
 		B7167F9A27AFC94A00067DBD /* ReachedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachedTableViewCell.swift; sourceTree = "<group>"; };
@@ -365,6 +401,79 @@
 				9A723B2EF055ED2C75BAC143 /* Pods_Component.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B711702B283B914400FF985A /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				B711702C283B917500FF985A /* Post.storyboard */,
+				B7117035283B917500FF985A /* Cell */,
+				B7117041283B917500FF985A /* KeyboardInputView */,
+				B711702D283B917500FF985A /* Utilities */,
+				B7117030283B917500FF985A /* ViewController */,
+				B7117032283B917500FF985A /* ViewModel */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
+		B711702D283B917500FF985A /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B711702E283B917500FF985A /* PostOpener.swift */,
+				B711702F283B917500FF985A /* PostNibVars.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		B7117030283B917500FF985A /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B7117031283B917500FF985A /* PostViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		B7117032283B917500FF985A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B7117033283B917500FF985A /* PostTextViewModel.swift */,
+				B7117034283B917500FF985A /* PostViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B7117035283B917500FF985A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B7117036283B917500FF985A /* Post */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		B7117036283B917500FF985A /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				B711703D283B917500FF985A /* HashtagTableViewCell.xib */,
+				B7117037283B917500FF985A /* HashtagTableViewCell.swift */,
+				B711703E283B917500FF985A /* MentionTableViewCell.xib */,
+				B7117038283B917500FF985A /* MentionTableViewCell.swift */,
+				B7117039283B917500FF985A /* PostTextTableViewCell.xib */,
+				B711703F283B917500FF985A /* PostTextTableViewCell.swift */,
+				B711703B283B917500FF985A /* HeaderPostTableViewCell.xib */,
+				B711703A283B917500FF985A /* HeaderPostTableViewCell.swift */,
+				B711703C283B917500FF985A /* ImagePostTableViewCell.xib */,
+				B7117040283B917500FF985A /* ImagePostTableViewCell.swift */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
+		B7117041283B917500FF985A /* KeyboardInputView */ = {
+			isa = PBXGroup;
+			children = (
+				B7117042283B917500FF985A /* CastKeyboardInput.xib */,
+				B7117043283B917500FF985A /* CastKeyboardInput.swift */,
+			);
+			path = KeyboardInputView;
 			sourceTree = "<group>";
 		};
 		B7167F9527AD1AA600067DBD /* Ads */ = {
@@ -655,6 +764,7 @@
 				B7A15B212795C196001E34DE /* Localizable */,
 				B75529D1269F693C005D5EB5 /* Utilities */,
 				B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */,
+				B711702B283B914400FF985A /* Post */,
 				B74EBE2927F7DA440024BB94 /* PublicPopup */,
 				B7E49ADC27F30FB60026C7F6 /* FarmingPopup */,
 				B786902A27CCA4570029EDFE /* UserToFollow */,
@@ -873,8 +983,10 @@
 				B71744A326E7ED320014D6B5 /* ReplyTableViewCell.xib in Resources */,
 				B7E64ECB275F63B300FFD78E /* Report.storyboard in Resources */,
 				B786634E2747AC4200B13EEF /* QuoteCastBlogNoImageCell.xib in Resources */,
+				B7117051283B917600FF985A /* MentionTableViewCell.xib in Resources */,
 				B7910E9226BC68460097C94E /* Picker.storyboard in Resources */,
 				B71744B526E9EF750014D6B5 /* ImageX2TableViewCell.xib in Resources */,
+				B711704C283B917500FF985A /* PostTextTableViewCell.xib in Resources */,
 				B7FA1D8A27B0DB3000A485A1 /* LongTextTableViewCell.xib in Resources */,
 				B78663542747AC4200B13EEF /* QuoteCastImageXMoreCell.xib in Resources */,
 				B7FA1D9E27B0E2C300A485A1 /* LongImageX1TableViewCell.xib in Resources */,
@@ -899,6 +1011,7 @@
 				B78663552747AC4200B13EEF /* QuoteCastImageX1Cell.xib in Resources */,
 				B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */,
 				B7E49ADE27F30FD60026C7F6 /* FarmingPopup.storyboard in Resources */,
+				B7117054283B917600FF985A /* CastKeyboardInput.xib in Resources */,
 				B71744C626E9F6980014D6B5 /* BlogNoImageTableViewCell.xib in Resources */,
 				B7FA1D9B27B0E2C300A485A1 /* LongImageXMoreTableViewCell.xib in Resources */,
 				B7E18D06283657AF0069F5C4 /* SelectCodeTableViewCell.xib in Resources */,
@@ -913,8 +1026,12 @@
 				B787963626C66E7300FECC21 /* Recast.storyboard in Resources */,
 				B7910DF526AFE32A0097C94E /* WebView.storyboard in Resources */,
 				B7FA1D9D27B0E2C300A485A1 /* LongImageX2TableViewCell.xib in Resources */,
+				B711704E283B917600FF985A /* HeaderPostTableViewCell.xib in Resources */,
 				B7866336274777F900B13EEF /* ActivityHeaderTableViewCell.xib in Resources */,
 				B717449B26E7A2550014D6B5 /* FooterTableViewCell.xib in Resources */,
+				B7117044283B917500FF985A /* Post.storyboard in Resources */,
+				B7117050283B917600FF985A /* HashtagTableViewCell.xib in Resources */,
+				B711704F283B917600FF985A /* ImagePostTableViewCell.xib in Resources */,
 				B7E18CF2283655F90069F5C4 /* SkeletonNotifyTableViewCell.xib in Resources */,
 				B7552987269CBE49005D5EB5 /* NormalFooter.bundle in Resources */,
 				B7FA1D8E27B0DF6300A485A1 /* LongTextLinkTableViewCell.xib in Resources */,
@@ -962,9 +1079,11 @@
 				B7552985269CBE49005D5EB5 /* NormalHeaderAnimator.swift in Sources */,
 				B7910DFB26B018E50097C94E /* InternalWebViewModel.swift in Sources */,
 				B7FA1D9927B0E2C300A485A1 /* LongImageX3TableViewCell.swift in Sources */,
+				B711704B283B917500FF985A /* MentionTableViewCell.swift in Sources */,
 				B71744B826E9EF850014D6B5 /* ImageX3TableViewCell.swift in Sources */,
 				B71744AE26E9EF280014D6B5 /* ImageX1TableViewCell.swift in Sources */,
 				B7866366274B833400B13EEF /* QuoteCastViewModel.swift in Sources */,
+				B711704D283B917600FF985A /* HeaderPostTableViewCell.swift in Sources */,
 				B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */,
 				B7E64ECD275F63D700FFD78E /* ReportSuccessViewController.swift in Sources */,
 				B7552972269CBA14005D5EB5 /* FastCheckLayer.swift in Sources */,
@@ -987,6 +1106,8 @@
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
 				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,
+				B7117045283B917500FF985A /* PostOpener.swift in Sources */,
+				B711704A283B917500FF985A /* HashtagTableViewCell.swift in Sources */,
 				B7E18CE5283655800069F5C4 /* CommentViewController.swift in Sources */,
 				B7167F9C27AFC94A00067DBD /* ReachedTableViewCell.swift in Sources */,
 				B7AC1E442717C67A002FC176 /* TextLinkPreviewTableViewCell.swift in Sources */,
@@ -994,6 +1115,8 @@
 				B71744AA26E9EAB10014D6B5 /* TextLinkTableViewCell.swift in Sources */,
 				B7552979269CBA14005D5EB5 /* RefreshProtocol.swift in Sources */,
 				B7E49AE427F3247B0026C7F6 /* FarmingLimitViewController.swift in Sources */,
+				B7117052283B917600FF985A /* PostTextTableViewCell.swift in Sources */,
+				B7117046283B917500FF985A /* PostNibVars.swift in Sources */,
 				B7FA1D8627B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift in Sources */,
 				B7E49AE027F310150026C7F6 /* FarmingPopupViewController.swift in Sources */,
 				B7552986269CBE49005D5EB5 /* NormalFooterAnimator.swift in Sources */,
@@ -1004,6 +1127,7 @@
 				B7910E9426BC686B0097C94E /* DatePickerViewController.swift in Sources */,
 				B7910DF726AFE4090097C94E /* InternalWebViewViewController.swift in Sources */,
 				B7552978269CBA14005D5EB5 /* RefreshComponent.swift in Sources */,
+				B7117049283B917500FF985A /* PostViewModel.swift in Sources */,
 				B71744C526E9F6980014D6B5 /* BlogNoImageTableViewCell.swift in Sources */,
 				B7FA1D9A27B0E2C300A485A1 /* LongImageXMoreTableViewCell.swift in Sources */,
 				B71744A626E9E6DC0014D6B5 /* TextTableViewCell.swift in Sources */,
@@ -1023,9 +1147,13 @@
 				B7E18CE4283655800069F5C4 /* UserReactionListViewController.swift in Sources */,
 				B71744BC26E9EF9F0014D6B5 /* ImageXMoreTableViewCell.swift in Sources */,
 				B7E18D05283657AF0069F5C4 /* SelectCodeTableViewCell.swift in Sources */,
+				B7117047283B917500FF985A /* PostViewController.swift in Sources */,
+				B7117055283B917600FF985A /* CastKeyboardInput.swift in Sources */,
 				B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */,
 				B7AC87FE27199A6D00500F81 /* CCActionSheet.swift in Sources */,
 				B7910DF926AFE8200097C94E /* ComponentOpener.swift in Sources */,
+				B7117048283B917500FF985A /* PostTextViewModel.swift in Sources */,
+				B7117053283B917600FF985A /* ImagePostTableViewCell.swift in Sources */,
 				B7E18CEF283655F90069F5C4 /* SkeletonUserTableViewCell.swift in Sources */,
 				B7E18CFD283656880069F5C4 /* ReactionCastTableViewCell.swift in Sources */,
 				B7E18CF0283655F90069F5C4 /* SkeletonNotifyTableViewCell.swift in Sources */,
