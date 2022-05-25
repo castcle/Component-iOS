@@ -316,7 +316,7 @@ extension CommentViewController {
                     let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.reply, for: indexPath as IndexPath) as? ReplyTableViewCell
                     cell?.backgroundColor = UIColor.Asset.darkGraphiteBlue
                     cell?.delegate = self
-                    cell?.configCell(replyCommentId: comment.reply[indexPath.row - 2], originalCommentId: comment.id)
+                    cell?.configCell(replyCommentId: comment.reply[indexPath.row - 1], originalCommentId: comment.id)
                     if comment.isFirst {
                         cell?.lineView.isHidden = false
                     } else if comment.isLast {
