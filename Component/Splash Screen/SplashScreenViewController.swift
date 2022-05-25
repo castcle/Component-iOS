@@ -75,50 +75,44 @@ public class SplashScreenViewController: UIViewController {
         let setting = RemoteConfigSettings()
         setting.minimumFetchInterval = duration
         RemoteConfig.remoteConfig().configSettings = setting
-
         let defualt: [String: NSObject] = [
             "version_ios": "9.9.9" as NSObject
         ]
         RemoteConfig.remoteConfig().setDefaults(defualt)
-        RemoteConfig.remoteConfig().fetch(withExpirationDuration: duration) { ststus, error in
-            if ststus == .success, error == nil {
-                RemoteConfig.remoteConfig().activate {_, error in
-                    if error == nil {
-                        let json = RemoteConfig.remoteConfig().configValue(forKey: "force_version").jsonValue
-                        if let jsonForceVersion = json {
-                            let data = JSON(jsonForceVersion)
-                            let remoteConfig = RemoteConfig(json: data)
-                            Defaults[.updateUrl] = remoteConfig.ios.url
-                            Defaults[.updateTitle] = remoteConfig.meta.title.eng
-                            Defaults[.updateMessage] = remoteConfig.meta.message.eng
-                            Defaults[.updateButton] = remoteConfig.meta.button.eng
+        self.checkForceUpdate()
+        Defaults[.isFarmingEnable] = RemoteConfig.remoteConfig().configValue(forKey: "farming_enable").boolValue
+    }
 
-                            if CheckUpdate.shared.isUpdateApp(version: remoteConfig.ios.version) {
-                                Defaults[.isForceUpdate] = true
-                                Defaults[.isSoftUpdate] = false
-                            } else {
-                                _ = CheckUpdate.shared.getAppInfo { (info, error) in
-                                    if let appStoreAppVersion = info?.version {
-                                        if error != nil {
-                                            print("Error")
-                                        } else if !CheckUpdate.shared.isUpdateApp(version: appStoreAppVersion) {
-                                            print("App not update")
-                                        } else {
-                                            Defaults[.isForceUpdate] = false
-                                            Defaults[.isSoftUpdate] = true
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        print("Error")
-                    }
-                }
+    private func checkForceUpdate() {
+        if let jsonForceVersion = RemoteConfig.remoteConfig().configValue(forKey: "force_version").jsonValue {
+            let data = JSON(jsonForceVersion)
+            let remoteConfig = RemoteConfig(json: data)
+            Defaults[.updateUrl] = remoteConfig.ios.url
+            Defaults[.updateTitle] = remoteConfig.meta.title.eng
+            Defaults[.updateMessage] = remoteConfig.meta.message.eng
+            Defaults[.updateButton] = remoteConfig.meta.button.eng
+            if CheckUpdate.shared.isUpdateApp(version: remoteConfig.ios.version) {
+                Defaults[.isForceUpdate] = true
+                Defaults[.isSoftUpdate] = false
             } else {
-                print("Error")
+                self.checkSoftUpdate()
             }
         }
-        Defaults[.isFarmingEnable] = RemoteConfig.remoteConfig().configValue(forKey: "farming_enable").boolValue
+    }
+
+    private func checkSoftUpdate() {
+        if let jsonCurrentVersion = RemoteConfig.remoteConfig().configValue(forKey: "current_version").jsonValue {
+            let data = JSON(jsonCurrentVersion)
+            let remoteConfig = RemoteConfig(json: data)
+            Defaults[.updateUrl] = remoteConfig.ios.url
+            Defaults[.updateTitle] = remoteConfig.meta.title.eng
+            Defaults[.updateMessage] = remoteConfig.meta.message.eng
+            Defaults[.updateButton] = remoteConfig.meta.buttonOk.eng
+            Defaults[.updateButtonCancel] = remoteConfig.meta.buttonCancel.eng
+            if CheckUpdate.shared.isUpdateApp(version: remoteConfig.ios.version) {
+                Defaults[.isForceUpdate] = false
+                Defaults[.isSoftUpdate] = true
+            }
+        }
     }
 }
