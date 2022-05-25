@@ -154,7 +154,10 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
             self.setupNevBar()
             self.viewModel.contentLoadState = .loaded
             self.enableTextField()
-            self.tableView.reloadData()
+            UIView.transition(with: self.tableView,
+                              duration: 0.35,
+                              options: .transitionCrossDissolve,
+                              animations: { self.tableView.reloadData() })
         }
 
         self.tableView.coreRefresh.addFootRefresh(animator: NormalFooterAnimator()) { [weak self] in

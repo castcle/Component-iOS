@@ -132,6 +132,8 @@ public final class CommentViewModel {
                     }
                     self.comments.insert(comment, at: 0)
                     self.modifyCommentData()
+                    self.content.metrics.commentCount += 1
+                    self.content.participate.commented = true
                     self.didLoadCommentsFinish?()
                 } catch {}
             } else {
@@ -213,6 +215,7 @@ public final class CommentViewModel {
                 if let index = self.comments.firstIndex(where: { $0.id == self.commentId }) {
                     self.comments.remove(at: index)
                     self.modifyCommentData()
+                    self.content.metrics.commentCount -= 1
                     self.didLoadCommentsFinish?()
                 }
             } else {
