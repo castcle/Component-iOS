@@ -43,7 +43,6 @@ public class SplashScreenViewController: UIViewController {
 
     public var delegate: SplashScreenViewControllerDelegate?
     var viewModel = SplashScreenViewModel()
-    private let remoteConfig = RemoteConfig.remoteConfig()
 
     public override func viewDidLoad() {
         super.viewDidLoad()
