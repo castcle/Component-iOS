@@ -78,8 +78,16 @@ public class SplashScreenViewController: UIViewController {
             "version_ios": "9.9.9" as NSObject
         ]
         RemoteConfig.remoteConfig().setDefaults(defualt)
-        self.checkForceUpdate()
-        Defaults[.isFarmingEnable] = RemoteConfig.remoteConfig().configValue(forKey: "farming_enable").boolValue
+        RemoteConfig.remoteConfig().fetch(withExpirationDuration: duration) { ststus, error in
+            if ststus == .success, error == nil {
+                RemoteConfig.remoteConfig().activate {_, error in
+                    if error == nil {
+                        self.checkForceUpdate()
+                        Defaults[.isFarmingEnable] = RemoteConfig.remoteConfig().configValue(forKey: "farming_enable").boolValue
+                    }
+                }
+            }
+        }
     }
 
     private func checkForceUpdate() {
