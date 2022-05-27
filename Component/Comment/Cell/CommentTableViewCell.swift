@@ -128,20 +128,20 @@ class CommentTableViewCell: UITableViewCell {
     private func showActionSheet() {
         guard let comment = self.comment else { return }
         let actionSheet = CCActionSheet(isGestureDismiss: false)
-        let cancelButton = CCAction(title: "Cancel", image: UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+        let cancelButton = CCAction(title: "Cancel", image: UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .normal) {
             actionSheet.dismissActionSheet()
             self.isShowActionSheet = false
         }
         actionSheet.addActions([cancelButton])
         if UserHelper.shared.isMyAccount(id: comment.authorId) {
-            let delete = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.deleteOne), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+            let delete = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.deleteOne), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .normal) {
                 actionSheet.dismissActionSheet()
                 self.isShowActionSheet = false
                 self.delegate?.didDelete(self, comment: comment)
             }
             actionSheet.addActions([delete])
         }
-        let reply = CCAction(title: "Reply", image: UIImage.init(icon: .castcle(.rightBack), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+        let reply = CCAction(title: "Reply", image: UIImage.init(icon: .castcle(.rightBack), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .normal) {
             actionSheet.dismissActionSheet()
             self.isShowActionSheet = false
             if let authorRef = ContentHelper.shared.getAuthorRef(id: comment.authorId) {

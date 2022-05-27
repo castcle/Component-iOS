@@ -29,7 +29,7 @@ import Foundation
 
 extension CCAction {
     public enum Style: Int {
-        case `default`
+        case normal
         case destructive
     }
 }

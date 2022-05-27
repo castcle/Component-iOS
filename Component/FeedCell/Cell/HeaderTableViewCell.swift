@@ -211,7 +211,7 @@ public class HeaderTableViewCell: UITableViewCell {
         if let content = self.content {
             if UserHelper.shared.isMyAccount(id: content.authorId) {
                 let actionSheet = CCActionSheet()
-                let deleteButton = CCAction(title: Localization.ContentAction.delete.text, image: UIImage.init(icon: .castcle(.delete), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                let deleteButton = CCAction(title: Localization.ContentAction.delete.text, image: UIImage.init(icon: .castcle(.delete), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .normal) {
                     actionSheet.dismissActionSheet()
                     self.deleteContent()
                 }
@@ -220,7 +220,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
             } else {
                 let actionSheet = CCActionSheet()
-                let reportButton = CCAction(title: Localization.ContentAction.reportCast.text, image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                let reportButton = CCAction(title: Localization.ContentAction.reportCast.text, image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .normal) {
                     actionSheet.dismissActionSheet()
                     if UserManager.shared.isLogin {
                         self.reportContent()

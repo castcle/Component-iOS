@@ -122,9 +122,6 @@ public class CCActionSheet: UIViewController {
         self.setAlertViewContentConstraints()
     }
 
-    private func reloadAlertViewConstraints() {
-    }
-
     private func setAlertViewConstraints() {
         self.alertView.translatesAutoresizingMaskIntoConstraints = false
         self.alertView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true

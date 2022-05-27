@@ -115,8 +115,6 @@ public class AdsPageTableViewCell: UITableViewCell {
             urlString = urlString.replacingOccurrences(of: "http://", with: "")
             if let newUrl = URL(string: "https://\(urlString)") {
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
-            } else {
-                return
             }
         }
         self.detailLabel.handleCustomTap(for: self.customHashtag) { element in

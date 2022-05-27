@@ -37,7 +37,7 @@ public class CCAction: UIView {
     private var imageView = UIImageView()
     private var onTapCompletion: (() -> Void)?
     private var isCancelButton: Bool
-    private var _style: CCAction.Style
+    private var actionStyle: CCAction.Style
 
     public override var bounds: CGRect {
         didSet {
@@ -47,13 +47,13 @@ public class CCAction: UIView {
             }
         }
     }
-    public var style: CCAction.Style { return self._style }
+    public var style: CCAction.Style { return self.actionStyle }
 
     // MARK: - Initializers
     private override init(frame: CGRect) {
         self.isCancelButton = false
         self.onTapCompletion = nil
-        self._style = .default
+        self.actionStyle = .normal
         super.init(frame: frame)
     }
 
@@ -61,7 +61,7 @@ public class CCAction: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public convenience init(title: String, image: UIImage? = nil, color: UIColor = UIColor.Asset.white, style: CCAction.Style = .default, completion: @escaping () -> Void) {
+    public convenience init(title: String, image: UIImage? = nil, color: UIColor = UIColor.Asset.white, style: CCAction.Style = .normal, completion: @escaping () -> Void) {
         self.init()
         self.button.setTitle(title, for: .normal)
         self.button.titleLabel?.font =  UIFont.asset(.bold, fontSize: .body)
@@ -71,7 +71,7 @@ public class CCAction: UIView {
         }
         self.onTapCompletion = completion
         self.isCancelButton = false
-        self._style = style
+        self.actionStyle = style
         if image != nil {
             self.setupView()
         } else {
@@ -89,7 +89,7 @@ public class CCAction: UIView {
 
     // MARK: - Setups
     private func setupView() {
-        self.button.setTitleColor(style == .default ? UIColor.Asset.white : UIColor.Asset.denger, for: .normal)
+        self.button.setTitleColor(style == .normal ? UIColor.Asset.white : UIColor.Asset.denger, for: .normal)
         self.addSubview(self.button)
         self.setButtonConstraints()
         if !self.isCancelButton {
@@ -120,7 +120,7 @@ public class CCAction: UIView {
         self.button.imageView?.contentMode = .scaleAspectFit
         self.imageView.contentMode = .scaleAspectFit
         self.imageView.image = self.imageView.image?.withRenderingMode(.alwaysTemplate)
-        self.imageView.tintColor = self.style == .default ? UIColor.Asset.white : UIColor.Asset.denger
+        self.imageView.tintColor = self.style == .normal ? UIColor.Asset.white : UIColor.Asset.denger
         self.addSubview(self.imageView)
         self.bringSubviewToFront(self.button)
         self.setImageViewConstraints()

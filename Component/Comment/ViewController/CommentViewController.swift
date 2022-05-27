@@ -349,20 +349,16 @@ extension CommentViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 && self.viewModel.contentLoadState == .loaded {
-            if self.viewModel.content.type == .long && indexPath.row == 1 {
-                self.viewModel.content.isExpand.toggle()
-                tableView.reloadRows(at: [indexPath], with: .automatic)
-            }
+        if indexPath.section == 0 && self.viewModel.contentLoadState == .loaded && self.viewModel.content.type == .long && indexPath.row == 1 {
+            self.viewModel.content.isExpand.toggle()
+            tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
 
     func renderFeedCell(content: Content, cellType: FeedCellType, tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         var originalContent = Content()
-        if content.referencedCasts.type == .recasted || content.referencedCasts.type == .quoted {
-            if let tempContent = ContentHelper.shared.getContentRef(id: content.referencedCasts.id) {
-                originalContent = tempContent
-            }
+        if (content.referencedCasts.type == .recasted || content.referencedCasts.type == .quoted), let tempContent = ContentHelper.shared.getContentRef(id: content.referencedCasts.id) {
+            originalContent = tempContent
         }
         switch cellType {
         case .activity:
