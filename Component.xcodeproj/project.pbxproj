@@ -835,10 +835,10 @@
 		B7E18CDB283655800069F5C4 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				B7E18CDC283655800069F5C4 /* ReactionViewController.swift */,
-				B7E18CDD283655800069F5C4 /* UserReactionListViewController.swift */,
 				B7E18CDE283655800069F5C4 /* CommentViewController.swift */,
 				B7E18CDF283655800069F5C4 /* CommentDetailViewController.swift */,
+				B7E18CDC283655800069F5C4 /* ReactionViewController.swift */,
+				B7E18CDD283655800069F5C4 /* UserReactionListViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";

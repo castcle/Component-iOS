@@ -425,7 +425,7 @@ auto-post to (@Songphracharoen) and will now auto-post to your new Page.</string
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u5w-2h-p7j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="805"/>
+            <point key="canvasLocation" x="750" y="738"/>
         </scene>
     </scenes>
     <resources>
