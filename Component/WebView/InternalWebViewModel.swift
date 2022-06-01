@@ -28,7 +28,7 @@
 import Foundation
 
 final class InternalWebViewModel {
-   
+
     // MARK: Public
     var request: URLRequest!
     var titleHidden: Bool = false
@@ -39,7 +39,7 @@ final class InternalWebViewModel {
     init() {
         // MARK: Init
     }
-    
+
     init(url: URL) {
         self.request = NSURLRequest(url: url) as URLRequest
     }

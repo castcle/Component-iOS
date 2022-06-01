@@ -40,11 +40,12 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
     @IBOutlet var linkTitleLabel: UILabel!
     @IBOutlet var linkDescriptionLabel: UILabel!
     @IBOutlet var skeletonView: UIView!
-    
+
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
             self.massageLabel.numberOfLines = 0
+            self.massageLabel.isSelectable = true
             self.massageLabel.attributedText = content.message
                 .styleHashtags(AttributedContent.link)
                 .styleMentions(AttributedContent.link)
@@ -58,9 +59,9 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     private func enableActiveLabel() {
-        self.massageLabel.onClick = { label, detection in
+        self.massageLabel.onClick = { _, detection in
             switch detection.type {
             case .hashtag(let tag):
                 let hashtagDict: [String: String] = [
@@ -86,7 +87,7 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.skeletonView.custom(cornerRadius: 12, borderWidth: 1, borderColor: UIColor.Asset.gray)
@@ -103,24 +104,24 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     private func setData(content: Content, link: Link) {
         UIView.transition(with: self, duration: 0.35, options: .transitionCrossDissolve, animations: {
             self.skeletonView.isHidden = true
             self.linkContainer.isHidden = false
         })
-        
+
         // MARK: - Image
         let url = URL(string: link.imagePreview)
         self.linkImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-        
+
         // MARK: - Title
         if link.title.isEmpty {
             self.linkTitleLabel.text = ""
         } else {
             self.linkTitleLabel.text = link.title
         }
-        
+
         // MARK: - Description
         if link.desc.isEmpty {
             self.linkDescriptionLabel.text = content.message
@@ -128,7 +129,7 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
             self.linkDescriptionLabel.text = link.desc
         }
     }
-    
+
     @IBAction func openWebViewAction(_ sender: Any) {
         guard let content = self.content else { return }
         if let link = content.link.first, let linkUrl = URL(string: link.url) {

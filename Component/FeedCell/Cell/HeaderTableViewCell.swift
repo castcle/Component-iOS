@@ -32,7 +32,7 @@ import SnackBar
 import Kingfisher
 import RealmSwift
 
-public protocol HeaderTableViewCellDelegate {
+public protocol HeaderTableViewCellDelegate: AnyObject {
     func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author)
     func didAuthen(_ headerTableViewCell: HeaderTableViewCell)
     func didRemoveSuccess(_ headerTableViewCell: HeaderTableViewCell)
@@ -49,7 +49,7 @@ public class HeaderTableViewCell: UITableViewCell {
     @IBOutlet var followButton: UIButton!
     @IBOutlet var moreButton: UIButton!
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
-    
+
     public var delegate: HeaderTableViewCellDelegate?
     private var userRepository: UserRepository = UserRepositoryImpl()
     private var contentRepository: ContentRepository = ContentRepositoryImpl()
@@ -58,11 +58,9 @@ public class HeaderTableViewCell: UITableViewCell {
     private var state: State = .none
     private var userRequest: UserRequest = UserRequest()
     private var reportRequest: ReportRequest = ReportRequest()
-    private let realm = try! Realm()
     var isPreview: Bool = false
-    
     private var content: Content?
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.tokenHelper.delegate = self
@@ -73,22 +71,20 @@ public class HeaderTableViewCell: UITableViewCell {
         self.dateLabel.textColor = UIColor.Asset.lightGray
         self.followButton.titleLabel?.font = UIFont.asset(.bold, fontSize: .overline)
         self.followButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
-        
         self.verifyIcon.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)
         self.globalIcon.image = UIImage.init(icon: .castcle(.global), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightGray)
-        
         self.moreButton.setImage(UIImage.init(icon: .castcle(.ellipsisV), size: CGSize(width: 22, height: 22), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
     }
 
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     public func configCell(feedType: FeedType, content: Content, isDefaultContent: Bool) {
         self.isPreview = false
         self.content = content
         if let content = self.content {
-            self.followButton.setTitle(Localization.contentDetail.follow.text, for: .normal)
+            self.followButton.setTitle(Localization.ContentDetail.follow.text, for: .normal)
             if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
                 if authorRef.type == AuthorType.people.rawValue {
                     if authorRef.castcleId == UserManager.shared.rawCastcleId {
@@ -105,19 +101,22 @@ public class HeaderTableViewCell: UITableViewCell {
                         }
                     }
                 } else {
-                    if let page = self.realm.objects(Page.self).filter("id = '\(content.authorId)'").first {
-                        let url = URL(string: page.avatar)
-                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        self.followButton.isHidden = true
-                    } else {
-                        let url = URL(string: authorRef.avatar)
-                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        if authorRef.followed {
+                    do {
+                      let realm = try Realm()
+                        if let page = realm.objects(Page.self).filter("id = '\(content.authorId)'").first {
+                            let url = URL(string: page.avatar)
+                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                             self.followButton.isHidden = true
                         } else {
-                            self.followButton.isHidden = false
+                            let url = URL(string: authorRef.avatar)
+                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                            if authorRef.followed {
+                                self.followButton.isHidden = true
+                            } else {
+                                self.followButton.isHidden = false
+                            }
                         }
-                    }
+                    } catch {}
                 }
 
                 self.displayNameLabel.text = authorRef.displayName
@@ -128,7 +127,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 } else {
                     self.dateLabel.text = content.postDate.timeAgoDisplay()
                 }
-                
+
                 if authorRef.official {
                     self.verifyConstraintWidth.constant = 15.0
                     self.verifyIcon.isHidden = false
@@ -155,10 +154,10 @@ public class HeaderTableViewCell: UITableViewCell {
             self.displayNameLabel.text = "Castcle"
         }
     }
-    
+
     public func configAdsPreViewCell(page: Page) {
         self.isPreview = true
-        self.followButton.setTitle(Localization.contentDetail.follow.text, for: .normal)
+        self.followButton.setTitle(Localization.ContentDetail.follow.text, for: .normal)
         let url = URL(string: page.avatar)
         self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
         self.followButton.isHidden = false
@@ -172,7 +171,7 @@ public class HeaderTableViewCell: UITableViewCell {
             self.verifyIcon.isHidden = true
         }
     }
-    
+
     @IBAction func followAction(_ sender: Any) {
         if self.isPreview {
             return
@@ -182,19 +181,18 @@ public class HeaderTableViewCell: UITableViewCell {
             if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
                 self.followButton.isHidden = true
                 self.followUser()
-                HeaderSnackBar.make(in: Utility.currentViewController().view, message: "\(Localization.contentAction.followed.text) @\(authorRef.castcleId)", duration: .lengthLong).setAction(with: Localization.contentAction.undo.text, action: {
+                HeaderSnackBar.make(in: Utility.currentViewController().view, message: "\(Localization.ContentAction.followed.text) @\(authorRef.castcleId)", duration: .lengthLong).setAction(with: Localization.ContentAction.undo.text, action: {
                     self.followButton.isHidden = false
                     self.unfollowUser()
                 }).show()
             } else {
                 return
             }
-            
         } else {
             self.delegate?.didAuthen(self)
         }
     }
-    
+
     @IBAction func viewProfileAction(_ sender: Any) {
         if self.isPreview {
             return
@@ -205,7 +203,7 @@ public class HeaderTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     @IBAction func moreAction(_ sender: Any) {
         if self.isPreview {
             return
@@ -213,17 +211,16 @@ public class HeaderTableViewCell: UITableViewCell {
         if let content = self.content {
             if UserHelper.shared.isMyAccount(id: content.authorId) {
                 let actionSheet = CCActionSheet()
-                let deleteButton = CCAction(title: Localization.contentAction.delete.text, image: UIImage.init(icon: .castcle(.delete), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                let deleteButton = CCAction(title: Localization.ContentAction.delete.text, image: UIImage.init(icon: .castcle(.delete), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
                     actionSheet.dismissActionSheet()
                     self.deleteContent()
                 }
-                
                 actionSheet.addActions([deleteButton])
                 actionSheet.modalPresentationStyle  = .overFullScreen
                 Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
             } else {
                 let actionSheet = CCActionSheet()
-                let reportButton = CCAction(title: Localization.contentAction.reportCast.text, image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                let reportButton = CCAction(title: Localization.ContentAction.reportCast.text, image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
                     actionSheet.dismissActionSheet()
                     if UserManager.shared.isLogin {
                         self.reportContent()
@@ -231,21 +228,19 @@ public class HeaderTableViewCell: UITableViewCell {
                         self.delegate?.didAuthen(self)
                     }
                 }
-                
                 actionSheet.addActions([reportButton])
                 actionSheet.modalPresentationStyle  = .overFullScreen
                 Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
             }
         }
-        
-        
+
     }
-    
+
     private func deleteContent() {
         self.state = .deleteContent
         guard let content = self.content else { return }
         self.delegate?.didRemoveSuccess(self)
-        self.contentRepository.deleteContent(contentId: content.id) { (success, response, isRefreshToken) in
+        self.contentRepository.deleteContent(contentId: content.id) { (success, _, isRefreshToken) in
             if !success {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
@@ -253,12 +248,12 @@ public class HeaderTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     private func reportContent() {
         self.state = .reportContent
         guard let content = self.content else { return }
         self.reportRequest.targetContentId = content.id
-        self.reportRepository.reportContent(userId: UserManager.shared.rawCastcleId, reportRequest: self.reportRequest) { (success, response, isRefreshToken) in
+        self.reportRepository.reportContent(userId: UserManager.shared.rawCastcleId, reportRequest: self.reportRequest) { (success, _, isRefreshToken) in
             if success {
                 self.delegate?.didReportSuccess(self)
             } else {
@@ -268,7 +263,7 @@ public class HeaderTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     private func followUser() {
         self.state = .followUser
         guard let content = self.content else { return }
@@ -280,14 +275,15 @@ public class HeaderTableViewCell: UITableViewCell {
             } else {
                 self.userRequest.targetCastcleId = authorRef.castcleId
             }
-            
-            try! self.realm.write {
-                authorRef.followed = true
-                self.realm.add(authorRef, update: .modified)
-                NotificationCenter.default.post(name: .feedReloadContent, object: nil)
-            }
-            
-            self.userRepository.follow(userRequest: self.userRequest) { (success, response, isRefreshToken) in
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    authorRef.followed = true
+                    realm.add(authorRef, update: .modified)
+                    NotificationCenter.default.post(name: .feedReloadContent, object: nil)
+                }
+            } catch {}
+            self.userRepository.follow(userRequest: self.userRequest) { (success, _, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
@@ -298,7 +294,7 @@ public class HeaderTableViewCell: UITableViewCell {
             return
         }
     }
-    
+
     private func unfollowUser() {
         self.state = .unfollowUser
         guard let content = self.content else { return }
@@ -310,14 +306,15 @@ public class HeaderTableViewCell: UITableViewCell {
             } else {
                 self.userRequest.targetCastcleId = authorRef.castcleId
             }
-            
-            try! self.realm.write {
-                authorRef.followed = false
-                self.realm.add(authorRef, update: .modified)
-                NotificationCenter.default.post(name: .feedReloadContent, object: nil)
-            }
-            
-            self.userRepository.unfollow(targetCastcleId: self.userRequest.targetCastcleId) { (success, response, isRefreshToken) in
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    authorRef.followed = false
+                    realm.add(authorRef, update: .modified)
+                    NotificationCenter.default.post(name: .feedReloadContent, object: nil)
+                }
+            } catch {}
+            self.userRepository.unfollow(targetCastcleId: self.userRequest.targetCastcleId) { (success, _, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()
@@ -350,11 +347,9 @@ class HeaderSnackBar: SnackBar {
         customStyle.background = UIColor.Asset.darkGray
         customStyle.textColor = UIColor.Asset.white
         customStyle.font = UIFont.asset(.bold, fontSize: .overline)
-        
         customStyle.actionTextColor = UIColor.Asset.lightBlue
         customStyle.actionFont = UIFont.asset(.bold, fontSize: .body)
         customStyle.actionTextColorAlpha = 1.0
-        
         return customStyle
     }
 }

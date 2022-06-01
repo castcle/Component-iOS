@@ -30,6 +30,10 @@ import Core
 import ActiveLabel
 import PanModal
 
+public protocol FarmingPopupViewControllerDelegate: AnyObject {
+    func farmingPopupViewController(didAction view: FarmingPopupViewController)
+}
+
 public class FarmingPopupViewController: UIViewController {
 
     @IBOutlet var titleLabel: UILabel!
@@ -45,10 +49,11 @@ public class FarmingPopupViewController: UIViewController {
     @IBOutlet var noteLabel: ActiveLabel!
     @IBOutlet var buttonView: UIView!
     @IBOutlet var iconImage: UIImageView!
-    
+
+    var delegate: FarmingPopupViewControllerDelegate?
     var maxHeight = (UIScreen.main.bounds.height - 400)
     var viewModel = FarmingPopupViewModel()
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.titleLabel.font = UIFont.asset(.bold, fontSize: .body)
@@ -61,15 +66,15 @@ public class FarmingPopupViewController: UIViewController {
         self.avalidBalanceTitleLabel.textColor = UIColor.Asset.white
         self.totalBalanceTitleLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.totalBalanceTitleLabel.textColor = UIColor.Asset.white
-        self.farmBalanceLabel.font = UIFont.asset(.medium, fontSize: .h4)
+        self.farmBalanceLabel.font = UIFont.asset(.medium, fontSize: .head4)
         self.farmBalanceLabel.textColor = UIColor.Asset.white
-        self.avalidBalanceLabel.font = UIFont.asset(.medium, fontSize: .h4)
+        self.avalidBalanceLabel.font = UIFont.asset(.medium, fontSize: .head4)
         self.avalidBalanceLabel.textColor = UIColor.Asset.white
-        self.totalBalanceLabel.font = UIFont.asset(.medium, fontSize: .h4)
+        self.totalBalanceLabel.font = UIFont.asset(.medium, fontSize: .head4)
         self.totalBalanceLabel.textColor = UIColor.Asset.white
         self.buttonLabel.font = UIFont.asset(.regular, fontSize: .body)
         self.buttonLabel.textColor = UIColor.Asset.white
-        self.buttonCashLabel.font = UIFont.asset(.medium, fontSize: .h4)
+        self.buttonCashLabel.font = UIFont.asset(.medium, fontSize: .head4)
         self.buttonCashLabel.textColor = UIColor.Asset.white
         self.iconImage.image = UIImage.init(icon: .castcle(.farm), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white)
         self.noteLabel.customize { label in
@@ -80,10 +85,10 @@ public class FarmingPopupViewController: UIViewController {
             label.enabledTypes = [learnMore]
             label.customColor[learnMore] = UIColor.Asset.lightBlue
             label.customSelectedColor[learnMore] = UIColor.Asset.gray
-            label.handleCustomTap(for: learnMore) { element in
+            label.handleCustomTap(for: learnMore) { _ in
             }
         }
-        
+
         if self.viewModel.farmingType == .unfarn {
             self.titleLabel.text = "Undo farm this cast "
             self.buttonLabel.text = "Undo farming"
@@ -94,9 +99,10 @@ public class FarmingPopupViewController: UIViewController {
             self.buttonView.custom(color: UIColor.Asset.lightBlue, cornerRadius: 10)
         }
     }
-    
+
     @IBAction func buttonAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+        self.delegate?.farmingPopupViewController(didAction: self)
     }
 }
 

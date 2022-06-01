@@ -31,7 +31,7 @@ import Networking
 import Kingfisher
 import RealmSwift
 
-public protocol SuggestionUserTableViewCellDelegate {
+public protocol SuggestionUserTableViewCellDelegate: AnyObject {
     func didSeeMore(_ suggestionUserTableViewCell: SuggestionUserTableViewCell, user: [Author])
     func didTabProfile(_ suggestionUserTableViewCell: SuggestionUserTableViewCell, user: Author)
     func didAuthen(_ suggestionUserTableViewCell: SuggestionUserTableViewCell)
@@ -49,7 +49,6 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     @IBOutlet weak var firstUserDescLabel: UILabel!
     @IBOutlet weak var fitstUserFollowButton: UIButton!
     @IBOutlet weak var firstUserVerifyImage: UIImageView!
-    
     @IBOutlet weak var secondUserView: UIView!
     @IBOutlet weak var secondUserNoticeLabel: UILabel!
     @IBOutlet weak var secondUserAvatarImage: UIImageView!
@@ -58,23 +57,21 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     @IBOutlet weak var secondUserDescLabel: UILabel!
     @IBOutlet weak var secondUserFollowButton: UIButton!
     @IBOutlet weak var secondUserVerifyImage: UIImageView!
-    
+
     public var delegate: SuggestionUserTableViewCellDelegate?
     private var userRepository: UserRepository = UserRepositoryImpl()
     private var user: [Author] = []
     let tokenHelper: TokenHelper = TokenHelper()
     private var state: State = .none
     private var userRequest: UserRequest = UserRequest()
-    private let realm = try! Realm()
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.tokenHelper.delegate = self
-        self.titleLabel.font = UIFont.asset(.regular, fontSize: .h4)
+        self.titleLabel.font = UIFont.asset(.regular, fontSize: .head4)
         self.titleLabel.textColor = UIColor.Asset.white
         self.showMoreButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .overline)
         self.showMoreButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
-        
         self.firstUserView.custom(cornerRadius: 10, borderWidth: 1.0, borderColor: UIColor.Asset.gray)
         self.firstUserAvatarImage.circle(color: UIColor.Asset.white)
         self.firstUserDisplayNameLabel.font = UIFont.asset(.bold, fontSize: .body)
@@ -87,7 +84,6 @@ public class SuggestionUserTableViewCell: UITableViewCell {
         self.firstUserDescLabel.textColor = UIColor.Asset.white
         self.firstUserVerifyImage.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)
         self.fitstUserFollowButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .small)
-        
         self.secondUserView.custom(cornerRadius: 10, borderWidth: 1.0, borderColor: UIColor.Asset.gray)
         self.secondUserAvatarImage.circle(color: UIColor.Asset.white)
         self.secondUserDisplayNameLabel.font = UIFont.asset(.bold, fontSize: .body)
@@ -105,12 +101,11 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     public func configCell(user: [Author]) {
         self.user = user
         self.updateFirstUserFollow()
         self.updateSecondUserFollow()
-        
         if self.user.count >= 2 {
             let firstUser = self.user[0]
             let firstUserAvatar = URL(string: firstUser.avatar.thumbnail)
@@ -124,7 +119,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
             } else {
                 self.firstUserVerifyImage.isHidden = true
             }
-            
+
             let secondUser = self.user[1]
             let secondUserAvatar = URL(string: secondUser.avatar.thumbnail)
             self.secondUserAvatarImage.kf.setImage(with: secondUserAvatar, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
@@ -139,7 +134,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     private func updateFirstUserFollow() {
         if self.user.count > 0 {
             let user = self.user[0]
@@ -154,7 +149,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     private func updateSecondUserFollow() {
         if self.user.count > 1 {
             let user = self.user[1]
@@ -169,17 +164,20 @@ public class SuggestionUserTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     private func followUser() {
         self.state = .followUser
         if let authorRef = ContentHelper.shared.getAuthorRef(castcleId: self.userRequest.targetCastcleId) {
-            try! self.realm.write {
-                authorRef.followed = true
-                self.realm.add(authorRef, update: .modified)
-                NotificationCenter.default.post(name: .feedReloadContent, object: nil)
-            }
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    authorRef.followed = true
+                    realm.add(authorRef, update: .modified)
+                    NotificationCenter.default.post(name: .feedReloadContent, object: nil)
+                }
+            } catch {}
         }
-        self.userRepository.follow(userRequest: self.userRequest) { (success, response, isRefreshToken) in
+        self.userRepository.follow(userRequest: self.userRequest) { (success, _, isRefreshToken) in
             if !success {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
@@ -187,17 +185,20 @@ public class SuggestionUserTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     private func unfollowUser() {
         self.state = .unfollowUser
         if let authorRef = ContentHelper.shared.getAuthorRef(castcleId: self.userRequest.targetCastcleId) {
-            try! self.realm.write {
-                authorRef.followed = false
-                self.realm.add(authorRef, update: .modified)
-                NotificationCenter.default.post(name: .feedReloadContent, object: nil)
-            }
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    authorRef.followed = false
+                    realm.add(authorRef, update: .modified)
+                    NotificationCenter.default.post(name: .feedReloadContent, object: nil)
+                }
+            } catch {}
         }
-        self.userRepository.unfollow(targetCastcleId: self.userRequest.targetCastcleId) { (success, response, isRefreshToken) in
+        self.userRepository.unfollow(targetCastcleId: self.userRequest.targetCastcleId) { (success, _, isRefreshToken) in
             if !success {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
@@ -205,7 +206,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     @IBAction func firstUserFollowAction(_ sender: Any) {
         if self.user.count > 0 {
             if UserManager.shared.isLogin {
@@ -222,13 +223,13 @@ public class SuggestionUserTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     @IBAction func firstUserProfileAction(_ sender: Any) {
         if self.user.count > 0 {
             self.delegate?.didTabProfile(self, user: self.user[0])
         }
     }
-    
+
     @IBAction func secondUserFollowAction(_ sender: Any) {
         if self.user.count > 1 {
             if UserManager.shared.isLogin {
@@ -245,13 +246,13 @@ public class SuggestionUserTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     @IBAction func secondUserProfileAction(_ sender: Any) {
         if self.user.count > 1 {
             self.delegate?.didTabProfile(self, user: self.user[1])
         }
     }
-    
+
     @IBAction func showMoreAction(_ sender: Any) {
         self.delegate?.didSeeMore(self, user: self.user)
     }

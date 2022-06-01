@@ -25,6 +25,7 @@
 //  Created by Castcle Co., Ltd. on 1/8/2564 BE.
 //
 
+import UIKit
 import Foundation
 import Core
 import Networking
@@ -33,33 +34,34 @@ import SwiftyJSON
 import RealmSwift
 
 final class SplashScreenViewModel {
-   
-    //MARK: Private
+
+    // MARK: - Private
     private var authenticationRepository: AuthenticationRepository = AuthenticationRepositoryImpl()
-    private var masterDataRepository: MasterDataRepository = MasterDataRepositoryImpl()
+    private var notificationRepository: NotificationRepository = NotificationRepositoryImpl()
+    private var dataRepository: DataRepository = DataRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
-    private var state: State = .none
+    var state: State = .none
 
     public func guestLogin() {
-        self.state = .login
+        self.state = .guestLogin
         self.authenticationRepository.guestLogin(uuid: Defaults[.deviceUuid]) { (success) in
             if success {
                 self.getCountryCode()
             }
         }
     }
-    
+
     private func getCountryCode() {
         self.state = .getCountryCode
-        self.masterDataRepository.getCountry() { (success, response, isRefreshToken) in
+        self.dataRepository.getCountry { (success, response, isRefreshToken) in
             if success {
                 do {
+                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let payload = json[JsonKey.payload.rawValue].arrayValue
-                    let realm = try! Realm()
-                    payload.forEach { item in
-                        try! realm.write {
+                    try realm.write {
+                        payload.forEach { item in
                             let countryCode = CountryCode().initWithJson(json: item)
                             realm.add(countryCode, update: .modified)
                         }
@@ -77,16 +79,33 @@ final class SplashScreenViewModel {
             }
         }
     }
-    
-    //MARK: Output
-    var didGuestLoginFinish: (() -> ())?
-    
+
+    public func getBadges() {
+        self.state = .getBadges
+        self.notificationRepository.getBadges { (success, _, isRefreshToken) in
+            if success {
+                UIApplication.shared.applicationIconBadgeNumber = UserManager.shared.badgeCount
+                self.getCountryCode()
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                } else {
+                    self.getCountryCode()
+                }
+            }
+        }
+    }
+
+    // MARK: - Output
+    var didGuestLoginFinish: (() -> Void)?
+
     public init() {
         self.tokenHelper.delegate = self
     }
-    
+
     public func tokenHandle() {
         if UserManager.shared.accessToken.isEmpty || UserManager.shared.userRole == .guest {
+            UIApplication.shared.applicationIconBadgeNumber = UserManager.shared.badgeCount
             self.guestLogin()
         } else {
             self.state = .refreshToken
@@ -97,10 +116,16 @@ final class SplashScreenViewModel {
 
 extension SplashScreenViewModel: TokenHelperDelegate {
     func didRefreshTokenFinish() {
-        if self.state == .getCountryCode {
+        if self.state == .getBadges {
+            self.getBadges()
+        } else if self.state == .getCountryCode {
             self.getCountryCode()
         } else {
-            self.didGuestLoginFinish?()
+            if UserManager.shared.isLogin {
+                self.getBadges()
+            } else {
+                self.didGuestLoginFinish?()
+            }
         }
     }
 }

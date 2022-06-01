@@ -19,31 +19,45 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  SkeletonFeedTableViewCell.swift
+//  ViewCastTableViewCell.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 24/10/2564 BE.
+//  Created by Castcle Co., Ltd. on 4/5/2565 BE.
 //
 
 import UIKit
 import Core
-import SkeletonView
 
-public class SkeletonFeedTableViewCell: UITableViewCell {
+class ViewCastTableViewCell: UITableViewCell {
 
-    @IBOutlet var skeletonView: UIView!
-    
-    public override func awakeFromNib() {
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var viewButton: UIButton!
+
+    private var contentId: String = ""
+
+    override func awakeFromNib() {
         super.awakeFromNib()
+        self.titleLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.titleLabel.textColor = UIColor.Asset.white
+        self.viewButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .overline)
+        self.viewButton.setTitleColor(UIColor.Asset.white, for: .normal)
+        self.viewButton.setBackgroundImage(UIColor.Asset.lightBlue.toImage(), for: .normal)
+        self.viewButton.custom(cornerRadius: 5)
     }
 
-    public override func setSelected(_ selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
-    public func configCell() {
-        DispatchQueue.main.async {
-            self.skeletonView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.Asset.gray))
-        }
+
+    func configCell(contentId: String) {
+        self.titleLabel.text = "View Original Cast"
+        self.contentId = contentId
+    }
+
+    @IBAction func viewAction(_ sender: Any) {
+        let castDict: [String: String] = [
+            JsonKey.contentId.rawValue: contentId
+        ]
+        NotificationCenter.default.post(name: .openCastDelegate, object: nil, userInfo: castDict)
     }
 }

@@ -32,7 +32,7 @@ import Defaults
 import FirebaseRemoteConfig
 import SwiftyJSON
 
-public protocol SplashScreenViewControllerDelegate {
+public protocol SplashScreenViewControllerDelegate: AnyObject {
     func didLoadFinish(_ view: SplashScreenViewController)
 }
 
@@ -40,36 +40,33 @@ public class SplashScreenViewController: UIViewController {
 
     @IBOutlet var logoImage: UIImageView!
     @IBOutlet var backgroundImage: UIImageView!
-    
+
     public var delegate: SplashScreenViewControllerDelegate?
     var viewModel = SplashScreenViewModel()
-    private let remoteConfig = RemoteConfig.remoteConfig()
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
-
         self.backgroundImage.image = UIImage.Asset.launchScreen
         self.logoImage.image = UIImage.Asset.castcleLogo
         self.fetchRemoteConfig()
         self.viewModel.tokenHandle()
-        
         self.viewModel.didGuestLoginFinish = {
             self.delegate?.didLoadFinish(self)
         }
     }
-    
+
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Defaults[.screenId] = ScreenId.splashScreen.rawValue
     }
-    
+
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !UserManager.shared.accessToken.isEmpty {
             EngagementHelper().sendCastcleAnalytic(event: .onScreenView, screen: .splashScreen)
         }
     }
-    
+
     private func fetchRemoteConfig() {
         Defaults[.isForceUpdate] = false
         Defaults[.isSoftUpdate] = false
@@ -77,48 +74,51 @@ public class SplashScreenViewController: UIViewController {
         let setting = RemoteConfigSettings()
         setting.minimumFetchInterval = duration
         RemoteConfig.remoteConfig().configSettings = setting
-        
         let defualt: [String: NSObject] = [
             "version_ios": "9.9.9" as NSObject
         ]
         RemoteConfig.remoteConfig().setDefaults(defualt)
         RemoteConfig.remoteConfig().fetch(withExpirationDuration: duration) { ststus, error in
             if ststus == .success, error == nil {
-                RemoteConfig.remoteConfig().activate() { success, error in
+                RemoteConfig.remoteConfig().activate {_, error in
                     if error == nil {
-                        let json = RemoteConfig.remoteConfig().configValue(forKey: "force_version").jsonValue
-                        if let jsonForceVersion = json {
-                            let data = JSON(jsonForceVersion)
-                            let remoteConfig = RemoteConfig(json: data)
-                            Defaults[.updateUrl] = remoteConfig.ios.url
-                            Defaults[.updateTitle] = remoteConfig.meta.title.en
-                            Defaults[.updateMessage] = remoteConfig.meta.message.en
-                            Defaults[.updateButton] = remoteConfig.meta.button.en
-
-                            if CheckUpdate.shared.isUpdateApp(version: remoteConfig.ios.version) {
-                                Defaults[.isForceUpdate] = true
-                                Defaults[.isSoftUpdate] = false
-                            } else {
-                                _ = CheckUpdate.shared.getAppInfo() { (info, error) in
-                                    if let appStoreAppVersion = info?.version {
-                                        if let _ = error {
-                                            print("Error")
-                                        } else if !CheckUpdate.shared.isUpdateApp(version: appStoreAppVersion) {
-                                            print("App not update")
-                                        } else {
-                                            Defaults[.isForceUpdate] = false
-                                            Defaults[.isSoftUpdate] = true
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        print("Error")
+                        self.checkForceUpdate()
+                        Defaults[.isFarmingEnable] = RemoteConfig.remoteConfig().configValue(forKey: "farming_enable").boolValue
                     }
                 }
+            }
+        }
+    }
+
+    private func checkForceUpdate() {
+        if let jsonForceVersion = RemoteConfig.remoteConfig().configValue(forKey: "force_version").jsonValue {
+            let data = JSON(jsonForceVersion)
+            let remoteConfig = RemoteConfig(json: data)
+            Defaults[.updateUrl] = remoteConfig.ios.url
+            Defaults[.updateTitle] = remoteConfig.meta.title.eng
+            Defaults[.updateMessage] = remoteConfig.meta.message.eng
+            Defaults[.updateButton] = remoteConfig.meta.button.eng
+            if CheckUpdate.shared.isUpdateApp(version: remoteConfig.ios.version) {
+                Defaults[.isForceUpdate] = true
+                Defaults[.isSoftUpdate] = false
             } else {
-                print("Error")
+                self.checkSoftUpdate()
+            }
+        }
+    }
+
+    private func checkSoftUpdate() {
+        if let jsonCurrentVersion = RemoteConfig.remoteConfig().configValue(forKey: "current_version").jsonValue {
+            let data = JSON(jsonCurrentVersion)
+            let remoteConfig = RemoteConfig(json: data)
+            Defaults[.updateUrl] = remoteConfig.ios.url
+            Defaults[.updateTitle] = remoteConfig.meta.title.eng
+            Defaults[.updateMessage] = remoteConfig.meta.message.eng
+            Defaults[.updateButton] = remoteConfig.meta.buttonOk.eng
+            Defaults[.updateButtonCancel] = remoteConfig.meta.buttonCancel.eng
+            if CheckUpdate.shared.isUpdateApp(version: remoteConfig.ios.version) {
+                Defaults[.isForceUpdate] = false
+                Defaults[.isSoftUpdate] = true
             }
         }
     }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -81,23 +81,23 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mIG-ts-cXc" customClass="AttributedLabel" customModule="Atributika">
-                        <rect key="frame" x="30" y="85" width="260" height="20"/>
+                        <rect key="frame" x="30" y="85" width="260" height="46"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YNu-W6-rCN">
-                        <rect key="frame" x="30" y="115" width="260" height="146"/>
+                        <rect key="frame" x="30" y="131" width="260" height="130"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P64-gc-Zt3">
-                                <rect key="frame" x="0.0" y="0.0" width="130" height="146"/>
+                                <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GTJ-KX-LDu">
-                                <rect key="frame" x="130" y="0.0" width="130" height="146"/>
+                                <rect key="frame" x="130" y="0.0" width="130" height="130"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="GTJ-KX-LDu" firstAttribute="height" secondItem="P64-gc-Zt3" secondAttribute="height" id="3Q8-L1-L0b"/>
-                            <constraint firstAttribute="width" secondItem="YNu-W6-rCN" secondAttribute="height" multiplier="16:9" id="3yH-O1-u20"/>
+                            <constraint firstAttribute="width" secondItem="YNu-W6-rCN" secondAttribute="height" multiplier="2:1" id="3yH-O1-u20"/>
                             <constraint firstItem="GTJ-KX-LDu" firstAttribute="width" secondItem="P64-gc-Zt3" secondAttribute="width" id="5y6-14-FVJ"/>
                             <constraint firstItem="P64-gc-Zt3" firstAttribute="top" secondItem="YNu-W6-rCN" secondAttribute="top" id="Nxn-xn-5pE"/>
                             <constraint firstAttribute="trailing" secondItem="GTJ-KX-LDu" secondAttribute="trailing" id="Oq8-U9-erZ"/>
@@ -112,7 +112,7 @@
                     <constraint firstItem="tqj-Xk-8bZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="26V-ES-Vir"/>
                     <constraint firstItem="YNu-W6-rCN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="39y-4G-VAF"/>
                     <constraint firstAttribute="trailing" secondItem="YNu-W6-rCN" secondAttribute="trailing" constant="30" id="3qt-rb-XBf"/>
-                    <constraint firstItem="YNu-W6-rCN" firstAttribute="top" secondItem="mIG-ts-cXc" secondAttribute="bottom" constant="10" id="5XN-Wq-Bt6"/>
+                    <constraint firstItem="YNu-W6-rCN" firstAttribute="top" secondItem="mIG-ts-cXc" secondAttribute="bottom" id="5XN-Wq-Bt6"/>
                     <constraint firstAttribute="trailing" secondItem="mIG-ts-cXc" secondAttribute="trailing" constant="30" id="6R7-W9-BpW"/>
                     <constraint firstAttribute="trailing" secondItem="8Rf-zw-9U5" secondAttribute="trailing" constant="20" id="Fh2-A8-Eb4"/>
                     <constraint firstItem="8Rf-zw-9U5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="Lff-Rx-M27"/>

@@ -36,34 +36,26 @@ public class BlogNoImageTableViewCell: UITableViewCell {
     @IBOutlet var headerLabel: UILabel!
     @IBOutlet var detailLabel: NantesLabel!
     @IBOutlet var blogImageView: UIImageView!
-    
+
     public var content: Content? {
         didSet {
-//            guard let content = self.content else { return }
-            
             let attributes = [NSAttributedString.Key.foregroundColor: UIColor.Asset.lightBlue,
                               NSAttributedString.Key.font: UIFont.asset(.contentLight, fontSize: .body)]
-            self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.contentDetail.readMore.text)", attributes: attributes)
+            self.detailLabel.attributedTruncationToken = NSAttributedString(string: " \(Localization.ContentDetail.readMore.text)", attributes: attributes)
             self.detailLabel.numberOfLines = 2
-            
-            self.headerLabel.font = UIFont.asset(.contentBold, fontSize: .h2)
+
+            self.headerLabel.font = UIFont.asset(.contentBold, fontSize: .head2)
             self.headerLabel.textColor = UIColor.Asset.white
             self.detailLabel.font = UIFont.asset(.contentLight, fontSize: .body)
             self.detailLabel.textColor = UIColor.Asset.lightGray
-            
-//            self.headerLabel.text = content.contentPayload.header
-//            self.detailLabel.text = content.contentPayload.message
-            
             self.blogImageView.image = UIColor.Asset.black.toImage()
         }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
     }
-
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
 }

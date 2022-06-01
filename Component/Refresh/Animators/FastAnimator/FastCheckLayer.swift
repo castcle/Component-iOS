@@ -28,14 +28,11 @@
 import UIKit
 
 class FastCheckLayer: CALayer {
-    
     private(set) var check: CAShapeLayer?
-    
     let color: UIColor
-    
     let lineWidth: CGFloat
-    
-    //MARK: Public Methods
+
+    // MARK: - Public Methods
     func startAnimation() {
         let start = CAKeyframeAnimation(keyPath: "strokeStart")
         start.values = [0, 0.4, 0.3]
@@ -43,7 +40,7 @@ class FastCheckLayer: CALayer {
         start.fillMode = CAMediaTimingFillMode.forwards
         start.duration = 0.5
         start.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        
+
         let end = CAKeyframeAnimation(keyPath: "strokeEnd")
         end.values = [0, 1, 0.9]
 
@@ -51,16 +48,16 @@ class FastCheckLayer: CALayer {
         end.fillMode = CAMediaTimingFillMode.forwards
         end.duration = 0.8
         end.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        
+
         check?.add(start, forKey: "start")
         check?.add(end, forKey: "end")
     }
-    
+
     func endAnimation() {
         check?.removeAllAnimations()
     }
-    
-    //MARK: Initial Methods
+
+    // MARK: - Initial Methods
     init(frame: CGRect, color: UIColor = UIColor.Asset.white, lineWidth: CGFloat = 1) {
         self.color      = color
         self.lineWidth  = lineWidth*2
@@ -69,12 +66,12 @@ class FastCheckLayer: CALayer {
         backgroundColor = UIColor.clear.cgColor
         drawCheck()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    //MARK: Privater Methods
+
+    // MARK: - Privater Methods
     private func drawCheck() {
         let width = Double(frame.size.width)
         check = CAShapeLayer()
@@ -86,11 +83,11 @@ class FastCheckLayer: CALayer {
         check?.strokeStart = 0
         check?.strokeEnd = 0
         let path = UIBezierPath()
-        let a = sin(0.4) * (width/2)
-        let b = cos(0.4) * (width/2)
-        path.move(to: CGPoint.init(x: width/2 - b, y: width/2 - a))
-        path.addLine(to: CGPoint.init(x: width/2 - width/20 , y: width/2 + width/8))
-        path.addLine(to: CGPoint.init(x: width - width/5, y: width/2 - a))
+        let aValue = sin(0.4) * (width/2)
+        let bValue = cos(0.4) * (width/2)
+        path.move(to: CGPoint.init(x: width/2 - bValue, y: width/2 - aValue))
+        path.addLine(to: CGPoint.init(x: width/2 - width/20, y: width/2 + width/8))
+        path.addLine(to: CGPoint.init(x: width - width/5, y: width/2 - aValue))
         check?.path = path.cgPath
         addSublayer(check!)
     }

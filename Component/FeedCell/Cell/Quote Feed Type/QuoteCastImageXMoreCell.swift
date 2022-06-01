@@ -48,7 +48,7 @@ public class QuoteCastImageXMoreCell: UITableViewCell {
     @IBOutlet var moreImageView: UIImageView!
     @IBOutlet var moreLabel: UILabel!
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
-    
+
     var viewModel: QuoteCastViewModel?
     public var content: Content? {
         didSet {
@@ -56,15 +56,16 @@ public class QuoteCastImageXMoreCell: UITableViewCell {
                 guard let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) else { return }
                 self.viewModel = QuoteCastViewModel(content: content)
                 self.massageLabel.numberOfLines = 0
-                self.massageLabel.attributedText = content.message
+                self.massageLabel.isSelectable = true
+                self.massageLabel.attributedText = (content.message.isEmpty ? "" : "\(content.message)\n")
                     .styleHashtags(AttributedContent.link)
                     .styleMentions(AttributedContent.link)
                     .styleLinks(AttributedContent.link)
                     .styleAll(AttributedContent.quote)
-                
+
                 self.moreImageView.image = UIColor.Asset.black.toImage()
                 self.moreLabel.font = UIFont.asset(.bold, fontSize: .custom(size: 45))
-                
+
                 if content.photo.count > 4 {
                     self.moreImageView.isHidden = false
                     self.moreImageView.alpha = 0.5
@@ -74,21 +75,21 @@ public class QuoteCastImageXMoreCell: UITableViewCell {
                     self.moreImageView.isHidden = true
                     self.moreLabel.isHidden = true
                 }
-                
+
                 if content.photo.count >= 4 {
                     let firstUrl = URL(string: content.photo[0].thumbnail)
                     self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-                    
+
                     let secondUrl = URL(string: content.photo[1].thumbnail)
                     self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-                    
+
                     let thirdUrl = URL(string: content.photo[2].thumbnail)
                     self.thirdImageView.kf.setImage(with: thirdUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-                    
+
                     let fourthUrl = URL(string: content.photo[3].thumbnail)
                     self.fourthImageView.kf.setImage(with: fourthUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
                 }
-                
+
                 if authorRef.type == AuthorType.people.rawValue {
                     if authorRef.castcleId == UserManager.shared.rawCastcleId {
                         let url = URL(string: UserManager.shared.avatar)
@@ -104,22 +105,23 @@ public class QuoteCastImageXMoreCell: UITableViewCell {
                         }
                     }
                 } else {
-                    let realm = try! Realm()
-                    if let page = realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first {
-                        let url = URL(string: page.avatar)
-                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        self.followButton.isHidden = true
-                    } else {
-                        let url = URL(string: authorRef.avatar)
-                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        if authorRef.followed {
+                    do {
+                        let realm = try Realm()
+                        if let page = realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first {
+                            let url = URL(string: page.avatar)
+                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                             self.followButton.isHidden = true
                         } else {
-                            self.followButton.isHidden = false
+                            let url = URL(string: authorRef.avatar)
+                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                            if authorRef.followed {
+                                self.followButton.isHidden = true
+                            } else {
+                                self.followButton.isHidden = false
+                            }
                         }
-                    }
+                    } catch {}
                 }
-                
                 self.displayNameLabel.text = authorRef.displayName
                 self.dateLabel.text = content.postDate.timeAgoDisplay()
                 if authorRef.official {
@@ -134,16 +136,14 @@ public class QuoteCastImageXMoreCell: UITableViewCell {
             }
         }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.avatarImage.circle(color: UIColor.Asset.white)
         self.displayNameLabel.font = UIFont.asset(.bold, fontSize: .overline)
         self.displayNameLabel.textColor = UIColor.Asset.white
         self.dateLabel.font = UIFont.asset(.regular, fontSize: .custom(size: 10))
         self.dateLabel.textColor = UIColor.Asset.lightGray
-        
         self.followButton.titleLabel?.font = UIFont.asset(.bold, fontSize: .overline)
         self.followButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
         self.verifyIcon.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)
@@ -154,7 +154,7 @@ public class QuoteCastImageXMoreCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     @IBAction func followAction(_ sender: Any) {
         guard let viewModel = self.viewModel else { return }
         viewModel.followUser()

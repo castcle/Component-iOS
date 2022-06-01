@@ -41,15 +41,16 @@ public class QuoteCastTextCell: UITableViewCell {
     @IBOutlet var lineView: UIView!
     @IBOutlet var massageLabel: AttributedLabel!
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
-    
+
     var viewModel: QuoteCastViewModel?
-    
+
     public var content: Content? {
         didSet {
             if let content = self.content {
                 guard let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) else { return }
                 self.viewModel = QuoteCastViewModel(content: content)
                 self.massageLabel.numberOfLines = 0
+                self.massageLabel.isSelectable = true
                 self.massageLabel.attributedText = content.message
                     .styleHashtags(AttributedContent.link)
                     .styleMentions(AttributedContent.link)
@@ -70,22 +71,23 @@ public class QuoteCastTextCell: UITableViewCell {
                         }
                     }
                 } else {
-                    let realm = try! Realm()
-                    if let page = realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first {
-                        let url = URL(string: page.avatar)
-                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        self.followButton.isHidden = true
-                    } else {
-                        let url = URL(string: authorRef.avatar)
-                        self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-                        if authorRef.followed {
+                    do {
+                        let realm = try Realm()
+                        if let page = realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first {
+                            let url = URL(string: page.avatar)
+                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                             self.followButton.isHidden = true
                         } else {
-                            self.followButton.isHidden = false
+                            let url = URL(string: authorRef.avatar)
+                            self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+                            if authorRef.followed {
+                                self.followButton.isHidden = true
+                            } else {
+                                self.followButton.isHidden = false
+                            }
                         }
-                    }
+                    } catch {}
                 }
-                
                 self.displayNameLabel.text = authorRef.displayName
                 self.dateLabel.text = content.postDate.timeAgoDisplay()
                 if authorRef.official {
@@ -100,7 +102,7 @@ public class QuoteCastTextCell: UITableViewCell {
             }
         }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.avatarImage.circle(color: UIColor.Asset.white)
@@ -117,7 +119,7 @@ public class QuoteCastTextCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     @IBAction func followAction(_ sender: Any) {
         guard let viewModel = self.viewModel else { return }
         viewModel.followUser()

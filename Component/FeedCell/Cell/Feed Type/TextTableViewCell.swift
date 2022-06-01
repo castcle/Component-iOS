@@ -33,11 +33,12 @@ import Atributika
 public class TextTableViewCell: UITableViewCell {
 
     @IBOutlet var massageLabel: AttributedLabel!
-    
+
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
             self.massageLabel.numberOfLines = 0
+            self.massageLabel.isSelectable = true
             self.massageLabel.attributedText = content.message
                 .styleHashtags(AttributedContent.link)
                 .styleMentions(AttributedContent.link)
@@ -46,9 +47,9 @@ public class TextTableViewCell: UITableViewCell {
             self.enableActiveLabel()
         }
     }
-    
+
     private func enableActiveLabel() {
-        self.massageLabel.onClick = { label, detection in
+        self.massageLabel.onClick = { _, detection in
             switch detection.type {
             case .hashtag(let tag):
                 let hashtagDict: [String: String] = [
@@ -74,7 +75,7 @@ public class TextTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
     }

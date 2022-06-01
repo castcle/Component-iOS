@@ -43,12 +43,13 @@ public class ImageXMoreTableViewCell: UITableViewCell {
     @IBOutlet var fourthImageView: UIImageView!
     @IBOutlet var moreImageView: UIImageView!
     @IBOutlet var moreLabel: UILabel!
-    
+
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
             self.massageLabel.numberOfLines = 0
-            self.massageLabel.attributedText = content.message
+            self.massageLabel.isSelectable = true
+            self.massageLabel.attributedText = (content.message.isEmpty ? "" : "\(content.message)\n")
                 .styleHashtags(AttributedContent.link)
                 .styleMentions(AttributedContent.link)
                 .styleLinks(AttributedContent.link)
@@ -56,7 +57,7 @@ public class ImageXMoreTableViewCell: UITableViewCell {
             self.enableActiveLabel()
             self.moreImageView.image = UIColor.Asset.black.toImage()
             self.moreLabel.font = UIFont.asset(.bold, fontSize: .custom(size: 45))
-            
+
             if content.photo.count > 4 {
                 self.moreImageView.isHidden = false
                 self.moreImageView.alpha = 0.5
@@ -66,25 +67,25 @@ public class ImageXMoreTableViewCell: UITableViewCell {
                 self.moreImageView.isHidden = true
                 self.moreLabel.isHidden = true
             }
-            
+
             if content.photo.count >= 4 {
                 let firstUrl = URL(string: content.photo[0].thumbnail)
                 self.firstImageView.kf.setImage(with: firstUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-                
+
                 let secondUrl = URL(string: content.photo[1].thumbnail)
                 self.secondImageView.kf.setImage(with: secondUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-                
+
                 let thirdUrl = URL(string: content.photo[2].thumbnail)
                 self.thirdImageView.kf.setImage(with: thirdUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
-                
+
                 let fourthUrl = URL(string: content.photo[3].thumbnail)
                 self.fourthImageView.kf.setImage(with: fourthUrl, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
             }
         }
     }
-    
+
     private func enableActiveLabel() {
-        self.massageLabel.onClick = { label, detection in
+        self.massageLabel.onClick = {_, detection in
             switch detection.type {
             case .hashtag(let tag):
                 let hashtagDict: [String: String] = [
@@ -110,7 +111,7 @@ public class ImageXMoreTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.imageContainer.custom(cornerRadius: 12)
@@ -119,43 +120,39 @@ public class ImageXMoreTableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     @IBAction func viewFirstImageAction(_ sender: Any) {
         self.openImage(index: 0)
     }
-    
+
     @IBAction func viewSecondImageAction(_ sender: Any) {
         self.openImage(index: 1)
     }
-    
+
     @IBAction func viewThirdImageAction(_ sender: Any) {
         self.openImage(index: 2)
     }
-    
+
     @IBAction func viewFourthImageAction(_ sender: Any) {
         self.openImage(index: 3)
     }
-    
+
     private func openImage(index: Int) {
         if let content = self.content, !content.photo.isEmpty {
-            
             var images: [LightboxImage] = []
             content.photo.forEach { photo in
                 images.append(LightboxImage(imageURL: URL(string: photo.fullHd)!))
             }
-            
             LightboxConfig.CloseButton.textAttributes = [
                 .font: UIFont.asset(.bold, fontSize: .body),
                 .foregroundColor: UIColor.Asset.white
               ]
             LightboxConfig.CloseButton.text = "Close"
-            
             let controller = LightboxController(images: images, startIndex: index)
             controller.pageDelegate = self
             controller.dismissalDelegate = self
             controller.dynamicBackground = true
             controller.footerView.isHidden = true
-
             Utility.currentViewController().present(controller, animated: true, completion: nil)
         }
     }

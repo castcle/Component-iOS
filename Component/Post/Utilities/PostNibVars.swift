@@ -19,16 +19,37 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  UIColorExtension.swift
+//  PostNibVars.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 8/7/2564 BE.
+//  Created by Castcle Co., Ltd. on 15/8/2564 BE.
 //
 
-import UIKit
+public struct PostNibVars {
+    // MARK: - View Controller
+    public struct ViewController {
+        public static let post = "PostViewController"
+    }
 
-extension UIColor {
-    public convenience init(rgb: (r: CGFloat, g: CGFloat, b: CGFloat)) {
-        self.init(red: rgb.r/255, green: rgb.g/255, blue: rgb.b/255, alpha: 1.0)
+    // MARK: - View
+    public struct Storyboard {
+        public static let post = "Post"
+    }
+
+    public struct View {
+        public static let cast = "CastKeyboardInput"
+    }
+
+    // MARK: - TableViewCell
+    public struct TableViewCell {
+        public static let header = "HeaderPostTableViewCell"
+        public static let newPost = "PostTextTableViewCell"
+        public static let imagePost = "ImagePostTableViewCell"
+        public static let mentionCell = "MentionTableViewCell"
+        public static let hashtagCell = "HashtagTableViewCell"
+    }
+
+    // MARK: - CollectionViewCell
+    public struct CollectionViewCell {
     }
 }

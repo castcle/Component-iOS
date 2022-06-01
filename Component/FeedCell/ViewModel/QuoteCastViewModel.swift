@@ -29,24 +29,24 @@ import Core
 import Networking
 
 public final class QuoteCastViewModel {
-   
+
     private var userRepository: UserRepository = UserRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
     private var state: State = .none
     private var userRequest: UserRequest = UserRequest()
     private var content: Content?
-    
+
     public init(content: Content) {
         self.content = content
         self.tokenHelper.delegate = self
     }
-    
+
     func followUser() {
         self.state = .followUser
         guard let content = self.content else { return }
         if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
             self.userRequest.targetCastcleId = authorRef.castcleId
-            self.userRepository.follow(userRequest: self.userRequest) { (success, response, isRefreshToken) in
+            self.userRepository.follow(userRequest: self.userRequest) { (success, _, isRefreshToken) in
                 if !success {
                     if isRefreshToken {
                         self.tokenHelper.refreshToken()

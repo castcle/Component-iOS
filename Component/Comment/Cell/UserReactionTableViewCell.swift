@@ -19,31 +19,38 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  SkeletonUserTableViewCell.swift
+//  UserReactionTableViewCell.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 7/2/2565 BE.
+//  Created by Castcle Co., Ltd. on 19/5/2565 BE.
 //
 
 import UIKit
 import Core
-import SkeletonView
+import Networking
 
-public class SkeletonUserTableViewCell: UITableViewCell {
+class UserReactionTableViewCell: UITableViewCell {
 
-    @IBOutlet var skeletonView: UIView!
-    
-    public override func awakeFromNib() {
+    @IBOutlet weak var userAvatarImage: UIImageView!
+    @IBOutlet weak var userDisplayNameLabel: UILabel!
+
+    var user: UserInfo = UserInfo()
+
+    override func awakeFromNib() {
         super.awakeFromNib()
+        self.userAvatarImage.circle(color: UIColor.Asset.white)
+        self.userDisplayNameLabel.font = UIFont.asset(.bold, fontSize: .body)
+        self.userDisplayNameLabel.textColor = UIColor.Asset.white
     }
 
-    public override func setSelected(_ selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
-    public func configCell() {
-        DispatchQueue.main.async {
-            self.skeletonView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.Asset.gray))
-        }
+
+    public func configCell(user: UserInfo) {
+        self.user = user
+        let userAvatar = URL(string: self.user.images.avatar.thumbnail)
+        self.userAvatarImage.kf.setImage(with: userAvatar, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
+        self.userDisplayNameLabel.text = self.user.displayName
     }
 }

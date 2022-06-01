@@ -33,13 +33,17 @@ public struct ComponentNibVars {
         public static let datePicker = "DatePickerViewController"
         public static let recastPopup = "RecastPopupViewController"
         public static let comment = "CommentViewController"
+        public static let commentDetail = "CommentDetailViewController"
         public static let reportSuccess = "ReportSuccessViewController"
         public static let farmingPopup = "FarmingPopupViewController"
+        public static let farmingLimitPopup = "FarmingLimitViewController"
         public static let syncAutoPostTwitter = "SyncAutoPostViewController"
         public static let acceptSyncSocialPopup = "AcceptSyncSocialPopupViewController"
         public static let selectCode = "SelectCodeViewController"
+        public static let reaction = "ReactionViewController"
+        public static let userReactionList = "UserReactionListViewController"
     }
-    
+
     // MARK: - View
     public struct Storyboard {
         public static let internalWebView = "WebView"
@@ -50,13 +54,12 @@ public struct ComponentNibVars {
         public static let report = "Report"
         public static let farmingPopup = "FarmingPopup"
         public static let publicPopup = "PublicPopup"
-        
     }
-    
+
     public struct View {
         public static let comment = "CommentKeyboardInput"
     }
-    
+
     // MARK: - TableViewCell
     public struct TableViewCell {
         public static let userList = "UserListTableViewCell"
@@ -75,6 +78,7 @@ public struct ComponentNibVars {
         public static let reply = "ReplyTableViewCell"
         public static let skeleton = "SkeletonFeedTableViewCell"
         public static let skeletonUser = "SkeletonUserTableViewCell"
+        public static let skeletonNotify = "SkeletonNotifyTableViewCell"
         public static let activityHeader = "ActivityHeaderTableViewCell"
         public static let quoteText = "QuoteCastTextCell"
         public static let quoteLink = "QuoteCastTextLinkCell"
@@ -97,8 +101,11 @@ public struct ComponentNibVars {
         public static let longImageXMore = "LongImageXMoreTableViewCell"
         public static let userToFollow = "UserToFollowTableViewCell"
         public static let selectCode = "SelectCodeTableViewCell"
+        public static let viewCast = "ViewCastTableViewCell"
+        public static let reactionCast = "ReactionCastTableViewCell"
+        public static let userReaction = "UserReactionTableViewCell"
     }
-    
+
     // MARK: - CollectionViewCell
     public struct CollectionViewCell {
     }

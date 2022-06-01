@@ -36,27 +36,27 @@ public class ImageX1TableViewCell: UITableViewCell {
     @IBOutlet var massageLabel: AttributedLabel!
     @IBOutlet var imageContainer: UIView!
     @IBOutlet var displayImage: UIImageView!
-    
+
     public var content: Content? {
         didSet {
             guard let content = self.content else { return }
             self.massageLabel.numberOfLines = 0
-            self.massageLabel.attributedText = content.message
+            self.massageLabel.isSelectable = true
+            self.massageLabel.attributedText = (content.message.isEmpty ? "" : "\(content.message)\n")
                 .styleHashtags(AttributedContent.link)
                 .styleMentions(AttributedContent.link)
                 .styleLinks(AttributedContent.link)
                 .styleAll(AttributedContent.all)
             self.enableActiveLabel()
-            
             if let imageUrl = content.photo.first {
                 let url = URL(string: imageUrl.thumbnail)
                 self.displayImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
             }
         }
     }
-    
+
     private func enableActiveLabel() {
-        self.massageLabel.onClick = { label, detection in
+        self.massageLabel.onClick = { _, detection in
             switch detection.type {
             case .hashtag(let tag):
                 let hashtagDict: [String: String] = [
@@ -82,7 +82,7 @@ public class ImageX1TableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.imageContainer.custom(cornerRadius: 12)
@@ -91,25 +91,22 @@ public class ImageX1TableViewCell: UITableViewCell {
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     @IBAction func viewImageAction(_ sender: Any) {
         if let content = self.content, let image = content.photo.first {
             let images = [
                 LightboxImage(imageURL: URL(string: image.fullHd)!)
             ]
-            
             LightboxConfig.CloseButton.textAttributes = [
                 .font: UIFont.asset(.bold, fontSize: .body),
                 .foregroundColor: UIColor.Asset.white
               ]
             LightboxConfig.CloseButton.text = "Close"
-            
             let controller = LightboxController(images: images)
             controller.pageDelegate = self
             controller.dismissalDelegate = self
             controller.dynamicBackground = true
             controller.footerView.isHidden = true
-
             Utility.currentViewController().present(controller, animated: true, completion: nil)
         }
     }
