@@ -130,6 +130,8 @@
 		B7AC880827199BA500500F81 /* HandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880727199BA500500F81 /* HandleView.swift */; };
 		B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */; };
 		B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */; };
+		B7D30D87285087850085F980 /* SkeletonNormalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D30D85285087850085F980 /* SkeletonNormalTableViewCell.swift */; };
+		B7D30D88285087850085F980 /* SkeletonNormalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7D30D86285087850085F980 /* SkeletonNormalTableViewCell.xib */; };
 		B7D4BC1C27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D4BC1B27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift */; };
 		B7D4BC1E27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D4BC1D27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift */; };
 		B7E18CE0283655800069F5C4 /* CommentDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E18CD8283655800069F5C4 /* CommentDetailViewModel.swift */; };
@@ -313,6 +315,8 @@
 		B7AC880727199BA500500F81 /* HandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleView.swift; sourceTree = "<group>"; };
 		B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
+		B7D30D85285087850085F980 /* SkeletonNormalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonNormalTableViewCell.swift; sourceTree = "<group>"; };
+		B7D30D86285087850085F980 /* SkeletonNormalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkeletonNormalTableViewCell.xib; sourceTree = "<group>"; };
 		B7D4BC1B27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptSyncSocialPopupViewController.swift; sourceTree = "<group>"; };
 		B7D4BC1D27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptSyncSocialPopupViewModel.swift; sourceTree = "<group>"; };
 		B7E18CD8283655800069F5C4 /* CommentDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentDetailViewModel.swift; sourceTree = "<group>"; };
@@ -846,12 +850,14 @@
 		B7E18CE7283655F90069F5C4 /* Skeleton */ = {
 			isa = PBXGroup;
 			children = (
+				B7E18CEB283655F90069F5C4 /* SkeletonFeedTableViewCell.swift */,
 				B7E18CE8283655F90069F5C4 /* SkeletonFeedTableViewCell.xib */,
 				B7E18CE9283655F90069F5C4 /* SkeletonUserTableViewCell.swift */,
-				B7E18CEA283655F90069F5C4 /* SkeletonNotifyTableViewCell.swift */,
-				B7E18CEB283655F90069F5C4 /* SkeletonFeedTableViewCell.swift */,
-				B7E18CEC283655F90069F5C4 /* SkeletonNotifyTableViewCell.xib */,
 				B7E18CED283655F90069F5C4 /* SkeletonUserTableViewCell.xib */,
+				B7E18CEA283655F90069F5C4 /* SkeletonNotifyTableViewCell.swift */,
+				B7E18CEC283655F90069F5C4 /* SkeletonNotifyTableViewCell.xib */,
+				B7D30D85285087850085F980 /* SkeletonNormalTableViewCell.swift */,
+				B7D30D86285087850085F980 /* SkeletonNormalTableViewCell.xib */,
 			);
 			path = Skeleton;
 			sourceTree = "<group>";
@@ -1004,6 +1010,7 @@
 				B7910E3026B5E1320097C94E /* SplashScreen.storyboard in Resources */,
 				B78663522747AC4200B13EEF /* QuoteCastTextCell.xib in Resources */,
 				B717449726E791070014D6B5 /* HeaderTableViewCell.xib in Resources */,
+				B7D30D88285087850085F980 /* SkeletonNormalTableViewCell.xib in Resources */,
 				B7A15B262795C40C001E34DE /* Localizable.strings in Resources */,
 				B7E18CFA283656880069F5C4 /* ReactionCastTableViewCell.xib in Resources */,
 				B717449F26E7E1450014D6B5 /* CommentTableViewCell.xib in Resources */,
@@ -1104,6 +1111,7 @@
 				B78663502747AC4200B13EEF /* QuoteCastTextLinkCell.swift in Sources */,
 				B7D4BC1E27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift in Sources */,
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
+				B7D30D87285087850085F980 /* SkeletonNormalTableViewCell.swift in Sources */,
 				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,
 				B7117045283B917500FF985A /* PostOpener.swift in Sources */,
