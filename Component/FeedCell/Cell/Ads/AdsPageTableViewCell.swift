@@ -82,10 +82,14 @@ public class AdsPageTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    public func configAdsPreViewCell(page: Page, ads: Ads) {
+    public func configAdsPreViewCell(page: Page, adsRequest: AdsRequest) {
         self.isPreview = true
         self.followButton.isHidden = false
-        self.detailLabel.text = ads.campaignMessage
+        if !adsRequest.campaignMessage.isEmpty {
+            self.detailLabel.text = "\(adsRequest.campaignMessage)\n"
+        } else {
+            self.detailLabel.text = adsRequest.campaignMessage
+        }
         let avatar = URL(string: page.avatar)
         let cover = URL(string: page.cover)
         self.avatarImageView.kf.setImage(with: avatar, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])

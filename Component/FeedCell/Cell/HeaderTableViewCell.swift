@@ -160,7 +160,7 @@ public class HeaderTableViewCell: UITableViewCell {
         self.followButton.setTitle(Localization.ContentDetail.follow.text, for: .normal)
         let url = URL(string: page.avatar)
         self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-        self.followButton.isHidden = false
+        self.followButton.isHidden = true
         self.displayNameLabel.text = page.displayName
         self.dateLabel.text = "Advertised"
         if page.official {
