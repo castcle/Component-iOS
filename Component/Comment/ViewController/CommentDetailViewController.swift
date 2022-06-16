@@ -259,10 +259,6 @@ extension CommentDetailViewController {
             return UIView()
         }
     }
-
-    func didViewFarmmingHistory(_ footerTableViewCell: FooterTableViewCell) {
-        NotificationCenter.default.post(name: .openFarmmingDelegate, object: nil, userInfo: nil)
-    }
 }
 
 extension CommentDetailViewController: CommentTableViewCellDelegate {

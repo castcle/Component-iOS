@@ -33,10 +33,7 @@ import Defaults
 import SwiftDate
 
 public protocol FooterTableViewCellDelegate: AnyObject {
-    func didTabComment(_ footerTableViewCell: FooterTableViewCell, content: Content)
     func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: Page)
-    func didAuthen(_ footerTableViewCell: FooterTableViewCell)
-    func didViewFarmmingHistory(_ footerTableViewCell: FooterTableViewCell)
 }
 
 public class FooterTableViewCell: UITableViewCell {
@@ -51,18 +48,13 @@ public class FooterTableViewCell: UITableViewCell {
     @IBOutlet var recastView: UIView!
     @IBOutlet var farmView: UIView!
 
-    public var content: Content? {
-        didSet {
-            guard let content = self.content else { return }
-            self.updateUi(content: content)
-        }
-    }
-
     public var delegate: FooterTableViewCellDelegate?
     private var contentRepository: ContentRepository = ContentRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
     var contentRequest: ContentRequest = ContentRequest()
     var stateType: StateType = .none
+    var isCommentView: Bool = false
+    private var content: Content?
     enum StateType {
         case like
         case recast
@@ -79,6 +71,13 @@ public class FooterTableViewCell: UITableViewCell {
 
     public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+
+    public func configCell(content: Content, isCommentView: Bool) {
+        self.content = content
+        self.isCommentView = isCommentView
+        guard let content = self.content else { return }
+        self.updateUi(content: content)
     }
 
     private func updateUi(content: Content) {
@@ -214,7 +213,7 @@ public class FooterTableViewCell: UITableViewCell {
             self.stateType = .like
             self.likeContent(content: content)
         } else {
-            self.delegate?.didAuthen(self)
+            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
         }
     }
 
@@ -222,9 +221,11 @@ public class FooterTableViewCell: UITableViewCell {
         if UserManager.shared.isLogin {
             guard let content = self.content else { return }
             self.stateType = .none
-            self.delegate?.didTabComment(self, content: content)
+            if !self.isCommentView {
+                Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.comment(CommentViewModel(contentId: content.id))), animated: true)
+            }
         } else {
-            self.delegate?.didAuthen(self)
+            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
         }
     }
 
@@ -235,7 +236,7 @@ public class FooterTableViewCell: UITableViewCell {
             viewController?.delegate = self
             Utility.currentViewController().presentPanModal(viewController ?? RecastPopupViewController())
         } else {
-            self.delegate?.didAuthen(self)
+            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
         }
     }
 
@@ -258,7 +259,7 @@ public class FooterTableViewCell: UITableViewCell {
                 }
             }
         } else {
-            self.delegate?.didAuthen(self)
+            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
         }
     }
 }
@@ -270,6 +271,7 @@ extension FooterTableViewCell: RecastPopupViewControllerDelegate {
             self.recastContent(content: content, castcleId: castcleId)
         } else if recastAction == .quoteCast {
             guard let page = page else { return }
+
             self.delegate?.didTabQuoteCast(self, content: content, page: page)
         }
     }
@@ -289,7 +291,7 @@ extension FooterTableViewCell: FarmingLimitViewControllerDelegate {
     }
 
     public func farmingLimitViewControllerDidViewHistory(_ view: FarmingLimitViewController) {
-        self.delegate?.didViewFarmmingHistory(self)
+        NotificationCenter.default.post(name: .openFarmmingDelegate, object: nil, userInfo: nil)
     }
 }
 

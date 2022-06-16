@@ -33,8 +33,6 @@ import Kingfisher
 import RealmSwift
 
 public protocol HeaderTableViewCellDelegate: AnyObject {
-    func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author)
-    func didAuthen(_ headerTableViewCell: HeaderTableViewCell)
     func didRemoveSuccess(_ headerTableViewCell: HeaderTableViewCell)
     func didReportSuccess(_ headerTableViewCell: HeaderTableViewCell)
 }
@@ -80,7 +78,7 @@ public class HeaderTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    public func configCell(feedType: FeedType, content: Content, isDefaultContent: Bool) {
+    public func configCell(type: FeedType, content: Content, isDefaultContent: Bool) {
         self.isPreview = false
         self.content = content
         if let content = self.content {
@@ -122,7 +120,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 self.displayNameLabel.text = authorRef.displayName
                 if isDefaultContent {
                     self.dateLabel.text = "Introduction"
-                } else if feedType == .ads {
+                } else if type == .ads {
                     self.dateLabel.text = "Advertised"
                 } else {
                     self.dateLabel.text = content.postDate.timeAgoDisplay()
@@ -139,7 +137,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 self.avatarImage.image = UIImage.Asset.userPlaceholder
                 if isDefaultContent {
                     self.dateLabel.text = "Introduction"
-                } else if feedType == .ads {
+                } else if type == .ads {
                     self.dateLabel.text = "Advertised"
                 }
                 self.displayNameLabel.text = "Castcle"
@@ -148,7 +146,7 @@ public class HeaderTableViewCell: UITableViewCell {
             self.avatarImage.image = UIImage.Asset.userPlaceholder
             if isDefaultContent {
                 self.dateLabel.text = "Introduction"
-            } else if feedType == .ads {
+            } else if type == .ads {
                 self.dateLabel.text = "Advertised"
             }
             self.displayNameLabel.text = "Castcle"
@@ -189,7 +187,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 return
             }
         } else {
-            self.delegate?.didAuthen(self)
+            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
         }
     }
 
@@ -199,7 +197,11 @@ public class HeaderTableViewCell: UITableViewCell {
         }
         if let content = self.content {
             if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
-                self.delegate?.didTabProfile(self, author: Author(authorRef: authorRef))
+                let userDict: [String: String] = [
+                    JsonKey.castcleId.rawValue: authorRef.castcleId,
+                    JsonKey.displayName.rawValue: authorRef.displayName
+                ]
+                NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
             }
         }
     }
@@ -225,7 +227,9 @@ public class HeaderTableViewCell: UITableViewCell {
                     if UserManager.shared.isLogin {
                         self.reportContent()
                     } else {
-                        self.delegate?.didAuthen(self)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
+                        }
                     }
                 }
                 actionSheet.addActions([reportButton])

@@ -211,4 +211,11 @@ public class FeedCellHelper {
             return UITableViewCell()
         }
     }
+
+    public func renderSkeletonCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.skeleton, for: indexPath as IndexPath) as? SkeletonFeedTableViewCell
+        cell?.backgroundColor = UIColor.Asset.darkGray
+        cell?.configCell()
+        return cell ?? SkeletonFeedTableViewCell()
+    }
 }
