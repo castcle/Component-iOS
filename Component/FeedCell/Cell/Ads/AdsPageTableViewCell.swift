@@ -115,9 +115,9 @@ public class AdsPageTableViewCell: UITableViewCell {
                 return
             }
             var urlString = url.absoluteString
-            urlString = urlString.replacingOccurrences(of: "https://", with: "")
-            urlString = urlString.replacingOccurrences(of: "http://", with: "")
-            if let newUrl = URL(string: "https://\(urlString)") {
+            urlString = urlString.replacingOccurrences(of: UrlProtocol.https.value, with: "")
+            urlString = urlString.replacingOccurrences(of: UrlProtocol.http.value, with: "")
+            if let newUrl = URL(string: "\(UrlProtocol.https.value)\(urlString)") {
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
             }
         }
