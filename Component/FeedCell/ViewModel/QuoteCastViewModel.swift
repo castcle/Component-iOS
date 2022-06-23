@@ -47,14 +47,10 @@ public final class QuoteCastViewModel {
         if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
             self.userRequest.targetCastcleId = authorRef.castcleId
             self.userRepository.follow(userRequest: self.userRequest) { (success, _, isRefreshToken) in
-                if !success {
-                    if isRefreshToken {
-                        self.tokenHelper.refreshToken()
-                    }
+                if !success && isRefreshToken {
+                    self.tokenHelper.refreshToken()
                 }
             }
-        } else {
-            return
         }
     }
 }

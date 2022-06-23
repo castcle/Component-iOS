@@ -195,14 +195,12 @@ public class HeaderTableViewCell: UITableViewCell {
         if self.isPreview {
             return
         }
-        if let content = self.content {
-            if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
-                let userDict: [String: String] = [
-                    JsonKey.castcleId.rawValue: authorRef.castcleId,
-                    JsonKey.displayName.rawValue: authorRef.displayName
-                ]
-                NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
-            }
+        if let content = self.content, let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
+            let userDict: [String: String] = [
+                JsonKey.castcleId.rawValue: authorRef.castcleId,
+                JsonKey.displayName.rawValue: authorRef.displayName
+            ]
+            NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
         }
     }
 
@@ -245,10 +243,8 @@ public class HeaderTableViewCell: UITableViewCell {
         guard let content = self.content else { return }
         self.delegate?.didRemoveSuccess(self)
         self.contentRepository.deleteContent(contentId: content.id) { (success, _, isRefreshToken) in
-            if !success {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
-                }
+            if !success && isRefreshToken {
+                self.tokenHelper.refreshToken()
             }
         }
     }
@@ -288,14 +284,10 @@ public class HeaderTableViewCell: UITableViewCell {
                 }
             } catch {}
             self.userRepository.follow(userRequest: self.userRequest) { (success, _, isRefreshToken) in
-                if !success {
-                    if isRefreshToken {
-                        self.tokenHelper.refreshToken()
-                    }
+                if !success && isRefreshToken {
+                    self.tokenHelper.refreshToken()
                 }
             }
-        } else {
-            return
         }
     }
 
@@ -319,14 +311,10 @@ public class HeaderTableViewCell: UITableViewCell {
                 }
             } catch {}
             self.userRepository.unfollow(targetCastcleId: self.userRequest.targetCastcleId) { (success, _, isRefreshToken) in
-                if !success {
-                    if isRefreshToken {
-                        self.tokenHelper.refreshToken()
-                    }
+                if !success && isRefreshToken {
+                    self.tokenHelper.refreshToken()
                 }
             }
-        } else {
-            return
         }
     }
 }

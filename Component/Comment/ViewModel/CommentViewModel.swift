@@ -133,13 +133,13 @@ public final class CommentViewModel {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let commentJson = JSON(json[JsonKey.payload.rawValue].dictionaryValue)
-                    let replyId = commentJson["id"].stringValue
+                    let replyIdData = commentJson[JsonKey.id.rawValue].stringValue
                     let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
                     let users = includes[JsonKey.users.rawValue].arrayValue
                     CommentHelper.shared.updateCommentRef(commentJson: commentJson)
                     UserHelper.shared.updateAuthorRef(users: users)
                     if let index = self.comments.firstIndex(where: { $0.id == self.commentId }) {
-                        self.comments[index].reply.append(replyId)
+                        self.comments[index].reply.append(replyIdData)
                         self.modifyCommentData()
                         self.didLoadCommentsFinish?()
                     }

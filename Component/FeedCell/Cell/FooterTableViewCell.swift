@@ -65,7 +65,7 @@ public class FooterTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.tokenHelper.delegate = self
         let footerItem: CGFloat = (Defaults[.isFarmingEnable] ? 4.0 : 3.0)
-        self.farmView.isHidden = (Defaults[.isFarmingEnable] ? false : true)
+        self.farmView.isHidden = !Defaults[.isFarmingEnable]
         self.widthConstraint.constant = (UIScreen.main.bounds.width / footerItem)
     }
 

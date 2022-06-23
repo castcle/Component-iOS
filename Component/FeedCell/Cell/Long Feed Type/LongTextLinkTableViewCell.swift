@@ -87,13 +87,6 @@ public class LongTextLinkTableViewCell: UITableViewCell {
         }
     }
 
-    private func setData() {
-        UIView.transition(with: self, duration: 0.35, options: .transitionCrossDissolve, animations: {
-            self.skeletonView.isHidden = true
-            self.linkContainer.isHidden = false
-        })
-    }
-
     private func setDataWithContent(icon: UIImage, title: String, desc: String) {
         self.skeletonView.isHidden = true
         self.linkContainer.isHidden = false

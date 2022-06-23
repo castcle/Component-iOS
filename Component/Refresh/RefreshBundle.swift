@@ -56,7 +56,7 @@ class RefreshBundle {
         }
 
         if let bundle = Bundle(path: self.bundle.bundlePath + self.imagePath) {
-            if let path = bundle.path(forResource: imageName, ofType: "png") {
+            if let path = bundle.path(forResource: name, ofType: "png") {
                 let image = UIImage(contentsOfFile: path)
                 return image
             }
