@@ -337,7 +337,7 @@ auto-post to (@Songphracharoen) and will now auto-post to your new Page.</string
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="37k-54-ggj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1431" y="42"/>
+            <point key="canvasLocation" x="1433" y="42"/>
         </scene>
         <!--Select Code View Controller-->
         <scene sceneID="e2H-tE-LEz">
@@ -426,6 +426,85 @@ auto-post to (@Songphracharoen) and will now auto-post to your new Page.</string
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u5w-2h-p7j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="750" y="738"/>
+        </scene>
+        <!--Pdpa Popup View Controller-->
+        <scene sceneID="EE3-9w-61U">
+            <objects>
+                <viewController storyboardIdentifier="PdpaPopupViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="kaA-ex-Nhe" customClass="PdpaPopupViewController" customModule="Component" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="va5-tq-cCB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view alpha="0.60000002384185791" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ecS-TX-KO7">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pEa-HC-EIU">
+                                <rect key="frame" x="5" y="156" width="310" height="256.5"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zfi-wz-alM">
+                                        <rect key="frame" x="20" y="186.5" width="270" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="Cie-UO-YBM"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="Accept"/>
+                                        <connections>
+                                            <action selector="closeAction:" destination="kaA-ex-Nhe" eventType="touchUpInside" id="6L1-MX-IQq"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Policy Update" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZGs-ZP-8FC">
+                                        <rect key="frame" x="10" y="30" width="290" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpp-JT-kvy" customClass="ActiveLabel" customModule="ActiveLabel">
+                                        <rect key="frame" x="15" y="79.5" width="280" height="67"/>
+                                        <string key="text">Castcle’s new Privacy Policy will begin on June 1st, 2022.  Please review carefully, and Contact Castcle if you have any concerns</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="Zfi-wz-alM" firstAttribute="top" secondItem="Vpp-JT-kvy" secondAttribute="bottom" constant="40" id="7Sd-uP-UuI"/>
+                                    <constraint firstItem="ZGs-ZP-8FC" firstAttribute="top" secondItem="pEa-HC-EIU" secondAttribute="top" constant="30" id="8SP-cN-nWe"/>
+                                    <constraint firstItem="ZGs-ZP-8FC" firstAttribute="leading" secondItem="pEa-HC-EIU" secondAttribute="leading" constant="10" id="N6X-jO-5XI"/>
+                                    <constraint firstAttribute="bottom" secondItem="Zfi-wz-alM" secondAttribute="bottom" constant="20" id="NJj-m8-7gh"/>
+                                    <constraint firstItem="Vpp-JT-kvy" firstAttribute="leading" secondItem="pEa-HC-EIU" secondAttribute="leading" constant="15" id="QAj-16-ySS"/>
+                                    <constraint firstItem="Zfi-wz-alM" firstAttribute="leading" secondItem="pEa-HC-EIU" secondAttribute="leading" constant="20" id="Ubk-W1-VAC"/>
+                                    <constraint firstItem="Vpp-JT-kvy" firstAttribute="top" secondItem="ZGs-ZP-8FC" secondAttribute="bottom" constant="30" id="fIT-st-lJM"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZGs-ZP-8FC" secondAttribute="trailing" constant="10" id="jDz-Fd-RjJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="Vpp-JT-kvy" secondAttribute="trailing" constant="15" id="o9Q-o9-b2I"/>
+                                    <constraint firstAttribute="width" constant="310" id="uZj-Ig-Wyf"/>
+                                    <constraint firstAttribute="trailing" secondItem="Zfi-wz-alM" secondAttribute="trailing" constant="20" id="wRB-hg-gh5"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Ooz-0J-BVh"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ecS-TX-KO7" firstAttribute="leading" secondItem="va5-tq-cCB" secondAttribute="leading" id="0Oo-Vl-Lpp"/>
+                            <constraint firstAttribute="trailing" secondItem="ecS-TX-KO7" secondAttribute="trailing" id="1uO-Mw-HNH"/>
+                            <constraint firstItem="ecS-TX-KO7" firstAttribute="top" secondItem="va5-tq-cCB" secondAttribute="top" id="Jty-O3-g2f"/>
+                            <constraint firstAttribute="bottom" secondItem="ecS-TX-KO7" secondAttribute="bottom" id="UwX-E2-Zke"/>
+                            <constraint firstItem="pEa-HC-EIU" firstAttribute="centerX" secondItem="va5-tq-cCB" secondAttribute="centerX" id="ZYP-Rk-Dk3"/>
+                            <constraint firstItem="pEa-HC-EIU" firstAttribute="centerY" secondItem="va5-tq-cCB" secondAttribute="centerY" id="oZX-73-Ru2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundView" destination="ecS-TX-KO7" id="rQf-l2-2o8"/>
+                        <outlet property="closeButton" destination="Zfi-wz-alM" id="emh-WP-Z85"/>
+                        <outlet property="detailLabel" destination="Vpp-JT-kvy" id="SaY-Eh-feU"/>
+                        <outlet property="popupView" destination="pEa-HC-EIU" id="7yJ-3h-XvU"/>
+                        <outlet property="titleLabel" destination="ZGs-ZP-8FC" id="PWZ-Z7-LTY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xnH-5t-eQ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2115" y="42"/>
         </scene>
     </scenes>
     <resources>

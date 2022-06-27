@@ -42,6 +42,7 @@ public struct ComponentNibVars {
         public static let selectCode = "SelectCodeViewController"
         public static let reaction = "ReactionViewController"
         public static let userReactionList = "UserReactionListViewController"
+        public static let pdpaPopup = "PdpaPopupViewController"
     }
 
     // MARK: - View

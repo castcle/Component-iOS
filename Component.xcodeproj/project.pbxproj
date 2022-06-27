@@ -119,6 +119,8 @@
 		B797240B27FAACA300111F24 /* SyncTwitterAutoPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B797240A27FAACA300111F24 /* SyncTwitterAutoPostViewModel.swift */; };
 		B7A15B232795C1A1001E34DE /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A15B222795C1A1001E34DE /* Localizable.swift */; };
 		B7A15B262795C40C001E34DE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7A15B282795C40C001E34DE /* Localizable.strings */; };
+		B7A5B535286992A200FB92D1 /* PdpaPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A5B534286992A200FB92D1 /* PdpaPopupViewController.swift */; };
+		B7A5B53728699CD000FB92D1 /* PdpaPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A5B53628699CD000FB92D1 /* PdpaPopupViewModel.swift */; };
 		B7A71D0126FC4E380092F318 /* FeedCellHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A71D0026FC4E380092F318 /* FeedCellHelper.swift */; };
 		B7AC1E442717C67A002FC176 /* TextLinkPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC1E422717C67A002FC176 /* TextLinkPreviewTableViewCell.swift */; };
 		B7AC1E452717C67A002FC176 /* TextLinkPreviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7AC1E432717C67A002FC176 /* TextLinkPreviewTableViewCell.xib */; };
@@ -304,6 +306,8 @@
 		B7A15B222795C1A1001E34DE /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		B7A15B272795C40C001E34DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B7A15B292795C414001E34DE /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B7A5B534286992A200FB92D1 /* PdpaPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdpaPopupViewController.swift; sourceTree = "<group>"; };
+		B7A5B53628699CD000FB92D1 /* PdpaPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdpaPopupViewModel.swift; sourceTree = "<group>"; };
 		B7A71D0026FC4E380092F318 /* FeedCellHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellHelper.swift; sourceTree = "<group>"; };
 		B7AC1E422717C67A002FC176 /* TextLinkPreviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextLinkPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		B7AC1E432717C67A002FC176 /* TextLinkPreviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextLinkPreviewTableViewCell.xib; sourceTree = "<group>"; };
@@ -813,6 +817,7 @@
 				B74EBE2B27F7DA440024BB94 /* SyncAutoPostViewController.swift */,
 				B7D4BC1B27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift */,
 				B7E18D00283657790069F5C4 /* SelectCodeViewController.swift */,
+				B7A5B534286992A200FB92D1 /* PdpaPopupViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -822,6 +827,7 @@
 			children = (
 				B797240A27FAACA300111F24 /* SyncTwitterAutoPostViewModel.swift */,
 				B7D4BC1D27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift */,
+				B7A5B53628699CD000FB92D1 /* PdpaPopupViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1089,6 +1095,8 @@
 				B711704B283B917500FF985A /* MentionTableViewCell.swift in Sources */,
 				B71744B826E9EF850014D6B5 /* ImageX3TableViewCell.swift in Sources */,
 				B71744AE26E9EF280014D6B5 /* ImageX1TableViewCell.swift in Sources */,
+				B7A5B535286992A200FB92D1 /* PdpaPopupViewController.swift in Sources */,
+				B7A5B53728699CD000FB92D1 /* PdpaPopupViewModel.swift in Sources */,
 				B7866366274B833400B13EEF /* QuoteCastViewModel.swift in Sources */,
 				B711704D283B917600FF985A /* HeaderPostTableViewCell.swift in Sources */,
 				B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */,

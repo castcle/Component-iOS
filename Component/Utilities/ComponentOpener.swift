@@ -44,6 +44,7 @@ public enum ComponentScene {
     case selectCode
     case reaction(Content, ReactionType)
     case userReactionList(UserReactionListViewModel)
+    case pdpaPopup
 }
 
 public struct ComponentOpener {
@@ -117,6 +118,10 @@ public struct ComponentOpener {
             let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.userReactionList) as? UserReactionListViewController
             viewController?.viewModel = viewModel
             return viewController ?? UserReactionListViewController()
+        case .pdpaPopup:
+            let storyboard: UIStoryboard = UIStoryboard(name: ComponentNibVars.Storyboard.publicPopup, bundle: ConfigBundle.component)
+            let viewController = storyboard.instantiateViewController(withIdentifier: ComponentNibVars.ViewController.pdpaPopup) as? PdpaPopupViewController
+            return viewController ?? PdpaPopupViewController()
         }
     }
 }
