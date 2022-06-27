@@ -174,7 +174,9 @@ public class HeaderTableViewCell: UITableViewCell {
         if self.isPreview {
             return
         }
-        if UserManager.shared.isLogin {
+        if !UserManager.shared.isVerified {
+            NotificationCenter.default.post(name: .openVerifyDelegate, object: nil, userInfo: nil)
+        } else if UserManager.shared.isLogin {
             guard let content = self.content else { return }
             if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
                 self.followButton.isHidden = true
@@ -183,8 +185,6 @@ public class HeaderTableViewCell: UITableViewCell {
                     self.followButton.isHidden = false
                     self.unfollowUser()
                 }).show()
-            } else {
-                return
             }
         } else {
             NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)

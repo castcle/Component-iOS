@@ -208,7 +208,9 @@ public class FooterTableViewCell: UITableViewCell {
     }
 
     @IBAction func likeAction(_ sender: Any) {
-        if UserManager.shared.isLogin {
+        if !UserManager.shared.isVerified {
+            NotificationCenter.default.post(name: .openVerifyDelegate, object: nil, userInfo: nil)
+        } else if UserManager.shared.isLogin {
             guard let content = self.content else { return }
             self.stateType = .like
             self.likeContent(content: content)
@@ -218,7 +220,9 @@ public class FooterTableViewCell: UITableViewCell {
     }
 
     @IBAction func commentAction(_ sender: Any) {
-        if UserManager.shared.isLogin {
+        if !UserManager.shared.isVerified {
+            NotificationCenter.default.post(name: .openVerifyDelegate, object: nil, userInfo: nil)
+        } else if UserManager.shared.isLogin {
             guard let content = self.content else { return }
             self.stateType = .none
             if !self.isCommentView {
@@ -230,7 +234,9 @@ public class FooterTableViewCell: UITableViewCell {
     }
 
     @IBAction func recastAction(_ sender: Any) {
-        if UserManager.shared.isLogin {
+        if !UserManager.shared.isVerified {
+            NotificationCenter.default.post(name: .openVerifyDelegate, object: nil, userInfo: nil)
+        } else if UserManager.shared.isLogin {
             guard let content = self.content else { return }
             let viewController = ComponentOpener.open(.recast(RecastPopupViewModel(isRecasted: content.participate.recasted))) as? RecastPopupViewController
             viewController?.delegate = self
@@ -241,7 +247,9 @@ public class FooterTableViewCell: UITableViewCell {
     }
 
     @IBAction func farmingAction(_ sender: Any) {
-        if UserManager.shared.isLogin {
+        if !UserManager.shared.isVerified {
+            NotificationCenter.default.post(name: .openVerifyDelegate, object: nil, userInfo: nil)
+        } else if UserManager.shared.isLogin {
             guard let content = self.content else { return }
             if content.participate.farming {
                 let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(type: .unfarn))) as? FarmingPopupViewController
