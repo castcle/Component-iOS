@@ -119,6 +119,8 @@
 		B797240B27FAACA300111F24 /* SyncTwitterAutoPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B797240A27FAACA300111F24 /* SyncTwitterAutoPostViewModel.swift */; };
 		B7A15B232795C1A1001E34DE /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A15B222795C1A1001E34DE /* Localizable.swift */; };
 		B7A15B262795C40C001E34DE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7A15B282795C40C001E34DE /* Localizable.strings */; };
+		B7A5B535286992A200FB92D1 /* PdpaPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A5B534286992A200FB92D1 /* PdpaPopupViewController.swift */; };
+		B7A5B53728699CD000FB92D1 /* PdpaPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A5B53628699CD000FB92D1 /* PdpaPopupViewModel.swift */; };
 		B7A71D0126FC4E380092F318 /* FeedCellHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A71D0026FC4E380092F318 /* FeedCellHelper.swift */; };
 		B7AC1E442717C67A002FC176 /* TextLinkPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC1E422717C67A002FC176 /* TextLinkPreviewTableViewCell.swift */; };
 		B7AC1E452717C67A002FC176 /* TextLinkPreviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7AC1E432717C67A002FC176 /* TextLinkPreviewTableViewCell.xib */; };
@@ -130,6 +132,8 @@
 		B7AC880827199BA500500F81 /* HandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880727199BA500500F81 /* HandleView.swift */; };
 		B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */; };
 		B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */; };
+		B7D30D87285087850085F980 /* SkeletonNormalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D30D85285087850085F980 /* SkeletonNormalTableViewCell.swift */; };
+		B7D30D88285087850085F980 /* SkeletonNormalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7D30D86285087850085F980 /* SkeletonNormalTableViewCell.xib */; };
 		B7D4BC1C27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D4BC1B27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift */; };
 		B7D4BC1E27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D4BC1D27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift */; };
 		B7E18CE0283655800069F5C4 /* CommentDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E18CD8283655800069F5C4 /* CommentDetailViewModel.swift */; };
@@ -302,6 +306,8 @@
 		B7A15B222795C1A1001E34DE /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		B7A15B272795C40C001E34DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B7A15B292795C414001E34DE /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B7A5B534286992A200FB92D1 /* PdpaPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdpaPopupViewController.swift; sourceTree = "<group>"; };
+		B7A5B53628699CD000FB92D1 /* PdpaPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdpaPopupViewModel.swift; sourceTree = "<group>"; };
 		B7A71D0026FC4E380092F318 /* FeedCellHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellHelper.swift; sourceTree = "<group>"; };
 		B7AC1E422717C67A002FC176 /* TextLinkPreviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextLinkPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		B7AC1E432717C67A002FC176 /* TextLinkPreviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextLinkPreviewTableViewCell.xib; sourceTree = "<group>"; };
@@ -313,6 +319,8 @@
 		B7AC880727199BA500500F81 /* HandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleView.swift; sourceTree = "<group>"; };
 		B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
+		B7D30D85285087850085F980 /* SkeletonNormalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonNormalTableViewCell.swift; sourceTree = "<group>"; };
+		B7D30D86285087850085F980 /* SkeletonNormalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkeletonNormalTableViewCell.xib; sourceTree = "<group>"; };
 		B7D4BC1B27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptSyncSocialPopupViewController.swift; sourceTree = "<group>"; };
 		B7D4BC1D27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptSyncSocialPopupViewModel.swift; sourceTree = "<group>"; };
 		B7E18CD8283655800069F5C4 /* CommentDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentDetailViewModel.swift; sourceTree = "<group>"; };
@@ -809,6 +817,7 @@
 				B74EBE2B27F7DA440024BB94 /* SyncAutoPostViewController.swift */,
 				B7D4BC1B27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift */,
 				B7E18D00283657790069F5C4 /* SelectCodeViewController.swift */,
+				B7A5B534286992A200FB92D1 /* PdpaPopupViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -818,6 +827,7 @@
 			children = (
 				B797240A27FAACA300111F24 /* SyncTwitterAutoPostViewModel.swift */,
 				B7D4BC1D27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift */,
+				B7A5B53628699CD000FB92D1 /* PdpaPopupViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -835,10 +845,10 @@
 		B7E18CDB283655800069F5C4 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				B7E18CDC283655800069F5C4 /* ReactionViewController.swift */,
-				B7E18CDD283655800069F5C4 /* UserReactionListViewController.swift */,
 				B7E18CDE283655800069F5C4 /* CommentViewController.swift */,
 				B7E18CDF283655800069F5C4 /* CommentDetailViewController.swift */,
+				B7E18CDC283655800069F5C4 /* ReactionViewController.swift */,
+				B7E18CDD283655800069F5C4 /* UserReactionListViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -846,12 +856,14 @@
 		B7E18CE7283655F90069F5C4 /* Skeleton */ = {
 			isa = PBXGroup;
 			children = (
+				B7E18CEB283655F90069F5C4 /* SkeletonFeedTableViewCell.swift */,
 				B7E18CE8283655F90069F5C4 /* SkeletonFeedTableViewCell.xib */,
 				B7E18CE9283655F90069F5C4 /* SkeletonUserTableViewCell.swift */,
-				B7E18CEA283655F90069F5C4 /* SkeletonNotifyTableViewCell.swift */,
-				B7E18CEB283655F90069F5C4 /* SkeletonFeedTableViewCell.swift */,
-				B7E18CEC283655F90069F5C4 /* SkeletonNotifyTableViewCell.xib */,
 				B7E18CED283655F90069F5C4 /* SkeletonUserTableViewCell.xib */,
+				B7E18CEA283655F90069F5C4 /* SkeletonNotifyTableViewCell.swift */,
+				B7E18CEC283655F90069F5C4 /* SkeletonNotifyTableViewCell.xib */,
+				B7D30D85285087850085F980 /* SkeletonNormalTableViewCell.swift */,
+				B7D30D86285087850085F980 /* SkeletonNormalTableViewCell.xib */,
 			);
 			path = Skeleton;
 			sourceTree = "<group>";
@@ -1004,6 +1016,7 @@
 				B7910E3026B5E1320097C94E /* SplashScreen.storyboard in Resources */,
 				B78663522747AC4200B13EEF /* QuoteCastTextCell.xib in Resources */,
 				B717449726E791070014D6B5 /* HeaderTableViewCell.xib in Resources */,
+				B7D30D88285087850085F980 /* SkeletonNormalTableViewCell.xib in Resources */,
 				B7A15B262795C40C001E34DE /* Localizable.strings in Resources */,
 				B7E18CFA283656880069F5C4 /* ReactionCastTableViewCell.xib in Resources */,
 				B717449F26E7E1450014D6B5 /* CommentTableViewCell.xib in Resources */,
@@ -1082,6 +1095,8 @@
 				B711704B283B917500FF985A /* MentionTableViewCell.swift in Sources */,
 				B71744B826E9EF850014D6B5 /* ImageX3TableViewCell.swift in Sources */,
 				B71744AE26E9EF280014D6B5 /* ImageX1TableViewCell.swift in Sources */,
+				B7A5B535286992A200FB92D1 /* PdpaPopupViewController.swift in Sources */,
+				B7A5B53728699CD000FB92D1 /* PdpaPopupViewModel.swift in Sources */,
 				B7866366274B833400B13EEF /* QuoteCastViewModel.swift in Sources */,
 				B711704D283B917600FF985A /* HeaderPostTableViewCell.swift in Sources */,
 				B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */,
@@ -1104,6 +1119,7 @@
 				B78663502747AC4200B13EEF /* QuoteCastTextLinkCell.swift in Sources */,
 				B7D4BC1E27FEFA13008ACD9F /* AcceptSyncSocialPopupViewModel.swift in Sources */,
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
+				B7D30D87285087850085F980 /* SkeletonNormalTableViewCell.swift in Sources */,
 				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,
 				B7117045283B917500FF985A /* PostOpener.swift in Sources */,

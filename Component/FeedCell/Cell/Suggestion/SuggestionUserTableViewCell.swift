@@ -60,7 +60,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
 
     public var delegate: SuggestionUserTableViewCellDelegate?
     private var userRepository: UserRepository = UserRepositoryImpl()
-    private var user: [Author] = []
+    private var users: [Author] = []
     let tokenHelper: TokenHelper = TokenHelper()
     private var state: State = .none
     private var userRequest: UserRequest = UserRequest()
@@ -102,12 +102,12 @@ public class SuggestionUserTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    public func configCell(user: [Author]) {
-        self.user = user
+    public func configCell(users: [Author]) {
+        self.users = users
         self.updateFirstUserFollow()
         self.updateSecondUserFollow()
-        if self.user.count >= 2 {
-            let firstUser = self.user[0]
+        if self.users.count >= 2 {
+            let firstUser = self.users[0]
             let firstUserAvatar = URL(string: firstUser.avatar.thumbnail)
             self.firstUserAvatarImage.kf.setImage(with: firstUserAvatar, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
             self.firstUserNoticeLabel.text = firstUser.aggregator.message
@@ -120,7 +120,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
                 self.firstUserVerifyImage.isHidden = true
             }
 
-            let secondUser = self.user[1]
+            let secondUser = self.users[1]
             let secondUserAvatar = URL(string: secondUser.avatar.thumbnail)
             self.secondUserAvatarImage.kf.setImage(with: secondUserAvatar, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
             self.secondUserNoticeLabel.text = secondUser.aggregator.message
@@ -136,8 +136,8 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     }
 
     private func updateFirstUserFollow() {
-        if self.user.count > 0 {
-            let user = self.user[0]
+        if self.users.count > 0 {
+            let user = self.users[0]
             if user.followed {
                 self.fitstUserFollowButton.setTitle("Following", for: .normal)
                 self.fitstUserFollowButton.setTitleColor(UIColor.Asset.white, for: .normal)
@@ -151,8 +151,8 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     }
 
     private func updateSecondUserFollow() {
-        if self.user.count > 1 {
-            let user = self.user[1]
+        if self.users.count > 1 {
+            let user = self.users[1]
             if user.followed {
                 self.secondUserFollowButton.setTitle("Following", for: .normal)
                 self.secondUserFollowButton.setTitleColor(UIColor.Asset.white, for: .normal)
@@ -178,10 +178,8 @@ public class SuggestionUserTableViewCell: UITableViewCell {
             } catch {}
         }
         self.userRepository.follow(userRequest: self.userRequest) { (success, _, isRefreshToken) in
-            if !success {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
-                }
+            if !success && isRefreshToken {
+                self.tokenHelper.refreshToken()
             }
         }
     }
@@ -199,24 +197,22 @@ public class SuggestionUserTableViewCell: UITableViewCell {
             } catch {}
         }
         self.userRepository.unfollow(targetCastcleId: self.userRequest.targetCastcleId) { (success, _, isRefreshToken) in
-            if !success {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
-                }
+            if !success && isRefreshToken {
+                self.tokenHelper.refreshToken()
             }
         }
     }
 
     @IBAction func firstUserFollowAction(_ sender: Any) {
-        if self.user.count > 0 {
+        if self.users.count > 0 {
             if UserManager.shared.isLogin {
-                self.userRequest.targetCastcleId = self.user[0].castcleId
-                if self.user[0].followed {
+                self.userRequest.targetCastcleId = self.users[0].castcleId
+                if self.users[0].followed {
                     self.unfollowUser()
                 } else {
                     self.followUser()
                 }
-                self.user[0].followed.toggle()
+                self.users[0].followed.toggle()
                 self.updateFirstUserFollow()
             } else {
                 self.delegate?.didAuthen(self)
@@ -225,21 +221,21 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     }
 
     @IBAction func firstUserProfileAction(_ sender: Any) {
-        if self.user.count > 0 {
-            self.delegate?.didTabProfile(self, user: self.user[0])
+        if self.users.count > 0 {
+            self.delegate?.didTabProfile(self, user: self.users[0])
         }
     }
 
     @IBAction func secondUserFollowAction(_ sender: Any) {
-        if self.user.count > 1 {
+        if self.users.count > 1 {
             if UserManager.shared.isLogin {
-                self.userRequest.targetCastcleId = self.user[1].castcleId
-                if self.user[1].followed {
+                self.userRequest.targetCastcleId = self.users[1].castcleId
+                if self.users[1].followed {
                     self.unfollowUser()
                 } else {
                     self.followUser()
                 }
-                self.user[1].followed.toggle()
+                self.users[1].followed.toggle()
                 self.updateFirstUserFollow()
             } else {
                 self.delegate?.didAuthen(self)
@@ -248,13 +244,13 @@ public class SuggestionUserTableViewCell: UITableViewCell {
     }
 
     @IBAction func secondUserProfileAction(_ sender: Any) {
-        if self.user.count > 1 {
-            self.delegate?.didTabProfile(self, user: self.user[1])
+        if self.users.count > 1 {
+            self.delegate?.didTabProfile(self, user: self.users[1])
         }
     }
 
     @IBAction func showMoreAction(_ sender: Any) {
-        self.delegate?.didSeeMore(self, user: self.user)
+        self.delegate?.didSeeMore(self, user: self.users)
     }
 }
 

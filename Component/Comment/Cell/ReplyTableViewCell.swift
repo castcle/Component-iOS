@@ -121,22 +121,20 @@ class ReplyTableViewCell: UITableViewCell {
     }
 
     @objc func longPressed(sender: UILongPressGestureRecognizer) {
-        if UserHelper.shared.isMyAccount(id: self.commentRef.authorId) {
-            if !self.isShowActionSheet {
-                self.isShowActionSheet = true
-                self.showActionSheet()
-            }
+        if UserHelper.shared.isMyAccount(id: self.commentRef.authorId) && !self.isShowActionSheet {
+            self.isShowActionSheet = true
+            self.showActionSheet()
         }
     }
 
     private func showActionSheet() {
         let actionSheet = CCActionSheet(isGestureDismiss: false)
-        let cancelButton = CCAction(title: "Cancel", image: UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+        let cancelButton = CCAction(title: "Cancel", image: UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .normal) {
             actionSheet.dismissActionSheet()
             self.isShowActionSheet = false
         }
         actionSheet.addActions([cancelButton])
-        let deleteButton = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.deleteOne), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+        let deleteButton = CCAction(title: "Delete", image: UIImage.init(icon: .castcle(.deleteOne), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .normal) {
             actionSheet.dismissActionSheet()
             self.isShowActionSheet = false
             self.delegate?.didDelete(self, replyComment: self.commentRef, originalCommentId: self.originalCommentId)

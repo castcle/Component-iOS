@@ -109,10 +109,8 @@ public class UserToFollowTableViewCell: UITableViewCell {
     private func followUser() {
         self.state = .followUser
         self.userRepository.follow(userRequest: self.userRequest) { (success, _, isRefreshToken) in
-            if !success {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
-                }
+            if !success && isRefreshToken {
+                self.tokenHelper.refreshToken()
             }
         }
     }
@@ -120,10 +118,8 @@ public class UserToFollowTableViewCell: UITableViewCell {
     private func unfollowUser() {
         self.state = .unfollowUser
         self.userRepository.unfollow(targetCastcleId: self.userRequest.targetCastcleId) { (success, _, isRefreshToken) in
-            if !success {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
-                }
+            if !success && isRefreshToken {
+                self.tokenHelper.refreshToken()
             }
         }
     }

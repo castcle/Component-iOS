@@ -56,16 +56,9 @@ final class SplashScreenViewModel {
         self.dataRepository.getCountry { (success, response, isRefreshToken) in
             if success {
                 do {
-                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    let payload = json[JsonKey.payload.rawValue].arrayValue
-                    try realm.write {
-                        payload.forEach { item in
-                            let countryCode = CountryCode().initWithJson(json: item)
-                            realm.add(countryCode, update: .modified)
-                        }
-                    }
+                    self.updateLocalCountryCode(json: json)
                     self.didGuestLoginFinish?()
                 } catch {
                     self.didGuestLoginFinish?()
@@ -94,6 +87,19 @@ final class SplashScreenViewModel {
                 }
             }
         }
+    }
+
+    private func updateLocalCountryCode(json: JSON) {
+        do {
+            let realm = try Realm()
+            let payload = json[JsonKey.payload.rawValue].arrayValue
+            try realm.write {
+                payload.forEach { item in
+                    let countryCode = CountryCode().initWithJson(json: item)
+                    realm.add(countryCode, update: .modified)
+                }
+            }
+        } catch {}
     }
 
     // MARK: - Output

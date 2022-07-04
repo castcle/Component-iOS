@@ -29,7 +29,6 @@ import Core
 import Networking
 import Moya
 import SwiftyJSON
-import RealmSwift
 
 public final class CommentViewModel {
 
@@ -62,26 +61,14 @@ public final class CommentViewModel {
         self.contentRepository.getContentDetail(contentId: self.contentId) { (success, response, isRefreshToken)  in
             if success {
                 do {
-                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let payload = JSON(json[JsonKey.payload.rawValue].dictionaryValue)
                     let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
-                    let casts = includes[JsonKey.casts.rawValue].arrayValue
                     let users = includes[JsonKey.users.rawValue].arrayValue
                     self.content = Content(json: payload)
-                    try realm.write {
-                        casts.forEach { cast in
-                            let contentRef = ContentRef().initCustom(json: cast)
-                            realm.add(contentRef, update: .modified)
-                        }
-                    }
-                    try realm.write {
-                        users.forEach { user in
-                            let authorRef = AuthorRef().initCustom(json: user)
-                            realm.add(authorRef, update: .modified)
-                        }
-                    }
+                    ContentHelper.shared.updateContentRef(casts: includes[JsonKey.casts.rawValue].arrayValue)
+                    UserHelper.shared.updateAuthorRef(users: users)
                     self.didLoadContentFinish?()
                 } catch {}
             } else {
@@ -118,18 +105,12 @@ public final class CommentViewModel {
         self.commentRepository.createComment(castcleId: UserManager.shared.rawCastcleId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 do {
-                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let comment = Comment(json: JSON(json[JsonKey.payload.rawValue].dictionaryValue))
                     let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
                     let users = includes[JsonKey.users.rawValue].arrayValue
-                    try realm.write {
-                        users.forEach { user in
-                            let authorRef = AuthorRef().initCustom(json: user)
-                            realm.add(authorRef, update: .modified)
-                        }
-                    }
+                    UserHelper.shared.updateAuthorRef(users: users)
                     self.comments.insert(comment, at: 0)
                     self.modifyCommentData()
                     self.content.metrics.commentCount += 1
@@ -149,25 +130,16 @@ public final class CommentViewModel {
         self.commentRepository.replyComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 do {
-                    let realm = try Realm()
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
                     let commentJson = JSON(json[JsonKey.payload.rawValue].dictionaryValue)
-                    let replyId = commentJson["id"].stringValue
+                    let replyIdData = commentJson[JsonKey.id.rawValue].stringValue
                     let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
                     let users = includes[JsonKey.users.rawValue].arrayValue
-                    try realm.write {
-                        let commentRef = CommentRef().initCustom(json: commentJson)
-                        realm.add(commentRef, update: .modified)
-                    }
-                    try realm.write {
-                        users.forEach { user in
-                            let authorRef = AuthorRef().initCustom(json: user)
-                            realm.add(authorRef, update: .modified)
-                        }
-                    }
+                    CommentHelper.shared.updateCommentRef(commentJson: commentJson)
+                    UserHelper.shared.updateAuthorRef(users: users)
                     if let index = self.comments.firstIndex(where: { $0.id == self.commentId }) {
-                        self.comments[index].reply.append(replyId)
+                        self.comments[index].reply.append(replyIdData)
                         self.modifyCommentData()
                         self.didLoadCommentsFinish?()
                     }

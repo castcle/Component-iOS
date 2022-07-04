@@ -42,6 +42,7 @@ public struct ComponentNibVars {
         public static let selectCode = "SelectCodeViewController"
         public static let reaction = "ReactionViewController"
         public static let userReactionList = "UserReactionListViewController"
+        public static let pdpaPopup = "PdpaPopupViewController"
     }
 
     // MARK: - View
@@ -79,6 +80,7 @@ public struct ComponentNibVars {
         public static let skeleton = "SkeletonFeedTableViewCell"
         public static let skeletonUser = "SkeletonUserTableViewCell"
         public static let skeletonNotify = "SkeletonNotifyTableViewCell"
+        public static let skeletonNormal = "SkeletonNormalTableViewCell"
         public static let activityHeader = "ActivityHeaderTableViewCell"
         public static let quoteText = "QuoteCastTextCell"
         public static let quoteLink = "QuoteCastTextLinkCell"

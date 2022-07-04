@@ -33,8 +33,6 @@ import Kingfisher
 import RealmSwift
 
 public protocol HeaderTableViewCellDelegate: AnyObject {
-    func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author)
-    func didAuthen(_ headerTableViewCell: HeaderTableViewCell)
     func didRemoveSuccess(_ headerTableViewCell: HeaderTableViewCell)
     func didReportSuccess(_ headerTableViewCell: HeaderTableViewCell)
 }
@@ -80,7 +78,7 @@ public class HeaderTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    public func configCell(feedType: FeedType, content: Content, isDefaultContent: Bool) {
+    public func configCell(type: FeedType, content: Content, isDefaultContent: Bool) {
         self.isPreview = false
         self.content = content
         if let content = self.content {
@@ -122,7 +120,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 self.displayNameLabel.text = authorRef.displayName
                 if isDefaultContent {
                     self.dateLabel.text = "Introduction"
-                } else if feedType == .ads {
+                } else if type == .ads {
                     self.dateLabel.text = "Advertised"
                 } else {
                     self.dateLabel.text = content.postDate.timeAgoDisplay()
@@ -139,7 +137,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 self.avatarImage.image = UIImage.Asset.userPlaceholder
                 if isDefaultContent {
                     self.dateLabel.text = "Introduction"
-                } else if feedType == .ads {
+                } else if type == .ads {
                     self.dateLabel.text = "Advertised"
                 }
                 self.displayNameLabel.text = "Castcle"
@@ -148,7 +146,7 @@ public class HeaderTableViewCell: UITableViewCell {
             self.avatarImage.image = UIImage.Asset.userPlaceholder
             if isDefaultContent {
                 self.dateLabel.text = "Introduction"
-            } else if feedType == .ads {
+            } else if type == .ads {
                 self.dateLabel.text = "Advertised"
             }
             self.displayNameLabel.text = "Castcle"
@@ -160,7 +158,7 @@ public class HeaderTableViewCell: UITableViewCell {
         self.followButton.setTitle(Localization.ContentDetail.follow.text, for: .normal)
         let url = URL(string: page.avatar)
         self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
-        self.followButton.isHidden = false
+        self.followButton.isHidden = true
         self.displayNameLabel.text = page.displayName
         self.dateLabel.text = "Advertised"
         if page.official {
@@ -176,7 +174,9 @@ public class HeaderTableViewCell: UITableViewCell {
         if self.isPreview {
             return
         }
-        if UserManager.shared.isLogin {
+        if !UserManager.shared.isVerified {
+            NotificationCenter.default.post(name: .openVerifyDelegate, object: nil, userInfo: nil)
+        } else if UserManager.shared.isLogin {
             guard let content = self.content else { return }
             if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
                 self.followButton.isHidden = true
@@ -185,11 +185,9 @@ public class HeaderTableViewCell: UITableViewCell {
                     self.followButton.isHidden = false
                     self.unfollowUser()
                 }).show()
-            } else {
-                return
             }
         } else {
-            self.delegate?.didAuthen(self)
+            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
         }
     }
 
@@ -197,10 +195,12 @@ public class HeaderTableViewCell: UITableViewCell {
         if self.isPreview {
             return
         }
-        if let content = self.content {
-            if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
-                self.delegate?.didTabProfile(self, author: Author(authorRef: authorRef))
-            }
+        if let content = self.content, let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
+            let userDict: [String: String] = [
+                JsonKey.castcleId.rawValue: authorRef.castcleId,
+                JsonKey.displayName.rawValue: authorRef.displayName
+            ]
+            NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
         }
     }
 
@@ -211,7 +211,7 @@ public class HeaderTableViewCell: UITableViewCell {
         if let content = self.content {
             if UserHelper.shared.isMyAccount(id: content.authorId) {
                 let actionSheet = CCActionSheet()
-                let deleteButton = CCAction(title: Localization.ContentAction.delete.text, image: UIImage.init(icon: .castcle(.delete), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                let deleteButton = CCAction(title: Localization.ContentAction.delete.text, image: UIImage.init(icon: .castcle(.delete), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .normal) {
                     actionSheet.dismissActionSheet()
                     self.deleteContent()
                 }
@@ -220,12 +220,14 @@ public class HeaderTableViewCell: UITableViewCell {
                 Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
             } else {
                 let actionSheet = CCActionSheet()
-                let reportButton = CCAction(title: Localization.ContentAction.reportCast.text, image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .default) {
+                let reportButton = CCAction(title: Localization.ContentAction.reportCast.text, image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .normal) {
                     actionSheet.dismissActionSheet()
                     if UserManager.shared.isLogin {
                         self.reportContent()
                     } else {
-                        self.delegate?.didAuthen(self)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
+                        }
                     }
                 }
                 actionSheet.addActions([reportButton])
@@ -241,10 +243,8 @@ public class HeaderTableViewCell: UITableViewCell {
         guard let content = self.content else { return }
         self.delegate?.didRemoveSuccess(self)
         self.contentRepository.deleteContent(contentId: content.id) { (success, _, isRefreshToken) in
-            if !success {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
-                }
+            if !success && isRefreshToken {
+                self.tokenHelper.refreshToken()
             }
         }
     }
@@ -284,14 +284,10 @@ public class HeaderTableViewCell: UITableViewCell {
                 }
             } catch {}
             self.userRepository.follow(userRequest: self.userRequest) { (success, _, isRefreshToken) in
-                if !success {
-                    if isRefreshToken {
-                        self.tokenHelper.refreshToken()
-                    }
+                if !success && isRefreshToken {
+                    self.tokenHelper.refreshToken()
                 }
             }
-        } else {
-            return
         }
     }
 
@@ -315,14 +311,10 @@ public class HeaderTableViewCell: UITableViewCell {
                 }
             } catch {}
             self.userRepository.unfollow(targetCastcleId: self.userRequest.targetCastcleId) { (success, _, isRefreshToken) in
-                if !success {
-                    if isRefreshToken {
-                        self.tokenHelper.refreshToken()
-                    }
+                if !success && isRefreshToken {
+                    self.tokenHelper.refreshToken()
                 }
             }
-        } else {
-            return
         }
     }
 }

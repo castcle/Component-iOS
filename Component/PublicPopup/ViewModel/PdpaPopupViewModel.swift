@@ -19,35 +19,31 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  QuoteCastViewModel.swift
+//  PdpaPopupViewModel.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 22/11/2564 BE.
+//  Created by Castcle Co., Ltd. on 27/6/2565 BE.
 //
 
 import Core
 import Networking
+import Defaults
 
-public final class QuoteCastViewModel {
+final public class PdpaPopupViewModel {
 
-    private var userRepository: UserRepository = UserRepositoryImpl()
+    private let userRepository: UserRepository = UserRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
-    private var state: State = .none
-    private var userRequest: UserRequest = UserRequest()
-    private var content: Content?
 
-    public init(content: Content) {
-        self.content = content
+    public init() {
         self.tokenHelper.delegate = self
     }
 
-    func followUser() {
-        self.state = .followUser
-        guard let content = self.content else { return }
-        if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
-            self.userRequest.targetCastcleId = authorRef.castcleId
-            self.userRepository.follow(userRequest: self.userRequest) { (success, _, isRefreshToken) in
-                if !success && isRefreshToken {
+    func acceptPdpa() {
+        self.userRepository.pdpa(date: "20220601") { (success, _, isRefreshToken) in
+            if success {
+                Defaults[.pdpa] = true
+            } else {
+                if isRefreshToken {
                     self.tokenHelper.refreshToken()
                 }
             }
@@ -55,10 +51,8 @@ public final class QuoteCastViewModel {
     }
 }
 
-extension QuoteCastViewModel: TokenHelperDelegate {
+extension PdpaPopupViewModel: TokenHelperDelegate {
     public func didRefreshTokenFinish() {
-        if self.state == .followUser {
-            self.followUser()
-        }
+            self.acceptPdpa()
     }
 }

@@ -82,10 +82,14 @@ public class AdsPageTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    public func configAdsPreViewCell(page: Page, ads: Ads) {
+    public func configAdsPreViewCell(page: Page, adsRequest: AdsRequest) {
         self.isPreview = true
         self.followButton.isHidden = false
-        self.detailLabel.text = ads.campaignMessage
+        if !adsRequest.campaignMessage.isEmpty {
+            self.detailLabel.text = "\(adsRequest.campaignMessage)\n"
+        } else {
+            self.detailLabel.text = adsRequest.campaignMessage
+        }
         let avatar = URL(string: page.avatar)
         let cover = URL(string: page.cover)
         self.avatarImageView.kf.setImage(with: avatar, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
@@ -111,12 +115,10 @@ public class AdsPageTableViewCell: UITableViewCell {
                 return
             }
             var urlString = url.absoluteString
-            urlString = urlString.replacingOccurrences(of: "https://", with: "")
-            urlString = urlString.replacingOccurrences(of: "http://", with: "")
-            if let newUrl = URL(string: "https://\(urlString)") {
+            urlString = urlString.replacingOccurrences(of: UrlProtocol.https.value, with: "")
+            urlString = urlString.replacingOccurrences(of: UrlProtocol.http.value, with: "")
+            if let newUrl = URL(string: "\(UrlProtocol.https.value)\(urlString)") {
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(newUrl)), animated: true)
-            } else {
-                return
             }
         }
         self.detailLabel.handleCustomTap(for: self.customHashtag) { element in

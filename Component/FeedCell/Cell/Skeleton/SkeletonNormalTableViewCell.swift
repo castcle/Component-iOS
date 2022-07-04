@@ -19,17 +19,31 @@
 //  Thailand 10160, or visit www.castcle.com if you need additional information
 //  or have any questions.
 //
-//  CCAction+Style.swift
+//  SkeletonNormalTableViewCell.swift
 //  Component
 //
-//  Created by Castcle Co., Ltd. on 15/10/2564 BE.
+//  Created by Castcle Co., Ltd. on 8/6/2565 BE.
 //
 
-import Foundation
+import UIKit
+import Core
+import SkeletonView
 
-extension CCAction {
-    public enum Style: Int {
-        case normal
-        case destructive
+public class SkeletonNormalTableViewCell: UITableViewCell {
+
+    @IBOutlet var skeletonView: UIView!
+
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+
+    public override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+
+    public func configCell() {
+        DispatchQueue.main.async {
+            self.skeletonView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.Asset.gray))
+        }
     }
 }

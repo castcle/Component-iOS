@@ -254,10 +254,7 @@ extension CommentViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             if self.viewModel.contentLoadState == .loading {
-                let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.skeleton, for: indexPath as IndexPath) as? SkeletonFeedTableViewCell
-                cell?.backgroundColor = UIColor.Asset.darkGray
-                cell?.configCell()
-                return cell ?? SkeletonFeedTableViewCell()
+                return FeedCellHelper().renderSkeletonCell(tableView: tableView, indexPath: indexPath)
             } else {
                 if self.viewModel.content.referencedCasts.type == .quoted {
                     if indexPath.row == 0 {
@@ -371,9 +368,9 @@ extension CommentViewController {
             cell?.backgroundColor = UIColor.Asset.darkGray
             cell?.delegate = self
             if content.referencedCasts.type == .recasted {
-                cell?.configCell(feedType: .content, content: originalContent, isDefaultContent: false)
+                cell?.configCell(type: .content, content: originalContent, isDefaultContent: false)
             } else {
-                cell?.configCell(feedType: .content, content: content, isDefaultContent: false)
+                cell?.configCell(type: .content, content: content, isDefaultContent: false)
             }
             return cell ?? HeaderTableViewCell()
         case .footer:
@@ -381,9 +378,9 @@ extension CommentViewController {
             cell?.backgroundColor = UIColor.Asset.darkGray
             cell?.delegate = self
             if content.referencedCasts.type == .recasted {
-                cell?.content = originalContent
+                cell?.configCell(content: originalContent, isCommentView: true)
             } else {
-                cell?.content = content
+                cell?.configCell(content: content, isCommentView: true)
             }
             return cell ?? FooterTableViewCell()
         case .quote:
@@ -411,42 +408,18 @@ extension CommentViewController: HeaderTableViewCellDelegate {
         Utility.currentViewController().dismiss(animated: true)
     }
 
-    func didTabProfile(_ headerTableViewCell: HeaderTableViewCell, author: Author) {
-        let userDict: [String: String] = [
-            JsonKey.castcleId.rawValue: author.castcleId,
-            JsonKey.displayName.rawValue: author.displayName
-        ]
-        NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
-    }
-
-    func didAuthen(_ headerTableViewCell: HeaderTableViewCell) {
-        // Not use
-    }
-
     func didReportSuccess(_ headerTableViewCell: HeaderTableViewCell) {
         Utility.currentViewController().dismiss(animated: true)
     }
 }
 
 extension CommentViewController: FooterTableViewCellDelegate {
-    func didTabComment(_ footerTableViewCell: FooterTableViewCell, content: Content) {
-        self.commentTextField.becomeFirstResponder()
-    }
-
     func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: Page) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             let viewController = PostOpener.open(.post(PostViewModel(postType: .quoteCast, content: content, page: page)))
             viewController.modalPresentationStyle = .fullScreen
             Utility.currentViewController().present(viewController, animated: true, completion: nil)
         }
-    }
-
-    func didAuthen(_ footerTableViewCell: FooterTableViewCell) {
-        // Not use
-    }
-
-    func didViewFarmmingHistory(_ footerTableViewCell: FooterTableViewCell) {
-        //
     }
 }
 
