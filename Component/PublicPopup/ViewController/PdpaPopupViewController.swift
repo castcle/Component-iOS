@@ -67,10 +67,14 @@ class PdpaPopupViewController: UIViewController {
             }
             label.handleCustomTap(for: policyType) { _ in
                 self.dismiss(animated: true)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(URL(string: Environment.privacyPolicy)!)), animated: true)
-                }
+                self.openPolicy()
             }
+        }
+    }
+
+    private func openPolicy() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(URL(string: Environment.privacyPolicy)!)), animated: true)
         }
     }
 
