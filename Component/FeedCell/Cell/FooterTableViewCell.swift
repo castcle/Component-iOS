@@ -134,6 +134,7 @@ public class FooterTableViewCell: UITableViewCell {
         } else {
             content.metrics.likeCount += 1
             content.participate.liked.toggle()
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
             self.updateUi(content: content)
             self.contentRepository.likeContent(castcleId: UserManager.shared.rawCastcleId, contentId: content.id) { (success, _, isRefreshToken) in
                 if !success {
@@ -208,48 +209,50 @@ public class FooterTableViewCell: UITableViewCell {
     }
 
     @IBAction func likeAction(_ sender: Any) {
-        if !UserManager.shared.isVerified {
+        if !UserManager.shared.isLogin {
+            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
+        } else if !UserManager.shared.isVerified {
             NotificationCenter.default.post(name: .openVerifyDelegate, object: nil, userInfo: nil)
-        } else if UserManager.shared.isLogin {
+        } else {
             guard let content = self.content else { return }
             self.stateType = .like
             self.likeContent(content: content)
-        } else {
-            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
         }
     }
 
     @IBAction func commentAction(_ sender: Any) {
-        if !UserManager.shared.isVerified {
+        if !UserManager.shared.isLogin {
+            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
+        } else if !UserManager.shared.isVerified {
             NotificationCenter.default.post(name: .openVerifyDelegate, object: nil, userInfo: nil)
-        } else if UserManager.shared.isLogin {
+        } else {
             guard let content = self.content else { return }
             self.stateType = .none
             if !self.isCommentView {
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.comment(CommentViewModel(contentId: content.id))), animated: true)
             }
-        } else {
-            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
         }
     }
 
     @IBAction func recastAction(_ sender: Any) {
-        if !UserManager.shared.isVerified {
+        if !UserManager.shared.isLogin {
+            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
+        } else if !UserManager.shared.isVerified {
             NotificationCenter.default.post(name: .openVerifyDelegate, object: nil, userInfo: nil)
-        } else if UserManager.shared.isLogin {
+        } else {
             guard let content = self.content else { return }
             let viewController = ComponentOpener.open(.recast(RecastPopupViewModel(isRecasted: content.participate.recasted))) as? RecastPopupViewController
             viewController?.delegate = self
             Utility.currentViewController().presentPanModal(viewController ?? RecastPopupViewController())
-        } else {
-            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
         }
     }
 
     @IBAction func farmingAction(_ sender: Any) {
-        if !UserManager.shared.isVerified {
+        if !UserManager.shared.isLogin {
+            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
+        } else if !UserManager.shared.isVerified {
             NotificationCenter.default.post(name: .openVerifyDelegate, object: nil, userInfo: nil)
-        } else if UserManager.shared.isLogin {
+        } else {
             guard let content = self.content else { return }
             if content.participate.farming {
                 let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(type: .unfarn))) as? FarmingPopupViewController
@@ -266,8 +269,6 @@ public class FooterTableViewCell: UITableViewCell {
                     Utility.currentViewController().presentPanModal(viewController ?? FarmingLimitViewController())
                 }
             }
-        } else {
-            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
         }
     }
 }
