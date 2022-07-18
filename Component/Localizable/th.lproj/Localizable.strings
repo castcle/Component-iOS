@@ -42,3 +42,11 @@
 "content_action_followed"                   = "You've followed";
 "content_action_undo"                       = "Undo";
 "content_action_delete"                     = "Delete";
+
+// MARK: - Castcle About
+"castcle_about_join_us"                     = "ร่วมงานกับเรา";
+"castcle_about_docs"                        = "Docs";
+"castcle_about_whitepaper"                  = "Whitepaper";
+"castcle_about_version"                     = "Castcle เวอร์ชั่น";
+"castcle_about_term_of_service"             = "เงื่อนไขการใช้บริการ";
+"castcle_about_privacy"                     = "นโยบายความเป็นส่วนตัว";
