@@ -47,7 +47,7 @@ class HeaderPostTableViewCell: UITableViewCell {
         self.statusLabel.font = UIFont.asset(.regular, fontSize: .small)
         self.statusLabel.textColor = UIColor.Asset.lightGray
         self.globalIcon.image = UIImage.init(icon: .castcle(.global), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightGray)
-        self.statusView.custom(color: UIColor.Asset.darkGray, cornerRadius: 5.0, borderWidth: 1.0, borderColor: UIColor.Asset.black)
+        self.statusView.custom(color: UIColor.Asset.cellBackground, cornerRadius: 5.0, borderWidth: 1.0, borderColor: UIColor.Asset.black)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -54,7 +54,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     override var inputAccessoryView: UIView? {
         if self.customInputView == nil {
             self.customInputView = CustomView()
-            self.customInputView.backgroundColor = UIColor.Asset.darkGray
+            self.customInputView.backgroundColor = UIColor.Asset.cellBackground
             self.commentTextField.placeholder = "What's on your mind?"
             self.commentTextField.font = UIFont.asset(.regular, fontSize: .overline)
             self.commentTextField.textColor = UIColor.Asset.white
@@ -284,7 +284,7 @@ extension CommentViewController {
         } else {
             if self.viewModel.commentLoadState == .loading {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.skeletonNotify, for: indexPath as IndexPath) as? SkeletonNotifyTableViewCell
-                cell?.backgroundColor = UIColor.Asset.darkGray
+                cell?.backgroundColor = UIColor.Asset.cellBackground
                 cell?.configCell()
                 return cell ?? SkeletonNotifyTableViewCell()
             } else {
@@ -360,12 +360,12 @@ extension CommentViewController {
         switch cellType {
         case .activity:
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.activityHeader, for: indexPath as IndexPath) as? ActivityHeaderTableViewCell
-            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.backgroundColor = UIColor.Asset.cellBackground
             cell?.cellConfig(content: content)
             return cell ?? ActivityHeaderTableViewCell()
         case .header:
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.headerFeed, for: indexPath as IndexPath) as? HeaderTableViewCell
-            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.backgroundColor = UIColor.Asset.cellBackground
             cell?.delegate = self
             if content.referencedCasts.type == .recasted {
                 cell?.configCell(type: .content, content: originalContent, isDefaultContent: false)
@@ -375,7 +375,7 @@ extension CommentViewController {
             return cell ?? HeaderTableViewCell()
         case .footer:
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.footerFeed, for: indexPath as IndexPath) as? FooterTableViewCell
-            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.backgroundColor = UIColor.Asset.cellBackground
             cell?.delegate = self
             if content.referencedCasts.type == .recasted {
                 cell?.configCell(content: originalContent, isCommentView: true)

@@ -108,7 +108,7 @@ public class CCAction: UIView {
     }
 
     private func setupCancelButton() {
-        self.backgroundColor = UIColor.Asset.darkGray
+        self.backgroundColor = UIColor.Asset.cellBackground
     }
 
     private func setupNotCancelView() {

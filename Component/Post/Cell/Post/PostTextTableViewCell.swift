@@ -69,8 +69,8 @@ class PostTextTableViewCell: UITableViewCell {
         DropDown.appearance().textColor = UIColor.Asset.white
         DropDown.appearance().selectedTextColor = UIColor.Asset.white
         DropDown.appearance().textFont = UIFont.asset(.bold, fontSize: .overline)
-        DropDown.appearance().backgroundColor = UIColor.Asset.darkGray
-        DropDown.appearance().selectionBackgroundColor = UIColor.Asset.darkGray
+        DropDown.appearance().backgroundColor = UIColor.Asset.cellBackground
+        DropDown.appearance().selectionBackgroundColor = UIColor.Asset.cellBackground
         DropDown.appearance().cellHeight = 70
         DropDown.appearance().shadowColor = UIColor.clear
         self.tokenHelper.delegate = self

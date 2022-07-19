@@ -49,7 +49,7 @@ public class DatePickerViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.Asset.darkGraphiteBlue
-        self.toolBarView.backgroundColor = UIColor.Asset.darkGray
+        self.toolBarView.backgroundColor = UIColor.Asset.cellBackground
         self.doneButton.titleLabel?.font = UIFont.asset(.bold, fontSize: .head4)
         self.datePicker.datePickerMode = .date
         self.datePicker.maximumDate = Date()

@@ -98,7 +98,7 @@ extension UserReactionListViewController: UITableViewDelegate, UITableViewDataSo
         if self.viewModel.loadState == .loading {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.skeletonUser, for: indexPath as IndexPath) as? SkeletonUserTableViewCell
             cell?.configCell()
-            cell?.backgroundColor = UIColor.Asset.darkGray
+            cell?.backgroundColor = UIColor.Asset.cellBackground
             return cell ?? SkeletonUserTableViewCell()
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.userReaction, for: indexPath as IndexPath) as? UserReactionTableViewCell

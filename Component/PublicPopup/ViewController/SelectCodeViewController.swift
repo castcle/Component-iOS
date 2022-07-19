@@ -55,11 +55,11 @@ public class SelectCodeViewController: UIViewController, UITextFieldDelegate {
             self.countryCode = realm.objects(CountryCode.self)
         } catch {}
 
-        self.searchView.custom(color: UIColor.Asset.darkGray, cornerRadius: 18, borderWidth: 1, borderColor: UIColor.Asset.darkGraphiteBlue)
+        self.searchView.custom(color: UIColor.Asset.cellBackground, cornerRadius: 18, borderWidth: 1, borderColor: UIColor.Asset.darkGraphiteBlue)
         self.searchImage.image = UIImage.init(icon: .castcle(.search), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.white)
         self.searchTextField.font = UIFont.asset(.regular, fontSize: .overline)
         self.searchTextField.textColor = UIColor.Asset.white
-        self.searchContainerView.backgroundColor = UIColor.Asset.darkGray
+        self.searchContainerView.backgroundColor = UIColor.Asset.cellBackground
         self.clearButton.setImage(UIImage.init(icon: .castcle(.incorrect), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
 
         self.searchTextField.delegate = self

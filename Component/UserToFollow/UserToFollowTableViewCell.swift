@@ -57,16 +57,16 @@ public class UserToFollowTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.tokenHelper.delegate = self
         self.userAvatarImage.circle(color: UIColor.Asset.white)
-        self.userDisplayNameLabel.font = UIFont.asset(.bold, fontSize: .body)
+        self.userDisplayNameLabel.font = UIFont.asset(.medium, fontSize: .body)
         self.userDisplayNameLabel.textColor = UIColor.Asset.white
         self.userNoticeLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.userNoticeLabel.textColor = UIColor.Asset.white
-        self.userIdLabel.font = UIFont.asset(.regular, fontSize: .overline)
-        self.userIdLabel.textColor = UIColor.Asset.white
-        self.userDescLabel.font = UIFont.asset(.regular, fontSize: .overline)
-        self.userDescLabel.textColor = UIColor.Asset.lightGray
+        self.userIdLabel.font = UIFont.asset(.light, fontSize: .overline)
+        self.userIdLabel.textColor = UIColor.Asset.textGray
+        self.userDescLabel.font = UIFont.asset(.light, fontSize: .overline)
+        self.userDescLabel.textColor = UIColor.Asset.textDetailGray
         self.userVerifyImage.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)
-        self.userFollowButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .small)
+        self.userFollowButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .overline)
     }
 
     public override func setSelected(_ selected: Bool, animated: Bool) {

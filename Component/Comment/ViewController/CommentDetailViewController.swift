@@ -47,7 +47,7 @@ class CommentDetailViewController: UITableViewController, UITextViewDelegate {
     override var inputAccessoryView: UIView? {
         if self.customInputView == nil {
             self.customInputView = CustomView()
-            self.customInputView.backgroundColor = UIColor.Asset.darkGray
+            self.customInputView.backgroundColor = UIColor.Asset.cellBackground
             self.commentTextField.placeholder = "Write your reply"
             self.commentTextField.font = UIFont.asset(.regular, fontSize: .overline)
             self.commentTextField.textColor = UIColor.Asset.white
@@ -213,7 +213,7 @@ extension CommentDetailViewController {
         if indexPath.section == 0 {
             if self.viewModel.commentLoadState == .loading {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.skeletonNotify, for: indexPath as IndexPath) as? SkeletonNotifyTableViewCell
-                cell?.backgroundColor = UIColor.Asset.darkGray
+                cell?.backgroundColor = UIColor.Asset.cellBackground
                 cell?.configCell()
                 return cell ?? SkeletonNotifyTableViewCell()
             } else {

@@ -336,7 +336,7 @@ extension HeaderTableViewCell: TokenHelperDelegate {
 class HeaderSnackBar: SnackBar {
     override var style: SnackBarStyle {
         var customStyle = SnackBarStyle()
-        customStyle.background = UIColor.Asset.darkGray
+        customStyle.background = UIColor.Asset.cellBackground
         customStyle.textColor = UIColor.Asset.white
         customStyle.font = UIFont.asset(.bold, fontSize: .overline)
         customStyle.actionTextColor = UIColor.Asset.lightBlue

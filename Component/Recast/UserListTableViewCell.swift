@@ -60,7 +60,7 @@ class UserListTableViewCell: UITableViewCell {
 
         if isSelect {
             self.checkImage.isHidden = false
-            self.backgroundColor = UIColor.Asset.darkGray
+            self.backgroundColor = UIColor.Asset.cellBackground
         } else {
             self.checkImage.isHidden = true
             self.backgroundColor = UIColor.Asset.darkGraphiteBlue
