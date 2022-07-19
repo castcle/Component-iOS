@@ -106,6 +106,7 @@ public struct ComponentNibVars {
         public static let viewCast = "ViewCastTableViewCell"
         public static let reactionCast = "ReactionCastTableViewCell"
         public static let userReaction = "UserReactionTableViewCell"
+        public static let about = "AboutTableViewCell"
     }
 
     // MARK: - CollectionViewCell

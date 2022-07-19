@@ -85,4 +85,31 @@ extension Localization {
             }
         }
     }
+
+    // MARK: - Castcle About
+    public enum CastcleAbout {
+        case joinUs
+        case docs
+        case whitepaper
+        case version
+        case termOfService
+        case privacy
+
+        public var text: String {
+            switch self {
+            case .joinUs:
+                return "castcle_about_join_us".localized(bundle: ConfigBundle.component)
+            case .docs:
+                return "castcle_about_docs".localized(bundle: ConfigBundle.component)
+            case .whitepaper:
+                return "castcle_about_whitepaper".localized(bundle: ConfigBundle.component)
+            case .version:
+                return "castcle_about_version".localized(bundle: ConfigBundle.component)
+            case .termOfService:
+                return "castcle_about_term_of_service".localized(bundle: ConfigBundle.component)
+            case .privacy:
+                return "castcle_about_privacy".localized(bundle: ConfigBundle.component)
+            }
+        }
+    }
 }

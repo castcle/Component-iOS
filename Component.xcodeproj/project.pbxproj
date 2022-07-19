@@ -78,6 +78,8 @@
 		B75529A2269D8837005D5EB5 /* NSObject+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */; };
 		B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75529D2269F696A005D5EB5 /* ComponentNibVars.swift */; };
 		B756C8A3277337C1007AADE4 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B756C8A2277337C1007AADE4 /* TableView.swift */; };
+		B767A05F2885211800960FA5 /* AboutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B767A05D2885211800960FA5 /* AboutTableViewCell.swift */; };
+		B767A0602885211800960FA5 /* AboutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B767A05E2885211800960FA5 /* AboutTableViewCell.xib */; };
 		B7866335274777F900B13EEF /* ActivityHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7866333274777F800B13EEF /* ActivityHeaderTableViewCell.swift */; };
 		B7866336274777F900B13EEF /* ActivityHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7866334274777F800B13EEF /* ActivityHeaderTableViewCell.xib */; };
 		B786634E2747AC4200B13EEF /* QuoteCastBlogNoImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B786633C2747AC4100B13EEF /* QuoteCastBlogNoImageCell.xib */; };
@@ -261,6 +263,8 @@
 		B75529D2269F696A005D5EB5 /* ComponentNibVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentNibVars.swift; sourceTree = "<group>"; };
 		B75529D4269FD885005D5EB5 /* Feed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Feed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B756C8A2277337C1007AADE4 /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
+		B767A05D2885211800960FA5 /* AboutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTableViewCell.swift; sourceTree = "<group>"; };
+		B767A05E2885211800960FA5 /* AboutTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutTableViewCell.xib; sourceTree = "<group>"; };
 		B7866333274777F800B13EEF /* ActivityHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		B7866334274777F800B13EEF /* ActivityHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		B786633C2747AC4100B13EEF /* QuoteCastBlogNoImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuoteCastBlogNoImageCell.xib; sourceTree = "<group>"; };
@@ -608,6 +612,15 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		B767A05C288520D300960FA5 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				B767A05D2885211800960FA5 /* AboutTableViewCell.swift */,
+				B767A05E2885211800960FA5 /* AboutTableViewCell.xib */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
 		B786633B2747AC4100B13EEF /* Quote Feed Type */ = {
 			isa = PBXGroup;
 			children = (
@@ -772,6 +785,7 @@
 				B7A15B212795C196001E34DE /* Localizable */,
 				B75529D1269F693C005D5EB5 /* Utilities */,
 				B75529A1269D8837005D5EB5 /* NSObject+ListDiffable.swift */,
+				B767A05C288520D300960FA5 /* About */,
 				B711702B283B914400FF985A /* Post */,
 				B74EBE2927F7DA440024BB94 /* PublicPopup */,
 				B7E49ADC27F30FB60026C7F6 /* FarmingPopup */,
@@ -1007,6 +1021,7 @@
 				B7552984269CBE48005D5EB5 /* NormalHeader.bundle in Resources */,
 				B7FA1D8727B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.xib in Resources */,
 				B7E18CEE283655F90069F5C4 /* SkeletonFeedTableViewCell.xib in Resources */,
+				B767A0602885211800960FA5 /* AboutTableViewCell.xib in Resources */,
 				B717447C26E2595E0014D6B5 /* Comment.storyboard in Resources */,
 				B7E18CF3283655F90069F5C4 /* SkeletonUserTableViewCell.xib in Resources */,
 				B78663572747AC4200B13EEF /* QuoteCastTextLinkCell.xib in Resources */,
@@ -1181,6 +1196,7 @@
 				B7AC880427199B4700500F81 /* CCAction.swift in Sources */,
 				B7D4BC1C27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift in Sources */,
 				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,
+				B767A05F2885211800960FA5 /* AboutTableViewCell.swift in Sources */,
 				B755297D269CBA15005D5EB5 /* RefreshExtension.swift in Sources */,
 				B7AC880227199B0F00500F81 /* CastcleActionSheetExtensions.swift in Sources */,
 				B71744A226E7ED320014D6B5 /* ReplyTableViewCell.swift in Sources */,
