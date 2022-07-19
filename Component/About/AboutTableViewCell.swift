@@ -65,7 +65,7 @@ public class AboutTableViewCell: UITableViewCell {
         self.otherLabel.customize { label in
             label.font = UIFont.asset(.light, fontSize: .overline)
             label.numberOfLines = 1
-            label.textColor = UIColor.Asset.gray
+            label.textColor = UIColor.Asset.lightBlue
             let joinUsType = ActiveType.custom(pattern: Localization.CastcleAbout.joinUs.text)
             let docsType = ActiveType.custom(pattern: Localization.CastcleAbout.docs.text)
             let whitepaperType = ActiveType.custom(pattern: Localization.CastcleAbout.whitepaper.text)
@@ -90,7 +90,7 @@ public class AboutTableViewCell: UITableViewCell {
         self.termLabel.customize { label in
             label.font = UIFont.asset(.light, fontSize: .overline)
             label.numberOfLines = 1
-            label.textColor = UIColor.Asset.gray
+            label.textColor = UIColor.Asset.lightBlue
             let termType = ActiveType.custom(pattern: Localization.CastcleAbout.termOfService.text)
             let privacyType = ActiveType.custom(pattern: Localization.CastcleAbout.privacy.text)
             label.enabledTypes = [termType, privacyType]

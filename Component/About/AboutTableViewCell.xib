@@ -10,11 +10,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="136" id="KGk-i7-Jjw" customClass="AboutTableViewCell" customModule="Component" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="136"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="131" id="KGk-i7-Jjw" customClass="AboutTableViewCell" customModule="Component" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="131"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="136"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="131"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Join us | Docs | Whitepaper" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgU-cr-e6X" customClass="ActiveLabel" customModule="ActiveLabel">
@@ -30,13 +30,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms of Service | Privacy Policy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oqk-Yk-tRg" customClass="ActiveLabel" customModule="ActiveLabel">
-                        <rect key="frame" x="20" y="64" width="280" height="17"/>
+                        <rect key="frame" x="20" y="59" width="280" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EtI-hL-Axg">
-                        <rect key="frame" x="47.5" y="91" width="225" height="25"/>
+                        <rect key="frame" x="47.5" y="86" width="225" height="25"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bU8-SM-BDu">
                                 <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -131,7 +131,7 @@
                     <constraint firstItem="YgU-cr-e6X" firstAttribute="top" secondItem="3dJ-D3-H5W" secondAttribute="bottom" constant="10" id="2pC-tr-ioe"/>
                     <constraint firstAttribute="bottom" secondItem="EtI-hL-Axg" secondAttribute="bottom" constant="20" id="5EW-V4-vrQ"/>
                     <constraint firstAttribute="trailing" secondItem="oqk-Yk-tRg" secondAttribute="trailing" constant="20" id="JEh-JO-pgm"/>
-                    <constraint firstItem="oqk-Yk-tRg" firstAttribute="top" secondItem="YgU-cr-e6X" secondAttribute="bottom" constant="10" id="MUu-kM-uB6"/>
+                    <constraint firstItem="oqk-Yk-tRg" firstAttribute="top" secondItem="YgU-cr-e6X" secondAttribute="bottom" constant="5" id="MUu-kM-uB6"/>
                     <constraint firstItem="oqk-Yk-tRg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="V87-5j-GTb"/>
                     <constraint firstItem="EtI-hL-Axg" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="VE4-vs-qJG"/>
                     <constraint firstAttribute="trailing" secondItem="3dJ-D3-H5W" secondAttribute="trailing" constant="20" id="Vth-ub-dzb"/>
