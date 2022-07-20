@@ -40,6 +40,7 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
     @IBOutlet var linkTitleLabel: UILabel!
     @IBOutlet var linkDescriptionLabel: UILabel!
     @IBOutlet var skeletonView: UIView!
+    @IBOutlet weak var defualtImage: UIImageView!
 
     public var content: Content? {
         didSet {
@@ -90,15 +91,16 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
 
     public override func awakeFromNib() {
         super.awakeFromNib()
-        self.skeletonView.custom(cornerRadius: 12, borderWidth: 1, borderColor: UIColor.Asset.gray)
-        self.linkContainer.custom(cornerRadius: 12)
-        self.linkContainer.backgroundColor = UIColor.Asset.darkGraphiteBlue
-        self.titleLinkView.backgroundColor = UIColor.Asset.darkGraphiteBlue
-        self.linkTitleLabel.font = UIFont.asset(.contentBold, fontSize: .overline)
+        self.skeletonView.custom(cornerRadius: 12, borderWidth: 1, borderColor: UIColor.Asset.lineGray)
+        self.linkContainer.custom(cornerRadius: 12, borderWidth: 1, borderColor: UIColor.Asset.lineGray)
+        self.linkContainer.backgroundColor = UIColor.Asset.cellBackground
+        self.titleLinkView.backgroundColor = UIColor.Asset.cellBackground
+        self.linkTitleLabel.font = UIFont.asset(.contentLight, fontSize: .small)
         self.linkTitleLabel.textColor = UIColor.Asset.white
-        self.linkDescriptionLabel.font = UIFont.asset(.contentLight, fontSize: .small)
-        self.linkDescriptionLabel.textColor = UIColor.Asset.lightGray
+        self.linkDescriptionLabel.font = UIFont.asset(.regular, fontSize: .overline)
+        self.linkDescriptionLabel.textColor = UIColor.Asset.white
         self.skeletonView.showAnimatedGradientSkeleton(usingGradient: SkeletonGradient(baseColor: UIColor.Asset.gray))
+        self.defualtImage.image = UIImage.Asset.placeholder
     }
 
     public override func setSelected(_ selected: Bool, animated: Bool) {
