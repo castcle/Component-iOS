@@ -29,7 +29,6 @@ import UIKit
 import LinkPresentation
 import Core
 import Networking
-import Atributika
 import SkeletonView
 import RealmSwift
 

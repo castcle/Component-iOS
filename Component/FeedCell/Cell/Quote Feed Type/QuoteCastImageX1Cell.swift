@@ -28,7 +28,6 @@
 import UIKit
 import Core
 import Networking
-import Atributika
 import RealmSwift
 
 public class QuoteCastImageX1Cell: UITableViewCell {

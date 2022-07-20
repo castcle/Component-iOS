@@ -28,7 +28,6 @@
 import UIKit
 import Core
 import Networking
-import Atributika
 import Lightbox
 import Kingfisher
 

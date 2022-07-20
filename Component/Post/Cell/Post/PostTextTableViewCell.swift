@@ -29,7 +29,6 @@ import UIKit
 import Core
 import Networking
 import DropDown
-import Atributika
 
 protocol PostTextTableViewCellDelegate: AnyObject {
     func updateHeightOfRow(_ cell: PostTextTableViewCell, _ textView: UITextView)
