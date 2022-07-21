@@ -34,20 +34,18 @@ class HeaderPostTableViewCell: UITableViewCell {
     @IBOutlet var avatarImage: UIImageView!
     @IBOutlet var verifyIcon: UIImageView!
     @IBOutlet var displayNameLabel: UILabel!
-    @IBOutlet var statusView: UIView!
     @IBOutlet var globalIcon: UIImageView!
     @IBOutlet var statusLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         self.avatarImage.circle(color: UIColor.Asset.white)
-        self.displayNameLabel.font = UIFont.asset(.bold, fontSize: .overline)
+        self.displayNameLabel.font = UIFont.asset(.medium, fontSize: .body)
         self.displayNameLabel.textColor = UIColor.Asset.white
         self.verifyIcon.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)
-        self.statusLabel.font = UIFont.asset(.regular, fontSize: .small)
-        self.statusLabel.textColor = UIColor.Asset.lightGray
+        self.statusLabel.font = UIFont.asset(.light, fontSize: .overline)
+        self.statusLabel.textColor = UIColor.Asset.textGray
         self.globalIcon.image = UIImage.init(icon: .castcle(.global), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightGray)
-        self.statusView.custom(color: UIColor.Asset.cellBackground, cornerRadius: 5.0, borderWidth: 1.0, borderColor: UIColor.Asset.black)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

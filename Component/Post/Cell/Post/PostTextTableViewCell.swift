@@ -50,19 +50,17 @@ class PostTextTableViewCell: UITableViewCell {
     var viewModel = PostTextViewModel()
     let tokenHelper: TokenHelper = TokenHelper()
     var state: State = .none
-
-    let hastags = Style.font(UIFont.asset(.regular, fontSize: .body)).foregroundColor(UIColor.Asset.lightBlue)
-    let mentions = Style.font(UIFont.asset(.regular, fontSize: .body)).foregroundColor(UIColor.Asset.lightBlue)
-    let all = Style.font(UIFont.asset(.regular, fontSize: .body)).foregroundColor(UIColor.Asset.white)
-
+    let hastags = Style.font(UIFont.asset(.contentLight, fontSize: .body)).foregroundColor(UIColor.Asset.lightBlue)
+    let mentions = Style.font(UIFont.asset(.contentLight, fontSize: .body)).foregroundColor(UIColor.Asset.lightBlue)
+    let all = Style.font(UIFont.asset(.contentLight, fontSize: .body)).foregroundColor(UIColor.Asset.white)
     private var currentTaggingRange: NSRange?
 
     override func awakeFromNib() {
         super.awakeFromNib()
         self.postView.delegate = self
-        self.postView.font = UIFont.asset(.regular, fontSize: .body)
+        self.postView.font = UIFont.asset(.contentLight, fontSize: .body)
         self.postView.textColor = UIColor.Asset.white
-        self.limitLabel.font = UIFont.asset(.bold, fontSize: .small)
+        self.limitLabel.font = UIFont.asset(.regular, fontSize: .small)
         self.limitLabel.textColor = UIColor.Asset.white
         self.limitLabel.text = "\(self.limitCharacter)"
         DropDown.appearance().textColor = UIColor.Asset.white
@@ -238,7 +236,7 @@ extension PostTextTableViewCell {
         guard tag == "#" || tag == "@" else {
             if tag.hasPrefix("#") {
                 do {
-                    let hastagRegex = try NSRegularExpression(pattern: RegexpParser.hashtagPattern)
+                    let hastagRegex = try NSRegularExpression(pattern: RegexpParser.hashtagAutoCorrectPattern)
                     let matched = hastagRegex.matches(in: taggingText, options: .reportCompletion, range: textRange)
                     if matched.count > 0, let range = matched.last?.range {
                         matchedRange = range
@@ -250,7 +248,7 @@ extension PostTextTableViewCell {
                 }
             } else {
                 do {
-                    let mentionRegex = try NSRegularExpression(pattern: RegexpParser.mentionPattern)
+                    let mentionRegex = try NSRegularExpression(pattern: RegexpParser.mentionAutoCorrectPattern)
                     let matched = mentionRegex.matches(in: taggingText, options: .reportCompletion, range: textRange)
                     if matched.count > 0, let range = matched.last?.range {
                         matchedRange = range
