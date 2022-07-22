@@ -90,6 +90,7 @@ class PostTextTableViewCell: UITableViewCell {
             cell.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
             cell.idLabel.text = mention.id
             cell.topLineView.isHidden = (index == 0 ? false : true)
+            cell.statusLabel.text = (mention.isFollow ? "Followed" : "")
         }
 
         self.mentionDropDown.selectionAction = { [weak self] (index, _) in
