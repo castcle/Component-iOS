@@ -33,12 +33,19 @@ class MentionTableViewCell: DropDownCell {
 
     @IBOutlet var avatarImage: UIImageView!
     @IBOutlet var idLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var lineView: UIView!
+    @IBOutlet weak var topLineView: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         self.avatarImage.circle(color: UIColor.Asset.white)
-        self.idLabel.font = UIFont.asset(.regular, fontSize: .small)
-        self.idLabel.textColor = UIColor.Asset.lightGray
+        self.idLabel.font = UIFont.asset(.light, fontSize: .small)
+        self.idLabel.textColor = UIColor.Asset.textGray
+        self.statusLabel.font = UIFont.asset(.contentMedium, fontSize: .custom(size: 10))
+        self.statusLabel.textColor = UIColor.Asset.lightBlue
+        self.lineView.backgroundColor = UIColor.Asset.lineGray
+        self.topLineView.backgroundColor = UIColor.Asset.lineGray
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

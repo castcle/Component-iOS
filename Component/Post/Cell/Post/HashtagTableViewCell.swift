@@ -32,11 +32,15 @@ import DropDown
 class HashtagTableViewCell: DropDownCell {
 
     @IBOutlet var subTitleLabel: UILabel!
+    @IBOutlet weak var lineView: UIView!
+    @IBOutlet weak var topLineView: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         self.subTitleLabel.font = UIFont.asset(.regular, fontSize: .small)
-        self.subTitleLabel.textColor = UIColor.Asset.lightGray
+        self.subTitleLabel.textColor = UIColor.Asset.textGray
+        self.lineView.backgroundColor = UIColor.Asset.lineGray
+        self.topLineView.backgroundColor = UIColor.Asset.lineGray
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

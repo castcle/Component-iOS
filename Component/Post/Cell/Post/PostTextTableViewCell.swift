@@ -65,9 +65,9 @@ class PostTextTableViewCell: UITableViewCell {
         self.limitLabel.text = "\(self.limitCharacter)"
         DropDown.appearance().textColor = UIColor.Asset.white
         DropDown.appearance().selectedTextColor = UIColor.Asset.white
-        DropDown.appearance().textFont = UIFont.asset(.bold, fontSize: .overline)
-        DropDown.appearance().backgroundColor = UIColor.Asset.cellBackground
-        DropDown.appearance().selectionBackgroundColor = UIColor.Asset.cellBackground
+        DropDown.appearance().textFont = UIFont.asset(.medium, fontSize: .overline)
+        DropDown.appearance().backgroundColor = UIColor.Asset.darkGraphiteBlue
+        DropDown.appearance().selectionBackgroundColor = UIColor.Asset.darkGraphiteBlue
         DropDown.appearance().cellHeight = 70
         DropDown.appearance().shadowColor = UIColor.clear
         self.tokenHelper.delegate = self
@@ -80,7 +80,6 @@ class PostTextTableViewCell: UITableViewCell {
     func setupMentionDropDown() {
         self.mentionDropDown.anchorView = self.postView
         self.mentionDropDown.bottomOffset = CGPoint(x: 0, y: self.postView.bounds.height)
-
         let mentionDataSource: [String] = self.viewModel.mention.map { $0.name }
         self.mentionDropDown.dataSource = mentionDataSource
         self.mentionDropDown.cellNib = UINib(nibName: PostNibVars.TableViewCell.mentionCell, bundle: ConfigBundle.component)
@@ -90,6 +89,7 @@ class PostTextTableViewCell: UITableViewCell {
             let url = URL(string: mention.avatar)
             cell.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
             cell.idLabel.text = mention.id
+            cell.topLineView.isHidden = (index == 0 ? false : true)
         }
 
         self.mentionDropDown.selectionAction = { [weak self] (index, _) in
@@ -109,6 +109,11 @@ class PostTextTableViewCell: UITableViewCell {
         self.hastagDropDown.bottomOffset = CGPoint(x: 0, y: self.postView.bounds.height)
         self.hastagDropDown.dataSource = self.viewModel.hastagDataSource
         self.hastagDropDown.cellNib = UINib(nibName: PostNibVars.TableViewCell.hashtagCell, bundle: ConfigBundle.component)
+        self.mentionDropDown.customCellConfiguration = { (index: Index, _, cell: DropDownCell) -> Void in
+            guard let cell = cell as? MentionTableViewCell else { return }
+            cell.topLineView.isHidden = (index == 0 ? false : true)
+        }
+
         self.hastagDropDown.selectionAction = { [weak self] (_, item) in
             guard let self = self else { return }
             self.updateTaggedList(allText: self.postView.text, tagText: item)
