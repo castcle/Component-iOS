@@ -84,6 +84,7 @@ public class SplashScreenViewController: UIViewController {
                     if error == nil {
                         self.checkForceUpdate()
                         Defaults[.isFarmingEnable] = RemoteConfig.remoteConfig().configValue(forKey: "farming_enable").boolValue
+                        Defaults[.isAdjustEnable] = RemoteConfig.remoteConfig().configValue(forKey: "adjust_enable").boolValue
                     }
                 }
             }
