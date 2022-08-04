@@ -52,7 +52,7 @@ public final class PostViewModel {
     var content: Content?
     var page: Page?
 
-    public init(postType: PostType = .newCast, content: Content? = nil, page: Page = Page().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.rawCastcleId, avatar: UserManager.shared.avatar, cover: UserManager.shared.cover, overview: UserManager.shared.overview, official: UserManager.shared.official)) {
+    public init(postType: PostType = .newCast, content: Content? = nil, page: Page = Page().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.castcleId, avatar: UserManager.shared.avatar, cover: UserManager.shared.cover, overview: UserManager.shared.overview, official: UserManager.shared.official)) {
         self.postType = postType
         self.content = content
         self.page = page
@@ -82,7 +82,7 @@ public final class PostViewModel {
             }
         }
         self.contentRequest.payload.message = self.postText
-        self.contentRequest.castcleId = self.page?.castcleId ?? UserManager.shared.rawCastcleId
+        self.contentRequest.castcleId = self.page?.castcleId ?? UserManager.shared.castcleId
         self.contentRequest.type = .short
         self.contentRepository.createContent(featureSlug: self.featureSlug, contentRequest: self.contentRequest) { (success, _, isRefreshToken) in
             if success {
@@ -100,7 +100,7 @@ public final class PostViewModel {
     func quotecastContent() {
         guard let content = self.content else { return }
         self.contentRequest.message = self.postText
-        self.contentRequest.castcleId = self.page?.castcleId ?? UserManager.shared.rawCastcleId
+        self.contentRequest.castcleId = self.page?.castcleId ?? UserManager.shared.castcleId
         self.contentRequest.contentId = content.id
         self.contentRepository.quotecastContent(contentRequest: self.contentRequest) { (success, _, isRefreshToken) in
             if success {

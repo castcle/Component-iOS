@@ -84,15 +84,15 @@ class AcceptSyncSocialPopupViewController: UIViewController {
         let castcleAvatarUrl = URL(string: self.viewModel.userInfo.images.avatar.thumbnail)
         self.castcleAvatarImage.kf.setImage(with: castcleAvatarUrl, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
         self.castcleNameLabel.text = self.viewModel.userInfo.displayName
-        self.castcleIdLabel.text = "@\(self.viewModel.userInfo.castcleId)"
+        self.castcleIdLabel.text = self.viewModel.userInfo.castcleId
 
         let socialAvatarUrl = URL(string: self.viewModel.pageSocial.avatar)
         self.socialAvatarImage.kf.setImage(with: socialAvatarUrl, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
         self.socialNameLabel.text = self.viewModel.pageSocial.displayName
-        self.socialIdLabel.text = (socialUsername.isEmpty ? "" : "@\(self.viewModel.pageSocial.userName)")
+        self.socialIdLabel.text = (socialUsername.isEmpty ? "" : self.viewModel.pageSocial.userName.toCastcleId)
 
-        let displaySocialName: String = (socialUsername.isEmpty ? self.viewModel.pageSocial.displayName : "@\(self.viewModel.pageSocial.userName)")
-        self.detailLabel.text = "Your \(self.viewModel.socialType.display) account (\(displaySocialName)) is linked to your Castcle Profile (@\(self.viewModel.userInfo.castcleId)). By continuing, your Twitter will no longer auto-post to (@\(self.viewModel.userInfo.castcleId)) and will now auto-post to your new Page."
+        let displaySocialName: String = (socialUsername.isEmpty ? self.viewModel.pageSocial.displayName : self.viewModel.pageSocial.userName.toCastcleId)
+        self.detailLabel.text = "Your \(self.viewModel.socialType.display) account (\(displaySocialName)) is linked to your Castcle Profile (\(self.viewModel.userInfo.castcleId)). By continuing, your Twitter will no longer auto-post to (\(self.viewModel.userInfo.castcleId)) and will now auto-post to your new Page."
     }
 
     @IBAction func closeAction(_ sender: Any) {

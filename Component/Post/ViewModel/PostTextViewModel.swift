@@ -50,7 +50,7 @@ public final class PostTextViewModel {
             let payload = json[JsonKey.payload.rawValue].arrayValue
             payload.forEach { content in
                 let user = UserInfo(json: content)
-                self.mention.append(Mention(name: user.displayName, id: "@\(user.castcleId)", avatar: user.images.avatar.thumbnail, isFollow: user.followed))
+                self.mention.append(Mention(name: user.displayName, id: user.castcleId.toCastcleId, avatar: user.images.avatar.thumbnail, isFollow: user.followed))
             }
             self.mention.sort { $0.isFollow && !$1.isFollow }
         } catch {}

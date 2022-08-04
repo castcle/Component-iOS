@@ -102,7 +102,7 @@ public final class CommentViewModel {
 
     public func createComment() {
         self.state = .createComment
-        self.commentRepository.createComment(castcleId: UserManager.shared.rawCastcleId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
+        self.commentRepository.createComment(castcleId: UserManager.shared.castcleId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 do {
                     let rawJson = try response.mapJSON()
@@ -127,7 +127,7 @@ public final class CommentViewModel {
 
     public func replyComment() {
         self.state = .replyComment
-        self.commentRepository.replyComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
+        self.commentRepository.replyComment(castcleId: UserManager.shared.castcleId, commentId: self.commentId, commentRequest: self.commentRequest) { (success, response, isRefreshToken)  in
             if success {
                 do {
                     let rawJson = try response.mapJSON()
@@ -155,7 +155,7 @@ public final class CommentViewModel {
     public func likeComment() {
         self.state = .likeComment
         self.commentRequest.commentId = self.commentId
-        self.commentRepository.likedComment(castcleId: UserManager.shared.rawCastcleId, commentRequest: self.commentRequest) { (success, _, isRefreshToken)  in
+        self.commentRepository.likedComment(castcleId: UserManager.shared.castcleId, commentRequest: self.commentRequest) { (success, _, isRefreshToken)  in
             if success {
                 print("Like success")
             } else {
@@ -168,7 +168,7 @@ public final class CommentViewModel {
 
     public func unlikeComment() {
         self.state = .unlikeComment
-        self.commentRepository.unlikedComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId) { (success, _, isRefreshToken)  in
+        self.commentRepository.unlikedComment(castcleId: UserManager.shared.castcleId, commentId: self.commentId) { (success, _, isRefreshToken)  in
             if success {
                 print("Unlike success")
             } else {
@@ -182,7 +182,7 @@ public final class CommentViewModel {
     public func deleteComment(commentId: String) {
         self.state = .deleteComment
         self.commentId = commentId
-        self.commentRepository.deleteComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId) { (success, _, isRefreshToken)  in
+        self.commentRepository.deleteComment(castcleId: UserManager.shared.castcleId, commentId: self.commentId) { (success, _, isRefreshToken)  in
             if success {
                 if let index = self.comments.firstIndex(where: { $0.id == self.commentId }) {
                     self.comments.remove(at: index)
@@ -202,7 +202,7 @@ public final class CommentViewModel {
         self.state = .deleteReplyComment
         self.commentId = commentId
         self.replyId = replyId
-        self.commentRepository.deleteReplyComment(castcleId: UserManager.shared.rawCastcleId, commentId: self.commentId, replyId: self.replyId) { (success, _, isRefreshToken)  in
+        self.commentRepository.deleteReplyComment(castcleId: UserManager.shared.castcleId, commentId: self.commentId, replyId: self.replyId) { (success, _, isRefreshToken)  in
             if success {
                 if let index = self.comments.firstIndex(where: { $0.id == self.commentId }) {
                     let comment = self.comments[index]

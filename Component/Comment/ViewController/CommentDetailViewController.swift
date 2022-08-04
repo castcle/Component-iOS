@@ -264,7 +264,7 @@ extension CommentDetailViewController {
 extension CommentDetailViewController: CommentTableViewCellDelegate {
     func didReply(_ commentTableViewCell: CommentTableViewCell, comment: Comment, castcleId: String) {
         if !castcleId.isEmpty {
-            self.commentTextField.text = "@\(castcleId) "
+            self.commentTextField.text = "\(castcleId.toCastcleId) "
         }
         self.commentTextField.becomeFirstResponder()
     }

@@ -428,7 +428,7 @@ extension CommentViewController: CommentTableViewCellDelegate {
         self.event = .reply
         self.viewModel.commentId = comment.id
         if !castcleId.isEmpty {
-            self.commentTextField.text = "@\(castcleId) "
+            self.commentTextField.text = "\(castcleId.toCastcleId) "
         }
         self.commentTextField.becomeFirstResponder()
     }

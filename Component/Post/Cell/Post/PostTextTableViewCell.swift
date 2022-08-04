@@ -127,7 +127,7 @@ class PostTextTableViewCell: UITableViewCell {
     }
 
     private func checkCharacterCount() {
-        self.characterCount = self.postView.text.count
+        self.characterCount = self.postView.text.utf16.count
         self.limitLabel.text = "\(self.limitCharacter - self.characterCount)"
         if self.characterCount > self.limitCharacter {
             self.limitLabel.textColor = UIColor.Asset.denger

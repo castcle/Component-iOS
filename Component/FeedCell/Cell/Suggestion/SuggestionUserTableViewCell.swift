@@ -112,7 +112,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
             self.firstUserAvatarImage.kf.setImage(with: firstUserAvatar, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
             self.firstUserNoticeLabel.text = firstUser.aggregator.message
             self.firstUserDisplayNameLabel.text = firstUser.displayName
-            self.firstUserIdLabel.text = "@\(firstUser.castcleId)"
+            self.firstUserIdLabel.text = firstUser.castcleId
             self.firstUserDescLabel.text = firstUser.overview
             if firstUser.verified.official {
                 self.firstUserVerifyImage.isHidden = false
@@ -125,7 +125,7 @@ public class SuggestionUserTableViewCell: UITableViewCell {
             self.secondUserAvatarImage.kf.setImage(with: secondUserAvatar, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
             self.secondUserNoticeLabel.text = secondUser.aggregator.message
             self.secondUserDisplayNameLabel.text = secondUser.displayName
-            self.secondUserIdLabel.text = "@\(secondUser.castcleId)"
+            self.secondUserIdLabel.text = secondUser.castcleId
             self.secondUserDescLabel.text = secondUser.overview
             if secondUser.verified.official {
                 self.secondUserVerifyImage.isHidden = false

@@ -41,7 +41,7 @@ final public class SyncTwitterAutoPostViewModel {
     }
 
     func syncSocial() {
-        self.userRepository.syncSocial(userId: UserManager.shared.rawCastcleId, pageSocial: self.pageSocial) { (success, _, isRefreshToken) in
+        self.userRepository.syncSocial(userId: UserManager.shared.castcleId, pageSocial: self.pageSocial) { (success, _, isRefreshToken) in
             if !success && isRefreshToken {
                 self.tokenHelper.refreshToken()
             }

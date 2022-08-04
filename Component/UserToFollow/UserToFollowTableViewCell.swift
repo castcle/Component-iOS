@@ -79,14 +79,14 @@ public class UserToFollowTableViewCell: UITableViewCell {
         self.userAvatarImage.kf.setImage(with: userAvatar, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
         self.userNoticeLabel.text = self.user.aggregator.message
         self.userDisplayNameLabel.text = self.user.displayName
-        self.userIdLabel.text = "@\(self.user.castcleId)"
+        self.userIdLabel.text = self.user.castcleId
         self.userDescLabel.text = self.user.overview
         if self.user.verified.official {
             self.userVerifyImage.isHidden = false
         } else {
             self.userVerifyImage.isHidden = true
         }
-        if self.user.castcleId == UserManager.shared.rawCastcleId {
+        if self.user.castcleId == UserManager.shared.castcleId {
             self.userFollowButton.isHidden = true
         } else {
             self.userFollowButton.isHidden = false

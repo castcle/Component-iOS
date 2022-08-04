@@ -47,7 +47,7 @@ class ReportSuccessViewController: UIViewController {
         if self.isReportContent {
             self.termLabel.text = "If we find this cast violating Castcle Terms of Service, we will take action on it"
         } else {
-            self.termLabel.text = "If we find @\(self.castcleId) violating Castcle Terms of Service, we will take action on it"
+            self.termLabel.text = "If we find \(self.castcleId) violating Castcle Terms of Service, we will take action on it"
         }
         self.termLabel.customize { label in
             label.font = UIFont.asset(.regular, fontSize: .body)

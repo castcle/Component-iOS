@@ -85,7 +85,7 @@ public class HeaderTableViewCell: UITableViewCell {
             self.followButton.setTitle(Localization.ContentDetail.follow.text, for: .normal)
             if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
                 if authorRef.type == AuthorType.people.rawValue {
-                    if authorRef.castcleId == UserManager.shared.rawCastcleId {
+                    if authorRef.castcleId == UserManager.shared.castcleId {
                         let url = URL(string: UserManager.shared.avatar)
                         self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                         self.followButton.isHidden = true
@@ -183,7 +183,7 @@ public class HeaderTableViewCell: UITableViewCell {
             if let authorRef = ContentHelper.shared.getAuthorRef(id: content.authorId) {
                 self.followButton.isHidden = true
                 self.followUser()
-                HeaderSnackBar.make(in: Utility.currentViewController().view, message: "\(Localization.ContentAction.followed.text) @\(authorRef.castcleId)", duration: .lengthLong).setAction(with: Localization.ContentAction.undo.text, action: {
+                HeaderSnackBar.make(in: Utility.currentViewController().view, message: "\(Localization.ContentAction.followed.text) \(authorRef.castcleId)", duration: .lengthLong).setAction(with: Localization.ContentAction.undo.text, action: {
                     self.followButton.isHidden = false
                     self.unfollowUser()
                 }).show()
@@ -253,7 +253,7 @@ public class HeaderTableViewCell: UITableViewCell {
         self.state = .reportContent
         guard let content = self.content else { return }
         self.reportRequest.targetContentId = content.id
-        self.reportRepository.reportContent(userId: UserManager.shared.rawCastcleId, reportRequest: self.reportRequest) { (success, _, isRefreshToken) in
+        self.reportRepository.reportContent(userId: UserManager.shared.castcleId, reportRequest: self.reportRequest) { (success, _, isRefreshToken) in
             if success {
                 self.delegate?.didReportSuccess(self)
             } else {
