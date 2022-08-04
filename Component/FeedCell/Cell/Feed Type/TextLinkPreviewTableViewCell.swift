@@ -70,7 +70,7 @@ public class TextLinkPreviewTableViewCell: UITableViewCell {
                 NotificationCenter.default.post(name: .openSearchDelegate, object: nil, userInfo: hashtagDict)
             case .mention(let name):
                 let userDict: [String: String] = [
-                    JsonKey.castcleId.rawValue: name
+                    JsonKey.castcleId.rawValue: name.toCastcleId
                 ]
                 NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
             case .link(let url):

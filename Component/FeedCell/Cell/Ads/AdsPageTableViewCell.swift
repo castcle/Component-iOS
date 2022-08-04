@@ -106,7 +106,7 @@ public class AdsPageTableViewCell: UITableViewCell {
     private func enableActiveLabel() {
         self.detailLabel.handleMentionTap { mention in
             let userDict: [String: String] = [
-                JsonKey.castcleId.rawValue: mention
+                JsonKey.castcleId.rawValue: mention.toCastcleId
             ]
             NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
         }

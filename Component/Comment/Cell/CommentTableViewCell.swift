@@ -85,7 +85,7 @@ class CommentTableViewCell: UITableViewCell {
             }
             self.commentLabel.handleMentionTap { mention in
                 let userDict: [String: String] = [
-                    JsonKey.castcleId.rawValue: mention
+                    JsonKey.castcleId.rawValue: mention.toCastcleId
                 ]
                 NotificationCenter.default.post(name: .openProfileDelegate, object: nil, userInfo: userDict)
             }
