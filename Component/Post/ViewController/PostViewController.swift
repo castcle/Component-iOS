@@ -197,7 +197,7 @@ class PostViewController: UIViewController {
 
     private func updateCastToolBarButton() {
         if !self.viewModel.postText.isEmpty {
-            let characterCount = self.viewModel.postText.count
+            let characterCount = self.viewModel.postText.utf16.count
             if characterCount <= self.viewModel.limitCharacter {
                 self.enableCaseButtom()
             } else {
