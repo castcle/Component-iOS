@@ -164,8 +164,6 @@
 		B7E49AE027F310150026C7F6 /* FarmingPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */; };
 		B7E49AE227F3101D0026C7F6 /* FarmingPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */; };
 		B7E49AE427F3247B0026C7F6 /* FarmingLimitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49AE327F3247B0026C7F6 /* FarmingLimitViewController.swift */; };
-		B7E64ECB275F63B300FFD78E /* Report.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7E64ECA275F63B300FFD78E /* Report.storyboard */; };
-		B7E64ECD275F63D700FFD78E /* ReportSuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E64ECC275F63D700FFD78E /* ReportSuccessViewController.swift */; };
 		B7FA1D8627B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FA1D8427B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift */; };
 		B7FA1D8727B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7FA1D8527B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.xib */; };
 		B7FA1D8A27B0DB3000A485A1 /* LongTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7FA1D8827B0DB3000A485A1 /* LongTextTableViewCell.xib */; };
@@ -353,8 +351,6 @@
 		B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FarmingPopupViewController.swift; sourceTree = "<group>"; };
 		B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FarmingPopupViewModel.swift; sourceTree = "<group>"; };
 		B7E49AE327F3247B0026C7F6 /* FarmingLimitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmingLimitViewController.swift; sourceTree = "<group>"; };
-		B7E64ECA275F63B300FFD78E /* Report.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Report.storyboard; sourceTree = "<group>"; };
-		B7E64ECC275F63D700FFD78E /* ReportSuccessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportSuccessViewController.swift; sourceTree = "<group>"; };
 		B7FA1D8427B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTextLinkPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		B7FA1D8527B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LongTextLinkPreviewTableViewCell.xib; sourceTree = "<group>"; };
 		B7FA1D8827B0DB3000A485A1 /* LongTextTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LongTextTableViewCell.xib; sourceTree = "<group>"; };
@@ -790,7 +786,6 @@
 				B74EBE2927F7DA440024BB94 /* PublicPopup */,
 				B7E49ADC27F30FB60026C7F6 /* FarmingPopup */,
 				B786902A27CCA4570029EDFE /* UserToFollow */,
-				B7E64EC9275F637F00FFD78E /* Report */,
 				B7AC87FC271999CF00500F81 /* CastcleActionSheet */,
 				B717447826E258DE0014D6B5 /* Comment */,
 				B787963426C66E5F00FECC21 /* Recast */,
@@ -902,15 +897,6 @@
 			path = FarmingPopup;
 			sourceTree = "<group>";
 		};
-		B7E64EC9275F637F00FFD78E /* Report */ = {
-			isa = PBXGroup;
-			children = (
-				B7E64ECA275F63B300FFD78E /* Report.storyboard */,
-				B7E64ECC275F63D700FFD78E /* ReportSuccessViewController.swift */,
-			);
-			path = Report;
-			sourceTree = "<group>";
-		};
 		B7FA1D8327B0D24300A485A1 /* Long Feed Type */ = {
 			isa = PBXGroup;
 			children = (
@@ -1007,7 +993,6 @@
 				B786902E27CCA48E0029EDFE /* UserToFollowTableViewCell.xib in Resources */,
 				B71744B926E9EF850014D6B5 /* ImageX3TableViewCell.xib in Resources */,
 				B71744A326E7ED320014D6B5 /* ReplyTableViewCell.xib in Resources */,
-				B7E64ECB275F63B300FFD78E /* Report.storyboard in Resources */,
 				B786634E2747AC4200B13EEF /* QuoteCastBlogNoImageCell.xib in Resources */,
 				B7117051283B917600FF985A /* MentionTableViewCell.xib in Resources */,
 				B7910E9226BC68460097C94E /* Picker.storyboard in Resources */,
@@ -1115,7 +1100,6 @@
 				B7866366274B833400B13EEF /* QuoteCastViewModel.swift in Sources */,
 				B711704D283B917600FF985A /* HeaderPostTableViewCell.swift in Sources */,
 				B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */,
-				B7E64ECD275F63D700FFD78E /* ReportSuccessViewController.swift in Sources */,
 				B7552972269CBA14005D5EB5 /* FastCheckLayer.swift in Sources */,
 				B7E18D01283657790069F5C4 /* SelectCodeViewController.swift in Sources */,
 				B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */,

@@ -34,7 +34,6 @@ public struct ComponentNibVars {
         public static let recastPopup = "RecastPopupViewController"
         public static let comment = "CommentViewController"
         public static let commentDetail = "CommentDetailViewController"
-        public static let reportSuccess = "ReportSuccessViewController"
         public static let farmingPopup = "FarmingPopupViewController"
         public static let farmingLimitPopup = "FarmingLimitViewController"
         public static let syncAutoPostTwitter = "SyncAutoPostViewController"
@@ -52,7 +51,6 @@ public struct ComponentNibVars {
         public static let picker = "Picker"
         public static let recast = "Recast"
         public static let comment = "Comment"
-        public static let report = "Report"
         public static let farmingPopup = "FarmingPopup"
         public static let publicPopup = "PublicPopup"
     }
