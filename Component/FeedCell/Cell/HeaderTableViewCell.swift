@@ -34,7 +34,7 @@ import RealmSwift
 
 public protocol HeaderTableViewCellDelegate: AnyObject {
     func didRemoveSuccess(_ headerTableViewCell: HeaderTableViewCell)
-    func didReportSuccess(_ headerTableViewCell: HeaderTableViewCell)
+    func didReport(_ headerTableViewCell: HeaderTableViewCell, contentId: String)
 }
 
 public class HeaderTableViewCell: UITableViewCell {
@@ -51,11 +51,9 @@ public class HeaderTableViewCell: UITableViewCell {
     public var delegate: HeaderTableViewCellDelegate?
     private var userRepository: UserRepository = UserRepositoryImpl()
     private var contentRepository: ContentRepository = ContentRepositoryImpl()
-    private var reportRepository: ReportRepository = ReportRepositoryImpl()
     let tokenHelper: TokenHelper = TokenHelper()
     private var state: State = .none
     private var userRequest: UserRequest = UserRequest()
-    private var reportRequest: ReportRequest = ReportRequest()
     var isPreview: Bool = false
     private var content: Content?
 
@@ -223,7 +221,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 let reportButton = CCAction(title: Localization.ContentAction.reportCast.text, image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .normal) {
                     actionSheet.dismissActionSheet()
                     if UserManager.shared.isLogin {
-                        self.reportContent()
+                        self.delegate?.didReport(self, contentId: content.id)
                     } else {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
@@ -245,21 +243,6 @@ public class HeaderTableViewCell: UITableViewCell {
         self.contentRepository.deleteContent(contentId: content.id) { (success, _, isRefreshToken) in
             if !success && isRefreshToken {
                 self.tokenHelper.refreshToken()
-            }
-        }
-    }
-
-    private func reportContent() {
-        self.state = .reportContent
-        guard let content = self.content else { return }
-        self.reportRequest.targetContentId = content.id
-        self.reportRepository.reportContent(userId: UserManager.shared.castcleId, reportRequest: self.reportRequest) { (success, _, isRefreshToken) in
-            if success {
-                self.delegate?.didReportSuccess(self)
-            } else {
-                if isRefreshToken {
-                    self.tokenHelper.refreshToken()
-                }
             }
         }
     }
@@ -327,8 +310,6 @@ extension HeaderTableViewCell: TokenHelperDelegate {
             self.followUser()
         } else if self.state == .unfollowUser {
             self.unfollowUser()
-        } else if self.state == .reportContent {
-            self.reportContent()
         }
     }
 }

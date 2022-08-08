@@ -408,7 +408,7 @@ extension CommentViewController: HeaderTableViewCellDelegate {
         Utility.currentViewController().dismiss(animated: true)
     }
 
-    func didReportSuccess(_ headerTableViewCell: HeaderTableViewCell) {
+    func didReport(_ headerTableViewCell: HeaderTableViewCell, contentId: String) {
         Utility.currentViewController().dismiss(animated: true)
     }
 }

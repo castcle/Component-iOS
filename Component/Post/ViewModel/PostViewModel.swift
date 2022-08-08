@@ -61,7 +61,7 @@ public final class PostViewModel {
 
     func isCanPost() -> Bool {
         if !self.postText.isEmpty {
-            if self.postText.count <= self.limitCharacter {
+            if self.postText.utf16.count <= self.limitCharacter {
                 return true
             } else {
                 return false

@@ -45,7 +45,10 @@ public class ActivityHeaderTableViewCell: UITableViewCell {
     }
 
     public func cellConfig(content: Content) {
-        if content.referencedCasts.type == .recasted {
+        if ContentHelper.shared.isReportContent(contentId: content.id) {
+            self.detailLabel.text = "This cast has been reported by you"
+            self.iconImage.image = UIImage.init(icon: .castcle(.report), size: CGSize(width: 25, height: 25), textColor: UIColor.Asset.lightGray)
+        } else if content.referencedCasts.type == .recasted {
             if content.authorId == UserManager.shared.id {
                 self.detailLabel.text = Localization.ContentDetail.youRecasted.text
             } else {
