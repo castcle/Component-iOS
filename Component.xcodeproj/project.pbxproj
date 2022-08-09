@@ -132,6 +132,10 @@
 		B7AC880427199B4700500F81 /* CCAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880327199B4700500F81 /* CCAction.swift */; };
 		B7AC880627199B7800500F81 /* CCAction+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880527199B7800500F81 /* CCAction+Style.swift */; };
 		B7AC880827199BA500500F81 /* HandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AC880727199BA500500F81 /* HandleView.swift */; };
+		B7BE808A28A276550066ADF9 /* IllegalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE808828A276540066ADF9 /* IllegalTableViewCell.swift */; };
+		B7BE808B28A276550066ADF9 /* IllegalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7BE808928A276550066ADF9 /* IllegalTableViewCell.xib */; };
+		B7BE808E28A276A20066ADF9 /* IllegalActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE808C28A276A10066ADF9 /* IllegalActionTableViewCell.swift */; };
+		B7BE808F28A276A20066ADF9 /* IllegalActionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7BE808D28A276A20066ADF9 /* IllegalActionTableViewCell.xib */; };
 		B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */; };
 		B7C2529626CCED4000ACBB84 /* UserListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */; };
 		B7C5268228A110EE003476BE /* ReportTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C5268028A110EE003476BE /* ReportTableViewCell.swift */; };
@@ -321,6 +325,10 @@
 		B7AC880327199B4700500F81 /* CCAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCAction.swift; sourceTree = "<group>"; };
 		B7AC880527199B7800500F81 /* CCAction+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CCAction+Style.swift"; sourceTree = "<group>"; };
 		B7AC880727199BA500500F81 /* HandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleView.swift; sourceTree = "<group>"; };
+		B7BE808828A276540066ADF9 /* IllegalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IllegalTableViewCell.swift; sourceTree = "<group>"; };
+		B7BE808928A276550066ADF9 /* IllegalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IllegalTableViewCell.xib; sourceTree = "<group>"; };
+		B7BE808C28A276A10066ADF9 /* IllegalActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IllegalActionTableViewCell.swift; sourceTree = "<group>"; };
+		B7BE808D28A276A20066ADF9 /* IllegalActionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IllegalActionTableViewCell.xib; sourceTree = "<group>"; };
 		B7C2529326CCED4000ACBB84 /* UserListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableViewCell.swift; sourceTree = "<group>"; };
 		B7C2529426CCED4000ACBB84 /* UserListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListTableViewCell.xib; sourceTree = "<group>"; };
 		B7C5268028A110EE003476BE /* ReportTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewCell.swift; sourceTree = "<group>"; };
@@ -830,6 +838,10 @@
 			children = (
 				B7C5268028A110EE003476BE /* ReportTableViewCell.swift */,
 				B7C5268128A110EE003476BE /* ReportTableViewCell.xib */,
+				B7BE808C28A276A10066ADF9 /* IllegalActionTableViewCell.swift */,
+				B7BE808D28A276A20066ADF9 /* IllegalActionTableViewCell.xib */,
+				B7BE808828A276540066ADF9 /* IllegalTableViewCell.swift */,
+				B7BE808928A276550066ADF9 /* IllegalTableViewCell.xib */,
 			);
 			path = Report;
 			sourceTree = "<group>";
@@ -1009,6 +1021,7 @@
 				B71744A326E7ED320014D6B5 /* ReplyTableViewCell.xib in Resources */,
 				B786634E2747AC4200B13EEF /* QuoteCastBlogNoImageCell.xib in Resources */,
 				B7117051283B917600FF985A /* MentionTableViewCell.xib in Resources */,
+				B7BE808B28A276550066ADF9 /* IllegalTableViewCell.xib in Resources */,
 				B7910E9226BC68460097C94E /* Picker.storyboard in Resources */,
 				B71744B526E9EF750014D6B5 /* ImageX2TableViewCell.xib in Resources */,
 				B711704C283B917500FF985A /* PostTextTableViewCell.xib in Resources */,
@@ -1030,6 +1043,7 @@
 				B78663592747AC4200B13EEF /* QuoteCastBlogCell.xib in Resources */,
 				B7910E3026B5E1320097C94E /* SplashScreen.storyboard in Resources */,
 				B78663522747AC4200B13EEF /* QuoteCastTextCell.xib in Resources */,
+				B7BE808F28A276A20066ADF9 /* IllegalActionTableViewCell.xib in Resources */,
 				B717449726E791070014D6B5 /* HeaderTableViewCell.xib in Resources */,
 				B7D30D88285087850085F980 /* SkeletonNormalTableViewCell.xib in Resources */,
 				B7A15B262795C40C001E34DE /* Localizable.strings in Resources */,
@@ -1135,6 +1149,7 @@
 				B7552973269CBA14005D5EB5 /* FastCircleLayer.swift in Sources */,
 				B7D30D87285087850085F980 /* SkeletonNormalTableViewCell.swift in Sources */,
 				B717449626E791070014D6B5 /* HeaderTableViewCell.swift in Sources */,
+				B7BE808E28A276A20066ADF9 /* IllegalActionTableViewCell.swift in Sources */,
 				B75529D3269F696A005D5EB5 /* ComponentNibVars.swift in Sources */,
 				B7117045283B917500FF985A /* PostOpener.swift in Sources */,
 				B711704A283B917500FF985A /* HashtagTableViewCell.swift in Sources */,
@@ -1159,6 +1174,7 @@
 				B7552978269CBA14005D5EB5 /* RefreshComponent.swift in Sources */,
 				B7117049283B917500FF985A /* PostViewModel.swift in Sources */,
 				B71744C526E9F6980014D6B5 /* BlogNoImageTableViewCell.swift in Sources */,
+				B7BE808A28A276550066ADF9 /* IllegalTableViewCell.swift in Sources */,
 				B7FA1D9A27B0E2C300A485A1 /* LongImageXMoreTableViewCell.swift in Sources */,
 				B71744A626E9E6DC0014D6B5 /* TextTableViewCell.swift in Sources */,
 				B7E18CE1283655800069F5C4 /* UserReactionListViewModel.swift in Sources */,
