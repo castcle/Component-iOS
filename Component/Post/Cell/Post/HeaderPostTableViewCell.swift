@@ -52,7 +52,7 @@ class HeaderPostTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func configCell(page: Page?) {
+    func configCell(page: PageRealm?) {
         guard let page = page else { return }
         if page.castcleId == UserManager.shared.castcleId {
             let url = URL(string: UserManager.shared.avatar)

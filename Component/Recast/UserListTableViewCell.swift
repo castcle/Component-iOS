@@ -46,7 +46,7 @@ class UserListTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func configCell(isUser: Bool, page: Page?, isSelect: Bool) {
+    func configCell(isUser: Bool, page: PageRealm?, isSelect: Bool) {
         if isUser {
             let url = URL(string: UserManager.shared.avatar)
             self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])

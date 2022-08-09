@@ -32,7 +32,7 @@ import Kingfisher
 import RealmSwift
 
 public protocol RecastPopupViewControllerDelegate: AnyObject {
-    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?, castcleId: String)
+    func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: PageRealm?, castcleId: String)
 }
 
 public enum RecastAction {
@@ -59,7 +59,7 @@ public class RecastPopupViewController: UIViewController {
     var delegate: RecastPopupViewControllerDelegate?
     var maxHeight = (UIScreen.main.bounds.height - 320)
     var viewModel = RecastPopupViewModel()
-    var pages: Results<Page>!
+    var pages: Results<PageRealm>!
 
     enum UserListSection: Int, CaseIterable {
         case user = 0
@@ -86,7 +86,7 @@ public class RecastPopupViewController: UIViewController {
 
         do {
             let realm = try Realm()
-            self.pages = realm.objects(Page.self).sorted(byKeyPath: "id")
+            self.pages = realm.objects(PageRealm.self).sorted(byKeyPath: "id")
         } catch {}
 
         self.subTitleLabel.text = Localization.ContentAction.recastTitle.text
@@ -173,7 +173,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
             return cell ?? UserListTableViewCell()
         case UserListSection.page.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.userList, for: indexPath as IndexPath) as? UserListTableViewCell
-            let page: Page = self.pages[indexPath.row]
+            let page: PageRealm = self.pages[indexPath.row]
             let isSelect: Bool = (self.viewModel.page?.displayName == page.displayName)
             cell?.configCell(isUser: false, page: self.pages[indexPath.row], isSelect: isSelect)
             return cell ?? UserListTableViewCell()
@@ -185,7 +185,7 @@ extension RecastPopupViewController: UITableViewDelegate, UITableViewDataSource 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case UserListSection.user.rawValue:
-            self.viewModel.page = Page().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.castcleId, avatar: UserManager.shared.avatar, cover: UserManager.shared.cover, overview: UserManager.shared.overview, official: UserManager.shared.official)
+            self.viewModel.page = PageRealm().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.castcleId, avatar: UserManager.shared.avatar, cover: UserManager.shared.cover, overview: UserManager.shared.overview, official: UserManager.shared.official)
             self.userTableView.reloadData()
             self.updateUser()
             UIView.transition(with: self.view, duration: 0.3,

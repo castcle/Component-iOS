@@ -82,7 +82,7 @@ public class AdsPageTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    public func configAdsPreViewCell(page: Page, adsRequest: AdsRequest) {
+    public func configAdsPreViewCell(page: PageRealm, adsRequest: AdsRequest) {
         self.isPreview = true
         self.followButton.isHidden = false
         if !adsRequest.campaignMessage.isEmpty {

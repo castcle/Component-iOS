@@ -106,7 +106,7 @@ public class QuoteCastImageXMoreCell: UITableViewCell {
                 } else {
                     do {
                         let realm = try Realm()
-                        if let page = realm.objects(Page.self).filter("castcleId = '\(authorRef.castcleId)'").first {
+                        if let page = realm.objects(PageRealm.self).filter("castcleId = '\(authorRef.castcleId)'").first {
                             let url = URL(string: page.avatar)
                             self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                             self.followButton.isHidden = true

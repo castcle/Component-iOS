@@ -33,7 +33,7 @@ import Defaults
 import SwiftDate
 
 public protocol FooterTableViewCellDelegate: AnyObject {
-    func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: Page)
+    func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: PageRealm)
 }
 
 public class FooterTableViewCell: UITableViewCell {
@@ -274,7 +274,7 @@ public class FooterTableViewCell: UITableViewCell {
 }
 
 extension FooterTableViewCell: RecastPopupViewControllerDelegate {
-    public func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: Page?, castcleId: String) {
+    public func recastPopupViewController(_ view: RecastPopupViewController, didSelectRecastAction recastAction: RecastAction, page: PageRealm?, castcleId: String) {
         guard let content = self.content else { return }
         if recastAction == .recast {
             self.recastContent(content: content, castcleId: castcleId)

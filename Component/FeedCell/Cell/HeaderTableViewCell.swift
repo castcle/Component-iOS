@@ -99,7 +99,7 @@ public class HeaderTableViewCell: UITableViewCell {
                 } else {
                     do {
                       let realm = try Realm()
-                        if let page = realm.objects(Page.self).filter("id = '\(content.authorId)'").first {
+                        if let page = realm.objects(PageRealm.self).filter("id = '\(content.authorId)'").first {
                             let url = URL(string: page.avatar)
                             self.avatarImage.kf.setImage(with: url, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
                             self.followButton.isHidden = true
@@ -151,7 +151,7 @@ public class HeaderTableViewCell: UITableViewCell {
         }
     }
 
-    public func configAdsPreViewCell(page: Page) {
+    public func configAdsPreViewCell(page: PageRealm) {
         self.isPreview = true
         self.followButton.setTitle(Localization.ContentDetail.follow.text, for: .normal)
         let url = URL(string: page.avatar)

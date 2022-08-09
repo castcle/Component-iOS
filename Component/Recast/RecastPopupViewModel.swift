@@ -31,9 +31,9 @@ import Core
 public final class RecastPopupViewModel {
 
     var isRecasted: Bool = false
-    var page: Page?
+    var page: PageRealm?
 
-    public init(isRecasted: Bool = false, page: Page = Page().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.castcleId, avatar: UserManager.shared.avatar, cover: UserManager.shared.cover, overview: UserManager.shared.overview, official: UserManager.shared.official)) {
+    public init(isRecasted: Bool = false, page: PageRealm = PageRealm().initCustom(id: UserManager.shared.id, displayName: UserManager.shared.displayName, castcleId: UserManager.shared.castcleId, avatar: UserManager.shared.avatar, cover: UserManager.shared.cover, overview: UserManager.shared.overview, official: UserManager.shared.official)) {
         self.isRecasted = isRecasted
         self.page = page
     }
