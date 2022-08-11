@@ -40,8 +40,7 @@ public final class CommentViewModel {
     var commentRequest: CommentRequest = CommentRequest()
     let tokenHelper: TokenHelper = TokenHelper()
     var state: State = .none
-    var contentLoadState: LoadState = .loading
-    var commentLoadState: LoadState = .loading
+    var loadState: LoadState = .loading
     var commentId: String = ""
     var replyId: String = ""
     var meta: Meta = Meta()
@@ -52,7 +51,6 @@ public final class CommentViewModel {
             self.contentId = contentId
             self.comments = []
             self.getContentDetail()
-            self.getComments()
         }
     }
 

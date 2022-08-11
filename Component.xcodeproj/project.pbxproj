@@ -170,6 +170,8 @@
 		B7E49AE027F310150026C7F6 /* FarmingPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */; };
 		B7E49AE227F3101D0026C7F6 /* FarmingPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */; };
 		B7E49AE427F3247B0026C7F6 /* FarmingLimitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E49AE327F3247B0026C7F6 /* FarmingLimitViewController.swift */; };
+		B7E7D22028A3B62E0048C035 /* RemoveIllegalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E7D21E28A3B62E0048C035 /* RemoveIllegalTableViewCell.swift */; };
+		B7E7D22128A3B62E0048C035 /* RemoveIllegalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7E7D21F28A3B62E0048C035 /* RemoveIllegalTableViewCell.xib */; };
 		B7FA1D8627B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FA1D8427B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift */; };
 		B7FA1D8727B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7FA1D8527B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.xib */; };
 		B7FA1D8A27B0DB3000A485A1 /* LongTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7FA1D8827B0DB3000A485A1 /* LongTextTableViewCell.xib */; };
@@ -363,6 +365,8 @@
 		B7E49ADF27F310140026C7F6 /* FarmingPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FarmingPopupViewController.swift; sourceTree = "<group>"; };
 		B7E49AE127F3101D0026C7F6 /* FarmingPopupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FarmingPopupViewModel.swift; sourceTree = "<group>"; };
 		B7E49AE327F3247B0026C7F6 /* FarmingLimitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmingLimitViewController.swift; sourceTree = "<group>"; };
+		B7E7D21E28A3B62E0048C035 /* RemoveIllegalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveIllegalTableViewCell.swift; sourceTree = "<group>"; };
+		B7E7D21F28A3B62E0048C035 /* RemoveIllegalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RemoveIllegalTableViewCell.xib; sourceTree = "<group>"; };
 		B7FA1D8427B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongTextLinkPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		B7FA1D8527B0D39A00A485A1 /* LongTextLinkPreviewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LongTextLinkPreviewTableViewCell.xib; sourceTree = "<group>"; };
 		B7FA1D8827B0DB3000A485A1 /* LongTextTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LongTextTableViewCell.xib; sourceTree = "<group>"; };
@@ -842,6 +846,8 @@
 				B7BE808D28A276A20066ADF9 /* IllegalActionTableViewCell.xib */,
 				B7BE808828A276540066ADF9 /* IllegalTableViewCell.swift */,
 				B7BE808928A276550066ADF9 /* IllegalTableViewCell.xib */,
+				B7E7D21E28A3B62E0048C035 /* RemoveIllegalTableViewCell.swift */,
+				B7E7D21F28A3B62E0048C035 /* RemoveIllegalTableViewCell.xib */,
 			);
 			path = Report;
 			sourceTree = "<group>";
@@ -1061,6 +1067,7 @@
 				B786635D2747AC4200B13EEF /* QuoteCastImageX3Cell.xib in Resources */,
 				B7AC1E452717C67A002FC176 /* TextLinkPreviewTableViewCell.xib in Resources */,
 				B71744AF26E9EF280014D6B5 /* ImageX1TableViewCell.xib in Resources */,
+				B7E7D22128A3B62E0048C035 /* RemoveIllegalTableViewCell.xib in Resources */,
 				B7E18CFC283656880069F5C4 /* UserReactionTableViewCell.xib in Resources */,
 				B7167F9927AD1AE800067DBD /* AdsPageTableViewCell.xib in Resources */,
 				B71744C226E9F6820014D6B5 /* BlogTableViewCell.xib in Resources */,
@@ -1213,6 +1220,7 @@
 				B7D4BC1C27FEF47B008ACD9F /* AcceptSyncSocialPopupViewController.swift in Sources */,
 				B7552971269CBA14005D5EB5 /* FastArrowLayer.swift in Sources */,
 				B767A05F2885211800960FA5 /* AboutTableViewCell.swift in Sources */,
+				B7E7D22028A3B62E0048C035 /* RemoveIllegalTableViewCell.swift in Sources */,
 				B755297D269CBA15005D5EB5 /* RefreshExtension.swift in Sources */,
 				B7AC880227199B0F00500F81 /* CastcleActionSheetExtensions.swift in Sources */,
 				B71744A226E7ED320014D6B5 /* ReplyTableViewCell.swift in Sources */,

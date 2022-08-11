@@ -65,5 +65,8 @@ public extension UITableView {
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.longImageX3, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.longImageX3)
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.longImageXMore, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.longImageXMore)
         self.register(UINib(nibName: ComponentNibVars.TableViewCell.report, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.report)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.illegalAction, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.illegalAction)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.illegal, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.illegal)
+        self.register(UINib(nibName: ComponentNibVars.TableViewCell.removeIllegal, bundle: ConfigBundle.component), forCellReuseIdentifier: ComponentNibVars.TableViewCell.removeIllegal)
     }
 }

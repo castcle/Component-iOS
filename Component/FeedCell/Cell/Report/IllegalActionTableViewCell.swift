@@ -26,14 +26,129 @@
 //
 
 import UIKit
+import Core
+import Networking
+import ActiveLabel
 
-class IllegalActionTableViewCell: UITableViewCell {
+public protocol IllegalActionTableViewCellDelegate: AnyObject {
+    func didAppeal(_ illegalActionTableViewCell: IllegalActionTableViewCell)
+    func didRemove(_ illegalActionTableViewCell: IllegalActionTableViewCell)
+}
 
-    override func awakeFromNib() {
+public class IllegalActionTableViewCell: UITableViewCell {
+
+    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var blockImage: UIImageView!
+    @IBOutlet weak var illegalTitleLabel: UILabel!
+    @IBOutlet weak var illegalDetailLabel: ActiveLabel!
+    @IBOutlet weak var yesButton: UIButton!
+    @IBOutlet weak var noButton: UIButton!
+    @IBOutlet weak var illegalView: UIView!
+    @IBOutlet weak var illegalImage: UIImageView!
+
+    public var delegate: IllegalActionTableViewCellDelegate?
+    private let customTerms = ActiveType.custom(pattern: "Castcle Terms and Agreement")
+    private var reportRepository: ReportRepository = ReportRepositoryImpl()
+    let tokenHelper: TokenHelper = TokenHelper()
+    private var content: Content = Content()
+    private var state: State = .none
+
+    public override func awakeFromNib() {
         super.awakeFromNib()
+        self.illegalView.custom(cornerRadius: 12)
+        self.illegalImage.custom(cornerRadius: 12)
+        self.blockImage.image = UIImage.init(icon: .castcle(.blockedUsers), size: CGSize(width: 50, height: 50), textColor: UIColor.Asset.white)
+        self.contentLabel.font = UIFont.asset(.contentLight, fontSize: .body)
+        self.contentLabel.textColor = UIColor.Asset.textGray
+        self.illegalTitleLabel.font = UIFont.asset(.medium, fontSize: .overline)
+        self.illegalTitleLabel.textColor = UIColor.Asset.white
+        self.yesButton.titleLabel?.font = UIFont.asset(.medium, fontSize: .overline)
+        self.yesButton.setTitleColor(UIColor.Asset.white, for: .normal)
+        self.yesButton.capsule(color: UIColor.Asset.lightBlue, borderWidth: 1, borderColor: UIColor.clear)
+        self.noButton.titleLabel?.font = UIFont.asset(.medium, fontSize: .overline)
+        self.noButton.setTitleColor(UIColor.Asset.lightBlue, for: .normal)
+        self.noButton.capsule(color: UIColor.clear, borderWidth: 1, borderColor: UIColor.Asset.lightBlue)
+        self.illegalDetailLabel.customize { label in
+            label.font = UIFont.asset(.contentLight, fontSize: .overline)
+            label.numberOfLines = 0
+            label.enabledTypes = [self.customTerms]
+            label.textColor = UIColor.Asset.white
+            label.customColor[self.customTerms] = UIColor.Asset.lightBlue
+            label.customSelectedColor[self.customTerms] = UIColor.Asset.lightBlue
+        }
+        self.illegalDetailLabel.handleCustomTap(for: self.customTerms) { _ in
+            Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.internalWebView(URL(string: Environment.userAgreement)!)), animated: true)
+        }
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+    public override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+
+    public func configCell(content: Content) {
+        self.tokenHelper.delegate = self
+        self.contentLabel.text = (content.message.isEmpty ? "" : "\(content.message)\n")
+        self.content = content
+        if content.feedDisplayType == .postImageX1 || content.feedDisplayType == .postImageX2 || content.feedDisplayType == .postImageX3 || content.feedDisplayType == .postImageXMore {
+            self.illegalImage.isHidden = false
+        } else {
+            self.illegalImage.isHidden = true
+        }
+    }
+
+    @IBAction func yesAction(_ sender: Any) {
+        let alert = UIAlertController(title: "Thank you", message: "We will notify you once this Cast is reviewed.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
+            self.appealCast()
+        }
+        alert.addAction(okAction)
+        Utility.currentViewController().present(alert, animated: true, completion: nil)
+    }
+
+    @IBAction func noAction(_ sender: Any) {
+        let alert = UIAlertController(title: "Warning", message: "This Cast will be permanently deleted from your timeline.", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "Ok", style: .default) { _ in
+            self.notAppealCast()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
+        Utility.currentViewController().present(alert, animated: true, completion: nil)
+    }
+
+    private func notAppealCast() {
+        self.state = .notAppealCast
+        self.reportRepository.notAppealCast(contentId: self.content.id) { (success, _, isRefreshToken) in
+            if success {
+                self.delegate?.didRemove(self)
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
+    }
+
+    private func appealCast() {
+        self.state = .appealCast
+        self.reportRepository.appealCast(contentId: self.content.id) { (success, _, isRefreshToken) in
+            if success {
+                self.delegate?.didAppeal(self)
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
+    }
+}
+
+extension IllegalActionTableViewCell: TokenHelperDelegate {
+    public func didRefreshTokenFinish() {
+        if self.state == .notAppealCast {
+            self.notAppealCast()
+        } else if self.state == .appealCast {
+            self.appealCast()
+        }
     }
 }

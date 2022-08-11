@@ -34,6 +34,7 @@ import SwiftDate
 
 public protocol FooterTableViewCellDelegate: AnyObject {
     func didTabQuoteCast(_ footerTableViewCell: FooterTableViewCell, content: Content, page: PageRealm)
+    func didTabComment(_ footerTableViewCell: FooterTableViewCell)
 }
 
 public class FooterTableViewCell: UITableViewCell {
@@ -215,6 +216,9 @@ public class FooterTableViewCell: UITableViewCell {
             NotificationCenter.default.post(name: .openVerifyDelegate, object: nil, userInfo: nil)
         } else {
             guard let content = self.content else { return }
+            if content.reportedStatus != .none {
+                return
+            }
             self.stateType = .like
             self.likeContent(content: content)
         }
@@ -227,9 +231,14 @@ public class FooterTableViewCell: UITableViewCell {
             NotificationCenter.default.post(name: .openVerifyDelegate, object: nil, userInfo: nil)
         } else {
             guard let content = self.content else { return }
+            if content.reportedStatus != .none {
+                return
+            }
             self.stateType = .none
             if !self.isCommentView {
                 Utility.currentViewController().navigationController?.pushViewController(ComponentOpener.open(.comment(CommentViewModel(contentId: content.id))), animated: true)
+            } else {
+                self.delegate?.didTabComment(self)
             }
         }
     }
@@ -241,6 +250,9 @@ public class FooterTableViewCell: UITableViewCell {
             NotificationCenter.default.post(name: .openVerifyDelegate, object: nil, userInfo: nil)
         } else {
             guard let content = self.content else { return }
+            if content.reportedStatus != .none {
+                return
+            }
             let viewController = ComponentOpener.open(.recast(RecastPopupViewModel(isRecasted: content.participate.recasted))) as? RecastPopupViewController
             viewController?.delegate = self
             Utility.currentViewController().presentPanModal(viewController ?? RecastPopupViewController())
@@ -254,6 +266,9 @@ public class FooterTableViewCell: UITableViewCell {
             NotificationCenter.default.post(name: .openVerifyDelegate, object: nil, userInfo: nil)
         } else {
             guard let content = self.content else { return }
+            if content.reportedStatus != .none {
+                return
+            }
             if content.participate.farming {
                 let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(type: .unfarn))) as? FarmingPopupViewController
                 viewController?.delegate = self

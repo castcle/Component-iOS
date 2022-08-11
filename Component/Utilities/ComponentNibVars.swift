@@ -106,6 +106,9 @@ public struct ComponentNibVars {
         public static let userReaction = "UserReactionTableViewCell"
         public static let about = "AboutTableViewCell"
         public static let report = "ReportTableViewCell"
+        public static let illegalAction = "IllegalActionTableViewCell"
+        public static let illegal = "IllegalTableViewCell"
+        public static let removeIllegal = "RemoveIllegalTableViewCell"
     }
 
     // MARK: - CollectionViewCell

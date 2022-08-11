@@ -137,7 +137,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         self.commentTextField.isEditable = false
         self.viewModel.didLoadCommentsFinish = {
             self.hud.dismiss()
-            self.viewModel.commentLoadState = .loaded
+            self.viewModel.loadState = .loaded
             self.enableTextField()
             self.tableView.isScrollEnabled = true
             self.event = .create
@@ -149,17 +149,20 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
                               options: .transitionCrossDissolve,
                               animations: { self.tableView.reloadData() })
         }
-
         self.viewModel.didLoadContentFinish = {
             self.setupNevBar()
-            self.viewModel.contentLoadState = .loaded
-            self.enableTextField()
-            UIView.transition(with: self.tableView,
-                              duration: 0.35,
-                              options: .transitionCrossDissolve,
-                              animations: { self.tableView.reloadData() })
+            if self.viewModel.content.reportedStatus == .none {
+                self.viewModel.getComments()
+            } else {
+                self.viewModel.loadState = .loaded
+                self.customInputView.isHidden = true
+                self.tableView.coreRefresh.noticeNoMoreData()
+                UIView.transition(with: self.tableView,
+                                  duration: 0.35,
+                                  options: .transitionCrossDissolve,
+                                  animations: { self.tableView.reloadData() })
+            }
         }
-
         self.tableView.coreRefresh.addFootRefresh(animator: NormalFooterAnimator()) { [weak self] in
             guard let self = self else { return }
             if self.viewModel.meta.resultCount < self.viewModel.commentRequest.maxResults {
@@ -206,7 +209,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     }
 
     private func enableTextField() {
-        if self.viewModel.contentLoadState == .loaded && self.viewModel.commentLoadState == .loaded {
+        if self.viewModel.loadState == .loaded {
             self.commentTextField.isEditable = true
         }
     }
@@ -214,37 +217,49 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
 
 extension CommentViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if self.viewModel.commentLoadState == .loading {
-            return 2
+        if self.viewModel.loadState == .loading {
+            return 3
         } else {
-            return (2 + self.viewModel.comments.count)
+            if self.viewModel.content.reportedStatus != .none {
+                return 1
+            } else {
+                return (2 + self.viewModel.comments.count)
+            }
         }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            if self.viewModel.contentLoadState == .loading {
-                return 1
-            } else {
-                if self.viewModel.content.referencedCasts.type == .quoted {
-                    return 4
-                } else {
-                    return 3
-                }
-            }
-        } else if section == 1 {
-            if self.viewModel.commentLoadState == .loading {
+        if self.viewModel.loadState == .loading {
+            if section == 1 {
                 return 0
             } else {
+                return 1
+            }
+        } else {
+            if section == 0 {
+                if self.viewModel.content.reportedStatus == .removeWithOwner {
+                    return 1
+                } else if self.viewModel.content.participate.recasted || ContentHelper.shared.isReportContent(contentId: self.viewModel.content.id) {
+                    if self.viewModel.content.isShowContentReport && self.viewModel.content.referencedCasts.type == .quoted {
+                        return 5
+                    } else if self.viewModel.content.isShowContentReport && self.viewModel.content.referencedCasts.type != .quoted {
+                        return 4
+                    } else {
+                        return 1
+                    }
+                } else {
+                    if self.viewModel.content.referencedCasts.type == .quoted {
+                        return 4
+                    } else {
+                        return 3
+                    }
+                }
+            } else if section == 1 {
                 if self.viewModel.content.metrics.likeCount == 0 && self.viewModel.content.metrics.recastCount == 0 && self.viewModel.content.metrics.quoteCount == 0 {
                     return 0
                 } else {
                     return 1
                 }
-            }
-        } else {
-            if self.viewModel.commentLoadState == .loading {
-                return 1
             } else {
                 return 1 + self.viewModel.comments[section - 2].reply.count
             }
@@ -252,41 +267,73 @@ extension CommentViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            if self.viewModel.contentLoadState == .loading {
+        if self.viewModel.loadState == .loading {
+            if indexPath.section == 0 {
                 return FeedCellHelper().renderSkeletonCell(tableView: tableView, indexPath: indexPath)
             } else {
-                if self.viewModel.content.referencedCasts.type == .quoted {
-                    if indexPath.row == 0 {
-                        return self.renderFeedCell(content: self.viewModel.content, cellType: .header, tableView: tableView, indexPath: indexPath)
-                    } else if indexPath.row == 1 {
-                        return self.renderFeedCell(content: self.viewModel.content, cellType: .content, tableView: tableView, indexPath: indexPath)
-                    } else if indexPath.row == 2 {
-                        return self.renderFeedCell(content: self.viewModel.content, cellType: .quote, tableView: tableView, indexPath: indexPath)
-                    } else {
-                        return self.renderFeedCell(content: self.viewModel.content, cellType: .footer, tableView: tableView, indexPath: indexPath)
-                    }
-                } else {
-                    if indexPath.row == 0 {
-                        return self.renderFeedCell(content: self.viewModel.content, cellType: .header, tableView: tableView, indexPath: indexPath)
-                    } else if indexPath.row == 1 {
-                        return self.renderFeedCell(content: self.viewModel.content, cellType: .content, tableView: tableView, indexPath: indexPath)
-                    } else {
-                        return self.renderFeedCell(content: self.viewModel.content, cellType: .footer, tableView: tableView, indexPath: indexPath)
-                    }
-                }
-            }
-        } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.reactionCast, for: indexPath as IndexPath) as? ReactionCastTableViewCell
-            cell?.backgroundColor = UIColor.clear
-            cell?.configCell(content: self.viewModel.content)
-            return cell ?? ReactionCastTableViewCell()
-        } else {
-            if self.viewModel.commentLoadState == .loading {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.skeletonNotify, for: indexPath as IndexPath) as? SkeletonNotifyTableViewCell
                 cell?.backgroundColor = UIColor.Asset.cellBackground
                 cell?.configCell()
                 return cell ?? SkeletonNotifyTableViewCell()
+            }
+        } else {
+            if indexPath.section == 0 {
+                if self.viewModel.content.reportedStatus == .removeWithOwner {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.removeIllegal, for: indexPath as IndexPath) as? RemoveIllegalTableViewCell
+                    cell?.backgroundColor = UIColor.clear
+                    return cell ?? RemoveIllegalTableViewCell()
+                } else if self.viewModel.content.participate.recasted || ContentHelper.shared.isReportContent(contentId: self.viewModel.content.id) {
+                    if self.viewModel.content.isShowContentReport && self.viewModel.content.referencedCasts.type == .quoted {
+                        if indexPath.row == 0 {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .activity, tableView: tableView, indexPath: indexPath)
+                        } else if indexPath.row == 1 {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .header, tableView: tableView, indexPath: indexPath)
+                        } else if indexPath.row == 2 {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .content, tableView: tableView, indexPath: indexPath)
+                        } else if indexPath.row == 3 {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .quote, tableView: tableView, indexPath: indexPath)
+                        } else {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .footer, tableView: tableView, indexPath: indexPath)
+                        }
+                    } else if self.viewModel.content.isShowContentReport && self.viewModel.content.referencedCasts.type != .quoted {
+                        if indexPath.row == 0 {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .activity, tableView: tableView, indexPath: indexPath)
+                        } else if indexPath.row == 1 {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .header, tableView: tableView, indexPath: indexPath)
+                        } else if indexPath.row == 2 {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .content, tableView: tableView, indexPath: indexPath)
+                        } else {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .footer, tableView: tableView, indexPath: indexPath)
+                        }
+                    } else {
+                        return self.renderFeedCell(content: self.viewModel.content, cellType: .report, tableView: tableView, indexPath: indexPath)
+                    }
+                } else {
+                    if self.viewModel.content.referencedCasts.type == .quoted {
+                        if indexPath.row == 0 {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .header, tableView: tableView, indexPath: indexPath)
+                        } else if indexPath.row == 1 {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .content, tableView: tableView, indexPath: indexPath)
+                        } else if indexPath.row == 2 {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .quote, tableView: tableView, indexPath: indexPath)
+                        } else {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .footer, tableView: tableView, indexPath: indexPath)
+                        }
+                    } else {
+                        if indexPath.row == 0 {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .header, tableView: tableView, indexPath: indexPath)
+                        } else if indexPath.row == 1 {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .content, tableView: tableView, indexPath: indexPath)
+                        } else {
+                            return self.renderFeedCell(content: self.viewModel.content, cellType: .footer, tableView: tableView, indexPath: indexPath)
+                        }
+                    }
+                }
+            } else if indexPath.section == 1 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.reactionCast, for: indexPath as IndexPath) as? ReactionCastTableViewCell
+                cell?.backgroundColor = UIColor.clear
+                cell?.configCell(content: self.viewModel.content)
+                return cell ?? ReactionCastTableViewCell()
             } else {
                 let comment = self.viewModel.comments[indexPath.section - 2]
                 if indexPath.row == 0 {
@@ -346,7 +393,7 @@ extension CommentViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 && self.viewModel.contentLoadState == .loaded && self.viewModel.content.type == .long && indexPath.row == 1 {
+        if indexPath.section == 0 && self.viewModel.loadState == .loaded && self.viewModel.content.type == .long && indexPath.row == 1 {
             self.viewModel.content.isExpand.toggle()
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
@@ -385,8 +432,32 @@ extension CommentViewController {
             return cell ?? FooterTableViewCell()
         case .quote:
             return FeedCellHelper().renderQuoteCastCell(content: originalContent, tableView: self.tableView, indexPath: indexPath, isRenderForFeed: true)
+        case .report:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.report, for: indexPath as IndexPath) as? ReportTableViewCell
+            cell?.backgroundColor = UIColor.Asset.cellBackground
+            cell?.delegate = self
+            return cell ?? ReportTableViewCell()
         default:
-            if content.referencedCasts.type == .recasted {
+            if content.reportedStatus == .illegal {
+                let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.illegalAction, for: indexPath as IndexPath) as? IllegalActionTableViewCell
+                cell?.backgroundColor = UIColor.Asset.cellBackground
+                if content.referencedCasts.type == .recasted {
+                    cell?.configCell(content: originalContent)
+                } else {
+                    cell?.configCell(content: content)
+                }
+                cell?.delegate = self
+                return cell ?? IllegalActionTableViewCell()
+            } else if content.reportedStatus == .appeal {
+                let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.illegal, for: indexPath as IndexPath) as? IllegalTableViewCell
+                cell?.backgroundColor = UIColor.Asset.cellBackground
+                if content.referencedCasts.type == .recasted {
+                    cell?.configCell(content: originalContent)
+                } else {
+                    cell?.configCell(content: content)
+                }
+                return cell ?? IllegalTableViewCell()
+            } else if content.referencedCasts.type == .recasted {
                 if originalContent.type == .long && !content.isOriginalExpand {
                     return FeedCellHelper().renderLongCastCell(content: originalContent, tableView: self.tableView, indexPath: indexPath)
                 } else {
@@ -420,6 +491,10 @@ extension CommentViewController: FooterTableViewCellDelegate {
             viewController.modalPresentationStyle = .fullScreen
             Utility.currentViewController().present(viewController, animated: true, completion: nil)
         }
+    }
+
+    func didTabComment(_ footerTableViewCell: FooterTableViewCell) {
+        self.commentTextField.becomeFirstResponder()
     }
 }
 
@@ -475,6 +550,25 @@ extension CommentViewController: ReplyTableViewCellDelegate {
     func didUnliked(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef) {
         self.viewModel.commentId = replyComment.id
         self.viewModel.unlikeComment()
+    }
+}
+
+extension CommentViewController: ReportTableViewCellDelegate {
+    func didTabView(_ reportTableViewCell: ReportTableViewCell) {
+        self.viewModel.content.isShowContentReport = true
+        self.tableView.reloadData()
+    }
+}
+
+extension CommentViewController: IllegalActionTableViewCellDelegate {
+    func didAppeal(_ illegalActionTableViewCell: IllegalActionTableViewCell) {
+        self.viewModel.content.reportedStatus = .appeal
+        self.tableView.reloadData()
+    }
+
+    func didRemove(_ illegalActionTableViewCell: IllegalActionTableViewCell) {
+        self.viewModel.content.reportedStatus = .removeWithOwner
+        self.tableView.reloadData()
     }
 }
 
