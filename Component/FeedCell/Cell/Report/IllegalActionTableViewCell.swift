@@ -29,6 +29,7 @@ import UIKit
 import Core
 import Networking
 import ActiveLabel
+import JGProgressHUD
 
 public protocol IllegalActionTableViewCellDelegate: AnyObject {
     func didAppeal(_ illegalActionTableViewCell: IllegalActionTableViewCell)
@@ -52,9 +53,11 @@ public class IllegalActionTableViewCell: UITableViewCell {
     let tokenHelper: TokenHelper = TokenHelper()
     private var content: Content = Content()
     private var state: State = .none
+    private let hud = JGProgressHUD()
 
     public override func awakeFromNib() {
         super.awakeFromNib()
+        self.hud.textLabel.text = "Sending"
         self.illegalView.custom(cornerRadius: 12)
         self.illegalImage.custom(cornerRadius: 12)
         self.blockImage.image = UIImage.init(icon: .castcle(.blockedUsers), size: CGSize(width: 50, height: 50), textColor: UIColor.Asset.white)
@@ -99,6 +102,7 @@ public class IllegalActionTableViewCell: UITableViewCell {
     @IBAction func yesAction(_ sender: Any) {
         let alert = UIAlertController(title: "Thank you", message: "We will notify you once this Cast is reviewed.", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
+            self.hud.show(in: Utility.currentViewController().view)
             self.appealCast()
         }
         alert.addAction(okAction)
@@ -108,6 +112,7 @@ public class IllegalActionTableViewCell: UITableViewCell {
     @IBAction func noAction(_ sender: Any) {
         let alert = UIAlertController(title: "Warning", message: "This Cast will be permanently deleted from your timeline.", preferredStyle: .alert)
         let confirmAction = UIAlertAction(title: "Ok", style: .default) { _ in
+            self.hud.show(in: Utility.currentViewController().view)
             self.notAppealCast()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -120,10 +125,13 @@ public class IllegalActionTableViewCell: UITableViewCell {
         self.state = .notAppealCast
         self.reportRepository.notAppealCast(contentId: self.content.id) { (success, _, isRefreshToken) in
             if success {
+                self.hud.dismiss()
                 self.delegate?.didRemove(self)
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
+                } else {
+                    self.hud.dismiss()
                 }
             }
         }
@@ -133,10 +141,13 @@ public class IllegalActionTableViewCell: UITableViewCell {
         self.state = .appealCast
         self.reportRepository.appealCast(contentId: self.content.id) { (success, _, isRefreshToken) in
             if success {
+                self.hud.dismiss()
                 self.delegate?.didAppeal(self)
             } else {
                 if isRefreshToken {
                     self.tokenHelper.refreshToken()
+                } else {
+                    self.hud.dismiss()
                 }
             }
         }
