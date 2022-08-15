@@ -239,7 +239,7 @@ extension CommentViewController {
             if section == 0 {
                 if self.viewModel.content.reportedStatus == .removeWithOwner {
                     return 1
-                } else if self.viewModel.content.participate.recasted || ContentHelper.shared.isReportContent(contentId: self.viewModel.content.id) {
+                } else if self.viewModel.content.participate.reported || ContentHelper.shared.isReportContent(contentId: self.viewModel.content.id) {
                     if self.viewModel.content.isShowContentReport && self.viewModel.content.referencedCasts.type == .quoted {
                         return 5
                     } else if self.viewModel.content.isShowContentReport && self.viewModel.content.referencedCasts.type != .quoted {
@@ -282,7 +282,7 @@ extension CommentViewController {
                     let cell = tableView.dequeueReusableCell(withIdentifier: ComponentNibVars.TableViewCell.removeIllegal, for: indexPath as IndexPath) as? RemoveIllegalTableViewCell
                     cell?.backgroundColor = UIColor.clear
                     return cell ?? RemoveIllegalTableViewCell()
-                } else if self.viewModel.content.participate.recasted || ContentHelper.shared.isReportContent(contentId: self.viewModel.content.id) {
+                } else if self.viewModel.content.participate.reported || ContentHelper.shared.isReportContent(contentId: self.viewModel.content.id) {
                     if self.viewModel.content.isShowContentReport && self.viewModel.content.referencedCasts.type == .quoted {
                         if indexPath.row == 0 {
                             return self.renderFeedCell(content: self.viewModel.content, cellType: .activity, tableView: tableView, indexPath: indexPath)
