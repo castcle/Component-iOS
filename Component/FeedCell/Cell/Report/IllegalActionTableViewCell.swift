@@ -45,7 +45,6 @@ public class IllegalActionTableViewCell: UITableViewCell {
     @IBOutlet weak var yesButton: UIButton!
     @IBOutlet weak var noButton: UIButton!
     @IBOutlet weak var illegalView: UIView!
-    @IBOutlet weak var illegalImage: UIImageView!
 
     public var delegate: IllegalActionTableViewCellDelegate?
     private let customTerms = ActiveType.custom(pattern: "Castcle Terms and Agreement")
@@ -58,8 +57,7 @@ public class IllegalActionTableViewCell: UITableViewCell {
     public override func awakeFromNib() {
         super.awakeFromNib()
         self.hud.textLabel.text = "Sending"
-        self.illegalView.custom(cornerRadius: 12)
-        self.illegalImage.custom(cornerRadius: 12)
+        self.illegalView.custom(color: UIColor.Asset.black, cornerRadius: 12)
         self.blockImage.image = UIImage.init(icon: .castcle(.blockedUsers), size: CGSize(width: 50, height: 50), textColor: UIColor.Asset.white)
         self.contentLabel.font = UIFont.asset(.contentLight, fontSize: .body)
         self.contentLabel.textColor = UIColor.Asset.textGray
@@ -93,9 +91,9 @@ public class IllegalActionTableViewCell: UITableViewCell {
         self.contentLabel.text = (content.message.isEmpty ? "" : "\(content.message)\n")
         self.content = content
         if content.feedDisplayType == .postImageX1 || content.feedDisplayType == .postImageX2 || content.feedDisplayType == .postImageX3 || content.feedDisplayType == .postImageXMore {
-            self.illegalImage.isHidden = false
+            self.illegalView.backgroundColor = UIColor.Asset.black
         } else {
-            self.illegalImage.isHidden = true
+            self.illegalView.backgroundColor = UIColor.clear
         }
     }
 
