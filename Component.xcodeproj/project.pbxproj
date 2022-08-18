@@ -59,6 +59,7 @@
 		B74EBE2C27F7DA440024BB94 /* PublicPopup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B74EBE2A27F7DA440024BB94 /* PublicPopup.storyboard */; };
 		B74EBE2D27F7DA440024BB94 /* SyncAutoPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B74EBE2B27F7DA440024BB94 /* SyncAutoPostViewController.swift */; };
 		B74EBE3027F7DA4F0024BB94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B74EBE2F27F7DA4F0024BB94 /* Assets.xcassets */; };
+		B750A55028AEB98600489C90 /* CCLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = B750A54F28AEB98600489C90 /* CCLoading.swift */; };
 		B7552968269CBA14005D5EB5 /* RefreshAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */; };
 		B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552957269CBA14005D5EB5 /* FastAnimator.swift */; };
 		B7552970269CBA14005D5EB5 /* FastLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7552958269CBA14005D5EB5 /* FastLayer.swift */; };
@@ -249,6 +250,7 @@
 		B74EBE2A27F7DA440024BB94 /* PublicPopup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PublicPopup.storyboard; sourceTree = "<group>"; };
 		B74EBE2B27F7DA440024BB94 /* SyncAutoPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncAutoPostViewController.swift; sourceTree = "<group>"; };
 		B74EBE2F27F7DA4F0024BB94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B750A54F28AEB98600489C90 /* CCLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCLoading.swift; sourceTree = "<group>"; };
 		B755294C269CBA14005D5EB5 /* RefreshAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshAnimator.swift; sourceTree = "<group>"; };
 		B7552957269CBA14005D5EB5 /* FastAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastAnimator.swift; sourceTree = "<group>"; };
 		B7552958269CBA14005D5EB5 /* FastLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastLayer.swift; sourceTree = "<group>"; };
@@ -620,6 +622,7 @@
 				B75529D2269F696A005D5EB5 /* ComponentNibVars.swift */,
 				B7910DF826AFE8200097C94E /* ComponentOpener.swift */,
 				B756C8A2277337C1007AADE4 /* TableView.swift */,
+				B750A54F28AEB98600489C90 /* CCLoading.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1136,6 +1139,7 @@
 				B7866366274B833400B13EEF /* QuoteCastViewModel.swift in Sources */,
 				B711704D283B917600FF985A /* HeaderPostTableViewCell.swift in Sources */,
 				B755296F269CBA14005D5EB5 /* FastAnimator.swift in Sources */,
+				B750A55028AEB98600489C90 /* CCLoading.swift in Sources */,
 				B7552972269CBA14005D5EB5 /* FastCheckLayer.swift in Sources */,
 				B7E18D01283657790069F5C4 /* SelectCodeViewController.swift in Sources */,
 				B7C2529526CCED4000ACBB84 /* UserListTableViewCell.swift in Sources */,
