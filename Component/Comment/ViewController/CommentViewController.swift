@@ -29,7 +29,6 @@ import UIKit
 import Core
 import Networking
 import Defaults
-import JGProgressHUD
 
 class CommentViewController: UITableViewController, UITextViewDelegate {
 
@@ -38,7 +37,6 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
     var sendButton: UIButton!
     var avatarImage: UIImageView!
     let commentTextField = FlexibleTextView()
-    let hud = JGProgressHUD()
     var event: Event = .none
 
     enum Event {
@@ -110,13 +108,12 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
             self.viewModel.commentRequest.message = self.commentTextField.text
             self.viewModel.commentRequest.contentId = self.viewModel.content.id
             if self.event == .create {
-                self.hud.textLabel.text = "Commenting"
+                CCLoading.shared.show(text: "Commenting")
                 self.viewModel.createComment()
             } else if self.event == .reply {
-                self.hud.textLabel.text = "Replying"
+                CCLoading.shared.show(text: "Replying")
                 self.viewModel.replyComment()
             }
-            self.hud.show(in: self.view)
             self.commentTextField.text = ""
             self.commentTextField.resignFirstResponder()
         }
@@ -136,7 +133,7 @@ class CommentViewController: UITableViewController, UITextViewDelegate {
         self.tableView.keyboardDismissMode = .interactive
         self.commentTextField.isEditable = false
         self.viewModel.didLoadCommentsFinish = {
-            self.hud.dismiss()
+            CCLoading.shared.dismiss()
             self.viewModel.loadState = .loaded
             self.enableTextField()
             self.tableView.isScrollEnabled = true
@@ -514,8 +511,7 @@ extension CommentViewController: CommentTableViewCellDelegate {
     }
 
     func didDelete(_ commentTableViewCell: CommentTableViewCell, comment: Comment) {
-        self.hud.textLabel.text = "Deleting"
-        self.hud.show(in: self.view)
+        CCLoading.shared.show(text: "Deleting")
         self.viewModel.deleteComment(commentId: comment.id)
     }
 
@@ -537,8 +533,7 @@ extension CommentViewController: ReplyTableViewCellDelegate {
     }
 
     func didDelete(_ replyTableViewCell: ReplyTableViewCell, replyComment: CommentRef, originalCommentId: String) {
-        self.hud.textLabel.text = "Deleting"
-        self.hud.show(in: self.view)
+        CCLoading.shared.show(text: "Deleting")
         self.viewModel.deleteReplyComment(commentId: originalCommentId, replyId: replyComment.id)
     }
 

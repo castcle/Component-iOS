@@ -31,7 +31,6 @@ import Networking
 import SwiftColor
 import TLPhotoPicker
 import Defaults
-import JGProgressHUD
 
 class PostViewController: UIViewController {
 
@@ -43,7 +42,6 @@ class PostViewController: UIViewController {
     @IBOutlet var toolbarView: UIView!
 
     var viewModel = PostViewModel()
-    let hud = JGProgressHUD()
 
     private lazy var castKeyboardInput: CastKeyboardInput = {
         let inputView = CastKeyboardInput(frame: CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: 45))
@@ -107,7 +105,6 @@ class PostViewController: UIViewController {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
-        self.hud.textLabel.text = "Casting"
         Defaults[.screenId] = ScreenId.newCast.rawValue
     }
 
@@ -151,7 +148,7 @@ class PostViewController: UIViewController {
     @objc func castAction() {
         if self.viewModel.isCanPost() {
             self.view.endEditing(true)
-            self.hud.show(in: self.view)
+            CCLoading.shared.show(text: "Casting")
             if self.viewModel.postType == .newCast {
                 self.viewModel.createContent()
             } else {
@@ -340,7 +337,7 @@ extension PostViewController: TLPhotosPickerViewControllerDelegate {
 
 extension PostViewController: PostViewModelDelegate {
     func didCreateContentFinish(success: Bool) {
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
         if success {
             NotificationCenter.default.post(name: .getMyContent, object: nil)
             self.dismiss(animated: true, completion: nil)
@@ -348,7 +345,7 @@ extension PostViewController: PostViewModelDelegate {
     }
 
     func didQuotecastContentFinish(success: Bool) {
-        self.hud.dismiss()
+        CCLoading.shared.dismiss()
         if success {
             self.dismiss(animated: true, completion: nil)
         }
