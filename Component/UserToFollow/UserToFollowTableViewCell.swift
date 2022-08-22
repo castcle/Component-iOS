@@ -45,6 +45,7 @@ public class UserToFollowTableViewCell: UITableViewCell {
     @IBOutlet weak var userDescLabel: UILabel!
     @IBOutlet weak var userFollowButton: UIButton!
     @IBOutlet weak var userVerifyImage: UIImageView!
+    @IBOutlet weak var lineView: UIView!
 
     public var delegate: UserToFollowTableViewCellDelegate?
     private var userRepository: UserRepository = UserRepositoryImpl()
@@ -67,6 +68,7 @@ public class UserToFollowTableViewCell: UITableViewCell {
         self.userDescLabel.textColor = UIColor.Asset.textDetailGray
         self.userVerifyImage.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)
         self.userFollowButton.titleLabel?.font = UIFont.asset(.regular, fontSize: .overline)
+        self.lineView.backgroundColor = UIColor.Asset.lineGray
     }
 
     public override func setSelected(_ selected: Bool, animated: Bool) {

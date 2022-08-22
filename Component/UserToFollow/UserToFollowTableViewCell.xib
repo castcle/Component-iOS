@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -103,17 +104,27 @@
                                     <constraint firstItem="9dW-kX-CbT" firstAttribute="leading" secondItem="4Gw-vQ-9Vw" secondAttribute="trailing" constant="2" id="n4D-Bo-kP2"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zCW-fF-aIY">
+                                <rect key="frame" x="0.0" y="144" width="320" height="1"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="G0n-ha-uyh"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="zCW-fF-aIY" secondAttribute="bottom" id="2Kc-xM-OW2"/>
                             <constraint firstItem="Jqo-A0-7jb" firstAttribute="width" secondItem="W2Q-un-4r7" secondAttribute="width" id="2Kr-hp-9wz"/>
                             <constraint firstItem="IoP-uI-qnE" firstAttribute="centerY" secondItem="W2Q-un-4r7" secondAttribute="centerY" id="8b6-uR-FPa"/>
                             <constraint firstAttribute="trailing" secondItem="WTJ-5Y-D4E" secondAttribute="trailing" constant="20" id="9fi-jn-sFi"/>
+                            <constraint firstAttribute="trailing" secondItem="zCW-fF-aIY" secondAttribute="trailing" id="AvH-Y7-ax0"/>
                             <constraint firstAttribute="bottom" secondItem="LSN-Lg-pQT" secondAttribute="bottom" constant="14.5" id="B3y-R8-hzR"/>
                             <constraint firstItem="IoP-uI-qnE" firstAttribute="leading" secondItem="W2Q-un-4r7" secondAttribute="trailing" constant="15" id="BZu-Ab-Isn"/>
                             <constraint firstItem="63T-DZ-Aak" firstAttribute="leading" secondItem="IoP-uI-qnE" secondAttribute="trailing" constant="10" id="Bhh-ei-TNG"/>
                             <constraint firstItem="WTJ-5Y-D4E" firstAttribute="top" secondItem="ulK-rY-Lw9" secondAttribute="top" constant="15" id="C0A-Eh-Dg2"/>
                             <constraint firstItem="63T-DZ-Aak" firstAttribute="centerY" secondItem="W2Q-un-4r7" secondAttribute="centerY" id="C11-hU-arK"/>
+                            <constraint firstItem="zCW-fF-aIY" firstAttribute="leading" secondItem="ulK-rY-Lw9" secondAttribute="leading" id="MgD-Xf-xSw"/>
                             <constraint firstItem="WTJ-5Y-D4E" firstAttribute="leading" secondItem="ulK-rY-Lw9" secondAttribute="leading" constant="20" id="Q0q-b5-l3Q"/>
                             <constraint firstItem="LSN-Lg-pQT" firstAttribute="top" secondItem="W2Q-un-4r7" secondAttribute="bottom" constant="14" id="W1f-Oa-Qzm"/>
                             <constraint firstItem="Jqo-A0-7jb" firstAttribute="height" secondItem="W2Q-un-4r7" secondAttribute="height" id="bed-d9-zb3"/>
@@ -136,6 +147,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="lineView" destination="zCW-fF-aIY" id="Zaq-4a-stJ"/>
                 <outlet property="userAvatarImage" destination="W2Q-un-4r7" id="0Cj-DS-M9b"/>
                 <outlet property="userDescLabel" destination="LSN-Lg-pQT" id="qwR-Mi-sVn"/>
                 <outlet property="userDisplayNameLabel" destination="4Gw-vQ-9Vw" id="PSp-6Z-6ib"/>
@@ -148,4 +160,9 @@
             <point key="canvasLocation" x="137.68115942028987" y="118.86160714285714"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

@@ -197,13 +197,13 @@ public class FooterTableViewCell: UITableViewCell {
         }
     }
 
-    private func farmingContent(content: Content) {
-        if content.participate.farming {
-            content.metrics.farmCount -= 1
+    private func farmingContent(content: Content, farmingStatus: FarmingStatus) {
+        if farmingStatus == .farming {
+            content.metrics.farmCount += 1
             content.participate.farming.toggle()
             self.updateUi(content: content)
-        } else {
-            content.metrics.farmCount += 1
+        } else if farmingStatus == .available {
+            content.metrics.farmCount -= 1
             content.participate.farming.toggle()
             self.updateUi(content: content)
         }
@@ -269,20 +269,24 @@ public class FooterTableViewCell: UITableViewCell {
             if content.reportedStatus != .none {
                 return
             }
+            if UserHelper.shared.isMyAccount(id: content.authorId) {
+                return
+            }
             if content.participate.farming {
-                let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(type: .unfarn))) as? FarmingPopupViewController
+                let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(contentId: content.id))) as? FarmingPopupViewController
                 viewController?.delegate = self
                 Utility.currentViewController().presentPanModal(viewController ?? FarmingPopupViewController())
             } else {
-                if Date().second % 2 == 0 {
-                    let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(type: .farm))) as? FarmingPopupViewController
-                    viewController?.delegate = self
-                    Utility.currentViewController().presentPanModal(viewController ?? FarmingPopupViewController())
-                } else {
-                    let viewController = ComponentOpener.open(.farmingLimitPopup) as? FarmingLimitViewController
-                    viewController?.delegate = self
-                    Utility.currentViewController().presentPanModal(viewController ?? FarmingLimitViewController())
-                }
+                let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(contentId: content.id))) as? FarmingPopupViewController
+                viewController?.delegate = self
+                Utility.currentViewController().presentPanModal(viewController ?? FarmingPopupViewController())
+//                if Date().second % 2 == 0 {
+//
+//                } else {
+//                    let viewController = ComponentOpener.open(.farmingLimitPopup) as? FarmingLimitViewController
+//                    viewController?.delegate = self
+//                    Utility.currentViewController().presentPanModal(viewController ?? FarmingLimitViewController())
+//                }
             }
         }
     }
@@ -302,16 +306,20 @@ extension FooterTableViewCell: RecastPopupViewControllerDelegate {
 }
 
 extension FooterTableViewCell: FarmingPopupViewControllerDelegate {
-    public func farmingPopupViewController(didAction view: FarmingPopupViewController) {
+    public func farmingPopupViewController(didAction view: FarmingPopupViewController, farmingStatus: FarmingStatus) {
         guard let content = self.content else { return }
-        self.farmingContent(content: content)
+        self.farmingContent(content: content, farmingStatus: farmingStatus)
+    }
+
+    public func farmingPopupViewControllerDidViewHistory(_ view: FarmingPopupViewController) {
+        NotificationCenter.default.post(name: .openFarmmingDelegate, object: nil, userInfo: nil)
     }
 }
 
 extension FooterTableViewCell: FarmingLimitViewControllerDelegate {
     public func farmingLimitViewController(didAction view: FarmingLimitViewController) {
         guard let content = self.content else { return }
-        self.farmingContent(content: content)
+//        self.farmingContent(content: content)
     }
 
     public func farmingLimitViewControllerDidViewHistory(_ view: FarmingLimitViewController) {

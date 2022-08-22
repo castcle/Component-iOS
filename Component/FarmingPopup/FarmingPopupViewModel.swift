@@ -25,17 +25,89 @@
 //  Created by Castcle Co., Ltd. on 29/3/2565 BE.
 //
 
-public enum FarmingType {
-    case farm
-    case unfarn
-    case limit
-}
+import Core
+import Networking
+import SwiftyJSON
 
 final public class FarmingPopupViewModel {
 
-    var farmingType: FarmingType = .farm
+    private var farmingRepository: FarmingRepository = FarmingRepositoryImpl()
+    let tokenHelper: TokenHelper = TokenHelper()
+    var contentId: String = ""
+    var farming: Farming = Farming()
+    var state: State = .none
 
-    public init(type: FarmingType = .farm) {
-        self.farmingType = type
+    public init(contentId: String) {
+        self.contentId = contentId
+        self.tokenHelper.delegate = self
+        if !self.contentId.isEmpty {
+            self.farmingLookup()
+        }
+    }
+
+    func farmingLookup() {
+        self.state = .farmingLookup
+        self.farmingRepository.farmingLookup(userId: UserManager.shared.id, contentId: self.contentId) { (success, response, isRefreshToken)  in
+            if success {
+                do {
+                    let rawJson = try response.mapJSON()
+                    let json = JSON(rawJson)
+                    self.farming =  Farming(json: json)
+                    let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
+                    let users = includes[JsonKey.users.rawValue].arrayValue
+                    UserHelper.shared.updateAuthorRef(users: users)
+                    self.didLookupFinish?()
+                } catch {}
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                }
+            }
+        }
+    }
+
+    func farmingCast() {
+        self.state = .farmingCast
+        self.farmingRepository.farmingCast(userId: UserManager.shared.id, contentId: self.contentId) { (success, _, isRefreshToken)  in
+            if success {
+                self.didFarmingFinish?()
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                } else {
+                    self.didError?()
+                }
+            }
+        }
+    }
+
+    func unfarmingCast() {
+        self.state = .unfarmingCast
+        self.farmingRepository.unfarmingCast(userId: UserManager.shared.id, farmId: self.farming.id) { (success, _, isRefreshToken)  in
+            if success {
+                self.didUnfarmingFinish?()
+            } else {
+                if isRefreshToken {
+                    self.tokenHelper.refreshToken()
+                } else {
+                    self.didError?()
+                }
+            }
+        }
+    }
+
+    var didLookupFinish: (() -> Void)?
+    var didFarmingFinish: (() -> Void)?
+    var didUnfarmingFinish: (() -> Void)?
+    var didError: (() -> Void)?
+}
+
+extension FarmingPopupViewModel: TokenHelperDelegate {
+    public func didRefreshTokenFinish() {
+        if self.state == .farmingLookup {
+            self.farmingLookup()
+        } else if self.state == .farmingCast {
+            self.farmingCast()
+        }
     }
 }
