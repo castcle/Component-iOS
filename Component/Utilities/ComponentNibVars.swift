@@ -35,7 +35,6 @@ public struct ComponentNibVars {
         public static let comment = "CommentViewController"
         public static let commentDetail = "CommentDetailViewController"
         public static let farmingPopup = "FarmingPopupViewController"
-        public static let farmingLimitPopup = "FarmingLimitViewController"
         public static let syncAutoPostTwitter = "SyncAutoPostViewController"
         public static let acceptSyncSocialPopup = "AcceptSyncSocialPopupViewController"
         public static let selectCode = "SelectCodeViewController"

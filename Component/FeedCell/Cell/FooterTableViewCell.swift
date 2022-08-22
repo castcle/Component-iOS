@@ -272,22 +272,9 @@ public class FooterTableViewCell: UITableViewCell {
             if UserHelper.shared.isMyAccount(id: content.authorId) {
                 return
             }
-            if content.participate.farming {
-                let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(contentId: content.id))) as? FarmingPopupViewController
-                viewController?.delegate = self
-                Utility.currentViewController().presentPanModal(viewController ?? FarmingPopupViewController())
-            } else {
-                let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(contentId: content.id))) as? FarmingPopupViewController
-                viewController?.delegate = self
-                Utility.currentViewController().presentPanModal(viewController ?? FarmingPopupViewController())
-//                if Date().second % 2 == 0 {
-//
-//                } else {
-//                    let viewController = ComponentOpener.open(.farmingLimitPopup) as? FarmingLimitViewController
-//                    viewController?.delegate = self
-//                    Utility.currentViewController().presentPanModal(viewController ?? FarmingLimitViewController())
-//                }
-            }
+            let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(contentId: content.id))) as? FarmingPopupViewController
+            viewController?.delegate = self
+            Utility.currentViewController().presentPanModal(viewController ?? FarmingPopupViewController())
         }
     }
 }
@@ -312,17 +299,6 @@ extension FooterTableViewCell: FarmingPopupViewControllerDelegate {
     }
 
     public func farmingPopupViewControllerDidViewHistory(_ view: FarmingPopupViewController) {
-        NotificationCenter.default.post(name: .openFarmmingDelegate, object: nil, userInfo: nil)
-    }
-}
-
-extension FooterTableViewCell: FarmingLimitViewControllerDelegate {
-    public func farmingLimitViewController(didAction view: FarmingLimitViewController) {
-        guard let content = self.content else { return }
-//        self.farmingContent(content: content)
-    }
-
-    public func farmingLimitViewControllerDidViewHistory(_ view: FarmingLimitViewController) {
         NotificationCenter.default.post(name: .openFarmmingDelegate, object: nil, userInfo: nil)
     }
 }
