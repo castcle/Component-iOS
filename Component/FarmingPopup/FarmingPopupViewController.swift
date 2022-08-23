@@ -57,7 +57,6 @@ public class FarmingPopupViewController: UIViewController {
     @IBOutlet var cancelButton: UIButton!
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var avatarImage: UIImageView!
-    @IBOutlet weak var typeImage: UIImageView!
     @IBOutlet weak var displayNameLabel: UILabel!
     @IBOutlet weak var castcleIdLabel: UILabel!
     @IBOutlet var contentImage: UIImageView!
@@ -100,7 +99,6 @@ public class FarmingPopupViewController: UIViewController {
         self.contentView.custom(borderWidth: 1, borderColor: UIColor.Asset.lineGray)
         self.avatarImage.circle()
         self.avatarImage.image = UIImage.Asset.userPlaceholder
-        self.typeImage.image = UIImage.Asset.typePageIcon
         self.contentImage.image = UIImage.Asset.placeholder
         self.displayNameLabel.font = UIFont.asset(.regular, fontSize: .overline)
         self.displayNameLabel.textColor = UIColor.Asset.white
@@ -135,10 +133,12 @@ public class FarmingPopupViewController: UIViewController {
             })
         }
         self.viewModel.didFarmingFinish = {
+            CCLoading.shared.dismiss()
             self.dismiss(animated: true, completion: nil)
             self.delegate?.farmingPopupViewController(didAction: self, farmingStatus: .farming)
         }
         self.viewModel.didUnfarmingFinish = {
+            CCLoading.shared.dismiss()
             self.dismiss(animated: true, completion: nil)
             self.delegate?.farmingPopupViewController(didAction: self, farmingStatus: .available)
         }
@@ -158,6 +158,8 @@ public class FarmingPopupViewController: UIViewController {
         self.displayNameLabel.text = author?.displayName ?? "Castcle"
         self.castcleIdLabel.text = author?.castcleId ?? "@castcle"
         self.messageLabel.text = (self.viewModel.farming.content.message.isEmpty ? "N/A" : self.viewModel.farming.content.message)
+        let authorAvatarUrl = URL(string: author?.avatar ?? "")
+        self.avatarImage.kf.setImage(with: authorAvatarUrl, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
 
         if let imageUrl = self.viewModel.farming.content.photo.first {
             let url = URL(string: imageUrl.thumbnail)
@@ -188,7 +190,8 @@ public class FarmingPopupViewController: UIViewController {
             self.buttonLabel.isHidden = false
             self.buttonCashLabel.isHidden = false
             self.buttonHistoryLabel.isHidden = true
-            if Double(self.viewModel.farming.balance.farming) == 0 {
+            let farmingNumber: Double = Double(self.viewModel.farming.balance.farming) ?? 0
+            if farmingNumber == 0 {
                 self.buttonView.custom(color: UIColor.Asset.lineGray, cornerRadius: 10)
             } else {
                 self.buttonView.custom(color: UIColor.Asset.lightBlue, cornerRadius: 10)
@@ -198,10 +201,13 @@ public class FarmingPopupViewController: UIViewController {
 
     @IBAction func buttonAction(_ sender: Any) {
         if self.viewModel.farming.status == .available {
-            if Double(self.viewModel.farming.balance.farming) != 0 {
+            let farmingNumber: Double = Double(self.viewModel.farming.balance.farming) ?? 0
+            if farmingNumber != 0 {
+                CCLoading.shared.show()
                 self.viewModel.farmingCast()
             }
         } else if self.viewModel.farming.status == .farming {
+            CCLoading.shared.show()
             self.viewModel.unfarmingCast()
         } else if self.viewModel.farming.status == .limit {
             self.dismiss(animated: true, completion: nil)

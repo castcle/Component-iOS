@@ -36,7 +36,7 @@ public class CCLoading {
         // Init
     }
 
-    public func show(text: String) {
+    public func show(text: String = "") {
         self.hud.textLabel.text = text
         if let view = Utility.currentViewController().navigationController?.view {
             self.hud.show(in: view)

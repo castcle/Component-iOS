@@ -52,10 +52,7 @@ final public class FarmingPopupViewModel {
                 do {
                     let rawJson = try response.mapJSON()
                     let json = JSON(rawJson)
-                    self.farming =  Farming(json: json)
-                    let includes = JSON(json[JsonKey.includes.rawValue].dictionaryValue)
-                    let users = includes[JsonKey.users.rawValue].arrayValue
-                    UserHelper.shared.updateAuthorRef(users: users)
+                    self.farming = Farming(json: json)
                     self.didLookupFinish?()
                 } catch {}
             } else {
