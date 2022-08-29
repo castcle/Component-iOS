@@ -170,7 +170,7 @@ public class FarmingPopupViewController: UIViewController {
 
         if self.viewModel.farming.status == .farming {
             self.countLabel.textColor = UIColor.Asset.lightBlue
-            self.titleLabel.text = "Undo farm"
+            self.titleLabel.text = "Undo farming"
             self.buttonLabel.text = "Undo farming"
             self.buttonView.custom(color: UIColor.Asset.denger, cornerRadius: 10)
             self.buttonLabel.isHidden = false
@@ -184,7 +184,7 @@ public class FarmingPopupViewController: UIViewController {
             self.buttonLabel.isHidden = true
             self.buttonCashLabel.isHidden = true
             self.buttonHistoryLabel.isHidden = false
-            self.noteLabel.text = "Note: You can farm up to 20 Cast at a time. If you want to farm this Cast you must un-farm a previous Cast Learn more"
+            self.noteLabel.text = "Note: You can farm up to 20 Cast at a time. If you want to farm this Cast, you must un-farm a previous Cast. Learn more"
         } else {
             self.titleLabel.text = "Farm this cast"
             self.buttonLabel.text = "Farm this cast"
@@ -192,13 +192,13 @@ public class FarmingPopupViewController: UIViewController {
             self.buttonCashLabel.isHidden = false
             self.buttonHistoryLabel.isHidden = true
             self.noteLabel.text = "Note: 5% of total balance will farm this cast for 24 hr. Learn more"
-            let farmingNumber: Double = Double(self.viewModel.farming.balance.farming) ?? 0
-            if farmingNumber == 0 {
+            let farmingBalance: Double = Double(self.viewModel.farming.balance.farming) ?? 0
+            if farmingBalance == 0 {
                 self.buttonView.custom(color: UIColor.Asset.lineGray, cornerRadius: 10)
             } else {
                 self.buttonView.custom(color: UIColor.Asset.lightBlue, cornerRadius: 10)
             }
-            if farmingNumber == 20 {
+            if self.viewModel.farming.number == 20 {
                 self.countLabel.textColor = UIColor.Asset.denger
             } else {
                 self.countLabel.textColor = UIColor.Asset.lightBlue
