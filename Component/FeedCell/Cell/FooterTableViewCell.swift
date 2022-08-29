@@ -269,10 +269,21 @@ public class FooterTableViewCell: UITableViewCell {
             if content.reportedStatus != .none {
                 return
             }
-            if UserHelper.shared.isMyAccount(id: content.authorId) {
-                return
+            var contentId: String = ""
+            if content.referencedCasts.type == .quoted, let tempContent = ContentHelper.shared.getContentRef(id: content.referencedCasts.id) {
+                if UserHelper.shared.isMyAccount(id: tempContent.authorId) {
+                    return
+                } else {
+                    contentId = tempContent.id
+                }
+            } else {
+                if UserHelper.shared.isMyAccount(id: content.authorId) {
+                    return
+                } else {
+                    contentId = content.id
+                }
             }
-            let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(contentId: content.id))) as? FarmingPopupViewController
+            let viewController = ComponentOpener.open(.farmingPopup(FarmingPopupViewModel(contentId: contentId))) as? FarmingPopupViewController
             viewController?.delegate = self
             Utility.currentViewController().presentPanModal(viewController ?? FarmingPopupViewController())
         }
@@ -286,7 +297,6 @@ extension FooterTableViewCell: RecastPopupViewControllerDelegate {
             self.recastContent(content: content, castcleId: castcleId)
         } else if recastAction == .quoteCast {
             guard let page = page else { return }
-
             self.delegate?.didTabQuoteCast(self, content: content, page: page)
         }
     }

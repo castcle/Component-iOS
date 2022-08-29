@@ -65,7 +65,7 @@ public class FarmingPopupViewController: UIViewController {
     @IBOutlet weak var balanceLabel: UILabel!
 
     var delegate: FarmingPopupViewControllerDelegate?
-    var maxHeight = (UIScreen.main.bounds.height - 630)
+    var maxHeight = (UIScreen.main.bounds.height - 640)
     var viewModel = FarmingPopupViewModel(contentId: "")
 
     public override func viewDidLoad() {
@@ -170,12 +170,13 @@ public class FarmingPopupViewController: UIViewController {
 
         if self.viewModel.farming.status == .farming {
             self.countLabel.textColor = UIColor.Asset.lightBlue
-            self.titleLabel.text = "Undo farm this cast"
+            self.titleLabel.text = "Undo farm"
             self.buttonLabel.text = "Undo farming"
             self.buttonView.custom(color: UIColor.Asset.denger, cornerRadius: 10)
             self.buttonLabel.isHidden = false
             self.buttonCashLabel.isHidden = false
             self.buttonHistoryLabel.isHidden = true
+            self.noteLabel.text = "Note: 5% of total balance will farm this cast for 24 hr. Learn more"
         } else if self.viewModel.farming.status == .limit {
             self.countLabel.textColor = UIColor.Asset.denger
             self.titleLabel.text = "Your farm limit is reached"
@@ -183,18 +184,24 @@ public class FarmingPopupViewController: UIViewController {
             self.buttonLabel.isHidden = true
             self.buttonCashLabel.isHidden = true
             self.buttonHistoryLabel.isHidden = false
+            self.noteLabel.text = "Note: You can farm up to 20 Cast at a time. If you want to farm this Cast you must un-farm a previous Cast Learn more"
         } else {
-            self.countLabel.textColor = UIColor.Asset.lightBlue
             self.titleLabel.text = "Farm this cast"
             self.buttonLabel.text = "Farm this cast"
             self.buttonLabel.isHidden = false
             self.buttonCashLabel.isHidden = false
             self.buttonHistoryLabel.isHidden = true
+            self.noteLabel.text = "Note: 5% of total balance will farm this cast for 24 hr. Learn more"
             let farmingNumber: Double = Double(self.viewModel.farming.balance.farming) ?? 0
             if farmingNumber == 0 {
                 self.buttonView.custom(color: UIColor.Asset.lineGray, cornerRadius: 10)
             } else {
                 self.buttonView.custom(color: UIColor.Asset.lightBlue, cornerRadius: 10)
+            }
+            if farmingNumber == 20 {
+                self.countLabel.textColor = UIColor.Asset.denger
+            } else {
+                self.countLabel.textColor = UIColor.Asset.lightBlue
             }
         }
     }
