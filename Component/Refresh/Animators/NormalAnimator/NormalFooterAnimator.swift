@@ -91,7 +91,7 @@ open class NormalFooterAnimator: UIView, RefreshProtocol {
         switch state {
         case .idle:
             titleLabel.text = loadingMoreDescription
-        case .refreshing :
+        case .refreshing:
             titleLabel.text = loadingDescription
         case .noMoreData:
             titleLabel.text = noMoreDataDescription
