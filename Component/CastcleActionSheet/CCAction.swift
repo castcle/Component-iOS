@@ -61,11 +61,15 @@ public class CCAction: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public convenience init(title: String, image: UIImage? = nil, color: UIColor = UIColor.Asset.white, style: CCAction.Style = .normal, completion: @escaping () -> Void) {
+    public convenience init(title: String, image: UIImage? = nil, color: UIColor = UIColor.Asset.white, style: CCAction.Style = .normal, isSelect: Bool = false, completion: @escaping () -> Void) {
         self.init()
-        self.button.setTitle(title, for: .normal)
         self.button.titleLabel?.font =  UIFont.asset(.regular, fontSize: .body)
-        self.button.setTitleColor(color, for: .normal)
+        if isSelect {
+            self.button.setIcon(prefixText: "\(title)   ", prefixTextColor: color, icon: .castcle(.checkmark), iconColor: color, postfixText: "", postfixTextColor: .clear, forState: .normal, textSize: 16, iconSize: 14)
+        } else {
+            self.button.setTitle(title, for: .normal)
+            self.button.setTitleColor(color, for: .normal)
+        }
         if image != nil {
             self.imageView.image = image
         }

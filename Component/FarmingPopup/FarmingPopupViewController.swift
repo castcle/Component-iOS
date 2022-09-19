@@ -63,6 +63,11 @@ public class FarmingPopupViewController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var balanceTitleLabel: UILabel!
     @IBOutlet weak var balanceLabel: UILabel!
+    @IBOutlet weak var contentFullView: UIView!
+    @IBOutlet weak var contentImageView: UIView!
+    @IBOutlet weak var contentTextView: UIView!
+    @IBOutlet weak var messageOnlyLabel: UILabel!
+    @IBOutlet var contentOnlyImage: UIImageView!
 
     var delegate: FarmingPopupViewControllerDelegate?
     var maxHeight = (UIScreen.main.bounds.height - 640)
@@ -157,15 +162,27 @@ public class FarmingPopupViewController: UIViewController {
         let author = ContentHelper.shared.getAuthorRef(id: self.viewModel.farming.content.authorId)
         self.displayNameLabel.text = author?.displayName ?? "Castcle"
         self.castcleIdLabel.text = author?.castcleId ?? "@castcle"
-        self.messageLabel.text = (self.viewModel.farming.content.message.isEmpty ? "N/A" : self.viewModel.farming.content.message)
         let authorAvatarUrl = URL(string: author?.avatar ?? "")
         self.avatarImage.kf.setImage(with: authorAvatarUrl, placeholder: UIImage.Asset.userPlaceholder, options: [.transition(.fade(0.35))])
 
-        if let imageUrl = self.viewModel.farming.content.photo.first {
+        if !self.viewModel.farming.content.message.isEmpty, let imageUrl = self.viewModel.farming.content.photo.first {
+            self.contentFullView.isHidden = false
+            self.contentImageView.isHidden = true
+            self.contentTextView.isHidden = true
             let url = URL(string: imageUrl.thumbnail)
             self.contentImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
+            self.messageLabel.text = self.viewModel.farming.content.message
+        } else if let imageUrl = self.viewModel.farming.content.photo.first {
+            self.contentFullView.isHidden = true
+            self.contentImageView.isHidden = false
+            self.contentTextView.isHidden = true
+            let url = URL(string: imageUrl.thumbnail)
+            self.contentOnlyImage.kf.setImage(with: url, placeholder: UIImage.Asset.placeholder, options: [.transition(.fade(0.35))])
         } else {
-            self.contentImage.image = UIImage.Asset.placeholder
+            self.contentFullView.isHidden = true
+            self.contentImageView.isHidden = true
+            self.contentTextView.isHidden = false
+            self.messageOnlyLabel.text = self.viewModel.farming.content.message
         }
 
         if self.viewModel.farming.status == .farming {
