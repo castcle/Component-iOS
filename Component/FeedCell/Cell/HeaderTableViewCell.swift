@@ -233,7 +233,6 @@ public class HeaderTableViewCell: UITableViewCell {
                 Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
             }
         }
-
     }
 
     private func deleteContent() {

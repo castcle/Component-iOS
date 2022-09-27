@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -43,6 +43,16 @@
                                     <action selector="followAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Dgm-A2-dJ9"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FkI-1n-tVj">
+                                <rect key="frame" x="240" y="5" width="30" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="3Cl-3a-XBl"/>
+                                    <constraint firstAttribute="height" constant="40" id="WlS-m0-cLO"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="moreAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Y3S-b1-PRg"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Display Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6e9-Mj-X5r">
                                 <rect key="frame" x="45" y="7.5" width="89" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -65,13 +75,15 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="FkI-1n-tVj" firstAttribute="centerY" secondItem="8Rf-zw-9U5" secondAttribute="centerY" id="1F8-2Z-9ka"/>
                             <constraint firstItem="Cbu-0q-yoq" firstAttribute="top" secondItem="6e9-Mj-X5r" secondAttribute="bottom" id="6IP-MC-34e"/>
+                            <constraint firstItem="FkI-1n-tVj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tI4-g0-ZT0" secondAttribute="trailing" constant="10" id="AFa-8M-wKi"/>
                             <constraint firstItem="EP0-Cd-erz" firstAttribute="centerY" secondItem="6e9-Mj-X5r" secondAttribute="centerY" id="NGV-ny-dlB"/>
                             <constraint firstItem="tFB-6A-tn0" firstAttribute="centerY" secondItem="8Rf-zw-9U5" secondAttribute="centerY" id="OGg-Ce-2S3"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tI4-g0-ZT0" secondAttribute="trailing" constant="10" id="Onm-FY-HhP"/>
                             <constraint firstItem="Cbu-0q-yoq" firstAttribute="leading" secondItem="6e9-Mj-X5r" secondAttribute="leading" id="TMe-w3-p3h"/>
                             <constraint firstItem="tI4-g0-ZT0" firstAttribute="leading" secondItem="EP0-Cd-erz" secondAttribute="trailing" constant="10" id="V3G-7K-Wis"/>
                             <constraint firstItem="tI4-g0-ZT0" firstAttribute="centerY" secondItem="EP0-Cd-erz" secondAttribute="centerY" id="YgV-S8-TMX"/>
+                            <constraint firstAttribute="trailing" secondItem="FkI-1n-tVj" secondAttribute="trailing" constant="10" id="a4f-SE-SB7"/>
                             <constraint firstItem="tFB-6A-tn0" firstAttribute="leading" secondItem="8Rf-zw-9U5" secondAttribute="leading" constant="10" id="e4e-ps-oI9"/>
                             <constraint firstAttribute="height" constant="50" id="k6l-Kj-a6a"/>
                             <constraint firstItem="6e9-Mj-X5r" firstAttribute="leading" secondItem="tFB-6A-tn0" secondAttribute="trailing" constant="10" id="lwY-aQ-5gn"/>
@@ -116,6 +128,7 @@
                 <outlet property="followButton" destination="tI4-g0-ZT0" id="2xt-GE-HXt"/>
                 <outlet property="lineView" destination="tqj-Xk-8bZ" id="UWo-dR-1Hn"/>
                 <outlet property="massageLabel" destination="UPW-iB-Ngk" id="3a6-BB-QSv"/>
+                <outlet property="moreButton" destination="FkI-1n-tVj" id="iWb-5a-7eE"/>
                 <outlet property="verifyConstraintWidth" destination="IW5-ew-dhp" id="Cn4-Nl-a1H"/>
                 <outlet property="verifyIcon" destination="EP0-Cd-erz" id="86w-dG-mNo"/>
             </connections>

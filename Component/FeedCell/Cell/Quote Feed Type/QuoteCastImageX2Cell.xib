@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -44,6 +44,16 @@
                                     <action selector="followAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Dgm-A2-dJ9"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XNo-aO-DtO">
+                                <rect key="frame" x="240" y="5" width="30" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="B0c-3S-sgL"/>
+                                    <constraint firstAttribute="width" constant="30" id="w6l-cG-Dbj"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="moreAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="VRU-av-nLD"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Display Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6e9-Mj-X5r">
                                 <rect key="frame" x="45" y="7.5" width="89" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -69,7 +79,7 @@
                             <constraint firstItem="Cbu-0q-yoq" firstAttribute="top" secondItem="6e9-Mj-X5r" secondAttribute="bottom" id="6IP-MC-34e"/>
                             <constraint firstItem="EP0-Cd-erz" firstAttribute="centerY" secondItem="6e9-Mj-X5r" secondAttribute="centerY" id="NGV-ny-dlB"/>
                             <constraint firstItem="tFB-6A-tn0" firstAttribute="centerY" secondItem="8Rf-zw-9U5" secondAttribute="centerY" id="OGg-Ce-2S3"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tI4-g0-ZT0" secondAttribute="trailing" constant="10" id="Onm-FY-HhP"/>
+                            <constraint firstItem="XNo-aO-DtO" firstAttribute="centerY" secondItem="8Rf-zw-9U5" secondAttribute="centerY" id="QoZ-DZ-POQ"/>
                             <constraint firstItem="Cbu-0q-yoq" firstAttribute="leading" secondItem="6e9-Mj-X5r" secondAttribute="leading" id="TMe-w3-p3h"/>
                             <constraint firstItem="tI4-g0-ZT0" firstAttribute="leading" secondItem="EP0-Cd-erz" secondAttribute="trailing" constant="10" id="V3G-7K-Wis"/>
                             <constraint firstItem="tI4-g0-ZT0" firstAttribute="centerY" secondItem="EP0-Cd-erz" secondAttribute="centerY" id="YgV-S8-TMX"/>
@@ -77,7 +87,9 @@
                             <constraint firstAttribute="height" constant="50" id="k6l-Kj-a6a"/>
                             <constraint firstItem="6e9-Mj-X5r" firstAttribute="leading" secondItem="tFB-6A-tn0" secondAttribute="trailing" constant="10" id="lwY-aQ-5gn"/>
                             <constraint firstItem="EP0-Cd-erz" firstAttribute="leading" secondItem="6e9-Mj-X5r" secondAttribute="trailing" constant="5" id="mY1-RU-G7x"/>
+                            <constraint firstAttribute="trailing" secondItem="XNo-aO-DtO" secondAttribute="trailing" constant="10" id="nVJ-DR-Wtj"/>
                             <constraint firstItem="6e9-Mj-X5r" firstAttribute="top" secondItem="tFB-6A-tn0" secondAttribute="top" constant="-5" id="rbr-gj-ioN"/>
+                            <constraint firstItem="XNo-aO-DtO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tI4-g0-ZT0" secondAttribute="trailing" constant="10" id="zC8-Iy-X0X"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mIG-ts-cXc" customClass="AttributedLabel" customModule="Core">
@@ -135,6 +147,7 @@
                 <outlet property="imageContainer" destination="YNu-W6-rCN" id="YvC-MO-Jhn"/>
                 <outlet property="lineView" destination="tqj-Xk-8bZ" id="UWo-dR-1Hn"/>
                 <outlet property="massageLabel" destination="mIG-ts-cXc" id="dvk-8M-XMH"/>
+                <outlet property="moreButton" destination="XNo-aO-DtO" id="QPo-ba-a2R"/>
                 <outlet property="secondImageView" destination="GTJ-KX-LDu" id="qPV-Bg-4xO"/>
                 <outlet property="verifyConstraintWidth" destination="IW5-ew-dhp" id="jgk-fh-lgC"/>
                 <outlet property="verifyIcon" destination="EP0-Cd-erz" id="86w-dG-mNo"/>

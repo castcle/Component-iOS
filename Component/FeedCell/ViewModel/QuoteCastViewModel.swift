@@ -34,7 +34,7 @@ public final class QuoteCastViewModel {
     let tokenHelper: TokenHelper = TokenHelper()
     private var state: State = .none
     private var userRequest: UserRequest = UserRequest()
-    private var content: Content?
+    var content: Content?
 
     public init(content: Content) {
         self.content = content

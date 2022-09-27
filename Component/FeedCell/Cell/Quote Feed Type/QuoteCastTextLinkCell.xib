@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -44,6 +44,16 @@
                                     <action selector="followAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Dgm-A2-dJ9"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rni-WI-1cF">
+                                <rect key="frame" x="240" y="5" width="30" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="9cg-nq-PZp"/>
+                                    <constraint firstAttribute="height" constant="40" id="t3E-yV-7nF"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="moreAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zgr-4f-5HD"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Display Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6e9-Mj-X5r">
                                 <rect key="frame" x="45" y="7.5" width="89" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -67,17 +77,19 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Cbu-0q-yoq" firstAttribute="top" secondItem="6e9-Mj-X5r" secondAttribute="bottom" id="6IP-MC-34e"/>
+                            <constraint firstAttribute="trailing" secondItem="rni-WI-1cF" secondAttribute="trailing" constant="10" id="InN-1h-aG9"/>
                             <constraint firstItem="EP0-Cd-erz" firstAttribute="centerY" secondItem="6e9-Mj-X5r" secondAttribute="centerY" id="NGV-ny-dlB"/>
                             <constraint firstItem="tFB-6A-tn0" firstAttribute="centerY" secondItem="8Rf-zw-9U5" secondAttribute="centerY" id="OGg-Ce-2S3"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tI4-g0-ZT0" secondAttribute="trailing" constant="10" id="Onm-FY-HhP"/>
                             <constraint firstItem="Cbu-0q-yoq" firstAttribute="leading" secondItem="6e9-Mj-X5r" secondAttribute="leading" id="TMe-w3-p3h"/>
                             <constraint firstItem="tI4-g0-ZT0" firstAttribute="leading" secondItem="EP0-Cd-erz" secondAttribute="trailing" constant="10" id="V3G-7K-Wis"/>
                             <constraint firstItem="tI4-g0-ZT0" firstAttribute="centerY" secondItem="EP0-Cd-erz" secondAttribute="centerY" id="YgV-S8-TMX"/>
+                            <constraint firstItem="rni-WI-1cF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tI4-g0-ZT0" secondAttribute="trailing" constant="10" id="dsE-im-Q3x"/>
                             <constraint firstItem="tFB-6A-tn0" firstAttribute="leading" secondItem="8Rf-zw-9U5" secondAttribute="leading" constant="10" id="e4e-ps-oI9"/>
                             <constraint firstAttribute="height" constant="50" id="k6l-Kj-a6a"/>
                             <constraint firstItem="6e9-Mj-X5r" firstAttribute="leading" secondItem="tFB-6A-tn0" secondAttribute="trailing" constant="10" id="lwY-aQ-5gn"/>
                             <constraint firstItem="EP0-Cd-erz" firstAttribute="leading" secondItem="6e9-Mj-X5r" secondAttribute="trailing" constant="5" id="mY1-RU-G7x"/>
                             <constraint firstItem="6e9-Mj-X5r" firstAttribute="top" secondItem="tFB-6A-tn0" secondAttribute="top" constant="-5" id="rbr-gj-ioN"/>
+                            <constraint firstItem="rni-WI-1cF" firstAttribute="centerY" secondItem="8Rf-zw-9U5" secondAttribute="centerY" id="s4i-8w-oUd"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n8v-si-nNZ" customClass="AttributedLabel" customModule="Core">
@@ -248,6 +260,7 @@
                 <outlet property="linkImage" destination="IFh-vb-enF" id="fja-wW-ZiI"/>
                 <outlet property="linkTitleLabel" destination="g9V-5E-OAQ" id="MSU-eE-tTL"/>
                 <outlet property="massageLabel" destination="n8v-si-nNZ" id="7NE-qd-zoV"/>
+                <outlet property="moreButton" destination="rni-WI-1cF" id="9lc-hy-rmM"/>
                 <outlet property="skeletonView" destination="JsD-Lg-lRZ" id="HWl-kP-eo6"/>
                 <outlet property="titleLinkView" destination="Ojd-Cf-VNY" id="ThA-i8-uCf"/>
                 <outlet property="verifyConstraintWidth" destination="IW5-ew-dhp" id="nVV-ZQ-nlO"/>

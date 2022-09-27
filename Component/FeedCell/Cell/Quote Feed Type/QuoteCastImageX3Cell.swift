@@ -44,6 +44,7 @@ public class QuoteCastImageX3Cell: UITableViewCell {
     @IBOutlet var secondImageView: UIImageView!
     @IBOutlet var thirdImageView: UIImageView!
     @IBOutlet var verifyConstraintWidth: NSLayoutConstraint!
+    @IBOutlet var moreButton: UIButton!
 
     var viewModel: QuoteCastViewModel?
     public var content: Content? {
@@ -129,6 +130,7 @@ public class QuoteCastImageX3Cell: UITableViewCell {
         self.verifyIcon.image = UIImage.init(icon: .castcle(.verify), size: CGSize(width: 15, height: 15), textColor: UIColor.Asset.lightBlue)
         self.lineView.custom(color: UIColor.clear, cornerRadius: 12, borderWidth: 1, borderColor: UIColor.Asset.lightGray)
         self.imageContainer.custom(cornerRadius: 12)
+        self.moreButton.setImage(UIImage.init(icon: .castcle(.ellipsisV), size: CGSize(width: 22, height: 22), textColor: UIColor.Asset.white).withRenderingMode(.alwaysOriginal), for: .normal)
     }
 
     public override func setSelected(_ selected: Bool, animated: Bool) {
@@ -139,5 +141,32 @@ public class QuoteCastImageX3Cell: UITableViewCell {
         guard let viewModel = self.viewModel else { return }
         viewModel.followUser()
         self.followButton.isHidden = true
+    }
+
+    @IBAction func moreAction(_ sender: Any) {
+        if let content = self.content {
+            if !UserHelper.shared.isMyAccount(id: content.authorId) {
+                let actionSheet = CCActionSheet()
+                let reportButton = CCAction(title: Localization.ContentAction.reportCast.text, image: UIImage.init(icon: .castcle(.report), size: CGSize(width: 20, height: 20), textColor: UIColor.Asset.white), style: .normal) {
+                    actionSheet.dismissActionSheet()
+                    if UserManager.shared.isLogin {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            let reportDict: [String: Any] = [
+                                JsonKey.castcleId.rawValue: "",
+                                JsonKey.contentId.rawValue: content.id
+                            ]
+                            NotificationCenter.default.post(name: .openReportDelegate, object: nil, userInfo: reportDict)
+                        }
+                    } else {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            NotificationCenter.default.post(name: .openSignInDelegate, object: nil, userInfo: nil)
+                        }
+                    }
+                }
+                actionSheet.addActions([reportButton])
+                actionSheet.modalPresentationStyle  = .overFullScreen
+                Utility.currentViewController().present(actionSheet, animated: true, completion: nil)
+            }
+        }
     }
 }
