@@ -42,6 +42,7 @@ class PostTextTableViewCell: UITableViewCell {
     var delegate: PostTextTableViewCellDelegate?
     private var dataRepository: DataRepository = DataRepositoryImpl()
     private var limitCharacter: Int = 280
+    private var keywordText: String = ""
     let mentionDropDown = DropDown()
     let hastagDropDown = DropDown()
     var isShowDropDown: Bool = false
@@ -158,25 +159,38 @@ extension PostTextTableViewCell: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "@" {
             if !self.isShowDropDown {
+                self.keywordText = "@"
                 self.isShowDropDown = true
                 self.getMention()
             }
         } else if text == "#" {
             if !self.isShowDropDown {
+                self.keywordText = "#"
                 self.isShowDropDown = true
                 self.getHastag()
             }
         } else if text == " " {
+            self.keywordText = ""
             self.isShowDropDown = false
             self.mentionDropDown.hide()
             self.hastagDropDown.hide()
+        } else {
+            if self.isShowDropDown {
+                if self.keywordText.hasPrefix("@") {
+                    self.keywordText = "\(self.keywordText)\(text)"
+                    self.getMention()
+                } else if self.keywordText.hasPrefix("#") {
+                    self.keywordText = "\(self.keywordText)\(text)"
+                    self.getHastag()
+                }
+            }
         }
         return true
     }
 
     private func getMention() {
         self.state = .getMention
-        self.dataRepository.getMentions(keyword: "@") { (success, response, isRefreshToken) in
+        self.dataRepository.getMentions(keyword: self.keywordText) { (success, response, isRefreshToken) in
             if success {
                 self.viewModel.mappingMention(response: response)
                 self.setupMentionDropDown()
@@ -191,7 +205,7 @@ extension PostTextTableViewCell: UITextViewDelegate {
 
     private func getHastag() {
         self.state = .getHastag
-        self.dataRepository.getHashtag(keyword: "#") { (success, response, isRefreshToken) in
+        self.dataRepository.getHashtag(keyword: self.keywordText) { (success, response, isRefreshToken) in
             if success {
                 self.viewModel.mappingHastag(response: response)
                 self.setupHastagDropDown()
